@@ -1,23 +1,23 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NGame.Ecs;
+using NGame.UpdaterSchedulers;
 
 namespace NGame.Setup;
 
 public sealed class NGameHostedService : IHostedService
 {
 	private readonly ILogger _logger;
-	private readonly ISystemCollection _systemCollection;
+	private readonly IUpdateScheduler _updateScheduler;
 
 
 	public NGameHostedService(
 		ILogger<NGameHostedService> logger,
 		IHostApplicationLifetime appLifetime,
-		ISystemCollection systemCollection
+		IUpdateScheduler updateScheduler
 	)
 	{
 		_logger = logger;
-		_systemCollection = systemCollection;
+		_updateScheduler = updateScheduler;
 
 		appLifetime.ApplicationStarted.Register(OnStarted);
 		appLifetime.ApplicationStopping.Register(OnStopping);
@@ -33,16 +33,15 @@ public sealed class NGameHostedService : IHostedService
 	}
 
 
-	public async Task RunGameAsync(CancellationToken cancellationToken)
+	public Task RunGameAsync(CancellationToken cancellationToken)
 	{
-		var loopCounter = 0;
-
-		while (loopCounter < 5)
+		_updateScheduler.Initialize();
+		while (!cancellationToken.IsCancellationRequested)
 		{
-			loopCounter++;
-
-			await _systemCollection.UpdateSystems(cancellationToken);
+			_updateScheduler.Tick();
 		}
+
+		return Task.CompletedTask;
 	}
 
 

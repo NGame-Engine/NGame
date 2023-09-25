@@ -56,7 +56,7 @@ public class UpdateScheduler : IUpdateScheduler
 	private readonly object _tickLock = new();
 
 
-	protected UpdateScheduler(
+	public UpdateScheduler(
 		ILogger<UpdateScheduler> logger,
 		INGameRenderer nGameRenderer,
 		IUpdatableCollection updatableCollection

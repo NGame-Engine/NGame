@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NGame.Renderers;
+using NGame.UpdaterSchedulers;
 
 namespace NGame.Setup;
 
@@ -19,23 +21,32 @@ public interface INGameApplicationBuilder
 
 internal class NGameApplicationBuilder : INGameApplicationBuilder
 {
-	private readonly HostApplicationBuilder _hostApplicationBuilder = new();
+	private readonly HostApplicationBuilder _builder = new();
 
 
-	public IHostEnvironment Environment => _hostApplicationBuilder.Environment;
-	public ConfigurationManager Configuration => _hostApplicationBuilder.Configuration;
-	public IServiceCollection Services => _hostApplicationBuilder.Services;
-	public ILoggingBuilder Logging => _hostApplicationBuilder.Logging;
+	public NGameApplicationBuilder()
+	{
+		_builder.Services.AddSingleton<NGameHostedService>();
+
+		_builder.Services.AddHostedService(
+			services => services.GetRequiredService<NGameHostedService>()
+		);
+
+		_builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
+		_builder.Services.AddSingleton<INGameRenderer, NGameRenderer>();
+		_builder.Services.AddSingleton<IUpdatableCollection,UpdatableCollection>();
+	}
+
+
+	public IHostEnvironment Environment => _builder.Environment;
+	public ConfigurationManager Configuration => _builder.Configuration;
+	public IServiceCollection Services => _builder.Services;
+	public ILoggingBuilder Logging => _builder.Logging;
 
 
 	public NGameApplication Build()
 	{
-		_hostApplicationBuilder.Services.AddSingleton<NGameHostedService>();
-
-		_hostApplicationBuilder.Services.AddHostedService(
-			services => services.GetRequiredService<NGameHostedService>()
-		);
-		var host = _hostApplicationBuilder.Build();
+		var host = _builder.Build();
 		return new NGameApplication(host);
 	}
 }
