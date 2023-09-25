@@ -30,6 +30,11 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 
 	public NGameApplication Build()
 	{
+		_hostApplicationBuilder.Services.AddSingleton<NGameHostedService>();
+
+		_hostApplicationBuilder.Services.AddHostedService(
+			services => services.GetRequiredService<NGameHostedService>()
+		);
 		var host = _hostApplicationBuilder.Build();
 		return new NGameApplication(host);
 	}
