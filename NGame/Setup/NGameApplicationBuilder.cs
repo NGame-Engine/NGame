@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NGame.Ecs;
 using NGame.Renderers;
 using NGame.UpdaterSchedulers;
 
@@ -34,7 +35,9 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 
 		_builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
 		_builder.Services.AddSingleton<INGameRenderer, NGameRenderer>();
-		_builder.Services.AddSingleton<IUpdatableCollection,UpdatableCollection>();
+		_builder.Services.AddSingleton<IUpdatableCollection, UpdatableCollection>();
+
+		_builder.Services.AddSingleton<IEntityTracker, EntityTracker>();
 	}
 
 

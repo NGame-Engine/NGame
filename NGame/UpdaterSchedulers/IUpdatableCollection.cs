@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using NGame.Ecs;
 
 namespace NGame.UpdaterSchedulers;
 
@@ -13,11 +14,13 @@ public interface IUpdatableCollection
 public class UpdatableCollection : IUpdatableCollection
 {
 	private readonly ILogger<UpdatableCollection> _logger;
+	private readonly ISystemCollection _systemCollection;
 
 
-	public UpdatableCollection(ILogger<UpdatableCollection> logger)
+	public UpdatableCollection(ILogger<UpdatableCollection> logger, ISystemCollection systemCollection)
 	{
 		_logger = logger;
+		_systemCollection = systemCollection;
 	}
 
 
@@ -27,9 +30,8 @@ public class UpdatableCollection : IUpdatableCollection
 	}
 
 
-	public Task Update(GameTime gameTime)
+	public async Task Update(GameTime gameTime)
 	{
-		_logger.LogInformation("Update at {0}", gameTime.Total);
-		return Task.CompletedTask;
+		await _systemCollection.UpdateSystems(default);
 	}
 }

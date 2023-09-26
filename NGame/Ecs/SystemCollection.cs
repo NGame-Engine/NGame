@@ -1,4 +1,3 @@
-using System.Collections;
 using Microsoft.Extensions.Logging;
 
 namespace NGame.Ecs;
@@ -7,6 +6,7 @@ public interface ISystemCollection
 {
 	void Add(ISystem system);
 	Task UpdateSystems(CancellationToken cancellationToken);
+	IEnumerable<ISystem> GetSystems();
 }
 
 
@@ -37,4 +37,7 @@ public class SystemCollection : ISystemCollection
 			await system.Update(cancellationToken);
 		}
 	}
+
+
+	public IEnumerable<ISystem> GetSystems() => _systems.ToList();
 }

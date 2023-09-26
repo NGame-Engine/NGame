@@ -40,7 +40,6 @@ class NGameRenderer : INGameRenderer
 
 	public Task Draw(GameTime drawLoopTime)
 	{
-		_logger.LogInformation("	Draw at {0}", drawLoopTime.Total);
 		return Task.CompletedTask;
 	}
 
