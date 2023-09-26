@@ -5,6 +5,7 @@ end_of_line = lf
 insert_final_newline = true
 
 # Microsoft .NET properties
+csharp_new_line_before_members_in_object_initializers = false
 csharp_preferred_modifier_order = public, private, protected, internal, file, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, required, volatile, async:suggestion
 csharp_style_prefer_utf8_string_literals = true:suggestion
 dotnet_naming_rule.constant_fields_should_be_pascal_case_rule.import_to_resharper = True
@@ -50,7 +51,8 @@ resharper_enforce_line_ending_style = true
 resharper_keep_existing_declaration_block_arrangement = true
 resharper_keep_existing_embedded_block_arrangement = true
 resharper_keep_existing_enum_arrangement = true
-resharper_keep_existing_initializer_arrangement = false
+resharper_keep_existing_initializer_arrangement = true
+resharper_place_simple_initializer_on_single_line = false
 resharper_show_autodetect_configure_formatting_tip = false
 resharper_use_heuristics_for_body_style = false
 resharper_use_indent_from_vs = false
@@ -173,7 +175,7 @@ csharp_new_line_before_open_brace = all
 csharp_new_line_before_else = true
 csharp_new_line_before_catch = true
 csharp_new_line_before_finally = true
-csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_object_initializers = false
 csharp_new_line_before_members_in_anonymous_types = true
 csharp_new_line_between_query_expression_clauses = true
 # Indentation preferences

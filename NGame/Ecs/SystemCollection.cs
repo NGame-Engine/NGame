@@ -1,11 +1,12 @@
 using Microsoft.Extensions.Logging;
+using NGame.UpdaterSchedulers;
 
 namespace NGame.Ecs;
 
 public interface ISystemCollection
 {
 	void Add(ISystem system);
-	Task UpdateSystems(CancellationToken cancellationToken);
+	Task UpdateSystems(GameTime gameTime, CancellationToken cancellationToken);
 	IEnumerable<ISystem> GetSystems();
 }
 
@@ -30,11 +31,11 @@ public class SystemCollection : ISystemCollection
 	}
 
 
-	public async Task UpdateSystems(CancellationToken cancellationToken)
+	public async Task UpdateSystems(GameTime gameTime, CancellationToken cancellationToken)
 	{
 		foreach (var system in _systems)
 		{
-			await system.Update(cancellationToken);
+			await system.Update(gameTime, cancellationToken);
 		}
 	}
 

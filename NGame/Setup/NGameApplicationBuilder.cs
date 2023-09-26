@@ -32,12 +32,6 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 		_builder.Services.AddHostedService(
 			services => services.GetRequiredService<NGameHostedService>()
 		);
-
-		_builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
-		_builder.Services.AddSingleton<INGameRenderer, NGameRenderer>();
-		_builder.Services.AddSingleton<IUpdatableCollection, UpdatableCollection>();
-
-		_builder.Services.AddSingleton<IEntityTracker, EntityTracker>();
 	}
 
 

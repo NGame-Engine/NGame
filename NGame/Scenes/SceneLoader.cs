@@ -18,20 +18,22 @@ public class SceneLoader : ISceneLoader
 	private readonly IAssetSerializer<Scene> _assetSerializer;
 	private readonly IHostEnvironment _hostEnvironment;
 	private readonly ILogger<SceneLoader> _logger;
-	private IEntityTracker _entityTracker;
+	private readonly IEntityTracker _entityTracker;
 
 
 	public SceneLoader(
 		SceneConfiguration sceneConfiguration,
 		IAssetSerializer<Scene> assetSerializer,
 		IHostEnvironment hostEnvironment,
-		ILogger<SceneLoader> logger
+		ILogger<SceneLoader> logger,
+		IEntityTracker entityTracker
 	)
 	{
 		_sceneConfiguration = sceneConfiguration;
 		_assetSerializer = assetSerializer;
 		_hostEnvironment = hostEnvironment;
 		_logger = logger;
+		_entityTracker = entityTracker;
 	}
 
 

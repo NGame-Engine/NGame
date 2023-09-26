@@ -32,6 +32,6 @@ public class UpdatableCollection : IUpdatableCollection
 
 	public async Task Update(GameTime gameTime)
 	{
-		await _systemCollection.UpdateSystems(default);
+		await _systemCollection.UpdateSystems(gameTime, default);
 	}
 }
