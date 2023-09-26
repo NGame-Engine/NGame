@@ -13,7 +13,6 @@ public static class NGameApplicationBuilderExtensions
 		builder.Logging.AddConsole();
 
 		builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
-		builder.Services.AddSingleton<INGameRenderer, NGameRenderer>();
 		builder.Services.AddSingleton<IUpdatableCollection, UpdatableCollection>();
 
 		builder.AddComponentSystem();
