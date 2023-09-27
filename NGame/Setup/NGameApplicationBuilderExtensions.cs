@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using NGame.Ecs;
 using NGame.OsWindows;
 using NGame.Scenes;
-using NGame.UpdaterSchedulers;
+using NGame.UpdateSchedulers;
 
 namespace NGame.Setup;
 
@@ -18,12 +18,14 @@ public static class NGameApplicationBuilderExtensions
 
 		builder.AddComponentSystem();
 
+		builder.AddSceneSupport();
+
 
 		return builder;
 	}
 
 
-	public static NGameApplication UseNGame(this NGameApplication app)
+	public static NGameApplication StartNGame(this NGameApplication app)
 	{
 		var nGameHostedService = app.Services.GetRequiredService<NGameHostedService>();
 		var window = app.Services.GetRequiredService<IOsWindow>();

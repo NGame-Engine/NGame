@@ -1,4 +1,4 @@
-﻿using NGame.UpdaterSchedulers;
+﻿using NGame.UpdateSchedulers;
 
 namespace NGame.Renderers;
 

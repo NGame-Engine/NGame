@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace NGame.UpdaterSchedulers
+namespace NGame.UpdateSchedulers
 {
 	/// <summary>
 	/// This provides timing information similar to <see cref="System.Diagnostics.Stopwatch"/> but an update occurring only on a <see cref="Tick"/> method.

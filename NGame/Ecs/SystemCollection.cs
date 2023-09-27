@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using NGame.UpdaterSchedulers;
+using NGame.UpdateSchedulers;
 
 namespace NGame.Ecs;
 

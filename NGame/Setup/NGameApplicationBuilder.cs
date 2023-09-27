@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NGame.Ecs;
 using NGame.Renderers;
-using NGame.UpdaterSchedulers;
 
 namespace NGame.Setup;
 

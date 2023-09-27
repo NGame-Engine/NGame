@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using NGame.OsWindows;
 using NGame.Renderers;
 
-namespace NGame.UpdaterSchedulers;
+namespace NGame.UpdateSchedulers;
 
 public interface IUpdateScheduler
 {

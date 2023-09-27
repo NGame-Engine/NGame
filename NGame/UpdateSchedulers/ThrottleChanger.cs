@@ -1,4 +1,4 @@
-namespace NGame.UpdaterSchedulers;
+namespace NGame.UpdateSchedulers;
 
 /// <summary>
 /// Maybe use later, just stowing it away for now

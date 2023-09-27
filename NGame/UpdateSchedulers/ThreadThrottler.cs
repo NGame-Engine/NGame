@@ -3,7 +3,7 @@
 
 using System.Diagnostics;
 
-namespace NGame.UpdaterSchedulers
+namespace NGame.UpdateSchedulers
 {
     public class ThreadThrottler
     {

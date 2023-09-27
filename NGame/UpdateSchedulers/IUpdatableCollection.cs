@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using NGame.Ecs;
 
-namespace NGame.UpdaterSchedulers;
+namespace NGame.UpdateSchedulers;
 
 public interface IUpdatableCollection
 {
