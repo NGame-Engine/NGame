@@ -33,9 +33,9 @@ public sealed class NGameHostedService : IHostedService
 	}
 
 
-	public Task RunGameAsync(CancellationToken cancellationToken)
+	public Task RunGameAsync(CancellationTokenSource cancellationTokenSource, CancellationToken cancellationToken)
 	{
-		_updateScheduler.Initialize();
+		_updateScheduler.Initialize(cancellationTokenSource);
 		while (!cancellationToken.IsCancellationRequested)
 		{
 			_updateScheduler.Tick();
@@ -45,7 +45,7 @@ public sealed class NGameHostedService : IHostedService
 	}
 
 
-	public Task StopAsync(CancellationToken cancellationToken)
+	public Task StopAsync(CancellationToken cancellationToken = default)
 	{
 		_logger.LogInformation("4. StopAsync has been called.");
 

@@ -6,5 +6,6 @@ public interface IOsWindow
 
 	object? RenderTexture { get; }
 
-	void Initialize();
+	void Initialize(CancellationTokenSource cancellationTokenSource);
+	void Draw();
 }

@@ -20,13 +20,14 @@ public class NGameApplication
 	public static INGameApplicationBuilder CreateBuilder() => new NGameApplicationBuilder();
 
 
-	public async Task Run(CancellationToken cancellationToken = default)
+	public async Task Run()
 	{
+		var cancellationTokenSource = new CancellationTokenSource();
+		var cancellationToken = cancellationTokenSource.Token;
+
 		await _host.StartAsync(cancellationToken);
 
 		var hostedService = _host.Services.GetRequiredService<NGameHostedService>();
-		await hostedService.RunGameAsync(cancellationToken);
-
-		await _host.StopAsync(cancellationToken);
+		await hostedService.RunGameAsync(cancellationTokenSource, cancellationToken);
 	}
 }

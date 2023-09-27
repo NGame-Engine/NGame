@@ -16,19 +16,25 @@ public class NGameRenderer : INGameRenderer
 	{
 		_logger = logger;
 	}
-	
+
 
 	private RenderWindow? _window;
 	private Text? _text;
 	private Sprite _sprite;
-	
-	private	Clock _clock = new Clock();
-	private	float _delta = 0f;
-	private	float _angle = 0f;
-	private	float _angleSpeed = 90f;
+
+	private Clock _clock = new Clock();
+	private float _delta = 0f;
+	private float _angle = 0f;
+	private float _angleSpeed = 90f;
 
 
 	public void Initialize()
+	{
+		_logger.LogDebug("Initialize");
+	}
+
+
+	public void InitializeOld()
 	{
 		VideoMode mode = new VideoMode(250, 250);
 		_window = new RenderWindow(mode, "SFML.NET");
@@ -45,11 +51,10 @@ public class NGameRenderer : INGameRenderer
 			};
 
 		Texture texture = new Texture("Images\\moon.png");
-		
+
 
 		_sprite = new Sprite(texture);
-		
-		
+
 
 		Font font = new Font("C:/Windows/Fonts/arial.ttf");
 		_text = new Text("Hello World!", font);
@@ -71,6 +76,12 @@ public class NGameRenderer : INGameRenderer
 
 
 	public Task Draw(GameTime drawLoopTime)
+	{
+		return Task.CompletedTask;
+	}
+
+
+	public Task DrawOld(GameTime drawLoopTime)
 	{
 		_delta = _clock.Restart().AsSeconds();
 		_angle += _angleSpeed * _delta;

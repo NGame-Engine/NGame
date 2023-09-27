@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using NGame.OsWindows;
 using NGame.Renderers;
 
 namespace NGame.UpdaterSchedulers;
@@ -39,7 +40,7 @@ public interface IUpdateScheduler
 	/// </summary>
 	float DrawInterpolationFactor { get; }
 
-	void Initialize();
+	void Initialize(CancellationTokenSource cancellationTokenSource);
 	void Tick();
 }
 
@@ -50,6 +51,7 @@ public class UpdateScheduler : IUpdateScheduler
 	private readonly ILogger<UpdateScheduler> _logger;
 	private readonly INGameRenderer _nGameRenderer;
 	private readonly IUpdatableCollection _updatableCollection;
+	private readonly IOsWindow _osWindow;
 
 	private readonly TimeSpan _maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
 	private readonly TimerTick _autoTickTimer = new();
@@ -59,12 +61,14 @@ public class UpdateScheduler : IUpdateScheduler
 	public UpdateScheduler(
 		ILogger<UpdateScheduler> logger,
 		INGameRenderer nGameRenderer,
-		IUpdatableCollection updatableCollection
+		IUpdatableCollection updatableCollection,
+		IOsWindow osWindow
 	)
 	{
 		_logger = logger;
 		_nGameRenderer = nGameRenderer;
 		_updatableCollection = updatableCollection;
+		_osWindow = osWindow;
 	}
 
 
@@ -86,11 +90,13 @@ public class UpdateScheduler : IUpdateScheduler
 	private TimeSpan AccumulatedElapsedGameTime { get; set; }
 
 
-	void IUpdateScheduler.Initialize()
+	void IUpdateScheduler.Initialize(CancellationTokenSource cancellationTokenSource)
 	{
 		try
 		{
 			_updatableCollection.Initialize();
+
+			_osWindow.Initialize(cancellationTokenSource);
 			_nGameRenderer.Initialize();
 
 
@@ -220,6 +226,7 @@ public class UpdateScheduler : IUpdateScheduler
 				DrawLoopTime.Update(DrawLoopTime.Total + totalElapsedTime, totalElapsedTime, true);
 
 				await _nGameRenderer.Draw(DrawLoopTime);
+				_osWindow.Draw();
 			}
 		}
 		finally

@@ -5,7 +5,7 @@ namespace NGame.Ecs;
 public interface IComponentTypeRegistry
 {
 	void Register<T>() where T : Component;
-	IEnumerable<Type> GetComponentTypes();
+	ICollection<Type> GetComponentTypes();
 }
 
 
@@ -34,5 +34,5 @@ public class ComponentTypeRegistry : IComponentTypeRegistry
 	}
 
 
-	IEnumerable<Type> IComponentTypeRegistry.GetComponentTypes() => _registeredTypes.ToList();
+	ICollection<Type> IComponentTypeRegistry.GetComponentTypes() => _registeredTypes.ToList();
 }

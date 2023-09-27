@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using NGame.Assets;
 using NGame.Ecs;
 using NGame.Scenes;
@@ -46,7 +47,9 @@ public class SceneSerializerTests
 			.GetComponentTypes()
 			.Returns(new[] { typeof(TestComponent) });
 
-		var sceneSerializer = new SceneSerializer(componentTypeRegistry);
+		var logger = Substitute.For<ILogger<SceneSerializer>>();
+
+		var sceneSerializer = new SceneSerializer(componentTypeRegistry, logger);
 
 
 		// Act
