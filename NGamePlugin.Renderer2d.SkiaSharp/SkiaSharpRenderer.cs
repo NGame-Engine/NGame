@@ -11,12 +11,14 @@ public class SkiaSharpRenderer : INGameRenderer
 {
 	private readonly ILogger<SkiaSharpRenderer> _logger;
 	private readonly IOsWindow _window;
+	private readonly GraphicsConfiguration _graphicsConfiguration;
 
 
-	public SkiaSharpRenderer(ILogger<SkiaSharpRenderer> logger, IOsWindow window)
+	public SkiaSharpRenderer(ILogger<SkiaSharpRenderer> logger, IOsWindow window, GraphicsConfiguration graphicsConfiguration)
 	{
 		_logger = logger;
 		_window = window;
+		_graphicsConfiguration = graphicsConfiguration;
 	}
 
 
@@ -29,10 +31,13 @@ public class SkiaSharpRenderer : INGameRenderer
 	{
 		_logger.LogDebug("Initialize");
 
-		
+	
+		var width = _graphicsConfiguration.Width;
+		var height = _graphicsConfiguration.Height;
+
 		 ImageInfo = new SKImageInfo(
-			width: 250,
-			height: 250,
+			width: (int)width,
+			height: (int)height,
 			colorType: SKColorType.Rgba8888,
 			alphaType: SKAlphaType.Premul);
 

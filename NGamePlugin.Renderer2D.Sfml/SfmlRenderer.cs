@@ -11,6 +11,7 @@ public class SfmlRenderer : INGameRenderer
 {
 	private readonly ILogger<SfmlRenderer> _logger;
 	private readonly IOsWindow _window;
+	private readonly GraphicsConfiguration _graphicsConfiguration;
 
 
 	private RenderTexture? _renderTexture;
@@ -23,10 +24,11 @@ public class SfmlRenderer : INGameRenderer
 	private float _angleSpeed = 90f;
 
 
-	public SfmlRenderer(ILogger<SfmlRenderer> logger, IOsWindow window)
+	public SfmlRenderer(ILogger<SfmlRenderer> logger, IOsWindow window, GraphicsConfiguration graphicsConfiguration)
 	{
 		_logger = logger;
 		_window = window;
+		_graphicsConfiguration = graphicsConfiguration;
 	}
 
 
@@ -34,7 +36,9 @@ public class SfmlRenderer : INGameRenderer
 	{
 		_logger.LogDebug("Initialize");
 
-		_renderTexture = new RenderTexture(250, 250);
+		var width = _graphicsConfiguration.Width;
+		var height = _graphicsConfiguration.Height;
+		_renderTexture = new RenderTexture(width, height);
 
 		var texture = new Texture("Images\\moon.png");
 		_sprite = new Sprite(texture);
