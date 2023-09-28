@@ -99,13 +99,15 @@ public class UpdateScheduler : IUpdateScheduler
 			_osWindow.Initialize(cancellationTokenSource);
 			_nGameRenderer.Initialize();
 
+			//var pixelsPointer = _osWindow.PixelsPointer;
+			//_nGameRenderer.SetPixelsPointer(pixelsPointer);
 
-			_nGameRenderer.BeginDraw().GetAwaiter().GetResult();
+			_nGameRenderer.BeginDraw();
 
 			_autoTickTimer.Reset();
 			UpdateLoopTime.Reset(UpdateLoopTime.Total);
 
-			_nGameRenderer.EndDraw(false).GetAwaiter().GetResult();
+			_nGameRenderer.EndDraw(false);
 		}
 		catch (Exception ex)
 		{
@@ -124,14 +126,14 @@ public class UpdateScheduler : IUpdateScheduler
 				return;
 			}
 
-			RawTickProducer().GetAwaiter().GetResult();
+			RawTickProducer();
 		}
 
 		HasFinishedFirstUpdateLoop = true;
 	}
 
 
-	private async Task RawTickProducer()
+	private async void RawTickProducer()
 	{
 		try
 		{
@@ -209,7 +211,7 @@ public class UpdateScheduler : IUpdateScheduler
 		TimeSpan totalElapsedTime = TimeSpan.Zero;
 		try
 		{
-			beginDrawSuccessful = await _nGameRenderer.BeginDraw();
+			beginDrawSuccessful = _nGameRenderer.BeginDraw();
 
 			// Reset the time of the next frame
 			for (int i = 0; i < updateCount && !IsStopped; i++)
@@ -225,15 +227,14 @@ public class UpdateScheduler : IUpdateScheduler
 				DrawLoopTime.Factor = UpdateLoopTime.Factor;
 				DrawLoopTime.Update(DrawLoopTime.Total + totalElapsedTime, totalElapsedTime, true);
 
-				await _nGameRenderer.Draw(DrawLoopTime);
-				_osWindow.Draw();
+				_nGameRenderer.Draw(DrawLoopTime);
 			}
 		}
 		finally
 		{
 			if (beginDrawSuccessful)
 			{
-				await _nGameRenderer.EndDraw(true);
+				_nGameRenderer.EndDraw(true);
 			}
 		}
 	}

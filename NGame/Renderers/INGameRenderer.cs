@@ -5,8 +5,9 @@ namespace NGame.Renderers;
 public interface INGameRenderer
 {
 	void Initialize();
+	void SetPixelsPointer(IntPtr pixelsPointer);
 
-	Task<bool> BeginDraw();
-	Task Draw(GameTime drawLoopTime);
-	Task EndDraw(bool shouldPresent);
+	bool BeginDraw();
+	void Draw(GameTime drawLoopTime);
+	void EndDraw(bool shouldPresent);
 }

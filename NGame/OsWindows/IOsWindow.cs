@@ -3,7 +3,8 @@
 public interface IOsWindow
 {
 	event EventHandler Closed;
+	IntPtr PixelsPointer { get; }
 
 	void Initialize(CancellationTokenSource cancellationTokenSource);
-	void Draw();
+	void Draw(byte[] pixels);
 }

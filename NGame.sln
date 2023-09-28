@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlugin.Window.Sfml", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlugin.Renderer2D.Sfml", "NGamePlugin.Renderer2D.Sfml\NGamePlugin.Renderer2D.Sfml.csproj", "{D25D8289-7ECF-472F-B9EA-0626D8A523FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlugin.Renderer2d.SkiaSharp", "NGamePlugin.Renderer2d.SkiaSharp\NGamePlugin.Renderer2d.SkiaSharp.csproj", "{A0AB7E43-0FF9-4D25-B255-7149E20F1888}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{D25D8289-7ECF-472F-B9EA-0626D8A523FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D25D8289-7ECF-472F-B9EA-0626D8A523FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D25D8289-7ECF-472F-B9EA-0626D8A523FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -8,7 +8,6 @@ public static class Renderer2DSfmlInstaller
 {
 	public static void AddRenderer2dSfml(this INGameApplicationBuilder builder)
 	{
-		builder.Services.AddSingleton<IRenderTexture, SfmlRenderTexture>();
 		builder.Services.AddSingleton<INGameRenderer, SfmlRenderer>();
 	}
 

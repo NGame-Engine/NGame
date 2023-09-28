@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using NGame.OsWindows;
 using NGame.Renderers;
 using NGame.UpdateSchedulers;
 using SFML.Graphics;
@@ -9,14 +10,7 @@ namespace NGamePlugin.Renderer2D.Sfml;
 public class SfmlRenderer : INGameRenderer
 {
 	private readonly ILogger<SfmlRenderer> _logger;
-	private readonly IRenderTexture _nGameRenderTexture;
-
-
-	public SfmlRenderer(ILogger<SfmlRenderer> logger, IRenderTexture nGameRenderTexture)
-	{
-		_logger = logger;
-		_nGameRenderTexture = nGameRenderTexture;
-	}
+	private readonly IOsWindow _window;
 
 
 	private RenderTexture? _renderTexture;
@@ -29,6 +23,13 @@ public class SfmlRenderer : INGameRenderer
 	private float _angleSpeed = 90f;
 
 
+	public SfmlRenderer(ILogger<SfmlRenderer> logger, IOsWindow window)
+	{
+		_logger = logger;
+		_window = window;
+	}
+
+
 	public void Initialize()
 	{
 		_logger.LogDebug("Initialize");
@@ -38,7 +39,7 @@ public class SfmlRenderer : INGameRenderer
 		var texture = new Texture("Images\\moon.png");
 		_sprite = new Sprite(texture);
 
-		var font = new Font("C:/Windows/Fonts/arial.ttf");
+		var font = new Font("Fonts/YanoneKaffeesatz-VariableFont_wght.ttf");
 		_text = new Text("Hello World!", font);
 		_text.CharacterSize = 40;
 		var textWidth = _text.GetLocalBounds().Width;
@@ -50,14 +51,20 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public Task<bool> BeginDraw()
+	public void SetPixelsPointer(IntPtr pixelsPointer)
 	{
-		//_logger.LogInformation("BeginDraw");
-		return Task.FromResult(true);
+		throw new NotImplementedException();
 	}
 
 
-	public Task Draw(GameTime drawLoopTime)
+	public bool BeginDraw()
+	{
+		//_logger.LogInformation("BeginDraw");
+		return true;
+	}
+
+
+	public void Draw(GameTime drawLoopTime)
 	{
 		_delta = _clock.Restart().AsSeconds();
 		_angle += _angleSpeed * _delta;
@@ -72,15 +79,12 @@ public class SfmlRenderer : INGameRenderer
 		var texture = _renderTexture.Texture;
 		var image = texture.CopyToImage();
 		var pixels = image.Pixels;
-		_nGameRenderTexture.SetPixels(pixels);
-
-		return Task.CompletedTask;
+		_window.Draw(pixels);
 	}
 
 
-	public Task EndDraw(bool shouldPresent)
+	public void EndDraw(bool shouldPresent)
 	{
 		//_logger.LogInformation("EndDraw");
-		return Task.CompletedTask;
 	}
 }

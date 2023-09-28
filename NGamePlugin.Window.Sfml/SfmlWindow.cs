@@ -1,5 +1,4 @@
 ﻿using NGame.OsWindows;
-using NGame.Renderers;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -7,21 +6,13 @@ namespace NGamePlugin.Window.Sfml;
 
 public class SfmlWindow : IOsWindow
 {
-	private readonly IRenderTexture _renderTexture;
-
-
 	private Texture? _texture2;
 	private Sprite? _sprite;
 	private RenderWindow? _window;
 
 
-	public SfmlWindow(IRenderTexture renderTexture)
-	{
-		_renderTexture = renderTexture;
-	}
-
-
 	public event EventHandler? Closed;
+	public IntPtr PixelsPointer => _texture2.CPointer;
 
 
 	private CancellationTokenSource? CancellationTokenSource { get; set; }
@@ -41,12 +32,11 @@ public class SfmlWindow : IOsWindow
 	}
 
 
-	public void Draw()
+	public void Draw(byte[] pixels)
 	{
 		_window!.DispatchEvents();
 		_window.Clear();
 
-		var pixels = _renderTexture.GetPixels();
 		_texture2!.Update(pixels);
 		_window.Draw(_sprite);
 
