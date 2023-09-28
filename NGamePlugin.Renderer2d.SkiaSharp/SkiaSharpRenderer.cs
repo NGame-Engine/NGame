@@ -14,7 +14,11 @@ public class SkiaSharpRenderer : INGameRenderer
 	private readonly GraphicsConfiguration _graphicsConfiguration;
 
 
-	public SkiaSharpRenderer(ILogger<SkiaSharpRenderer> logger, IOsWindow window, GraphicsConfiguration graphicsConfiguration)
+	public SkiaSharpRenderer(
+		ILogger<SkiaSharpRenderer> logger,
+		IOsWindow window,
+		GraphicsConfiguration graphicsConfiguration
+	)
 	{
 		_logger = logger;
 		_window = window;
@@ -24,49 +28,27 @@ public class SkiaSharpRenderer : INGameRenderer
 
 	private SKImageInfo ImageInfo { get; set; }
 	private SKBitmap? Bitmap { get; set; }
-	private SKSurface? Surface { get; set; }
 	private SKCanvas? Canvas { get; set; }
+
 
 	public void Initialize()
 	{
 		_logger.LogDebug("Initialize");
 
-	
+
 		var width = _graphicsConfiguration.Width;
 		var height = _graphicsConfiguration.Height;
 
-		 ImageInfo = new SKImageInfo(
+		ImageInfo = new SKImageInfo(
 			width: (int)width,
 			height: (int)height,
 			colorType: SKColorType.Rgba8888,
-			alphaType: SKAlphaType.Premul);
+			alphaType: SKAlphaType.Premul
+		);
 
 		Bitmap = new SKBitmap(ImageInfo);
-
-		
-		 Surface = SKSurface.Create(ImageInfo);
-
-		 Canvas = new SKCanvas(Bitmap);
-		//Surface.Canvas;
-
+		Canvas = new SKCanvas(Bitmap);
 		Canvas.Clear(SKColor.Parse("#003366"));
-
-		/*
-		int lineCount = 1000;
-		for (int i = 0; i < lineCount; i++)
-		{
-			DrawRandomLine();
-		}*/
-
-		
-	}
-
-
-	private IntPtr _pixelsPointer;
-	public void SetPixelsPointer(IntPtr pixelsPointer)
-	{
-		_pixelsPointer = pixelsPointer;
-		Bitmap.SetPixels(pixelsPointer);
 	}
 
 
@@ -80,7 +62,7 @@ public class SkiaSharpRenderer : INGameRenderer
 	public void Draw(GameTime drawLoopTime)
 	{
 		DrawRandomLine();
-		
+
 		var bytes = Bitmap!.Bytes;
 		_window.Draw(bytes);
 	}
@@ -90,9 +72,9 @@ public class SkiaSharpRenderer : INGameRenderer
 	{
 		//_logger.LogInformation("EndDraw");
 	}
-	
-	
-	private  void DrawRandomLine()
+
+
+	private void DrawRandomLine()
 	{
 		float lineWidth = Random.Shared.Between(1, 10);
 		var lineColor = new SKColor(
@@ -113,6 +95,4 @@ public class SkiaSharpRenderer : INGameRenderer
 		int y2 = Random.Shared.Next(ImageInfo.Height);
 		Canvas.DrawLine(x1, y1, x2, y2, linePaint);
 	}
-
-
 }

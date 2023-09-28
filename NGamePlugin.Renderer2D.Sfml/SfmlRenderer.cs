@@ -55,12 +55,6 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public void SetPixelsPointer(IntPtr pixelsPointer)
-	{
-		throw new NotImplementedException();
-	}
-
-
 	public bool BeginDraw()
 	{
 		//_logger.LogInformation("BeginDraw");

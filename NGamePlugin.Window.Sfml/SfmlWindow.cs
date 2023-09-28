@@ -21,7 +21,6 @@ public class SfmlWindow : IOsWindow
 
 
 	public event EventHandler? Closed;
-	public IntPtr PixelsPointer => _texture2.CPointer;
 
 
 	private CancellationTokenSource? CancellationTokenSource { get; set; }

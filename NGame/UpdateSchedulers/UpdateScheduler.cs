@@ -99,9 +99,6 @@ public class UpdateScheduler : IUpdateScheduler
 			_osWindow.Initialize(cancellationTokenSource);
 			_nGameRenderer.Initialize();
 
-			//var pixelsPointer = _osWindow.PixelsPointer;
-			//_nGameRenderer.SetPixelsPointer(pixelsPointer);
-
 			_nGameRenderer.BeginDraw();
 
 			_autoTickTimer.Reset();
