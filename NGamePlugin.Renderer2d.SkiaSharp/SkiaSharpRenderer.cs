@@ -3,7 +3,7 @@ using NGame.Maths;
 using NGame.OsWindows;
 using NGame.Renderers;
 using NGame.Sprites;
-using NGame.UpdateSchedulers;
+using NGame.Transforms;
 using SkiaSharp;
 
 namespace NGamePlugin.Renderer2d.SkiaSharp;
@@ -13,6 +13,8 @@ public class SkiaSharpRenderer : INGameRenderer
 	private readonly ILogger<SkiaSharpRenderer> _logger;
 	private readonly IOsWindow _window;
 	private readonly GraphicsConfiguration _graphicsConfiguration;
+
+	private readonly Dictionary<Texture, SKImage> _textures = new();
 
 
 	public SkiaSharpRenderer(
@@ -53,11 +55,14 @@ public class SkiaSharpRenderer : INGameRenderer
 	}
 
 
-	private readonly Dictionary<Texture, SKImage> _textures = new();
-	private readonly List<RendererSprite> _sprites = new();
+	bool INGameRenderer.BeginDraw()
+	{
+		Canvas!.Clear();
+		return true;
+	}
 
 
-	void INGameRenderer.Add(RendererSprite sprite)
+	public void Draw(Sprite sprite, Transform transform)
 	{
 		var texture = sprite.Texture;
 		if (!_textures.ContainsKey(texture))
@@ -67,63 +72,52 @@ public class SkiaSharpRenderer : INGameRenderer
 			_textures.Add(texture, image);
 		}
 
-		_sprites.Add(sprite);
-	}
-
-
-	bool INGameRenderer.BeginDraw()
-	{
-		//_logger.LogInformation("BeginDraw");
-		return true;
-	}
-
-
-	void INGameRenderer.Draw(GameTime drawLoopTime)
-	{
-		Canvas!.Clear();
-
-
-		foreach (var sprite in _sprites)
 		{
 			var sourceRect = sprite.SourceRectangle.ToSkRect();
-			var rect = sprite.TargetRectangle.ToSkRect();
+
+			var targetRectangle =
+				SKRect.Create(
+					sprite.TargetRectangle.X + transform.Position.X,
+					sprite.TargetRectangle.Y + transform.Position.Y,
+					sprite.TargetRectangle.Width,
+					sprite.TargetRectangle.Height
+				);
+
 			var image = _textures[sprite.Texture];
-			Canvas.DrawImage(image, sourceRect, rect);
+			Canvas.DrawImage(image, sourceRect, targetRectangle);
 		}
+	}
 
 
-		DrawRandomLine();
+	public void Draw(Line line)
+	{
+		var vertices = line.Vertices;
+		for (int i = 0; i < vertices.Count - 1; i++)
+		{
+			var firstVertex = vertices[i];
+			var secondVertex = vertices[i + 1];
 
-		var bytes = Bitmap!.Bytes;
-		_window.Draw(bytes);
+			float lineWidth = Random.Shared.Between(1, 10);
+			var lineColor = new SKColor(
+				red: Random.Shared.NextByte(),
+				green: Random.Shared.NextByte(),
+				blue: Random.Shared.NextByte(),
+				alpha: Random.Shared.NextByte()
+			);
+
+			var linePaint = new SKPaint
+			{
+				Color = lineColor, StrokeWidth = lineWidth, IsAntialias = true, Style = SKPaintStyle.Stroke
+			};
+
+			Canvas.DrawLine(firstVertex.X, firstVertex.Y, secondVertex.X, secondVertex.Y, linePaint);
+		}
 	}
 
 
 	void INGameRenderer.EndDraw(bool shouldPresent)
 	{
-		//_logger.LogInformation("EndDraw");
-	}
-
-
-	private void DrawRandomLine()
-	{
-		float lineWidth = Random.Shared.Between(1, 10);
-		var lineColor = new SKColor(
-			red: Random.Shared.NextByte(),
-			green: Random.Shared.NextByte(),
-			blue: Random.Shared.NextByte(),
-			alpha: Random.Shared.NextByte()
-		);
-
-		var linePaint = new SKPaint
-		{
-			Color = lineColor, StrokeWidth = lineWidth, IsAntialias = true, Style = SKPaintStyle.Stroke
-		};
-
-		int x1 = Random.Shared.Next(ImageInfo.Width);
-		int y1 = Random.Shared.Next(ImageInfo.Height);
-		int x2 = Random.Shared.Next(ImageInfo.Width);
-		int y2 = Random.Shared.Next(ImageInfo.Height);
-		Canvas.DrawLine(x1, y1, x2, y2, linePaint);
+		var bytes = Bitmap!.Bytes;
+		_window.Draw(bytes);
 	}
 }

@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using NGame.OsWindows;
 using NGame.Renderers;
-using NGame.Sprites;
-using NGame.UpdateSchedulers;
 using SFML.Graphics;
 using SFML.System;
 using NGameSprite = NGame.Sprites.Sprite;
 using NGameTexture = NGame.Sprites.Texture;
+using NGameTransform = NGame.Transforms.Transform;
 using Sprite = SFML.Graphics.Sprite;
 using Texture = SFML.Graphics.Texture;
 
@@ -18,6 +17,8 @@ public class SfmlRenderer : INGameRenderer
 	private readonly ILogger<SfmlRenderer> _logger;
 	private readonly IOsWindow _window;
 	private readonly GraphicsConfiguration _graphicsConfiguration;
+
+	private readonly Dictionary<NGameTexture, Texture> _textures = new();
 
 	private RenderTexture? _renderTexture;
 	private Text? _text;
@@ -51,11 +52,14 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	private readonly Dictionary<NGameTexture, Texture> _textures = new();
-	private readonly List<RendererSprite> _sprites = new();
+	bool INGameRenderer.BeginDraw()
+	{
+		_renderTexture!.Clear();
+		return true;
+	}
 
 
-	void INGameRenderer.Add(RendererSprite sprite)
+	public void Draw(NGameSprite sprite, NGameTransform transform)
 	{
 		var texture = sprite.Texture;
 		if (!_textures.ContainsKey(texture))
@@ -65,50 +69,52 @@ public class SfmlRenderer : INGameRenderer
 			_textures.Add(texture, image);
 		}
 
-		_sprites.Add(sprite);
+		var spriteTexture = _textures[sprite.Texture];
+		var sp = new Sprite(spriteTexture);
+
+		sp.TextureRect = new IntRect(
+			sprite.SourceRectangle.X,
+			sprite.SourceRectangle.Y,
+			sprite.SourceRectangle.Width,
+			sprite.SourceRectangle.Height
+		);
+
+		sp.Position = new Vector2f(
+			transform.Position.X + sprite.TargetRectangle.X,
+			transform.Position.Y + sprite.TargetRectangle.Y
+		);
+
+		_renderTexture.Draw(sp);
 	}
 
 
-	bool INGameRenderer.BeginDraw()
+	public void Draw(Line line)
 	{
-		//_logger.LogInformation("BeginDraw");
-		return true;
-	}
+		var vertices =
+			line
+				.Vertices
+				.Select(x => new Vertex(new Vector2f(x.X, x.Y)))
+				.ToArray();
 
 
-	void INGameRenderer.Draw(GameTime drawLoopTime)
-	{
-		_renderTexture!.Clear();
-
-		foreach (var sprite in _sprites)
+		for (int i = 0; i < vertices.Length - 1; i++)
 		{
-			var spriteTexture = _textures[sprite.Texture];
-			var sp = new Sprite(spriteTexture);
+			var firstVertex = vertices[i];
+			var secondVertex = vertices[i + 1];
 
-			sp.TextureRect = new IntRect(
-				sprite.SourceRectangle.X,
-				sprite.SourceRectangle.Y,
-				sprite.SourceRectangle.Width,
-				sprite.SourceRectangle.Height
-			);
 
-			sp.Position = new Vector2f(sprite.TargetRectangle.X, sprite.TargetRectangle.Y);
-			
-
-			_renderTexture.Draw(sp);
+			_renderTexture.Draw(new[] { firstVertex, secondVertex }, PrimitiveType.Lines);
 		}
+	}
 
+
+	void INGameRenderer.EndDraw(bool shouldPresent)
+	{
 		_renderTexture.Display();
 
 		var texture = _renderTexture.Texture;
 		var image = texture.CopyToImage();
 		var pixels = image.Pixels;
 		_window.Draw(pixels);
-	}
-
-
-	void INGameRenderer.EndDraw(bool shouldPresent)
-	{
-		//_logger.LogInformation("EndDraw");
 	}
 }

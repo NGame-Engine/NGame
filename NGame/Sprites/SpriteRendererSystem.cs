@@ -1,4 +1,5 @@
-﻿using NGame.Ecs;
+﻿using System.Numerics;
+using NGame.Ecs;
 using NGame.Renderers;
 using NGame.Transforms;
 using NGame.UpdateSchedulers;
@@ -17,40 +18,39 @@ public class SpriteRendererSystem : ISystem, IDrawable
 	}
 
 
-	public IEnumerable<Type> RequiredComponents => new[] { typeof(Transform), typeof(SpriteRenderer) };
+	IEnumerable<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(SpriteRenderer) };
 
 
-	public void Add(Entity entity)
+	void ISystem.Add(Entity entity)
 	{
 		var transform = entity.GetRequiredComponent<Transform>();
 		var spriteRenderer = entity.GetRequiredComponent<SpriteRenderer>();
 
 		var sprite = spriteRenderer.Sprite;
 
-		var rendererSprite = new RendererSprite(sprite.Texture);
-		_renderer.Add(rendererSprite);
-
-		var data = new Data(transform, sprite, rendererSprite);
+		var data = new Data(transform, sprite);
 		_datas.Add(data);
 	}
 
 
-
-
-
-	public void Draw(GameTime gameTime)
+	void IDrawable.Draw(GameTime gameTime)
 	{
 		foreach (var data in _datas)
 		{
-			data.RendererSprite.SourceRectangle = data.Sprite.SourceRectangle;
+			if (data.Sprite == null) continue;
 
-			data.RendererSprite.TargetRectangle =
-				data.Sprite.TargetRectangle with
-				{
-					X = data.Sprite.TargetRectangle.X + (int)data.Transform.Position.X,
-					Y = data.Sprite.TargetRectangle.Y + (int)data.Transform.Position.Y
-				};
+			_renderer.Draw(data.Sprite, data.Transform);
 		}
+
+		_renderer.Draw(new Line
+		{
+			Vertices = new List<Vector2>
+			{
+				new Vector2(1, 2),
+				new Vector2(40, 50),
+				new Vector2(60, 30)
+			}
+		});
 	}
 
 
@@ -58,13 +58,11 @@ public class SpriteRendererSystem : ISystem, IDrawable
 	private class Data
 	{
 		public readonly Transform Transform;
-		public readonly Sprite Sprite;
-		public readonly RendererSprite RendererSprite;
+		public readonly Sprite? Sprite;
 
 
-		public Data(Transform transform, Sprite sprite, RendererSprite rendererSprite)
+		public Data(Transform transform, Sprite? sprite)
 		{
-			RendererSprite = rendererSprite;
 			Transform = transform;
 			Sprite = sprite;
 		}

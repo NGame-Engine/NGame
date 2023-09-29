@@ -226,7 +226,6 @@ public class UpdateScheduler : IUpdateScheduler
 				DrawLoopTime.Update(DrawLoopTime.Total + totalElapsedTime, totalElapsedTime, true);
 
 				_drawableCollection.Draw(DrawLoopTime);
-				_nGameRenderer.Draw(DrawLoopTime);
 			}
 		}
 		finally
