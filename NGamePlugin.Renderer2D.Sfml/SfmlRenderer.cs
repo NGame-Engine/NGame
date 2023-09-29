@@ -3,10 +3,13 @@ using NGame.OsWindows;
 using NGame.Renderers;
 using SFML.Graphics;
 using SFML.System;
+using Font = SFML.Graphics.Font;
 using NGameSprite = NGame.Sprites.Sprite;
 using NGameTexture = NGame.Sprites.Texture;
 using NGameTransform = NGame.Transforms.Transform;
+using NGameFont = NGame.Renderers.Font;
 using Sprite = SFML.Graphics.Sprite;
+using Text = SFML.Graphics.Text;
 using Texture = SFML.Graphics.Texture;
 
 
@@ -19,6 +22,7 @@ public class SfmlRenderer : INGameRenderer
 	private readonly GraphicsConfiguration _graphicsConfiguration;
 
 	private readonly Dictionary<NGameTexture, Texture> _textures = new();
+	private readonly Dictionary<NGameFont, Font> _fonts = new();
 
 	private RenderTexture? _renderTexture;
 	private Text? _text;
@@ -93,7 +97,7 @@ public class SfmlRenderer : INGameRenderer
 		var vertices =
 			line
 				.Vertices
-				.Select(x => new Vertex(new Vector2f(x.X, x.Y)))
+				.Select(x => new Vertex(x.ToSfmlVector2()))
 				.ToArray();
 
 
@@ -105,6 +109,24 @@ public class SfmlRenderer : INGameRenderer
 
 			_renderTexture.Draw(new[] { firstVertex, secondVertex }, PrimitiveType.Lines);
 		}
+	}
+
+
+	public void Draw(NGame.Renderers.Text nGameText, NGameTransform transform)
+	{
+		var nGameFont = nGameText.Font;
+		if (!_fonts.ContainsKey(nGameFont))
+		{
+			_fonts.Add(nGameFont, new Font(nGameFont.FilePath));
+		}
+
+		var font = _fonts[nGameFont];
+		var text = new Text(nGameText.Content, font);
+		text.CharacterSize = nGameText.CharacterSize;
+		text.Origin = nGameText.TransformOrigin.ToSfmlVector2();
+		text.Position = transform.Position.ToSfmlVector2();
+
+		_renderTexture.Draw(text);
 	}
 
 

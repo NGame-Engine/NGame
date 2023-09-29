@@ -33,6 +33,11 @@ public class SpriteRendererSystem : ISystem, IDrawable
 	}
 
 
+	private Font font = new Font
+	{
+		FilePath = "Fonts/YanoneKaffeesatz-VariableFont_wght.ttf"
+	};
+
 	void IDrawable.Draw(GameTime gameTime)
 	{
 		foreach (var data in _datas)
@@ -51,6 +56,19 @@ public class SpriteRendererSystem : ISystem, IDrawable
 				new Vector2(60, 30)
 			}
 		});
+		
+		_renderer.Draw(
+			new Text
+			{
+				Font = font,
+				Content = "Ayyyy text rendering",
+				CharacterSize = 40
+			},
+			new Transform
+			{
+				Position = new Vector3(100, 200, 0)
+			}
+			);
 	}
 
 

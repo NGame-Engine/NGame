@@ -15,6 +15,7 @@ public class SkiaSharpRenderer : INGameRenderer
 	private readonly GraphicsConfiguration _graphicsConfiguration;
 
 	private readonly Dictionary<Texture, SKImage> _textures = new();
+	private readonly Dictionary<Font, SKFont> _fonts = new();
 
 
 	public SkiaSharpRenderer(
@@ -112,6 +113,31 @@ public class SkiaSharpRenderer : INGameRenderer
 
 			Canvas.DrawLine(firstVertex.X, firstVertex.Y, secondVertex.X, secondVertex.Y, linePaint);
 		}
+	}
+
+
+	public void Draw(Text text, Transform transform)
+	{
+		var nGameFont = text.Font;
+		if (!_fonts.ContainsKey(nGameFont))
+		{
+			var skTypeface = SKTypeface.FromFile(nGameFont.FilePath);
+			var skFont = new SKFont(skTypeface, text.CharacterSize);
+			_fonts.Add(nGameFont, skFont);
+		}
+
+		var font = _fonts[nGameFont];
+
+		var skTextBlob = SKTextBlob.Create(text.Content, font);
+		Canvas.DrawText(
+			skTextBlob,
+			transform.Position.X,
+			transform.Position.Y,
+			new SKPaint
+			{
+				Color = SKColor.Parse("F90")
+			}
+		);
 	}
 
 
