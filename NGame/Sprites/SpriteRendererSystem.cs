@@ -5,7 +5,7 @@ using NGame.UpdateSchedulers;
 
 namespace NGame.Sprites;
 
-public class SpriteRendererSystem : ISystem
+public class SpriteRendererSystem : ISystem, IDrawable
 {
 	private readonly INGameRenderer _renderer;
 	private readonly List<Data> _datas = new();
@@ -35,7 +35,10 @@ public class SpriteRendererSystem : ISystem
 	}
 
 
-	public void Update(GameTime gameTime)
+
+
+
+	public void Draw(GameTime gameTime)
 	{
 		foreach (var data in _datas)
 		{

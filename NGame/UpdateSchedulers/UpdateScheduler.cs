@@ -51,6 +51,7 @@ public class UpdateScheduler : IUpdateScheduler
 	private readonly ILogger<UpdateScheduler> _logger;
 	private readonly INGameRenderer _nGameRenderer;
 	private readonly IUpdatableCollection _updatableCollection;
+	private readonly IDrawableCollection _drawableCollection;
 	private readonly IOsWindow _osWindow;
 
 	private readonly TimeSpan _maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
@@ -62,13 +63,15 @@ public class UpdateScheduler : IUpdateScheduler
 		ILogger<UpdateScheduler> logger,
 		INGameRenderer nGameRenderer,
 		IUpdatableCollection updatableCollection,
-		IOsWindow osWindow
+		IOsWindow osWindow,
+		IDrawableCollection drawableCollection
 	)
 	{
 		_logger = logger;
 		_nGameRenderer = nGameRenderer;
 		_updatableCollection = updatableCollection;
 		_osWindow = osWindow;
+		_drawableCollection = drawableCollection;
 	}
 
 
@@ -94,8 +97,6 @@ public class UpdateScheduler : IUpdateScheduler
 	{
 		try
 		{
-			_updatableCollection.Initialize();
-
 			_osWindow.Initialize(cancellationTokenSource);
 			_nGameRenderer.Initialize();
 
@@ -184,7 +185,7 @@ public class UpdateScheduler : IUpdateScheduler
 			}
 
 			var drawInterpolationFactor = drawLag / (float)FixedTimeStepTarget.Ticks;
-			 RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor, drawFrame);
+			RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor, drawFrame);
 
 
 			ThreadThrottler.Throttle(out long _);
@@ -197,7 +198,7 @@ public class UpdateScheduler : IUpdateScheduler
 	}
 
 
-	private async Task RawTick(
+	private void RawTick(
 		TimeSpan elapsedTimePerUpdate,
 		int updateCount = 1,
 		float drawInterpolationFactor = 0,
@@ -224,6 +225,7 @@ public class UpdateScheduler : IUpdateScheduler
 				DrawLoopTime.Factor = UpdateLoopTime.Factor;
 				DrawLoopTime.Update(DrawLoopTime.Total + totalElapsedTime, totalElapsedTime, true);
 
+				_drawableCollection.Draw(DrawLoopTime);
 				_nGameRenderer.Draw(DrawLoopTime);
 			}
 		}

@@ -16,22 +16,22 @@ public static class NGameApplicationExtensions
 	}
 
 
+	public static NGameApplication RegisterSystem<T>(this NGameApplication app)
+		where T : ISystem
+	{
+		var systemCollection = app.Services.GetRequiredService<ISystemCollection>();
+		var system = app.Services.GetRequiredService<T>();
+		systemCollection.Add(system);
+		return app;
+	}
+
+
 	public static NGameApplication RegisterComponent<T>(this NGameApplication app)
 		where T : Component
 	{
 		var componentTypeRegistry = app.Services.GetRequiredService<IComponentTypeRegistry>();
 		componentTypeRegistry.Register<T>();
 
-		return app;
-	}
-
-
-	public static NGameApplication UseSystem<T>(this NGameApplication app)
-		where T : ISystem
-	{
-		var systemCollection = app.Services.GetRequiredService<ISystemCollection>();
-		var system = app.Services.GetRequiredService<T>();
-		systemCollection.Add(system);
 		return app;
 	}
 }

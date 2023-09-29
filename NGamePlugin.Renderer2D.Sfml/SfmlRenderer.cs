@@ -5,8 +5,10 @@ using NGame.Sprites;
 using NGame.UpdateSchedulers;
 using SFML.Graphics;
 using SFML.System;
+using NGameSprite = NGame.Sprites.Sprite;
+using NGameTexture = NGame.Sprites.Texture;
 using Sprite = SFML.Graphics.Sprite;
-using Texture = NGame.Sprites.Texture;
+using Texture = SFML.Graphics.Texture;
 
 
 namespace NGamePlugin.Renderer2D.Sfml;
@@ -17,15 +19,8 @@ public class SfmlRenderer : INGameRenderer
 	private readonly IOsWindow _window;
 	private readonly GraphicsConfiguration _graphicsConfiguration;
 
-
 	private RenderTexture? _renderTexture;
 	private Text? _text;
-	private Sprite? _sprite;
-
-	private Clock _clock = new Clock();
-	private float _delta = 0f;
-	private float _angle = 0f;
-	private float _angleSpeed = 90f;
 
 
 	public SfmlRenderer(ILogger<SfmlRenderer> logger, IOsWindow window, GraphicsConfiguration graphicsConfiguration)
@@ -44,9 +39,6 @@ public class SfmlRenderer : INGameRenderer
 		var height = _graphicsConfiguration.Height;
 		_renderTexture = new RenderTexture(width, height);
 
-		var texture = new SFML.Graphics.Texture("Images\\moon.png");
-		_sprite = new Sprite(texture);
-
 		var font = new Font("Fonts/YanoneKaffeesatz-VariableFont_wght.ttf");
 		_text = new Text("Hello World!", font);
 		_text.CharacterSize = 40;
@@ -59,6 +51,24 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
+	private readonly Dictionary<NGameTexture, Texture> _textures = new();
+	private readonly List<RendererSprite> _sprites = new();
+
+
+	void INGameRenderer.Add(RendererSprite sprite)
+	{
+		var texture = sprite.Texture;
+		if (!_textures.ContainsKey(texture))
+		{
+			var filename = texture.FilePath;
+			var image = new Texture(filename);
+			_textures.Add(texture, image);
+		}
+
+		_sprites.Add(sprite);
+	}
+
+
 	bool INGameRenderer.BeginDraw()
 	{
 		//_logger.LogInformation("BeginDraw");
@@ -68,13 +78,25 @@ public class SfmlRenderer : INGameRenderer
 
 	void INGameRenderer.Draw(GameTime drawLoopTime)
 	{
-		_delta = _clock.Restart().AsSeconds();
-		_angle += _angleSpeed * _delta;
-
 		_renderTexture!.Clear();
-		_text!.Rotation = _angle;
-		_renderTexture.Draw(_text);
-		_renderTexture.Draw(_sprite);
+
+		foreach (var sprite in _sprites)
+		{
+			var spriteTexture = _textures[sprite.Texture];
+			var sp = new Sprite(spriteTexture);
+
+			sp.TextureRect = new IntRect(
+				sprite.SourceRectangle.X,
+				sprite.SourceRectangle.Y,
+				sprite.SourceRectangle.Width,
+				sprite.SourceRectangle.Height
+			);
+
+			sp.Position = new Vector2f(sprite.TargetRectangle.X, sprite.TargetRectangle.Y);
+			
+
+			_renderTexture.Draw(sp);
+		}
 
 		_renderTexture.Display();
 
@@ -88,11 +110,5 @@ public class SfmlRenderer : INGameRenderer
 	void INGameRenderer.EndDraw(bool shouldPresent)
 	{
 		//_logger.LogInformation("EndDraw");
-	}
-
-
-	void INGameRenderer.Add(RendererSprite sprite)
-	{
-		throw new NotImplementedException();
 	}
 }

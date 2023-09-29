@@ -1,12 +1,10 @@
-using Microsoft.Extensions.Logging;
-using NGame.UpdateSchedulers;
+﻿using Microsoft.Extensions.Logging;
 
 namespace NGame.Ecs;
 
 public interface ISystemCollection
 {
 	void Add(ISystem system);
-	void UpdateSystems(GameTime gameTime);
 	IEnumerable<ISystem> GetSystems();
 }
 
@@ -28,15 +26,6 @@ public class SystemCollection : ISystemCollection
 	{
 		_systems.Add(system);
 		_logger.LogInformation("System {0} added", system);
-	}
-
-
-	public void UpdateSystems(GameTime gameTime)
-	{
-		foreach (var system in _systems)
-		{
-			system.Update(gameTime);
-		}
 	}
 
 
