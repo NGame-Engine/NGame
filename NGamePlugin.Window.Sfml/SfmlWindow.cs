@@ -1,4 +1,5 @@
-﻿using NGame.OsWindows;
+﻿using Microsoft.Extensions.Hosting;
+using NGame.OsWindows;
 using NGame.Renderers;
 using SFML.Graphics;
 using SFML.Window;
@@ -8,15 +9,17 @@ namespace NGamePlugin.Window.Sfml;
 public class SfmlWindow : IOsWindow
 {
 	private readonly GraphicsConfiguration _graphicsConfiguration;
+	private readonly IHostEnvironment _hostEnvironment;
 
 	private Texture? _texture2;
 	private Sprite? _sprite;
 	private RenderWindow? _window;
 
 
-	public SfmlWindow(GraphicsConfiguration graphicsConfiguration)
+	public SfmlWindow(GraphicsConfiguration graphicsConfiguration, IHostEnvironment hostEnvironment)
 	{
 		_graphicsConfiguration = graphicsConfiguration;
+		_hostEnvironment = hostEnvironment;
 	}
 
 
@@ -36,8 +39,9 @@ public class SfmlWindow : IOsWindow
 		_texture2 = new Texture(width, height);
 		_sprite = new Sprite(_texture2);
 
-		VideoMode mode = new VideoMode(width, height);
-		_window = new RenderWindow(mode, "SFML.NET");
+		var mode = new VideoMode(width, height);
+		var title = _hostEnvironment.ApplicationName;
+		_window = new RenderWindow(mode, title);
 
 		_window.Closed += OnClosed;
 	}

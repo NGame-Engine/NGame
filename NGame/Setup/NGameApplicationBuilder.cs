@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,17 @@ public interface INGameApplicationBuilder
 
 internal class NGameApplicationBuilder : INGameApplicationBuilder
 {
-	private readonly HostApplicationBuilder _builder = new();
+	private readonly HostApplicationBuilder _builder =
+		new(
+			new HostApplicationBuilderSettings
+			{
+				ApplicationName =
+					Assembly
+						.GetEntryAssembly()?
+						.GetCustomAttribute<AssemblyTitleAttribute>()?
+						.Title
+			}
+		);
 
 
 	public NGameApplicationBuilder()
