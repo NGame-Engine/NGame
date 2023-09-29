@@ -6,7 +6,7 @@ namespace NGame.UpdateSchedulers;
 public interface IUpdatableCollection
 {
 	void Initialize();
-	Task Update(GameTime gameTime);
+	void Update(GameTime gameTime);
 }
 
 
@@ -30,8 +30,8 @@ public class UpdatableCollection : IUpdatableCollection
 	}
 
 
-	public async Task Update(GameTime gameTime)
+	public void Update(GameTime gameTime)
 	{
-		await _systemCollection.UpdateSystems(gameTime, default);
+		_systemCollection.UpdateSystems(gameTime);
 	}
 }

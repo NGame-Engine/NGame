@@ -27,7 +27,7 @@ public sealed class NGameHostedService : IHostedService
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		_logger.LogInformation("1. StartAsync has been called.");
+		//_logger.LogInformation("1. StartAsync has been called.");
 
 		return Task.CompletedTask;
 	}
@@ -55,7 +55,7 @@ public sealed class NGameHostedService : IHostedService
 
 	private void OnStarted()
 	{
-		_logger.LogInformation("2. OnStarted has been called.");
+		//_logger.LogInformation("2. OnStarted has been called.");
 	}
 
 

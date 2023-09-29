@@ -2,6 +2,7 @@
 using NGame.Maths;
 using NGame.OsWindows;
 using NGame.Renderers;
+using NGame.Sprites;
 using NGame.UpdateSchedulers;
 using SkiaSharp;
 
@@ -31,7 +32,7 @@ public class SkiaSharpRenderer : INGameRenderer
 	private SKCanvas? Canvas { get; set; }
 
 
-	public void Initialize()
+	void INGameRenderer.Initialize()
 	{
 		_logger.LogDebug("Initialize");
 
@@ -52,15 +53,45 @@ public class SkiaSharpRenderer : INGameRenderer
 	}
 
 
-	public bool BeginDraw()
+	private readonly Dictionary<Texture, SKImage> _textures = new();
+	private readonly List<RendererSprite> _sprites = new();
+
+
+	void INGameRenderer.Add(RendererSprite sprite)
+	{
+		var texture = sprite.Texture;
+		if (!_textures.ContainsKey(texture))
+		{
+			var filename = texture.FilePath;
+			var image = SKImage.FromEncodedData(filename);
+			_textures.Add(texture, image);
+		}
+
+		_sprites.Add(sprite);
+	}
+
+
+	bool INGameRenderer.BeginDraw()
 	{
 		//_logger.LogInformation("BeginDraw");
 		return true;
 	}
 
 
-	public void Draw(GameTime drawLoopTime)
+	void INGameRenderer.Draw(GameTime drawLoopTime)
 	{
+		Canvas!.Clear();
+
+
+		foreach (var sprite in _sprites)
+		{
+			var sourceRect = sprite.SourceRectangle.ToSkRect();
+			var rect = sprite.TargetRectangle.ToSkRect();
+			var image = _textures[sprite.Texture];
+			Canvas.DrawImage(image, sourceRect, rect);
+		}
+
+
 		DrawRandomLine();
 
 		var bytes = Bitmap!.Bytes;
@@ -68,7 +99,7 @@ public class SkiaSharpRenderer : INGameRenderer
 	}
 
 
-	public void EndDraw(bool shouldPresent)
+	void INGameRenderer.EndDraw(bool shouldPresent)
 	{
 		//_logger.LogInformation("EndDraw");
 	}

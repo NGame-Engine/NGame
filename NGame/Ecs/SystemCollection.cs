@@ -6,7 +6,7 @@ namespace NGame.Ecs;
 public interface ISystemCollection
 {
 	void Add(ISystem system);
-	Task UpdateSystems(GameTime gameTime, CancellationToken cancellationToken);
+	void UpdateSystems(GameTime gameTime);
 	IEnumerable<ISystem> GetSystems();
 }
 
@@ -31,11 +31,11 @@ public class SystemCollection : ISystemCollection
 	}
 
 
-	public async Task UpdateSystems(GameTime gameTime, CancellationToken cancellationToken)
+	public void UpdateSystems(GameTime gameTime)
 	{
 		foreach (var system in _systems)
 		{
-			await system.Update(gameTime, cancellationToken);
+			system.Update(gameTime);
 		}
 	}
 

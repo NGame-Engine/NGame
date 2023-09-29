@@ -28,7 +28,7 @@ public class EntityTracker : IEntityTracker
 
 		foreach (var system in _systemCollection.GetSystems())
 		{
-			if(!components.IsSubsetOf(system.RequiredComponents)) continue;
+			if(!components.IsSupersetOf(system.RequiredComponents)) continue;
 
 			system.Add(entity);
 		}

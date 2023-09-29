@@ -1,9 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using NGame.OsWindows;
 using NGame.Renderers;
+using NGame.Sprites;
 using NGame.UpdateSchedulers;
 using SFML.Graphics;
 using SFML.System;
+using Sprite = SFML.Graphics.Sprite;
+using Texture = NGame.Sprites.Texture;
+
 
 namespace NGamePlugin.Renderer2D.Sfml;
 
@@ -32,7 +36,7 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public void Initialize()
+	void INGameRenderer.Initialize()
 	{
 		_logger.LogDebug("Initialize");
 
@@ -40,7 +44,7 @@ public class SfmlRenderer : INGameRenderer
 		var height = _graphicsConfiguration.Height;
 		_renderTexture = new RenderTexture(width, height);
 
-		var texture = new Texture("Images\\moon.png");
+		var texture = new SFML.Graphics.Texture("Images\\moon.png");
 		_sprite = new Sprite(texture);
 
 		var font = new Font("Fonts/YanoneKaffeesatz-VariableFont_wght.ttf");
@@ -55,14 +59,14 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public bool BeginDraw()
+	bool INGameRenderer.BeginDraw()
 	{
 		//_logger.LogInformation("BeginDraw");
 		return true;
 	}
 
 
-	public void Draw(GameTime drawLoopTime)
+	void INGameRenderer.Draw(GameTime drawLoopTime)
 	{
 		_delta = _clock.Restart().AsSeconds();
 		_angle += _angleSpeed * _delta;
@@ -81,8 +85,14 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public void EndDraw(bool shouldPresent)
+	void INGameRenderer.EndDraw(bool shouldPresent)
 	{
 		//_logger.LogInformation("EndDraw");
+	}
+
+
+	void INGameRenderer.Add(RendererSprite sprite)
+	{
+		throw new NotImplementedException();
 	}
 }

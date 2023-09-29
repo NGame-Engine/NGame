@@ -18,9 +18,9 @@ public static class SceneInstaller
 	}
 
 
-	public static void LoadStartupScene(this NGameApplication gameRunner)
+	public static void LoadStartupScene(this NGameApplication app)
 	{
-		var sceneLoader = gameRunner.Services.GetRequiredService<ISceneLoader>();
-		sceneLoader.LoadStartupScene();
+		//var sceneLoader = gameRunner.Services.GetRequiredService<ISceneLoader>();
+		//sceneLoader.LoadStartupScene();
 	}
 }

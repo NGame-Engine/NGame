@@ -130,7 +130,7 @@ public class UpdateScheduler : IUpdateScheduler
 	}
 
 
-	private async void RawTickProducer()
+	private void RawTickProducer()
 	{
 		try
 		{
@@ -184,7 +184,7 @@ public class UpdateScheduler : IUpdateScheduler
 			}
 
 			var drawInterpolationFactor = drawLag / (float)FixedTimeStepTarget.Ticks;
-			await RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor, drawFrame);
+			 RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor, drawFrame);
 
 
 			ThreadThrottler.Throttle(out long _);
@@ -214,7 +214,7 @@ public class UpdateScheduler : IUpdateScheduler
 			for (int i = 0; i < updateCount && !IsStopped; i++)
 			{
 				UpdateLoopTime.Update(UpdateLoopTime.Total + elapsedTimePerUpdate, elapsedTimePerUpdate, true);
-				await _updatableCollection.Update(UpdateLoopTime);
+				_updatableCollection.Update(UpdateLoopTime);
 				totalElapsedTime += elapsedTimePerUpdate;
 			}
 
