@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using NGame.Maths;
-using NGame.OsWindows;
+﻿using NGame.OsWindows;
 using NGame.Renderers;
 using NGame.Sprites;
 using NGame.Texts;
@@ -11,55 +9,42 @@ namespace NGamePlugin.Renderer2d.SkiaSharp;
 
 public class SkiaSharpRenderer : INGameRenderer
 {
-	private readonly ILogger<SkiaSharpRenderer> _logger;
 	private readonly IOsWindow _window;
-	private readonly GraphicsConfiguration _graphicsConfiguration;
+	private readonly SKBitmap _bitmap;
+	private readonly SKCanvas _canvas;
+
 
 	private readonly Dictionary<Texture, SKImage> _textures = new();
 	private readonly Dictionary<Font, SKFont> _fonts = new();
 
 
 	public SkiaSharpRenderer(
-		ILogger<SkiaSharpRenderer> logger,
 		IOsWindow window,
 		GraphicsConfiguration graphicsConfiguration
 	)
 	{
-		_logger = logger;
 		_window = window;
-		_graphicsConfiguration = graphicsConfiguration;
-	}
 
 
-	private SKImageInfo ImageInfo { get; set; }
-	private SKBitmap? Bitmap { get; set; }
-	private SKCanvas? Canvas { get; set; }
+		var width = graphicsConfiguration.Width;
+		var height = graphicsConfiguration.Height;
 
-
-	void INGameRenderer.Initialize()
-	{
-		_logger.LogDebug("Initialize");
-
-
-		var width = _graphicsConfiguration.Width;
-		var height = _graphicsConfiguration.Height;
-
-		ImageInfo = new SKImageInfo(
+		var imageInfo = new SKImageInfo(
 			width: (int)width,
 			height: (int)height,
 			colorType: SKColorType.Rgba8888,
 			alphaType: SKAlphaType.Premul
 		);
 
-		Bitmap = new SKBitmap(ImageInfo);
-		Canvas = new SKCanvas(Bitmap);
-		Canvas.Clear(SKColor.Parse("#003366"));
+		_bitmap = new SKBitmap(imageInfo);
+		_canvas = new SKCanvas(_bitmap);
+		_canvas.Clear(SKColor.Parse("#003366"));
 	}
 
 
 	bool INGameRenderer.BeginDraw()
 	{
-		Canvas!.Clear();
+		_canvas.Clear();
 		return true;
 	}
 
@@ -86,7 +71,7 @@ public class SkiaSharpRenderer : INGameRenderer
 				);
 
 			var image = _textures[sprite.Texture];
-			Canvas.DrawImage(image, sourceRect, targetRectangle);
+			_canvas.DrawImage(image, sourceRect, targetRectangle);
 		}
 	}
 
@@ -99,20 +84,14 @@ public class SkiaSharpRenderer : INGameRenderer
 			var firstVertex = vertices[i];
 			var secondVertex = vertices[i + 1];
 
-			float lineWidth = Random.Shared.Between(1, 10);
-			var lineColor = new SKColor(
-				red: Random.Shared.NextByte(),
-				green: Random.Shared.NextByte(),
-				blue: Random.Shared.NextByte(),
-				alpha: Random.Shared.NextByte()
-			);
-
 			var linePaint = new SKPaint
 			{
-				Color = lineColor, StrokeWidth = lineWidth, IsAntialias = true, Style = SKPaintStyle.Stroke
+				StrokeWidth = line.Width,
+				IsAntialias = true,
+				Style = SKPaintStyle.Stroke
 			};
 
-			Canvas.DrawLine(firstVertex.X, firstVertex.Y, secondVertex.X, secondVertex.Y, linePaint);
+			_canvas.DrawLine(firstVertex.X, firstVertex.Y, secondVertex.X, secondVertex.Y, linePaint);
 		}
 	}
 
@@ -130,7 +109,7 @@ public class SkiaSharpRenderer : INGameRenderer
 		var font = _fonts[nGameFont];
 
 		var skTextBlob = SKTextBlob.Create(text.Content, font);
-		Canvas.DrawText(
+		_canvas.DrawText(
 			skTextBlob,
 			transform.Position.X,
 			transform.Position.Y,
@@ -144,7 +123,7 @@ public class SkiaSharpRenderer : INGameRenderer
 
 	void INGameRenderer.EndDraw(bool shouldPresent)
 	{
-		var bytes = Bitmap!.Bytes;
+		var bytes = _bitmap.Bytes;
 		_window.Draw(bytes);
 	}
 }

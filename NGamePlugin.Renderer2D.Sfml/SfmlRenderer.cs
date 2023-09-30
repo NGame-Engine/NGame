@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using NGame.OsWindows;
+﻿using NGame.OsWindows;
 using NGame.Renderers;
 using SFML.Graphics;
 using SFML.System;
@@ -15,39 +14,49 @@ using Texture = SFML.Graphics.Texture;
 
 namespace NGamePlugin.Renderer2D.Sfml;
 
-public class SfmlRenderer : INGameRenderer
+internal class RenderTextureFactory
 {
-	private readonly ILogger<SfmlRenderer> _logger;
-	private readonly IOsWindow _window;
 	private readonly GraphicsConfiguration _graphicsConfiguration;
 
-	private readonly Dictionary<NGameTexture, Texture> _textures = new();
-	private readonly Dictionary<NGameFont, Font> _fonts = new();
 
-	private RenderTexture? _renderTexture;
-
-
-	public SfmlRenderer(ILogger<SfmlRenderer> logger, IOsWindow window, GraphicsConfiguration graphicsConfiguration)
+	public RenderTextureFactory(GraphicsConfiguration graphicsConfiguration)
 	{
-		_logger = logger;
-		_window = window;
 		_graphicsConfiguration = graphicsConfiguration;
 	}
 
 
-	void INGameRenderer.Initialize()
+	public RenderTexture Create()
 	{
-		_logger.LogDebug("Initialize");
-
 		var width = _graphicsConfiguration.Width;
 		var height = _graphicsConfiguration.Height;
-		_renderTexture = new RenderTexture(width, height);
+		return new RenderTexture(width, height);
+	}
+}
+
+
+
+public class SfmlRenderer : INGameRenderer
+{
+	private readonly IOsWindow _window;
+	private readonly RenderTexture _renderTexture;
+
+	private readonly Dictionary<NGameTexture, Texture> _textures = new();
+	private readonly Dictionary<NGameFont, Font> _fonts = new();
+
+
+	public SfmlRenderer(
+		IOsWindow window,
+		RenderTexture renderTexture
+	)
+	{
+		_window = window;
+		_renderTexture = renderTexture;
 	}
 
 
 	bool INGameRenderer.BeginDraw()
 	{
-		_renderTexture!.Clear();
+		_renderTexture.Clear();
 		return true;
 	}
 

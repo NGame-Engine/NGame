@@ -6,8 +6,6 @@ namespace NGame.Renderers;
 
 public interface INGameRenderer
 {
-	void Initialize();
-
 	bool BeginDraw();
 	void Draw(Sprite sprite, Transform transform);
 	void Draw(Line line);

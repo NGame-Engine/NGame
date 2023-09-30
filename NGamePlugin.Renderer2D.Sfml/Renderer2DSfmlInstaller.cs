@@ -9,6 +9,14 @@ public static class Renderer2DSfmlInstaller
 	public static void AddRenderer2dSfml(this INGameApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<INGameRenderer, SfmlRenderer>();
+
+		builder.Services.AddTransient<RenderTextureFactory>();
+		builder.Services.AddSingleton(
+			services => 
+				services
+					.GetRequiredService<RenderTextureFactory>()
+					.Create()
+			);
 	}
 
 

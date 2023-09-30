@@ -93,8 +93,6 @@ public class UpdateScheduler : IUpdateScheduler
 	{
 		try
 		{
-			_nGameRenderer.Initialize();
-
 			_nGameRenderer.BeginDraw();
 
 			_autoTickTimer.Reset();
