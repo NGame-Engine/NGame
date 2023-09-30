@@ -35,13 +35,8 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 
 	public NGameApplicationBuilder()
 	{
-		_builder.Services.AddSingleton<NGameHostedService>();
-
-		_builder.Services.AddHostedService(
-			services => services.GetRequiredService<NGameHostedService>()
-		);
-
 		_builder.Services.AddSingleton<IApplicationEvents, ApplicationEvents>();
+		_builder.Services.AddSingleton<IGameRunner, GameRunner>();
 	}
 
 

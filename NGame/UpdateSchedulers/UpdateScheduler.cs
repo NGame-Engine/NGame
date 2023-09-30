@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using NGame.OsWindows;
 using NGame.Renderers;
 
 namespace NGame.UpdateSchedulers;
@@ -52,7 +51,6 @@ public class UpdateScheduler : IUpdateScheduler
 	private readonly INGameRenderer _nGameRenderer;
 	private readonly IUpdatableCollection _updatableCollection;
 	private readonly IDrawableCollection _drawableCollection;
-	private readonly IOsWindow _osWindow;
 
 	private readonly TimeSpan _maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
 	private readonly TimerTick _autoTickTimer = new();
@@ -63,14 +61,12 @@ public class UpdateScheduler : IUpdateScheduler
 		ILogger<UpdateScheduler> logger,
 		INGameRenderer nGameRenderer,
 		IUpdatableCollection updatableCollection,
-		IOsWindow osWindow,
 		IDrawableCollection drawableCollection
 	)
 	{
 		_logger = logger;
 		_nGameRenderer = nGameRenderer;
 		_updatableCollection = updatableCollection;
-		_osWindow = osWindow;
 		_drawableCollection = drawableCollection;
 	}
 

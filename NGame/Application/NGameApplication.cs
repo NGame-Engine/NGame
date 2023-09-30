@@ -3,9 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace NGame.Application;
 
-
-
-public class NGameApplication
+public sealed class NGameApplication
 {
 	private readonly IHost _host;
 
@@ -22,14 +20,11 @@ public class NGameApplication
 	public static INGameApplicationBuilder CreateBuilder() => new NGameApplicationBuilder();
 
 
-	public async Task Run()
+	public void Run()
 	{
-		var cancellationTokenSource = new CancellationTokenSource();
-		var cancellationToken = cancellationTokenSource.Token;
-
-		await _host.StartAsync(cancellationToken);
-
-		var hostedService = _host.Services.GetRequiredService<NGameHostedService>();
-		hostedService.RunGame();
+		var applicationEvents = Services.GetRequiredService<IApplicationEvents>();
+		var gameRunner = Services.GetRequiredService<IGameRunner>();
+		applicationEvents.Closing += (_, _) => gameRunner.Stop();
+		gameRunner.RunGame();
 	}
 }
