@@ -25,7 +25,6 @@ public class SfmlRenderer : INGameRenderer
 	private readonly Dictionary<NGameFont, Font> _fonts = new();
 
 	private RenderTexture? _renderTexture;
-	private Text? _text;
 
 
 	public SfmlRenderer(ILogger<SfmlRenderer> logger, IOsWindow window, GraphicsConfiguration graphicsConfiguration)
@@ -43,16 +42,6 @@ public class SfmlRenderer : INGameRenderer
 		var width = _graphicsConfiguration.Width;
 		var height = _graphicsConfiguration.Height;
 		_renderTexture = new RenderTexture(width, height);
-
-		var font = new Font("Fonts/YanoneKaffeesatz-VariableFont_wght.ttf");
-		_text = new Text("Hello World!", font);
-		_text.CharacterSize = 40;
-		var textWidth = _text.GetLocalBounds().Width;
-		var textHeight = _text.GetLocalBounds().Height;
-		var xOffset = _text.GetLocalBounds().Left;
-		var yOffset = _text.GetLocalBounds().Top;
-		_text.Origin = new Vector2f(textWidth / 2f + xOffset, textHeight / 2f + yOffset);
-		_text.Position = new Vector2f(_renderTexture.Size.X / 2f, _renderTexture.Size.Y / 2f);
 	}
 
 
@@ -63,7 +52,7 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public void Draw(NGameSprite sprite, NGameTransform transform)
+	void INGameRenderer.Draw(NGameSprite sprite, NGameTransform transform)
 	{
 		var texture = sprite.Texture;
 		if (!_textures.ContainsKey(texture))
@@ -92,7 +81,7 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public void Draw(Line line)
+	void INGameRenderer.Draw(Line line)
 	{
 		var vertices =
 			line
@@ -112,7 +101,7 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	public void Draw(NGame.Renderers.Text nGameText, NGameTransform transform)
+	void INGameRenderer.Draw(NGame.Renderers.Text nGameText, NGameTransform transform)
 	{
 		var nGameFont = nGameText.Font;
 		if (!_fonts.ContainsKey(nGameFont))
