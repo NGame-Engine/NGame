@@ -19,7 +19,7 @@ internal class SpriteRendererSystem : ISystem, IDrawable
 	}
 
 
-	IEnumerable<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(SpriteRenderer) };
+	ICollection<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(SpriteRenderer) };
 
 
 	void ISystem.Add(Entity entity)

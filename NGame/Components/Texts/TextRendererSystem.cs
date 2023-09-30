@@ -17,7 +17,7 @@ internal class TextRendererSystem : ISystem, IDrawable
 	}
 
 
-	IEnumerable<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(TextRenderer) };
+	ICollection<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(TextRenderer) };
 
 
 	void ISystem.Add(Entity entity)
