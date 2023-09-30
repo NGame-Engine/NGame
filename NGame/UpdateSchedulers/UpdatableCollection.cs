@@ -2,6 +2,8 @@
 
 namespace NGame.UpdateSchedulers;
 
+
+
 public interface IUpdatableCollection
 {
 	void Add(IUpdatable updatable);
@@ -10,7 +12,7 @@ public interface IUpdatableCollection
 
 
 
-public class UpdatableCollection : IUpdatableCollection
+internal class UpdatableCollection : IUpdatableCollection
 {
 	private readonly ILogger<UpdatableCollection> _logger;
 	private readonly List<IUpdatable> _updatableSystems = new();

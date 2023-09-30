@@ -11,7 +11,6 @@ public static class NGameApplicationExtensions
 		builder.Services.AddSingleton<IEntityTracker, EntityTracker>();
 		builder.Services.AddSingleton<IComponentTypeRegistry, ComponentTypeRegistry>();
 
-
 		return builder;
 	}
 
@@ -27,7 +26,7 @@ public static class NGameApplicationExtensions
 
 
 	public static NGameApplication RegisterComponent<T>(this NGameApplication app)
-		where T : Component
+		where T : IComponent
 	{
 		var componentTypeRegistry = app.Services.GetRequiredService<IComponentTypeRegistry>();
 		componentTypeRegistry.Register<T>();

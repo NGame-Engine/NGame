@@ -10,7 +10,7 @@ public interface ISystemCollection
 
 
 
-public class SystemCollection : ISystemCollection
+internal class SystemCollection : ISystemCollection
 {
 	private readonly ILogger<SystemCollection> _logger;
 	private readonly ICollection<ISystem> _systems = new List<ISystem>();

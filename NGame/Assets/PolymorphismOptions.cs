@@ -4,15 +4,7 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace NGame.Assets;
 
-[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public class ComponentAttribute : Attribute
-{
-	public string? StableDiscriminator { get; set; }
-}
-
-
-
-public static class PolymorphismOptions
+internal static class PolymorphismOptions
 {
 	public static JsonPolymorphismOptions ForComponents(IEnumerable<Type> componentTypes)
 	{

@@ -3,7 +3,9 @@ using NGame.Application;
 
 namespace NGame.UpdateSchedulers;
 
-public static class NGameApplicationExtensions
+
+
+public static class SchedulerInstaller
 {
 	public static INGameApplicationBuilder AddUpdateScheduler(this INGameApplicationBuilder builder)
 	{

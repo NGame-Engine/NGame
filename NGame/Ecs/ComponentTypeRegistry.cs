@@ -4,13 +4,13 @@ namespace NGame.Ecs;
 
 public interface IComponentTypeRegistry
 {
-	void Register<T>() where T : Component;
+	void Register<T>() where T : IComponent;
 	ICollection<Type> GetComponentTypes();
 }
 
 
 
-public class ComponentTypeRegistry : IComponentTypeRegistry
+internal class ComponentTypeRegistry : IComponentTypeRegistry
 {
 	private readonly ILogger<ComponentTypeRegistry> _logger;
 	private readonly ISet<Type> _registeredTypes = new HashSet<Type>();

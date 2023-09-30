@@ -2,7 +2,7 @@
 
 namespace NGame.Sprites;
 
-public class TextureAssetJson : AssetJson
+internal class TextureAssetJson : AssetJson
 {
 	public string FilePath { get; set; }
 }

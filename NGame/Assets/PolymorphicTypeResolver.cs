@@ -3,7 +3,7 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace NGame.Assets;
 
-public class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
+internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 {
 	private readonly Dictionary<Type, JsonPolymorphismOptions> _polymorphisms;
 

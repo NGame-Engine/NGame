@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿namespace NGame.UpdateSchedulers;
 
-namespace NGame.UpdateSchedulers;
+
 
 public interface IDrawableCollection
 {
@@ -10,16 +10,9 @@ public interface IDrawableCollection
 
 
 
-public class DrawableCollection : IDrawableCollection
+internal class DrawableCollection : IDrawableCollection
 {
-	private readonly ILogger<DrawableCollection> _logger;
 	private readonly List<IDrawable> _drawableSystems = new();
-
-
-	public DrawableCollection(ILogger<DrawableCollection> logger)
-	{
-		_logger = logger;
-	}
 
 
 	public void Add(IDrawable drawable)

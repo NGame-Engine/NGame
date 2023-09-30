@@ -12,7 +12,7 @@ public interface ISceneLoader
 
 
 
-public class SceneLoader : ISceneLoader
+internal class SceneLoader : ISceneLoader
 {
 	private readonly SceneConfiguration _sceneConfiguration;
 	private readonly IAssetSerializer<Scene> _assetSerializer;
@@ -57,7 +57,7 @@ public class SceneLoader : ISceneLoader
 		{
 			_entityTracker.AddEntity(entity);
 		}
-		
+
 		_logger.LogInformation("Got scene with {0} entities", scene.Entities.Count);
 	}
 }

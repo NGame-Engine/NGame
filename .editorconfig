@@ -36,6 +36,7 @@ dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:none
 dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:none
 
 # ReSharper properties
+resharper_blank_lines_after_file_scoped_namespace_directive = 3
 resharper_blank_lines_around_single_line_type = 1
 resharper_braces_for_for = required
 resharper_braces_for_foreach = required

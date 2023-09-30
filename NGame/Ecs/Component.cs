@@ -1,5 +1,5 @@
 namespace NGame.Ecs;
 
-public class Component
+public interface IComponent
 {
 }

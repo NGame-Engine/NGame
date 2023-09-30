@@ -1,9 +1,11 @@
 namespace NGame.UpdateSchedulers;
 
+
+
 /// <summary>
 /// Maybe use later, just stowing it away for now
 /// </summary>
-public class ThrottleChanger
+internal class ThrottleChanger
 {
 	private readonly IUpdateScheduler _updateScheduler;
 

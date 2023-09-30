@@ -3,6 +3,8 @@ using NGame.Renderers;
 
 namespace NGame.UpdateSchedulers;
 
+
+
 public interface IUpdateScheduler
 {
 	bool IsStopped { get; set; }
@@ -45,7 +47,7 @@ public interface IUpdateScheduler
 
 
 
-public class UpdateScheduler : IUpdateScheduler
+internal class UpdateScheduler : IUpdateScheduler
 {
 	private readonly ILogger<UpdateScheduler> _logger;
 	private readonly INGameRenderer _nGameRenderer;

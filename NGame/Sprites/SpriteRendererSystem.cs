@@ -7,7 +7,7 @@ using NGame.UpdateSchedulers;
 
 namespace NGame.Sprites;
 
-public class SpriteRendererSystem : ISystem, IDrawable
+internal class SpriteRendererSystem : ISystem, IDrawable
 {
 	private readonly INGameRenderer _renderer;
 	private readonly List<Data> _datas = new();

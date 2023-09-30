@@ -13,7 +13,7 @@ public interface ISceneSerializationOptionsProvider
 
 
 
-public class SceneSerializer : IAssetSerializer<Scene>, ISceneSerializationOptionsProvider
+internal class SceneSerializer : IAssetSerializer<Scene>, ISceneSerializationOptionsProvider
 {
 	private readonly IComponentTypeRegistry _componentTypeRegistry;
 	private readonly ILogger<SceneSerializer> _logger;
@@ -48,7 +48,7 @@ public class SceneSerializer : IAssetSerializer<Scene>, ISceneSerializationOptio
 				new PolymorphicTypeResolver(
 					new Dictionary<Type, JsonPolymorphismOptions>
 					{
-						[typeof(Component)] = PolymorphismOptions.ForComponents(types)
+						[typeof(IComponent)] = PolymorphismOptions.ForComponents(types)
 					}
 				)
 		};

@@ -10,7 +10,7 @@ namespace NGame.UnitTests.Scenes;
 public class SceneSerializerTests
 {
 	[Component(StableDiscriminator = "TestComponent")]
-	private class TestComponent : Component
+	private class TestComponent : IComponent
 	{
 		public int TestValue { get; set; }
 	}

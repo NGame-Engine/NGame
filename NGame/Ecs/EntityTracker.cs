@@ -7,7 +7,7 @@ public interface IEntityTracker
 
 
 
-public class EntityTracker : IEntityTracker
+internal class EntityTracker : IEntityTracker
 {
 	private readonly ISystemCollection _systemCollection;
 
@@ -20,15 +20,15 @@ public class EntityTracker : IEntityTracker
 
 	public void AddEntity(Entity entity)
 	{
-		var components = 
+		var components =
 			entity
 				.Components
-				.Select(x=>x.GetType())
+				.Select(x => x.GetType())
 				.ToHashSet();
 
 		foreach (var system in _systemCollection.GetSystems())
 		{
-			if(!components.IsSupersetOf(system.RequiredComponents)) continue;
+			if (!components.IsSupersetOf(system.RequiredComponents)) continue;
 
 			system.Add(entity);
 		}

@@ -5,7 +5,7 @@ using NGame.UpdateSchedulers;
 
 namespace NGame.Texts;
 
-public class TextRendererSystem : ISystem, IDrawable
+internal class TextRendererSystem : ISystem, IDrawable
 {
 	private readonly INGameRenderer _renderer;
 	private readonly List<Data> _datas = new();
