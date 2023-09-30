@@ -3,6 +3,7 @@ using NGame.Maths;
 using NGame.OsWindows;
 using NGame.Renderers;
 using NGame.Sprites;
+using NGame.Texts;
 using NGame.Transforms;
 using SkiaSharp;
 

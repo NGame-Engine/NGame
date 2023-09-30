@@ -7,7 +7,7 @@ using Font = SFML.Graphics.Font;
 using NGameSprite = NGame.Sprites.Sprite;
 using NGameTexture = NGame.Sprites.Texture;
 using NGameTransform = NGame.Transforms.Transform;
-using NGameFont = NGame.Renderers.Font;
+using NGameFont = NGame.Texts.Font;
 using Sprite = SFML.Graphics.Sprite;
 using Text = SFML.Graphics.Text;
 using Texture = SFML.Graphics.Texture;
@@ -101,7 +101,7 @@ public class SfmlRenderer : INGameRenderer
 	}
 
 
-	void INGameRenderer.Draw(NGame.Renderers.Text nGameText, NGameTransform transform)
+	void INGameRenderer.Draw(NGame.Texts.Text nGameText, NGameTransform transform)
 	{
 		var nGameFont = nGameText.Font;
 		if (!_fonts.ContainsKey(nGameFont))

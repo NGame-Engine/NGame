@@ -1,4 +1,4 @@
-﻿namespace NGame.Renderers;
+﻿namespace NGame.Texts;
 
 public class Font
 {

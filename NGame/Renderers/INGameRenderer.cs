@@ -1,4 +1,5 @@
 ﻿using NGame.Sprites;
+using NGame.Texts;
 using NGame.Transforms;
 
 namespace NGame.Renderers;
