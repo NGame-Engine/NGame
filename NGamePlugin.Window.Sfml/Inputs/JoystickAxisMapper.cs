@@ -1,7 +1,7 @@
-﻿using NGame.OsWindows;
+﻿using NGame.Inputs;
 using SFML.Window;
 
-namespace NGamePlugin.Window.Sfml;
+namespace NGamePlugin.Window.Sfml.Inputs;
 
 public static class JoystickAxisMapper
 {

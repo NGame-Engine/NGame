@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace NGame.OsWindows;
+﻿namespace NGame.Inputs;
 
 public class JoystickDisconnectedEventArgs : EventArgs
 {

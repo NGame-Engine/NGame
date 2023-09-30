@@ -1,4 +1,4 @@
-﻿namespace NGame.OsWindows;
+﻿namespace NGame.Inputs;
 
 public class TextEnteredEventArgs : EventArgs
 {
