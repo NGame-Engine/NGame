@@ -2,7 +2,7 @@
 
 namespace NGame.Texts;
 
-public class TextRenderer : IComponent
+public sealed class TextRenderer : IComponent
 {
 	public Text? Text { get; set; }
 }

@@ -1,6 +1,6 @@
 namespace NGame.Ecs;
 
-public class Entity
+public sealed class Entity
 {
 	public Guid Id { get; init; }
 	public string Name { get; set; } = "Entity";

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace NGame.Assets;
 
-public class AssetVersionJsonConverter : JsonConverter<AssetVersion>
+public sealed class AssetVersionJsonConverter : JsonConverter<AssetVersion>
 {
     public override AssetVersion Read(
         ref Utf8JsonReader reader,

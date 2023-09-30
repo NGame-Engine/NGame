@@ -1,6 +1,6 @@
 ﻿namespace NGame.Application;
 
-public class CloseRequestedEventArgs : EventArgs
+public sealed class CloseRequestedEventArgs : EventArgs
 {
 	public bool IsGoingToClose { get; set; } = true;
 }

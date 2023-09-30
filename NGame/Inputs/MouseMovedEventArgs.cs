@@ -2,7 +2,7 @@
 
 namespace NGame.Inputs;
 
-public class MouseMovedEventArgs : EventArgs
+public sealed class MouseMovedEventArgs : EventArgs
 {
 	public MouseMovedEventArgs(Point position)
 	{

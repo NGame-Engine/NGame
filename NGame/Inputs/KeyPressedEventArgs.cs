@@ -1,6 +1,6 @@
 ﻿namespace NGame.Inputs;
 
-public class KeyPressedEventArgs : EventArgs
+public sealed class KeyPressedEventArgs : EventArgs
 {
 	public KeyPressedEventArgs(KeyCode keyCode)
 	{

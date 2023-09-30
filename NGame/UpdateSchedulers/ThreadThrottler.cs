@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace NGame.UpdateSchedulers;
 
-public class ThreadThrottler
+public sealed class ThreadThrottler
 {
 	/// <summary>
 	/// Set this to zero to disable throttling.

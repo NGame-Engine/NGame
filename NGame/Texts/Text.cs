@@ -2,7 +2,7 @@
 
 namespace NGame.Texts;
 
-public class Text
+public sealed class Text
 {
 	public Text(Font font, string content)
 	{

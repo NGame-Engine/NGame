@@ -1,6 +1,6 @@
 ﻿namespace NGame.Inputs;
 
-public class TextEnteredEventArgs : EventArgs
+public sealed class TextEnteredEventArgs : EventArgs
 {
 	public TextEnteredEventArgs(string text)
 	{

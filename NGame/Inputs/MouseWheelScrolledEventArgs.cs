@@ -2,7 +2,7 @@
 
 namespace NGame.Inputs;
 
-public class MouseWheelScrolledEventArgs : EventArgs
+public sealed class MouseWheelScrolledEventArgs : EventArgs
 {
 	public MouseWheelScrolledEventArgs(MouseWheelDirection direction, float delta, Point position)
 	{

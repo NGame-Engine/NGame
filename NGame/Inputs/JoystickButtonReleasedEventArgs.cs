@@ -1,6 +1,6 @@
 ﻿namespace NGame.Inputs;
 
-public class JoystickButtonReleasedEventArgs : EventArgs
+public sealed class JoystickButtonReleasedEventArgs : EventArgs
 {
 	public JoystickButtonReleasedEventArgs(int joystickId, int button)
 	{

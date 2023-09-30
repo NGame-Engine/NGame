@@ -2,7 +2,7 @@
 
 namespace NGame.OsWindows;
 
-public class ResizedEventArgs : EventArgs
+public sealed class ResizedEventArgs : EventArgs
 {
 	public ResizedEventArgs(Size newSize)
 	{

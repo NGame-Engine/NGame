@@ -1,6 +1,6 @@
 ﻿namespace NGame.Sprites;
 
-public class Texture
+public sealed class Texture
 {
 	public string FilePath { get; set; }
 }

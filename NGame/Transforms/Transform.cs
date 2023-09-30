@@ -5,7 +5,7 @@ using NGame.Ecs;
 namespace NGame.Transforms;
 
 [Component(StableDiscriminator = "Transform")]
-public class Transform : IComponent
+public sealed class Transform : IComponent
 {
 	public Vector3 Position;
 	public Quaternion Rotation;

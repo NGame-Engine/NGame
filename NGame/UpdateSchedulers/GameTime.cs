@@ -3,7 +3,7 @@ namespace NGame.UpdateSchedulers;
 /// <summary>
 /// Current timing used for variable-step (real time) or fixed-step (game time) games.
 /// </summary>
-public class GameTime
+public sealed class GameTime
 {
 	private TimeSpan _accumulatedElapsedTime;
 	private int _accumulatedFrameCountPerSecond;

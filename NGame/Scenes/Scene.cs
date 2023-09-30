@@ -2,7 +2,7 @@
 
 namespace NGame.Scenes;
 
-public class Scene
+public sealed class Scene
 {
 	public ICollection<Entity> Entities { get; set; } = new List<Entity>();
 }

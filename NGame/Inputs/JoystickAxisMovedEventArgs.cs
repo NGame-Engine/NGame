@@ -1,6 +1,6 @@
 ﻿namespace NGame.Inputs;
 
-public class JoystickAxisMovedEventArgs : EventArgs
+public sealed class JoystickAxisMovedEventArgs : EventArgs
 {
 	public JoystickAxisMovedEventArgs(int joystickId, JoystickAxis joystickAxis, float value)
 	{

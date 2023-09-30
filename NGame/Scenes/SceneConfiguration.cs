@@ -1,6 +1,6 @@
 namespace NGame.Scenes;
 
-public class SceneConfiguration
+public sealed class SceneConfiguration
 {
     public const string JsonElementName = "Scenes";
 

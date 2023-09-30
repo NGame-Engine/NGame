@@ -1,6 +1,6 @@
 ﻿namespace NGame.Inputs;
 
-public class JoystickConnectedEventArgs : EventArgs
+public sealed class JoystickConnectedEventArgs : EventArgs
 {
 	public JoystickConnectedEventArgs(int joystickId)
 	{

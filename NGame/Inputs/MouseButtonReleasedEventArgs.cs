@@ -2,7 +2,7 @@
 
 namespace NGame.Inputs;
 
-public class MouseButtonReleasedEventArgs : EventArgs
+public sealed class MouseButtonReleasedEventArgs : EventArgs
 {
 	public MouseButtonReleasedEventArgs(MouseButton mouseButton, Point position)
 	{
