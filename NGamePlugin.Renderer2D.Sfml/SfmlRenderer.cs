@@ -27,8 +27,8 @@ internal class RenderTextureFactory
 
 	public RenderTexture Create()
 	{
-		var width = _graphicsConfiguration.Width;
-		var height = _graphicsConfiguration.Height;
+		var width = (uint)_graphicsConfiguration.Width;
+		var height = (uint)_graphicsConfiguration.Height;
 		return new RenderTexture(width, height);
 	}
 }
@@ -120,7 +120,7 @@ public class SfmlRenderer : INGameRenderer
 
 		var font = _fonts[nGameFont];
 		var text = new Text(nGameText.Content, font);
-		text.CharacterSize = nGameText.CharacterSize;
+		text.CharacterSize = (uint)nGameText.CharacterSize;
 		text.Origin = nGameText.TransformOrigin.ToSfmlVector2();
 		text.Position = transform.Position.ToSfmlVector2();
 

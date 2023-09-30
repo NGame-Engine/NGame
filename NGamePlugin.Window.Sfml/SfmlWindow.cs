@@ -20,8 +20,8 @@ public class SfmlWindow : IOsWindow
 	{
 		_window = renderWindow;
 
-		var width = graphicsConfiguration.Width;
-		var height = graphicsConfiguration.Height;
+		var width = (uint)graphicsConfiguration.Width;
+		var height = (uint)graphicsConfiguration.Height;
 		_texture = new Texture(width, height);
 
 		_sprite = new Sprite(_texture);

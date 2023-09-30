@@ -20,8 +20,8 @@ internal class RenderWindowFactory
 
 	public RenderWindow Create()
 	{
-		var width = _graphicsConfiguration.Width;
-		var height = _graphicsConfiguration.Height;
+		var width = (uint)_graphicsConfiguration.Width;
+		var height = (uint)_graphicsConfiguration.Height;
 		var mode = new VideoMode(width, height);
 
 		var title = _hostEnvironment.ApplicationName;

@@ -25,13 +25,9 @@ public class SkiaSharpRenderer : INGameRenderer
 	{
 		_window = window;
 
-
-		var width = graphicsConfiguration.Width;
-		var height = graphicsConfiguration.Height;
-
 		var imageInfo = new SKImageInfo(
-			width: (int)width,
-			height: (int)height,
+			width: graphicsConfiguration.Width,
+			height: graphicsConfiguration.Height,
 			colorType: SKColorType.Rgba8888,
 			alphaType: SKAlphaType.Premul
 		);
