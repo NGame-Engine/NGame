@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NGame.Application;
 using NGame.Assets;
-using NGame.Setup;
 
 namespace NGame.Scenes;
 

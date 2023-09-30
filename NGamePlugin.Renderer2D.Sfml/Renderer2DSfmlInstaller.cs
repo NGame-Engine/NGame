@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NGame.Application;
 using NGame.Renderers;
-using NGame.Setup;
 
 namespace NGamePlugin.Renderer2D.Sfml;
 

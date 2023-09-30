@@ -1,4 +1,5 @@
-﻿using NGamePlugin.Window.Sfml.Inputs;
+﻿using NGame.Application;
+using NGamePlugin.Window.Sfml.Inputs;
 using SFML.Graphics;
 
 namespace NGamePlugin.Window.Sfml;
@@ -8,23 +9,28 @@ internal class RenderWindowEventConnector
 	private readonly RenderWindow _renderWindow;
 	private readonly SfmlWindow _sfmlWindow;
 	private readonly RawInputListener _rawInputListener;
+	private readonly IApplicationEvents _applicationEvents;
 
 
 	public RenderWindowEventConnector(
 		RenderWindow renderWindow,
 		SfmlWindow sfmlWindow,
-		RawInputListener rawInputListener
+		RawInputListener rawInputListener,
+		IApplicationEvents applicationEvents
 	)
 	{
 		this._renderWindow = renderWindow;
 		_sfmlWindow = sfmlWindow;
 		_rawInputListener = rawInputListener;
+		_applicationEvents = applicationEvents;
 	}
 
 
 	public void ConnectEvents()
 	{
-		_renderWindow.Closed += _sfmlWindow.OnClosed;
+		_renderWindow.Closed += (_, _) => _applicationEvents.RequestClose();
+		_applicationEvents.Closing += (_, _) => _renderWindow.Close();
+
 		_renderWindow.Resized += _sfmlWindow.OnResized;
 		_renderWindow.LostFocus += _sfmlWindow.OnLostFocus;
 		_renderWindow.GainedFocus += _sfmlWindow.OnGainedFocus;

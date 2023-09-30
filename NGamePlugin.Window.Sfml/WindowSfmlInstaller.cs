@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NGame.Application;
 using NGame.Inputs;
 using NGame.OsWindows;
-using NGame.Setup;
 using NGamePlugin.Window.Sfml.Inputs;
 
 namespace NGamePlugin.Window.Sfml;
@@ -34,10 +34,6 @@ public static class WindowSfmlInstaller
 
 	public static void UseWindowSfml(this NGameApplication app)
 	{
-		var nGameHostedService = app.Services.GetRequiredService<NGameHostedService>();
-		var window = app.Services.GetRequiredService<IOsWindow>();
-		window.Closed += (_, _) => nGameHostedService.StopAsync();
-
 		var renderWindowEventConnector = app.Services.GetRequiredService<RenderWindowEventConnector>();
 		renderWindowEventConnector.ConnectEvents();
 	}

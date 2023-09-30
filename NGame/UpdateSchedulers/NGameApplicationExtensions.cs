@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Setup;
+using NGame.Application;
 
 namespace NGame.UpdateSchedulers;
 

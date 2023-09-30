@@ -8,12 +8,15 @@ namespace NGamePlugin.Window.Sfml;
 
 public class SfmlWindow : IOsWindow
 {
+	private readonly RenderWindow _window;
 	private readonly Texture _texture;
 	private readonly Sprite _sprite;
-	private readonly RenderWindow _window;
 
 
-	public SfmlWindow(RenderWindow renderWindow, GraphicsConfiguration graphicsConfiguration)
+	public SfmlWindow(
+		RenderWindow renderWindow,
+		GraphicsConfiguration graphicsConfiguration
+	)
 	{
 		_window = renderWindow;
 
@@ -25,19 +28,9 @@ public class SfmlWindow : IOsWindow
 	}
 
 
-	public event EventHandler? Closed;
 	public event EventHandler<ResizedEventArgs>? Resized;
 	public event EventHandler? FocusLost;
 	public event EventHandler? FocusGained;
-
-
-	private CancellationTokenSource? CancellationTokenSource { get; set; }
-
-
-	void IOsWindow.Initialize(CancellationTokenSource cancellationTokenSource)
-	{
-		CancellationTokenSource = cancellationTokenSource;
-	}
 
 
 	void IOsWindow.Draw(byte[] pixels)
@@ -49,14 +42,6 @@ public class SfmlWindow : IOsWindow
 		_window.Draw(_sprite);
 
 		_window.Display();
-	}
-
-
-	internal void OnClosed(object? sender, EventArgs e)
-	{
-		_window.Close();
-		CancellationTokenSource!.Cancel();
-		Closed?.Invoke(this, e);
 	}
 
 

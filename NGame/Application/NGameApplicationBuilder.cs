@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace NGame.Setup;
+namespace NGame.Application;
 
 public interface INGameApplicationBuilder
 {
@@ -40,6 +40,8 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 		_builder.Services.AddHostedService(
 			services => services.GetRequiredService<NGameHostedService>()
 		);
+
+		_builder.Services.AddSingleton<IApplicationEvents, ApplicationEvents>();
 	}
 
 

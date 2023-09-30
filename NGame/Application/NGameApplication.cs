@@ -1,7 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace NGame.Setup;
+namespace NGame.Application;
+
+
 
 public class NGameApplication
 {
@@ -28,6 +30,6 @@ public class NGameApplication
 		await _host.StartAsync(cancellationToken);
 
 		var hostedService = _host.Services.GetRequiredService<NGameHostedService>();
-		await hostedService.RunGameAsync(cancellationTokenSource, cancellationToken);
+		hostedService.RunGame();
 	}
 }

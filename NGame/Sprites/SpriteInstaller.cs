@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NGame.Application;
 using NGame.Ecs;
-using NGame.Setup;
 using NGame.UpdateSchedulers;
 
 namespace NGame.Sprites;

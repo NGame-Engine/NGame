@@ -40,7 +40,7 @@ public interface IUpdateScheduler
 	/// </summary>
 	float DrawInterpolationFactor { get; }
 
-	void Initialize(CancellationTokenSource cancellationTokenSource);
+	void Initialize();
 	void Tick();
 }
 
@@ -93,11 +93,10 @@ public class UpdateScheduler : IUpdateScheduler
 	private TimeSpan AccumulatedElapsedGameTime { get; set; }
 
 
-	void IUpdateScheduler.Initialize(CancellationTokenSource cancellationTokenSource)
+	void IUpdateScheduler.Initialize()
 	{
 		try
 		{
-			_osWindow.Initialize(cancellationTokenSource);
 			_nGameRenderer.Initialize();
 
 			_nGameRenderer.BeginDraw();

@@ -2,7 +2,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NGame.UpdateSchedulers;
 
-namespace NGame.Setup;
+namespace NGame.Application;
 
 public sealed class NGameHostedService : IHostedService
 {
@@ -13,7 +13,8 @@ public sealed class NGameHostedService : IHostedService
 	public NGameHostedService(
 		ILogger<NGameHostedService> logger,
 		IHostApplicationLifetime appLifetime,
-		IUpdateScheduler updateScheduler
+		IUpdateScheduler updateScheduler,
+		IApplicationEvents applicationEvents
 	)
 	{
 		_logger = logger;
@@ -22,8 +23,11 @@ public sealed class NGameHostedService : IHostedService
 		appLifetime.ApplicationStarted.Register(OnStarted);
 		appLifetime.ApplicationStopping.Register(OnStopping);
 		appLifetime.ApplicationStopped.Register(OnStopped);
+
+		applicationEvents.Closing += (_, _) => IsClosing = true;
 	}
 
+	private bool IsClosing { get; set; }
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
@@ -33,15 +37,13 @@ public sealed class NGameHostedService : IHostedService
 	}
 
 
-	public Task RunGameAsync(CancellationTokenSource cancellationTokenSource, CancellationToken cancellationToken)
+	public void RunGame()
 	{
-		_updateScheduler.Initialize(cancellationTokenSource);
-		while (!cancellationToken.IsCancellationRequested)
+		_updateScheduler.Initialize();
+		while (!IsClosing)
 		{
 			_updateScheduler.Tick();
 		}
-
-		return Task.CompletedTask;
 	}
 
 
