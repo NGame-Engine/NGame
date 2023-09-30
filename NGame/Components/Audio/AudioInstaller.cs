@@ -13,6 +13,7 @@ public static class AudioInstaller
 	{
 		builder.Services.AddSingleton<AudioListenerSystem>();
 		builder.Services.AddSingleton<AudioSourceSystem>();
+		builder.Services.AddSingleton<IGlobalSoundPlayer, GlobalSoundPlayer>();
 
 		return builder;
 	}
@@ -20,6 +21,14 @@ public static class AudioInstaller
 
 	public static NGameApplication UseAudio(this NGameApplication app)
 	{
+		var audioPlugin = app.Services.GetService<IAudioPlugin>();
+		if (audioPlugin == null)
+		{
+			throw new InvalidOperationException(
+				"Trying to use audio, but no audio plugin registered"
+			);
+		}
+
 		app.RegisterComponent<AudioListener>();
 		app.RegisterSystem<AudioListenerSystem>();
 		app.UseUpdatable<AudioListenerSystem>();
@@ -27,6 +36,10 @@ public static class AudioInstaller
 		app.RegisterComponent<AudioSource>();
 		app.RegisterSystem<AudioSourceSystem>();
 		app.UseUpdatable<AudioSourceSystem>();
+
+		var applicationEvents = app.Services.GetRequiredService<IApplicationEvents>();
+		applicationEvents.Closing += (_, _) => audioPlugin.UnloadAllClips();
+		applicationEvents.Closing += (_, _) => audioPlugin.RemoveAllSources();
 
 		return app;
 	}

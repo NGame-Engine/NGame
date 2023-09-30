@@ -12,7 +12,7 @@ public class AudioListenerSystem : ISystem, IUpdatable
 	private readonly IAudioPlugin _audioPlugin;
 	private readonly ILogger<AudioListenerSystem> _logger;
 	private readonly List<Data> _datas = new();
-	private bool _hasCheckedListenerExists;
+	private bool _hasWarnedThatNoListenerExists;
 	private bool _hasCheckedIfTooManyListeners;
 
 
@@ -44,14 +44,13 @@ public class AudioListenerSystem : ISystem, IUpdatable
 
 	public void Update(GameTime gameTime)
 	{
-		if (!_hasCheckedListenerExists)
+		if (_datas.Count == 0)
 		{
-			_hasCheckedListenerExists = true;
-			if (_datas.Count == 0)
-			{
-				_logger.LogWarning("No active audio listener, sounds will be global");
-				return;
-			}
+			if (_hasWarnedThatNoListenerExists) return;
+
+			_logger.LogWarning("No active audio listener, sounds will be global");
+			_hasWarnedThatNoListenerExists = true;
+			return;
 		}
 
 		if (!_hasCheckedIfTooManyListeners)

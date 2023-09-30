@@ -33,7 +33,12 @@ public class AudioSourceSystem : ISystem, IUpdatable
 		var audioClip = audioSource.AudioClip;
 		if (audioClip == null) return;
 
-		_audioPlugin.Load(audioClip);
+		if (!_audioPlugin.IsClipLoaded(audioClip))
+		{
+			_audioPlugin.Load(audioClip);
+		}
+
+		_audioPlugin.AddSource(audioSource);
 
 		var data = new Data(transform, audioSource);
 		_datas.Add(data);

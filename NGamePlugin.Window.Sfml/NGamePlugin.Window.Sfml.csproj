@@ -11,7 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="SFML.Net" Version="2.5.1" />
+      <PackageReference Include="SFML.Graphics" Version="2.5.1" />
+      <PackageReference Include="SFML.Window" Version="2.5.1" />
     </ItemGroup>
 
 </Project>
