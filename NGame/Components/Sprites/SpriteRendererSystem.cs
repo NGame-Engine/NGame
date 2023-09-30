@@ -1,11 +1,11 @@
-﻿using System.Numerics;
-using NGame.Components.Texts;
-using NGame.Components.Transforms;
+﻿using NGame.Components.Transforms;
 using NGame.Ecs;
 using NGame.Renderers;
 using NGame.UpdateSchedulers;
 
 namespace NGame.Components.Sprites;
+
+
 
 internal class SpriteRendererSystem : ISystem, IDrawable
 {
@@ -34,12 +34,6 @@ internal class SpriteRendererSystem : ISystem, IDrawable
 	}
 
 
-	private Font font = new Font
-	{
-		FilePath = "Fonts/YanoneKaffeesatz-VariableFont_wght.ttf"
-	};
-
-
 	void IDrawable.Draw(GameTime gameTime)
 	{
 		foreach (var data in _datas)
@@ -48,16 +42,6 @@ internal class SpriteRendererSystem : ISystem, IDrawable
 
 			_renderer.Draw(data.Sprite, data.Transform);
 		}
-
-		_renderer.Draw(new Line
-		{
-			Vertices = new List<Vector2>
-			{
-				new Vector2(1, 2),
-				new Vector2(40, 50),
-				new Vector2(60, 30)
-			}
-		});
 	}
 
 

@@ -1,4 +1,5 @@
-﻿using NGame.Components.Sprites;
+﻿using NGame.Components.Lines;
+using NGame.Components.Sprites;
 using NGame.Components.Texts;
 using NGame.Components.Transforms;
 

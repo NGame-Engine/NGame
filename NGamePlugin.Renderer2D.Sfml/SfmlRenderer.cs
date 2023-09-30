@@ -1,4 +1,5 @@
-﻿using NGame.OsWindows;
+﻿using NGame.Components.Lines;
+using NGame.OsWindows;
 using NGame.Renderers;
 using SFML.Graphics;
 using SFML.System;

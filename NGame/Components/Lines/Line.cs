@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace NGame.Renderers;
+namespace NGame.Components.Lines;
 
 public sealed class Line
 {
