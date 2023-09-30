@@ -1,6 +1,9 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using System.Numerics;
 
 namespace NGame.Components.Texts;
+
+
 
 public sealed class Text
 {
@@ -11,8 +14,9 @@ public sealed class Text
 	}
 
 
-	public Font Font { get; set; }
-	public string Content { get; set; }
-	public int CharacterSize { get; set; }
-	public Vector2 TransformOrigin { get; set; }
+	public Font Font;
+	public string Content;
+	public int CharacterSize;
+	public Color Color;
+	public Vector2 TransformOrigin;
 }

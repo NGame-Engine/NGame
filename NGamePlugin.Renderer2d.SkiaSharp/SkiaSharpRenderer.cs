@@ -8,6 +8,8 @@ using SkiaSharp;
 
 namespace NGamePlugin.Renderer2d.SkiaSharp;
 
+
+
 public class SkiaSharpRenderer : INGameRenderer
 {
 	private readonly IOsWindow _window;
@@ -84,6 +86,7 @@ public class SkiaSharpRenderer : INGameRenderer
 			var linePaint = new SKPaint
 			{
 				StrokeWidth = line.Width,
+				Color = line.Color.ToSkColor(),
 				IsAntialias = true,
 				Style = SKPaintStyle.Stroke
 			};
@@ -106,14 +109,17 @@ public class SkiaSharpRenderer : INGameRenderer
 		var font = _fonts[nGameFont];
 
 		var skTextBlob = SKTextBlob.Create(text.Content, font);
+
+		var skPaint = new SKPaint
+		{
+			Color = text.Color.ToSkColor()
+		};
+
 		_canvas.DrawText(
 			skTextBlob,
 			transform.Position.X,
 			transform.Position.Y,
-			new SKPaint
-			{
-				Color = SKColor.Parse("F90")
-			}
+			skPaint
 		);
 	}
 
