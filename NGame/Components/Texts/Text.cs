@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace NGame.Texts;
+namespace NGame.Components.Texts;
 
 public sealed class Text
 {

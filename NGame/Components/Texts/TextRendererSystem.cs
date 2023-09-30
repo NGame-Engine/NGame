@@ -1,9 +1,9 @@
-﻿using NGame.Ecs;
+﻿using NGame.Components.Transforms;
+using NGame.Ecs;
 using NGame.Renderers;
-using NGame.Transforms;
 using NGame.UpdateSchedulers;
 
-namespace NGame.Texts;
+namespace NGame.Components.Texts;
 
 internal class TextRendererSystem : ISystem, IDrawable
 {

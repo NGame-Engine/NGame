@@ -1,6 +1,6 @@
-﻿using NGame.Sprites;
-using NGame.Texts;
-using NGame.Transforms;
+﻿using NGame.Components.Sprites;
+using NGame.Components.Texts;
+using NGame.Components.Transforms;
 
 namespace NGame.Renderers;
 

@@ -1,8 +1,8 @@
-﻿using NGame.OsWindows;
+﻿using NGame.Components.Sprites;
+using NGame.Components.Texts;
+using NGame.Components.Transforms;
+using NGame.OsWindows;
 using NGame.Renderers;
-using NGame.Sprites;
-using NGame.Texts;
-using NGame.Transforms;
 using SkiaSharp;
 
 namespace NGamePlugin.Renderer2d.SkiaSharp;

@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace NGame.Sprites;
+namespace NGame.Components.Sprites;
 
 public sealed class Sprite
 {

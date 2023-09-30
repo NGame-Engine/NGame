@@ -1,4 +1,4 @@
-﻿namespace NGame.Sprites;
+﻿namespace NGame.Components.Sprites;
 
 public sealed class Texture
 {

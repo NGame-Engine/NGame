@@ -3,7 +3,7 @@ using NGame.Application;
 using NGame.Ecs;
 using NGame.UpdateSchedulers;
 
-namespace NGame.Texts;
+namespace NGame.Components.Texts;
 
 public static class TextInstaller
 {

@@ -1,7 +1,7 @@
 ﻿using NGame.Assets;
 using NGame.Ecs;
 
-namespace NGame.Sprites;
+namespace NGame.Components.Sprites;
 
 [Component(StableDiscriminator = "NGame.Sprites.SpriteRenderer")]
 public sealed class SpriteRenderer : IComponent

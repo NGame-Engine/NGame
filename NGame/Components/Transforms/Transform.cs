@@ -2,7 +2,7 @@
 using NGame.Assets;
 using NGame.Ecs;
 
-namespace NGame.Transforms;
+namespace NGame.Components.Transforms;
 
 [Component(StableDiscriminator = "Transform")]
 public sealed class Transform : IComponent

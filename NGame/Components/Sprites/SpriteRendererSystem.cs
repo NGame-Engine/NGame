@@ -1,11 +1,11 @@
 ﻿using System.Numerics;
+using NGame.Components.Texts;
+using NGame.Components.Transforms;
 using NGame.Ecs;
 using NGame.Renderers;
-using NGame.Texts;
-using NGame.Transforms;
 using NGame.UpdateSchedulers;
 
-namespace NGame.Sprites;
+namespace NGame.Components.Sprites;
 
 internal class SpriteRendererSystem : ISystem, IDrawable
 {

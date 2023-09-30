@@ -3,7 +3,7 @@ using NGame.Application;
 using NGame.Ecs;
 using NGame.UpdateSchedulers;
 
-namespace NGame.Sprites;
+namespace NGame.Components.Sprites;
 
 public static class SpriteInstaller
 {
