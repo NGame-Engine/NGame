@@ -38,8 +38,8 @@ public static class AudioInstaller
 		app.UseUpdatable<AudioSourceSystem>();
 
 		var applicationEvents = app.Services.GetRequiredService<IApplicationEvents>();
-		applicationEvents.Closing += (_, _) => audioPlugin.UnloadAllClips();
-		applicationEvents.Closing += (_, _) => audioPlugin.RemoveAllSources();
+		applicationEvents.GameLoopStopped += (_, _) => audioPlugin.UnloadAllClips();
+		applicationEvents.GameLoopStopped += (_, _) => audioPlugin.RemoveAllSources();
 
 		return app;
 	}

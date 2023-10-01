@@ -1,5 +1,4 @@
 ﻿using NGame.Components.Lines;
-using NGame.OsWindows;
 using NGame.Renderers;
 using SFML.Graphics;
 using SFML.System;
@@ -41,26 +40,23 @@ internal class RenderTextureFactory
 
 public class SfmlRenderer : INGameRenderer
 {
-	private readonly IOsWindow _window;
-	private readonly RenderTexture _renderTexture;
+	private readonly RenderWindow _window;
 
 	private readonly Dictionary<NGameTexture, Texture> _textures = new();
 	private readonly Dictionary<NGameFont, Font> _fonts = new();
 
 
-	public SfmlRenderer(
-		IOsWindow window,
-		RenderTexture renderTexture
-	)
+	public SfmlRenderer(RenderWindow window)
 	{
 		_window = window;
-		_renderTexture = renderTexture;
 	}
 
 
 	bool INGameRenderer.BeginDraw()
 	{
-		_renderTexture.Clear();
+		_window.DispatchEvents();
+		_window.Clear();
+
 		return true;
 	}
 
@@ -90,7 +86,7 @@ public class SfmlRenderer : INGameRenderer
 			transform.Position.Y + sprite.TargetRectangle.Y
 		);
 
-		_renderTexture.Draw(sp);
+		_window.Draw(sp);
 	}
 
 
@@ -114,7 +110,7 @@ public class SfmlRenderer : INGameRenderer
 			var secondVertex = vertices[i + 1];
 
 
-			_renderTexture.Draw(new[] { firstVertex, secondVertex }, PrimitiveType.Lines);
+			_window.Draw(new[] { firstVertex, secondVertex }, PrimitiveType.Lines);
 		}
 	}
 
@@ -134,17 +130,14 @@ public class SfmlRenderer : INGameRenderer
 		text.Position = transform.Position.ToSfmlVector2();
 		text.FillColor = nGameText.Color.ToSfmlColor();
 
-		_renderTexture.Draw(text);
+		_window.Draw(text);
 	}
 
 
 	void INGameRenderer.EndDraw(bool shouldPresent)
 	{
-		_renderTexture.Display();
+		if (!shouldPresent) return;
 
-		var texture = _renderTexture.Texture;
-		var image = texture.CopyToImage();
-		var pixels = image.Pixels;
-		_window.Draw(pixels);
+		_window.Display();
 	}
 }

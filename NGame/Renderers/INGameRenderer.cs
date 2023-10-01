@@ -5,6 +5,8 @@ using NGame.Components.Transforms;
 
 namespace NGame.Renderers;
 
+
+
 public interface INGameRenderer
 {
 	bool BeginDraw();
