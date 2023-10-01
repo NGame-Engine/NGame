@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame", "NGame\NGame.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.UnitTests", "NGame.UnitTests\NGame.UnitTests.csproj", "{82737E31-46D2-4329-8810-30CA884E863E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlugin.Renderer2d.SkiaSharp", "NGamePlugin.Renderer2d.SkiaSharp\NGamePlugin.Renderer2d.SkiaSharp.csproj", "{A0AB7E43-0FF9-4D25-B255-7149E20F1888}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlatform.Desktop.Sfml", "NGamePlatform.Desktop.Sfml\NGamePlatform.Desktop.Sfml.csproj", "{499EDDB4-DDA9-487E-B555-E01F99DBF45C}"
 EndProject
 Global
@@ -22,10 +20,6 @@ Global
 		{82737E31-46D2-4329-8810-30CA884E863E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82737E31-46D2-4329-8810-30CA884E863E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82737E31-46D2-4329-8810-30CA884E863E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0AB7E43-0FF9-4D25-B255-7149E20F1888}.Release|Any CPU.Build.0 = Release|Any CPU
 		{499EDDB4-DDA9-487E-B555-E01F99DBF45C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{499EDDB4-DDA9-487E-B555-E01F99DBF45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{499EDDB4-DDA9-487E-B555-E01F99DBF45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
