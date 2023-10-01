@@ -4,7 +4,7 @@ using NGame.Renderers;
 using SFML.Graphics;
 using SFML.Window;
 
-namespace NGamePlugin.Window.Sfml;
+namespace NGamePlatform.Desktop.Sfml.Window;
 
 public class SfmlWindow : IOsWindow
 {

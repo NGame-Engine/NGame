@@ -14,7 +14,7 @@ using Text = SFML.Graphics.Text;
 using Texture = SFML.Graphics.Texture;
 
 
-namespace NGamePlugin.Renderer2D.Sfml;
+namespace NGamePlatform.Desktop.Sfml.Renderers;
 
 
 

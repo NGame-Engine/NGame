@@ -3,7 +3,7 @@ using NGame.Components.Audio;
 using NGame.Components.Transforms;
 using SFML.Audio;
 
-namespace NGamePlugin.Audio.Sfml;
+namespace NGamePlatform.Desktop.Sfml.Audio;
 
 
 

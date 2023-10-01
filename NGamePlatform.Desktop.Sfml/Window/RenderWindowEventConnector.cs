@@ -1,8 +1,8 @@
 ﻿using NGame.Application;
-using NGamePlugin.Window.Sfml.Inputs;
+using NGamePlatform.Desktop.Sfml.Inputs;
 using SFML.Graphics;
 
-namespace NGamePlugin.Window.Sfml;
+namespace NGamePlatform.Desktop.Sfml.Window;
 
 internal class RenderWindowEventConnector
 {

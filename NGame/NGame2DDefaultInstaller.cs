@@ -13,9 +13,9 @@ namespace NGame;
 
 
 
-public static class NGameDefaultInstaller
+public static class NGame2DDefaultInstaller
 {
-	public static void AddNGameDefault(this INGameApplicationBuilder builder)
+	public static void AddNGame2DDefault(this INGameApplicationBuilder builder)
 	{
 		if (builder.Environment.IsDevelopment())
 		{
@@ -33,7 +33,7 @@ public static class NGameDefaultInstaller
 	}
 
 
-	public static void UseNGameDefault(this NGameApplication app)
+	public static void UseNGame2DDefault(this NGameApplication app)
 	{
 		app.UseSprites();
 		app.UseText();

@@ -2,7 +2,7 @@
 using NGame.Inputs;
 using SFML.Window;
 
-namespace NGamePlugin.Window.Sfml.Inputs;
+namespace NGamePlatform.Desktop.Sfml.Inputs;
 
 internal class RawInputListener : IRawInputListener
 {

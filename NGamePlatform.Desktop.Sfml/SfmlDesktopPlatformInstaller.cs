@@ -1,15 +1,36 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NGame.Application;
+using NGame.Components.Audio;
 using NGame.Inputs;
 using NGame.OsWindows;
-using NGamePlugin.Window.Sfml.Inputs;
+using NGame.Renderers;
+using NGamePlatform.Desktop.Sfml.Audio;
+using NGamePlatform.Desktop.Sfml.Inputs;
+using NGamePlatform.Desktop.Sfml.Renderers;
+using NGamePlatform.Desktop.Sfml.Window;
 
-namespace NGamePlugin.Window.Sfml;
+namespace NGamePlatform.Desktop.Sfml;
 
-public static class WindowSfmlInstaller
+
+
+public static class SfmlDesktopPlatformInstaller
 {
-	public static void AddWindowSfml(this INGameApplicationBuilder builder)
+	public static void AddSfmlDesktopPlatform(this INGameApplicationBuilder builder)
 	{
+		builder.Services.AddSingleton<IAudioPlugin, SfmlAudioPlugin>();
+
+
+		builder.Services.AddSingleton<INGameRenderer, SfmlRenderer>();
+
+		builder.Services.AddTransient<RenderTextureFactory>();
+		builder.Services.AddSingleton(
+			services =>
+				services
+					.GetRequiredService<RenderTextureFactory>()
+					.Create()
+		);
+
+
 		builder.Services.AddTransient<RenderWindowFactory>();
 		builder.Services.AddSingleton(
 			services =>
@@ -32,7 +53,7 @@ public static class WindowSfmlInstaller
 	}
 
 
-	public static void UseWindowSfml(this NGameApplication app)
+	public static void UseSfmlDesktopPlatform(this NGameApplication app)
 	{
 		var renderWindowEventConnector = app.Services.GetRequiredService<RenderWindowEventConnector>();
 		renderWindowEventConnector.ConnectEvents();

@@ -1,7 +1,7 @@
 ﻿using NGame.Inputs;
 using SFML.Window;
 
-namespace NGamePlugin.Window.Sfml.Inputs;
+namespace NGamePlatform.Desktop.Sfml.Inputs;
 
 public static class MouseButtonMapper
 {
