@@ -1,3 +1,4 @@
+using System.Numerics;
 using NGame.Components.Transforms;
 
 namespace NGame.Components.Audio;
@@ -10,7 +11,7 @@ public interface IAudioPlugin
 	bool IsClipLoaded(AudioClip audioClip);
 	void Unload(AudioClip audioClip);
 	void UnloadAllClips();
-	
+
 	void AddAudioListener(AudioListener audioListener, Transform transform);
 	void SetListenerPosition(Transform transform);
 
@@ -18,11 +19,13 @@ public interface IAudioPlugin
 	void AddSource(AudioSource audioSource);
 	bool DoesAudioSourceExist(AudioSource audioSource);
 	void SetSourceClip(AudioSource audioSource, AudioClip audioClip);
-	void SetSourcePosition(AudioSource audioSource, Transform transform);
+	void SetSourcePosition(AudioSource audioSource, Vector3 position);
 	void RemoveSource(AudioSource audioSource);
 	void RemoveAllSources();
 
 
 	void Play(AudioSource audioSource);
-	bool IsPlaying(AudioSource audioSource);
+	void Pause(AudioSource audioSource);
+	void Stop(AudioSource audioSource);
+	PlayStatus GetStatus(AudioSource audioSource);
 }

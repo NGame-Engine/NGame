@@ -1,3 +1,4 @@
+using System.Numerics;
 using NGame.Components.Audio;
 using NGame.Components.Transforms;
 using SFML.Audio;
@@ -14,11 +15,8 @@ public class SfmlAudioPlugin : IAudioPlugin
 
 	void IAudioPlugin.Load(AudioClip audioClip)
 	{
-		if (!_soundBuffers.ContainsKey(audioClip))
-		{
-			var newSoundBuffer = new SoundBuffer(audioClip.FilePath);
-			_soundBuffers[audioClip] = newSoundBuffer;
-		}
+		var newSoundBuffer = new SoundBuffer(audioClip.FilePath);
+		_soundBuffers.Add(audioClip, newSoundBuffer);
 	}
 
 
@@ -62,14 +60,14 @@ public class SfmlAudioPlugin : IAudioPlugin
 	{
 		var sound = new Sound();
 		sound.RelativeToListener = true;
-		_sounds[audioSource] = sound;
+		_sounds.Add(audioSource, sound);
 	}
 
 
 	void IAudioPlugin.AddSource(AudioSource audioSource)
 	{
 		var newSound = new Sound();
-		_sounds[audioSource] = newSound;
+		_sounds.Add(audioSource, newSound);
 	}
 
 
@@ -84,10 +82,10 @@ public class SfmlAudioPlugin : IAudioPlugin
 	}
 
 
-	void IAudioPlugin.SetSourcePosition(AudioSource audioSource, Transform transform)
+	void IAudioPlugin.SetSourcePosition(AudioSource audioSource, Vector3 position)
 	{
 		var sound = _sounds[audioSource];
-		sound.Position = transform.Position.ToSfmlVector3();
+		sound.Position = position.ToSfmlVector3();
 	}
 
 
@@ -118,9 +116,29 @@ public class SfmlAudioPlugin : IAudioPlugin
 	}
 
 
-	public bool IsPlaying(AudioSource audioSource)
+	void IAudioPlugin.Pause(AudioSource audioSource)
 	{
 		var sound = _sounds[audioSource];
-		return sound.Status == SoundStatus.Playing;
+		sound.Pause();
+	}
+
+
+	void IAudioPlugin.Stop(AudioSource audioSource)
+	{
+		var sound = _sounds[audioSource];
+		sound.Stop();
+	}
+
+
+	PlayStatus IAudioPlugin.GetStatus(AudioSource audioSource)
+	{
+		var sound = _sounds[audioSource];
+		return sound.Status switch
+		{
+			SoundStatus.Playing => PlayStatus.Playing,
+			SoundStatus.Paused => PlayStatus.Paused,
+			SoundStatus.Stopped => PlayStatus.Stopped,
+			_ => PlayStatus.Unknown,
+		};
 	}
 }

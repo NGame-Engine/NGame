@@ -30,6 +30,8 @@ public class AudioSourceSystem : ISystem, IUpdatable
 		var transform = entity.GetRequiredComponent<Transform>();
 		var audioSource = entity.GetRequiredComponent<AudioSource>();
 
+		_audioPlugin.AddSource(audioSource);
+
 		var audioClip = audioSource.AudioClip;
 		if (audioClip == null) return;
 
@@ -37,8 +39,6 @@ public class AudioSourceSystem : ISystem, IUpdatable
 		{
 			_audioPlugin.Load(audioClip);
 		}
-
-		_audioPlugin.AddSource(audioSource);
 
 		var data = new Data(transform, audioSource);
 		_datas.Add(data);
@@ -49,7 +49,7 @@ public class AudioSourceSystem : ISystem, IUpdatable
 	{
 		foreach (var data in _datas)
 		{
-			_audioPlugin.SetSourcePosition(data.AudioSource, data.Transform);
+			_audioPlugin.SetSourcePosition(data.AudioSource, data.Transform.Position);
 		}
 	}
 

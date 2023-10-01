@@ -51,7 +51,9 @@ internal class GlobalSoundPlayer : IGlobalSoundPlayer
 	{
 		var freeSource =
 			_audioSources
-				.FirstOrDefault(x => !_audioPlugin.IsPlaying(x));
+				.FirstOrDefault(x =>
+					_audioPlugin.GetStatus(x) == PlayStatus.Stopped
+				);
 
 		if (freeSource != null) return freeSource;
 
