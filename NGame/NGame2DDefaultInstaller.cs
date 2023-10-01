@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using NGame.Application;
 using NGame.Components.Audio;
 using NGame.Components.Lines;
+using NGame.Components.Physics2D;
 using NGame.Components.Sprites;
 using NGame.Components.Texts;
 using NGame.Ecs;
@@ -30,6 +31,8 @@ public static class NGame2DDefaultInstaller
 		builder.AddText();
 		builder.AddLines();
 		builder.AddAudio();
+
+		builder.AddPhysics2D();
 	}
 
 
@@ -39,5 +42,7 @@ public static class NGame2DDefaultInstaller
 		app.UseText();
 		app.UseLines();
 		app.UseAudio();
+
+		app.UsePhysics2D();
 	}
 }

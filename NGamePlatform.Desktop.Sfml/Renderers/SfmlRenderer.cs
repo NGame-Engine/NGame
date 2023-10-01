@@ -81,14 +81,15 @@ public class SfmlRenderer : INGameRenderer
 			sprite.SourceRectangle.Height
 		);
 
-		sp.Position = new Vector2f(
-			transform.Position.X + sprite.TargetRectangle.X,
-			transform.Position.Y + sprite.TargetRectangle.Y
-		);
+		sp.Position = (transform.Position * PixelPerMeter).ToSfmlVector2YInverted();
+		
+		
 
 		_window.Draw(sp);
 	}
 
+
+	private int PixelPerMeter = 64;
 
 	void INGameRenderer.Draw(Line line)
 	{
@@ -97,7 +98,7 @@ public class SfmlRenderer : INGameRenderer
 				.Vertices
 				.Select(
 					x => new Vertex(
-						x.ToSfmlVector2(),
+						x.ToSfmlVector2YInverted(),
 						line.Color.ToSfmlColor()
 					)
 				)
@@ -127,7 +128,7 @@ public class SfmlRenderer : INGameRenderer
 		var text = new Text(nGameText.Content, font);
 		text.CharacterSize = (uint)nGameText.CharacterSize;
 		text.Origin = nGameText.TransformOrigin.ToSfmlVector2();
-		text.Position = transform.Position.ToSfmlVector2();
+		text.Position = transform.Position.ToSfmlVector2YInverted();
 		text.FillColor = nGameText.Color.ToSfmlColor();
 
 		_window.Draw(text);

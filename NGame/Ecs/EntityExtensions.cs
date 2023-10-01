@@ -1,5 +1,7 @@
 ﻿namespace NGame.Ecs;
 
+
+
 public static class EntityExtensions
 {
 	public static T? GetComponent<T>(this Entity entity) where T : IComponent =>
@@ -14,6 +16,14 @@ public static class EntityExtensions
 		entity
 			.Components
 			.Where(x => x.GetType() == typeof(T))
+			.Cast<T>()
+			.First();
+
+
+	public static T GetRequiredSubTypeComponent<T>(this Entity entity) where T : IComponent =>
+		entity
+			.Components
+			.Where(x => x.GetType().IsAssignableTo(typeof(T)))
 			.Cast<T>()
 			.First();
 }

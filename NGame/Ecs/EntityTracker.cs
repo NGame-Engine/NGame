@@ -20,7 +20,7 @@ internal class EntityTracker : IEntityTracker
 
 	public void AddEntity(Entity entity)
 	{
-		var components =
+		ISet<Type> componentTypes =
 			entity
 				.Components
 				.Select(x => x.GetType())
@@ -28,9 +28,7 @@ internal class EntityTracker : IEntityTracker
 
 		foreach (var system in _systemCollection.GetSystems())
 		{
-			if (!components.IsSupersetOf(system.RequiredComponents)) continue;
-
-			system.Add(entity);
+			system.Add(entity, componentTypes);
 		}
 	}
 }

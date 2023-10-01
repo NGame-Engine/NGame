@@ -5,6 +5,8 @@ using NGame.UpdateSchedulers;
 
 namespace NGame.Components.Texts;
 
+
+
 internal class TextRendererSystem : ISystem, IDrawable
 {
 	private readonly INGameRenderer _renderer;
@@ -17,11 +19,13 @@ internal class TextRendererSystem : ISystem, IDrawable
 	}
 
 
-	ICollection<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(TextRenderer) };
+	public ICollection<Type> RequiredComponents => new[] { typeof(Transform), typeof(TextRenderer) };
 
 
-	void ISystem.Add(Entity entity)
+	void ISystem.Add(Entity entity, ISet<Type> componentTypes)
 	{
+		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
+
 		var transform = entity.GetRequiredComponent<Transform>();
 		var spriteRenderer = entity.GetRequiredComponent<TextRenderer>();
 

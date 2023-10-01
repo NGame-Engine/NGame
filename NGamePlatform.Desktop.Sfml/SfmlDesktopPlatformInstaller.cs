@@ -15,7 +15,7 @@ namespace NGamePlatform.Desktop.Sfml;
 
 public static class SfmlDesktopPlatformInstaller
 {
-	public static void AddSfmlDesktopPlatform(this INGameApplicationBuilder builder)
+	public static INGameApplicationBuilder AddSfmlDesktopPlatform(this INGameApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<IAudioPlugin, SfmlAudioPlugin>();
 
@@ -50,12 +50,16 @@ public static class SfmlDesktopPlatformInstaller
 		);
 
 		builder.Services.AddTransient<RenderWindowEventConnector>();
+
+		return builder;
 	}
 
 
-	public static void UseSfmlDesktopPlatform(this NGameApplication app)
+	public static NGameApplication UseSfmlDesktopPlatform(this NGameApplication app)
 	{
 		var renderWindowEventConnector = app.Services.GetRequiredService<RenderWindowEventConnector>();
 		renderWindowEventConnector.ConnectEvents();
+
+		return app;
 	}
 }

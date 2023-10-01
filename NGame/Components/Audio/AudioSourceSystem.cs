@@ -25,8 +25,10 @@ public class AudioSourceSystem : ISystem, IUpdatable
 	};
 
 
-	public void Add(Entity entity)
+	public void Add(Entity entity, ISet<Type> componentTypes)
 	{
+		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
+		
 		var transform = entity.GetRequiredComponent<Transform>();
 		var audioSource = entity.GetRequiredComponent<AudioSource>();
 

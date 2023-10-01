@@ -12,8 +12,16 @@ public static class Extensions
 		new(vector2.X, vector2.Y);
 
 
+	public static Vector2f ToSfmlVector2YInverted(this Vector2 vector2) =>
+		new(vector2.X, -vector2.Y);
+
+
 	public static Vector2f ToSfmlVector2(this Vector3 vector3) =>
 		new(vector3.X, vector3.Y);
+
+
+	public static Vector2f ToSfmlVector2YInverted(this Vector3 vector3) =>
+		new(vector3.X, -vector3.Y);
 
 
 	public static Vector3f ToSfmlVector3(this Vector3 vector3) =>

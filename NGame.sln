@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.UnitTests", "NGame.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlatform.Desktop.Sfml", "NGamePlatform.Desktop.Sfml\NGamePlatform.Desktop.Sfml.csproj", "{499EDDB4-DDA9-487E-B555-E01F99DBF45C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGamePlugin.Physics2D.Aether", "NGamePlugin.Physics2D.Aether\NGamePlugin.Physics2D.Aether.csproj", "{1DA735E7-1588-4F3C-A8A6-0BB496ABF24A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{499EDDB4-DDA9-487E-B555-E01F99DBF45C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{499EDDB4-DDA9-487E-B555-E01F99DBF45C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{499EDDB4-DDA9-487E-B555-E01F99DBF45C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DA735E7-1588-4F3C-A8A6-0BB496ABF24A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA735E7-1588-4F3C-A8A6-0BB496ABF24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA735E7-1588-4F3C-A8A6-0BB496ABF24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA735E7-1588-4F3C-A8A6-0BB496ABF24A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

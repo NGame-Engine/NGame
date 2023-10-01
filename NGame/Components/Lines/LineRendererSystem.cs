@@ -19,11 +19,13 @@ internal class LineRendererSystem : ISystem, IDrawable
 	}
 
 
-	ICollection<Type> ISystem.RequiredComponents => new[] { typeof(Transform), typeof(LineRenderer) };
+	public ICollection<Type> RequiredComponents => new[] { typeof(Transform), typeof(LineRenderer) };
 
 
-	void ISystem.Add(Entity entity)
+	void ISystem.Add(Entity entity, ISet<Type> componentTypes)
 	{
+		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
+
 		var lineRenderer = entity.GetRequiredComponent<LineRenderer>();
 
 		var line = lineRenderer.Line;

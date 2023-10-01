@@ -3,5 +3,5 @@
 public interface ISystem
 {
 	ICollection<Type> RequiredComponents { get; }
-	void Add(Entity entity);
+	void Add(Entity entity, ISet<Type> componentTypes);
 }
