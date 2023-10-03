@@ -1,4 +1,4 @@
-namespace NGame.Maths;
+namespace NGame.NGameSystem;
 
 public static class RandomExtensions
 {

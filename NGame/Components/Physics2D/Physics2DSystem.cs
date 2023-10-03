@@ -1,17 +1,16 @@
 ﻿using System.Numerics;
 using NGame.Components.Transforms;
 using NGame.Ecs;
-using NGame.Maths;
+using NGame.NGameSystem;
 using NGame.UpdateSchedulers;
 
 namespace NGame.Components.Physics2D;
 
 
 
-internal class Physics2DSystem : ISystem, IUpdatable
+internal class Physics2DSystem : DataListSystem<Physics2DSystem.Data>, IUpdatable
 {
 	private readonly IPhysicsEngine2D _physicsEngine2D;
-	private readonly List<Data> _datas = new();
 
 
 	public Physics2DSystem(IPhysicsEngine2D physicsEngine2D)
@@ -20,22 +19,17 @@ internal class Physics2DSystem : ISystem, IUpdatable
 	}
 
 
-	public ICollection<Type> RequiredComponents => new[] { typeof(Transform), typeof(Collider2D) };
+	protected override ICollection<Type> RequiredComponents =>
+		new[] { typeof(Collider2D) };
 
 
-	void ISystem.Add(Entity entity, ISet<Type> componentTypes)
+	protected override Data CreateDataFromEntity(Entity entity)
 	{
-		var appliesToThisSystem =
-			componentTypes.Contains(typeof(Transform)) &&
-			componentTypes.Any(x => x.IsAssignableTo(typeof(Collider2D)));
-
-		if (!appliesToThisSystem) return;
-
-		var transform = entity.GetRequiredComponent<Transform>();
+		var transform = entity.Transform;
 		var collider2D = entity.GetRequiredSubTypeComponent<Collider2D>();
 		var physicsBody2D =
 			entity.GetComponent<PhysicsBody2D>()
-			?? new PhysicsBody2D{BodyType2D = BodyType2D.Kinematic };
+			?? new PhysicsBody2D { BodyType2D = BodyType2D.Kinematic };
 
 		_physicsEngine2D.CreateBody(physicsBody2D, transform);
 
@@ -52,8 +46,7 @@ internal class Physics2DSystem : ISystem, IUpdatable
 			throw new NotSupportedException($"Collider type '{collider2D.GetType()}' not supported");
 		}
 
-		var data = new Data(transform, physicsBody2D, collider2D);
-		_datas.Add(data);
+		return new Data(transform, physicsBody2D, collider2D);
 	}
 
 
@@ -61,7 +54,7 @@ internal class Physics2DSystem : ISystem, IUpdatable
 	{
 		_physicsEngine2D.Tick(gameTime);
 
-		foreach (var data in _datas)
+		foreach (var data in DataEntries)
 		{
 			var transformResult = _physicsEngine2D.GetTransform(data.PhysicsBody2D);
 
@@ -80,7 +73,7 @@ internal class Physics2DSystem : ISystem, IUpdatable
 
 
 
-	private class Data
+	internal class Data
 	{
 		public readonly Transform Transform;
 		public readonly PhysicsBody2D PhysicsBody2D;

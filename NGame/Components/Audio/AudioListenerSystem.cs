@@ -7,13 +7,10 @@ namespace NGame.Components.Audio;
 
 
 
-public class AudioListenerSystem : ISystem, IUpdatable
+internal class AudioListenerSystem : DataListSystem<AudioListenerSystem.Data>, IUpdatable
 {
 	private readonly IAudioPlugin _audioPlugin;
 	private readonly ILogger<AudioListenerSystem> _logger;
-	private readonly List<Data> _datas = new();
-	private bool _hasWarnedThatNoListenerExists;
-	private bool _hasCheckedIfTooManyListeners;
 
 
 	public AudioListenerSystem(IAudioPlugin audioPlugin, ILogger<AudioListenerSystem> logger)
@@ -23,30 +20,28 @@ public class AudioListenerSystem : ISystem, IUpdatable
 	}
 
 
-	public ICollection<Type> RequiredComponents { get; } = new List<Type>
+	private bool _hasWarnedThatNoListenerExists;
+	private bool _hasCheckedIfTooManyListeners;
+
+
+	protected override ICollection<Type> RequiredComponents { get; } =
+		new[] { typeof(AudioListener) };
+
+
+	protected override Data CreateDataFromEntity(Entity entity)
 	{
-		typeof(AudioListener),
-		typeof(Transform)
-	};
-
-
-	public void Add(Entity entity, ISet<Type> componentTypes)
-	{
-		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
-
-		var transform = entity.GetRequiredComponent<Transform>();
+		var transform = entity.Transform;
 		var audioListener = entity.GetRequiredComponent<AudioListener>();
 
 		_audioPlugin.AddAudioListener(audioListener, transform);
 
-		var data = new Data(transform, audioListener);
-		_datas.Add(data);
+		return new Data(transform, audioListener);
 	}
 
 
 	public void Update(GameTime gameTime)
 	{
-		if (_datas.Count == 0)
+		if (DataEntries.Count == 0)
 		{
 			if (_hasWarnedThatNoListenerExists) return;
 
@@ -58,7 +53,7 @@ public class AudioListenerSystem : ISystem, IUpdatable
 		if (!_hasCheckedIfTooManyListeners)
 		{
 			_hasCheckedIfTooManyListeners = true;
-			if (_datas.Count > 1)
+			if (DataEntries.Count > 1)
 			{
 				_logger.LogWarning(
 					"More than one AudioListener in the scene, the second one will be ignored"
@@ -67,13 +62,13 @@ public class AudioListenerSystem : ISystem, IUpdatable
 		}
 
 
-		var data = _datas[0];
+		var data = DataEntries.First();
 		_audioPlugin.SetListenerPosition(data.Transform);
 	}
 
 
 
-	private class Data
+	internal class Data
 	{
 		public Transform Transform;
 		public AudioListener AudioListener;

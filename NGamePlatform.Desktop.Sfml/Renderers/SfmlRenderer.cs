@@ -1,7 +1,6 @@
 ﻿using NGame.Components.Lines;
 using NGame.Renderers;
 using SFML.Graphics;
-using SFML.System;
 using Font = SFML.Graphics.Font;
 using NGameSprite = NGame.Components.Sprites.Sprite;
 using NGameTexture = NGame.Components.Sprites.Texture;
@@ -82,14 +81,14 @@ public class SfmlRenderer : INGameRenderer
 		);
 
 		sp.Position = (transform.Position * PixelPerMeter).ToSfmlVector2YInverted();
-		
-		
+
 
 		_window.Draw(sp);
 	}
 
 
 	private int PixelPerMeter = 64;
+
 
 	void INGameRenderer.Draw(Line line)
 	{

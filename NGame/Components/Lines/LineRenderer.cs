@@ -4,7 +4,7 @@ namespace NGame.Components.Lines;
 
 
 
-public sealed class LineRenderer : IComponent
+public sealed class LineRenderer : Component
 {
 	public Line? Line { get; set; }
 }

@@ -1,26 +1,31 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Application;
-using NGame.Assets;
 
 namespace NGame.Scenes;
 
+
+
 public static class SceneInstaller
 {
-	public static void AddSceneSupport(this INGameApplicationBuilder gameBuilder)
+	public static INGameApplicationBuilder AddSceneSupport(this INGameApplicationBuilder builder)
 	{
 		var jwtConfiguration = new SceneConfiguration();
-		gameBuilder.Configuration.GetSection(SceneConfiguration.JsonElementName).Bind(jwtConfiguration);
-		gameBuilder.Services.AddSingleton(jwtConfiguration);
+		builder.Configuration.GetSection(SceneConfiguration.JsonElementName).Bind(jwtConfiguration);
+		builder.Services.AddSingleton(jwtConfiguration);
 
-		gameBuilder.Services.AddSingleton<IAssetSerializer<Scene>, SceneSerializer>();
-		gameBuilder.Services.AddTransient<ISceneLoader, SceneLoader>();
+		builder.Services.AddSingleton<IRootSceneAccessor, RootSceneAccessor>();
+		builder.Services.AddSingleton<Scene>();
+
+		return builder;
 	}
 
 
-	public static void LoadStartupScene(this NGameApplication app)
+	public static NGameApplication LoadStartupScene(this NGameApplication app)
 	{
 		//var sceneLoader = gameRunner.Services.GetRequiredService<ISceneLoader>();
 		//sceneLoader.LoadStartupScene();
+
+		return app;
 	}
 }

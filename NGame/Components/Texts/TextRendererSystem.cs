@@ -7,10 +7,9 @@ namespace NGame.Components.Texts;
 
 
 
-internal class TextRendererSystem : ISystem, IDrawable
+internal class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDrawable
 {
 	private readonly INGameRenderer _renderer;
-	private readonly List<Data> _datas = new();
 
 
 	public TextRendererSystem(INGameRenderer renderer)
@@ -19,26 +18,24 @@ internal class TextRendererSystem : ISystem, IDrawable
 	}
 
 
-	public ICollection<Type> RequiredComponents => new[] { typeof(Transform), typeof(TextRenderer) };
+	protected override ICollection<Type> RequiredComponents =>
+		new[] { typeof(TextRenderer) };
 
 
-	void ISystem.Add(Entity entity, ISet<Type> componentTypes)
+	protected override Data CreateDataFromEntity(Entity entity)
 	{
-		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
-
-		var transform = entity.GetRequiredComponent<Transform>();
+		var transform = entity.Transform;
 		var spriteRenderer = entity.GetRequiredComponent<TextRenderer>();
 
 		var sprite = spriteRenderer.Text;
 
-		var data = new Data(transform, sprite);
-		_datas.Add(data);
+		return new Data(transform, sprite);
 	}
 
 
 	void IDrawable.Draw(GameTime gameTime)
 	{
-		foreach (var data in _datas)
+		foreach (var data in DataEntries)
 		{
 			if (data.Text == null) continue;
 
@@ -48,7 +45,7 @@ internal class TextRendererSystem : ISystem, IDrawable
 
 
 
-	private class Data
+	internal class Data
 	{
 		public readonly Transform Transform;
 		public readonly Text? Text;

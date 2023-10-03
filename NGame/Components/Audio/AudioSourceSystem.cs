@@ -6,10 +6,9 @@ namespace NGame.Components.Audio;
 
 
 
-public class AudioSourceSystem : ISystem, IUpdatable
+internal class AudioSourceSystem : DataListSystem<AudioSourceSystem.Data>, IUpdatable
 {
 	private readonly IAudioPlugin _audioPlugin;
-	private readonly List<Data> _datas = new();
 
 
 	public AudioSourceSystem(IAudioPlugin audioPlugin)
@@ -18,38 +17,31 @@ public class AudioSourceSystem : ISystem, IUpdatable
 	}
 
 
-	public ICollection<Type> RequiredComponents { get; } = new List<Type>
-	{
-		typeof(AudioSource),
-		typeof(Transform)
-	};
+	protected override ICollection<Type> RequiredComponents { get; } =
+		new[] { typeof(AudioSource) };
 
 
-	public void Add(Entity entity, ISet<Type> componentTypes)
+	protected override Data CreateDataFromEntity(Entity entity)
 	{
-		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
-		
-		var transform = entity.GetRequiredComponent<Transform>();
+		var transform = entity.Transform;
 		var audioSource = entity.GetRequiredComponent<AudioSource>();
 
 		_audioPlugin.AddSource(audioSource);
 
 		var audioClip = audioSource.AudioClip;
-		if (audioClip == null) return;
 
-		if (!_audioPlugin.IsClipLoaded(audioClip))
+		if (audioClip != null && !_audioPlugin.IsClipLoaded(audioClip))
 		{
 			_audioPlugin.Load(audioClip);
 		}
 
-		var data = new Data(transform, audioSource);
-		_datas.Add(data);
+		return new Data(transform, audioSource);
 	}
 
 
 	public void Update(GameTime gameTime)
 	{
-		foreach (var data in _datas)
+		foreach (var data in DataEntries)
 		{
 			_audioPlugin.SetSourcePosition(data.AudioSource, data.Transform.Position);
 		}
@@ -57,7 +49,7 @@ public class AudioSourceSystem : ISystem, IUpdatable
 
 
 
-	private class Data
+	internal class Data
 	{
 		public readonly Transform Transform;
 		public readonly AudioSource AudioSource;

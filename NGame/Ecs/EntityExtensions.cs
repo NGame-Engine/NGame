@@ -4,25 +4,25 @@
 
 public static class EntityExtensions
 {
-	public static T? GetComponent<T>(this Entity entity) where T : IComponent =>
+	public static T? GetComponent<T>(this Entity entity) where T : Component =>
 		entity
-			.Components
+			.GetComponents()
 			.Where(x => x.GetType() == typeof(T))
 			.Cast<T>()
 			.FirstOrDefault();
 
 
-	public static T GetRequiredComponent<T>(this Entity entity) where T : IComponent =>
+	public static T GetRequiredComponent<T>(this Entity entity) where T : Component =>
 		entity
-			.Components
+			.GetComponents()
 			.Where(x => x.GetType() == typeof(T))
 			.Cast<T>()
 			.First();
 
 
-	public static T GetRequiredSubTypeComponent<T>(this Entity entity) where T : IComponent =>
+	public static T GetRequiredSubTypeComponent<T>(this Entity entity) where T : Component =>
 		entity
-			.Components
+			.GetComponents()
 			.Where(x => x.GetType().IsAssignableTo(typeof(T)))
 			.Cast<T>()
 			.First();
