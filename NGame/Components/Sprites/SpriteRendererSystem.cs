@@ -7,7 +7,7 @@ namespace NGame.Components.Sprites;
 
 
 
-internal class SpriteRendererSystem : DataListSystem<SpriteRendererSystem.Data>, IDrawable
+public class SpriteRendererSystem : DataListSystem<SpriteRendererSystem.Data>, IDrawable
 {
 	private readonly INGameRenderer _renderer;
 
@@ -44,7 +44,7 @@ internal class SpriteRendererSystem : DataListSystem<SpriteRendererSystem.Data>,
 
 
 
-	internal class Data
+	public class Data
 	{
 		public readonly Transform Transform;
 		public readonly SpriteRenderer SpriteRenderer;

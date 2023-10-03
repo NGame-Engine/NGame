@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Application;
 using NGame.Ecs.Events;
+using NGame.UpdateSchedulers;
 
 namespace NGame.Ecs;
 
@@ -37,21 +38,26 @@ public static class EcsInstaller
 	}
 
 
+	public static INGameApplicationBuilder AddSystemsFromAssembly(
+		this INGameApplicationBuilder builder,
+		Assembly assembly
+	)
+	{
+		foreach (var systemType in GetConcreteSubTypes<ISystem>(assembly))
+		{
+			builder.Services.AddSingleton(systemType);
+		}
+
+		return builder;
+	}
+
+
 	public static INGameApplicationBuilder AddComponentsFromAssembly(
 		this INGameApplicationBuilder builder,
 		Assembly assembly
 	)
 	{
-		var concreteComponentTypes =
-			assembly
-				.GetExportedTypes()
-				.Where(
-					x =>
-						!x.IsAbstract &&
-						x.IsAssignableTo(typeof(Component))
-				);
-
-		foreach (var componentType in concreteComponentTypes)
+		foreach (var componentType in GetConcreteSubTypes<Component>(assembly))
 		{
 			builder.Services.AddTransient(componentType);
 		}
@@ -70,6 +76,30 @@ public static class EcsInstaller
 	}
 
 
+	public static NGameApplication RegisterSystemsFromAssembly(
+		this NGameApplication app,
+		Assembly assembly
+	)
+	{
+		var systemCollection = app.Services.GetRequiredService<ISystemCollection>();
+		var updatableCollection = app.Services.GetRequiredService<IUpdatableCollection>();
+		var drawableCollection = app.Services.GetRequiredService<IDrawableCollection>();
+		foreach (var type in GetConcreteSubTypes<ISystem>(assembly))
+		{
+			var service = app.Services.GetService(type);
+			if (service is not ISystem system) continue;
+
+			systemCollection.Add(system);
+
+			if (system is IUpdatable updatable) updatableCollection.Add(updatable);
+			if (system is IDrawable drawable) drawableCollection.Add(drawable);
+		}
+
+
+		return app;
+	}
+
+
 	public static NGameApplication RegisterComponent<T>(this NGameApplication app)
 		where T : Component
 	{
@@ -78,4 +108,29 @@ public static class EcsInstaller
 
 		return app;
 	}
+
+
+	public static NGameApplication RegisterComponentsFromAssembly(
+		this NGameApplication app,
+		Assembly assembly
+	)
+	{
+		var componentTypeRegistry = app.Services.GetRequiredService<IComponentTypeRegistry>();
+		foreach (var type in GetConcreteSubTypes<Component>(assembly))
+		{
+			componentTypeRegistry.Register(type);
+		}
+
+		return app;
+	}
+
+
+	private static IEnumerable<Type> GetConcreteSubTypes<T>(Assembly assembly) =>
+		assembly
+			.GetExportedTypes()
+			.Where(
+				x =>
+					!x.IsAbstract &&
+					x.IsAssignableTo(typeof(T))
+			);
 }

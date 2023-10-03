@@ -7,7 +7,7 @@ namespace NGame.Components.Texts;
 
 
 
-internal class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDrawable
+public class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDrawable
 {
 	private readonly INGameRenderer _renderer;
 
@@ -45,7 +45,7 @@ internal class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDr
 
 
 
-	internal class Data
+	public class Data
 	{
 		public readonly Transform Transform;
 		public readonly Text? Text;

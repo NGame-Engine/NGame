@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
+using NGame.Components.Physics2D;
 using NGame.Components.Transforms;
 using NGame.Ecs;
 using NGame.NGameSystem;
 using NGame.UpdateSchedulers;
 
-namespace NGame.Components.Physics2D;
+namespace NGamePlugin.Physics2D.Aether;
 
 
 

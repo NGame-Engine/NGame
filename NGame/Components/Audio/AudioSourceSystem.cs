@@ -6,7 +6,7 @@ namespace NGame.Components.Audio;
 
 
 
-internal class AudioSourceSystem : DataListSystem<AudioSourceSystem.Data>, IUpdatable
+public class AudioSourceSystem : DataListSystem<AudioSourceSystem.Data>, IUpdatable
 {
 	private readonly IAudioPlugin _audioPlugin;
 
@@ -49,7 +49,7 @@ internal class AudioSourceSystem : DataListSystem<AudioSourceSystem.Data>, IUpda
 
 
 
-	internal class Data
+	public class Data
 	{
 		public readonly Transform Transform;
 		public readonly AudioSource AudioSource;

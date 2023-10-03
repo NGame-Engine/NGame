@@ -7,7 +7,7 @@ namespace NGame.Components.Audio;
 
 
 
-internal class AudioListenerSystem : DataListSystem<AudioListenerSystem.Data>, IUpdatable
+public class AudioListenerSystem : DataListSystem<AudioListenerSystem.Data>, IUpdatable
 {
 	private readonly IAudioPlugin _audioPlugin;
 	private readonly ILogger<AudioListenerSystem> _logger;
@@ -68,7 +68,7 @@ internal class AudioListenerSystem : DataListSystem<AudioListenerSystem.Data>, I
 
 
 
-	internal class Data
+	public class Data
 	{
 		public Transform Transform;
 		public AudioListener AudioListener;

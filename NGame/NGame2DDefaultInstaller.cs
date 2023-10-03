@@ -3,10 +3,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NGame.Application;
 using NGame.Components.Audio;
-using NGame.Components.Lines;
-using NGame.Components.Physics2D;
-using NGame.Components.Sprites;
-using NGame.Components.Texts;
 using NGame.Components.Transforms;
 using NGame.Ecs;
 using NGame.NGameSystem.Parallelism;
@@ -37,17 +33,14 @@ public static class NGame2DDefaultInstaller
 
 		builder.AddUpdateScheduler();
 		builder.AddComponentSystem();
+		builder.AddSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+		builder.AddComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 
 		builder.AddTransforms();
 
 		builder.AddSceneSupport();
 
-		builder.AddSprites();
-		builder.AddText();
-		builder.AddLines();
 		builder.AddAudio();
-
-		builder.AddPhysics2D();
 	}
 
 
@@ -56,11 +49,9 @@ public static class NGame2DDefaultInstaller
 		app.UseComponentSystem();
 		app.UseTransforms();
 
-		app.UseSprites();
-		app.UseText();
-		app.UseLines();
-		app.UseAudio();
+		app.RegisterSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+		app.RegisterComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 
-		app.UsePhysics2D();
+		app.UseAudio();
 	}
 }

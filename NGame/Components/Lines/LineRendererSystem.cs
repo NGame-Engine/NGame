@@ -6,7 +6,7 @@ namespace NGame.Components.Lines;
 
 
 
-internal class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDrawable
+public class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDrawable
 {
 	private readonly INGameRenderer _renderer;
 
@@ -40,7 +40,7 @@ internal class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDr
 
 
 
-	internal class Data
+	public class Data
 	{
 		public readonly Line? Line;
 
