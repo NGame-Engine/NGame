@@ -24,8 +24,7 @@ public class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDraw
 	protected override Data CreateDataFromEntity(Entity entity)
 	{
 		var lineRenderer = entity.GetRequiredComponent<LineRenderer>();
-		var line = lineRenderer.Line;
-		return new Data(line);
+		return new Data(lineRenderer);
 	}
 
 
@@ -33,8 +32,9 @@ public class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDraw
 	{
 		foreach (var data in DataEntries)
 		{
-			if (data.Line == null) continue;
-			_renderer.Draw(data.Line);
+			var line = data.LineRenderer.Line;
+			if (line == null) continue;
+			_renderer.Draw(line);
 		}
 	}
 
@@ -42,12 +42,12 @@ public class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDraw
 
 	public class Data
 	{
-		public readonly Line? Line;
+		public readonly LineRenderer LineRenderer;
 
 
-		public Data(Line? line)
+		public Data(LineRenderer lineRenderer)
 		{
-			Line = line;
+			LineRenderer = lineRenderer;
 		}
 	}
 }

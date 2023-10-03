@@ -25,11 +25,8 @@ public class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDraw
 	protected override Data CreateDataFromEntity(Entity entity)
 	{
 		var transform = entity.Transform;
-		var spriteRenderer = entity.GetRequiredComponent<TextRenderer>();
-
-		var sprite = spriteRenderer.Text;
-
-		return new Data(transform, sprite);
+		var textRenderer = entity.GetRequiredComponent<TextRenderer>();
+		return new Data(transform, textRenderer);
 	}
 
 
@@ -37,9 +34,10 @@ public class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDraw
 	{
 		foreach (var data in DataEntries)
 		{
-			if (data.Text == null) continue;
+			var text = data.TextRenderer.Text;
+			if (text == null) continue;
 
-			_renderer.Draw(data.Text, data.Transform);
+			_renderer.Draw(text, data.Transform);
 		}
 	}
 
@@ -48,13 +46,13 @@ public class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDraw
 	public class Data
 	{
 		public readonly Transform Transform;
-		public readonly Text? Text;
+		public readonly TextRenderer TextRenderer;
 
 
-		public Data(Transform transform, Text? text)
+		public Data(Transform transform, TextRenderer textRenderer)
 		{
 			Transform = transform;
-			Text = text;
+			TextRenderer = textRenderer;
 		}
 	}
 }
