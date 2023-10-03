@@ -3,6 +3,8 @@ using Microsoft.Extensions.Hosting;
 
 namespace NGame.Application;
 
+
+
 public sealed class NGameApplication
 {
 	private readonly IHost _host;
@@ -17,7 +19,8 @@ public sealed class NGameApplication
 	public IServiceProvider Services => _host.Services;
 
 
-	public static INGameApplicationBuilder CreateBuilder() => new NGameApplicationBuilder();
+	public static INGameApplicationBuilder CreateBuilder() =>
+		new NGameApplicationBuilder();
 
 
 	public void Run()

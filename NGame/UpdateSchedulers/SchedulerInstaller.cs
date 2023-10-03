@@ -12,6 +12,7 @@ public static class SchedulerInstaller
 		builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
 		builder.Services.AddSingleton<IUpdatableCollection, UpdatableCollection>();
 		builder.Services.AddSingleton<IDrawableCollection, DrawableCollection>();
+		builder.Services.AddSingleton<IFrameEventBus, FrameEventBus>();
 
 		return builder;
 	}

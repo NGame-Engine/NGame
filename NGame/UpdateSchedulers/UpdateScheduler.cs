@@ -53,6 +53,7 @@ internal class UpdateScheduler : IUpdateScheduler
 	private readonly INGameRenderer _nGameRenderer;
 	private readonly IUpdatableCollection _updatableCollection;
 	private readonly IDrawableCollection _drawableCollection;
+	private readonly IFrameEventBus _frameEventBus;
 
 	private readonly TimeSpan _maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
 	private readonly TimerTick _autoTickTimer = new();
@@ -63,13 +64,15 @@ internal class UpdateScheduler : IUpdateScheduler
 		ILogger<UpdateScheduler> logger,
 		INGameRenderer nGameRenderer,
 		IUpdatableCollection updatableCollection,
-		IDrawableCollection drawableCollection
+		IDrawableCollection drawableCollection,
+		IFrameEventBus frameEventBus
 	)
 	{
 		_logger = logger;
 		_nGameRenderer = nGameRenderer;
 		_updatableCollection = updatableCollection;
 		_drawableCollection = drawableCollection;
+		_frameEventBus = frameEventBus;
 	}
 
 
@@ -205,6 +208,8 @@ internal class UpdateScheduler : IUpdateScheduler
 		try
 		{
 			beginDrawSuccessful = _nGameRenderer.BeginDraw();
+
+			_frameEventBus.OnFrameStart();
 
 			// Reset the time of the next frame
 			for (int i = 0; i < updateCount && !IsStopped; i++)
