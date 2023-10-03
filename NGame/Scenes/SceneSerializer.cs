@@ -6,6 +6,8 @@ using NGame.Ecs;
 
 namespace NGame.Scenes;
 
+
+
 public interface ISceneSerializationOptionsProvider
 {
 	JsonSerializerOptions CreateJsonSerializerOptions();
@@ -13,7 +15,7 @@ public interface ISceneSerializationOptionsProvider
 
 
 
-internal class SceneSerializer : IAssetSerializer<Scene>, ISceneSerializationOptionsProvider
+public class SceneSerializer : IAssetSerializer<object>, ISceneSerializationOptionsProvider
 {
 	private readonly IComponentTypeRegistry _componentTypeRegistry;
 	private readonly ILogger<SceneSerializer> _logger;
@@ -26,11 +28,11 @@ internal class SceneSerializer : IAssetSerializer<Scene>, ISceneSerializationOpt
 	}
 
 
-	public Scene Deserialize(string filePath)
+	public object Deserialize(string filePath)
 	{
 		using var fileStream = File.OpenRead(filePath);
 		var jsonSerializerOptions = CreateJsonSerializerOptions();
-		return JsonSerializer.Deserialize<Scene>(fileStream, jsonSerializerOptions)!;
+		return JsonSerializer.Deserialize<object>(fileStream, jsonSerializerOptions)!;
 	}
 
 
@@ -48,7 +50,7 @@ internal class SceneSerializer : IAssetSerializer<Scene>, ISceneSerializationOpt
 				new PolymorphicTypeResolver(
 					new Dictionary<Type, JsonPolymorphismOptions>
 					{
-						[typeof(IComponent)] = PolymorphismOptions.ForComponents(types)
+						[typeof(Component)] = PolymorphismOptions.ForComponents(types)
 					}
 				)
 		};

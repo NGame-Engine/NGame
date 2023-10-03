@@ -1,5 +1,5 @@
 using NGame.Components.Physics2D;
-using NGame.Maths;
+using NGame.NGameSystem;
 using NGame.UpdateSchedulers;
 using nkast.Aether.Physics2D.Dynamics;
 using NgTransform = NGame.Components.Transforms.Transform;
@@ -132,6 +132,13 @@ public class AetherPhysicsEngine2D : IPhysicsEngine2D
 	}
 
 
+	// TODO 
+	// User scripts
+	// TransformProcessor update matrices from TRS
+	// Physics update bodies from Worlds
+	// Physics run
+	// Physics update Worlds from bodies
+	// Physics (?) update TRS from worlds
 	public void Tick(GameTime gameTime)
 	{
 		var seconds = (float)gameTime.Elapsed.TotalSeconds;

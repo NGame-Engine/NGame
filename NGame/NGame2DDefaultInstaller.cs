@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NGame.Application;
 using NGame.Components.Audio;
@@ -6,7 +7,9 @@ using NGame.Components.Lines;
 using NGame.Components.Physics2D;
 using NGame.Components.Sprites;
 using NGame.Components.Texts;
+using NGame.Components.Transforms;
 using NGame.Ecs;
+using NGame.NGameSystem.Parallelism;
 using NGame.Scenes;
 using NGame.UpdateSchedulers;
 
@@ -23,8 +26,20 @@ public static class NGame2DDefaultInstaller
 			builder.Logging.AddConsole();
 		}
 
+		if (builder.Environment.Platform.IsMobile())
+		{
+			builder.Services.AddSingleton<ITaskScheduler, SequentialTaskScheduler>();
+		}
+		else
+		{
+			builder.Services.AddSingleton<ITaskScheduler, ParallelTaskScheduler>();
+		}
+
 		builder.AddUpdateScheduler();
 		builder.AddComponentSystem();
+
+		builder.AddTransforms();
+
 		builder.AddSceneSupport();
 
 		builder.AddSprites();
@@ -38,6 +53,9 @@ public static class NGame2DDefaultInstaller
 
 	public static void UseNGame2DDefault(this NGameApplication app)
 	{
+		app.UseComponentSystem();
+		app.UseTransforms();
+
 		app.UseSprites();
 		app.UseText();
 		app.UseLines();

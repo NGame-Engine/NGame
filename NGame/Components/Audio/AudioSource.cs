@@ -4,7 +4,7 @@ namespace NGame.Components.Audio;
 
 
 
-public class AudioSource : IComponent
+public class AudioSource : Component
 {
 	public AudioClip? AudioClip { get; set; }
 }

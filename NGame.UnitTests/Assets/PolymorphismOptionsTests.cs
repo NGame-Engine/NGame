@@ -7,7 +7,7 @@ namespace NGame.UnitTests.Assets;
 
 public class PolymorphismOptionsTests
 {
-	public class TestComponent : IComponent
+	public class TestComponent : Component
 	{
 	}
 
@@ -35,13 +35,13 @@ public class PolymorphismOptionsTests
 			new PolymorphicTypeResolver(
 				new Dictionary<Type, JsonPolymorphismOptions>
 				{
-					[typeof(IComponent)] = polymorphismOptions
+					[typeof(Component)] = polymorphismOptions
 				}
 			);
 
 
 		var testComponent =
-			JsonSerializer.Deserialize<IComponent>(
+			JsonSerializer.Deserialize<Component>(
 				input,
 				new JsonSerializerOptions
 				{
@@ -57,7 +57,7 @@ public class PolymorphismOptionsTests
 
 
 	[Component(StableDiscriminator = "jojojo")]
-	public class TestComponentWithStableDiscriminator : IComponent
+	public class TestComponentWithStableDiscriminator : Component
 	{
 	}
 
@@ -85,13 +85,13 @@ public class PolymorphismOptionsTests
 			new PolymorphicTypeResolver(
 				new Dictionary<Type, JsonPolymorphismOptions>
 				{
-					[typeof(IComponent)] = polymorphismOptions
+					[typeof(Component)] = polymorphismOptions
 				}
 			);
 
 
 		var testComponent =
-			JsonSerializer.Deserialize<IComponent>(
+			JsonSerializer.Deserialize<Component>(
 				input,
 				new JsonSerializerOptions
 				{
@@ -144,7 +144,7 @@ public class PolymorphismOptionsTests
 					TypeInfoResolver = new PolymorphicTypeResolver(
 						new Dictionary<Type, JsonPolymorphismOptions>
 						{
-							[typeof(IComponent)] = polymorphismOptions
+							[typeof(Component)] = polymorphismOptions
 						}
 					)
 				}

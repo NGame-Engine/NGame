@@ -4,6 +4,6 @@ namespace NGame.Components.Audio;
 
 
 
-public class AudioListener : IComponent
+public class AudioListener : Component
 {
 }

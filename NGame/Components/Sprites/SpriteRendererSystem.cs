@@ -7,10 +7,9 @@ namespace NGame.Components.Sprites;
 
 
 
-internal class SpriteRendererSystem : ISystem, IDrawable
+internal class SpriteRendererSystem : DataListSystem<SpriteRendererSystem.Data>, IDrawable
 {
 	private readonly INGameRenderer _renderer;
-	private readonly List<Data> _datas = new();
 
 
 	public SpriteRendererSystem(INGameRenderer renderer)
@@ -19,45 +18,42 @@ internal class SpriteRendererSystem : ISystem, IDrawable
 	}
 
 
-	public ICollection<Type> RequiredComponents => new[] { typeof(Transform), typeof(SpriteRenderer) };
+	protected override ICollection<Type> RequiredComponents =>
+		new[] { typeof(SpriteRenderer) };
 
 
-	void ISystem.Add(Entity entity, ISet<Type> componentTypes)
+	protected override Data CreateDataFromEntity(Entity entity)
 	{
-		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
-
-		var transform = entity.GetRequiredComponent<Transform>();
+		var transform = entity.Transform;
 		var spriteRenderer = entity.GetRequiredComponent<SpriteRenderer>();
 
-		var sprite = spriteRenderer.Sprite;
-
-		var data = new Data(transform, sprite);
-		_datas.Add(data);
+		return new Data(transform, spriteRenderer);
 	}
 
 
 	void IDrawable.Draw(GameTime gameTime)
 	{
-		foreach (var data in _datas)
+		foreach (var data in DataEntries)
 		{
-			if (data.Sprite == null) continue;
+			var sprite = data.SpriteRenderer.Sprite;
+			if (sprite == null) continue;
 
-			_renderer.Draw(data.Sprite, data.Transform);
+			_renderer.Draw(sprite, data.Transform);
 		}
 	}
 
 
 
-	private class Data
+	internal class Data
 	{
 		public readonly Transform Transform;
-		public readonly Sprite? Sprite;
+		public readonly SpriteRenderer SpriteRenderer;
 
 
-		public Data(Transform transform, Sprite? sprite)
+		public Data(Transform transform, SpriteRenderer spriteRenderer)
 		{
 			Transform = transform;
-			Sprite = sprite;
+			SpriteRenderer = spriteRenderer;
 		}
 	}
 }

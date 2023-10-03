@@ -6,9 +6,11 @@ using Microsoft.Extensions.Logging;
 
 namespace NGame.Application;
 
+
+
 public interface INGameApplicationBuilder
 {
-	public IHostEnvironment Environment { get; }
+	public INGameEnvironment Environment { get; }
 	public ConfigurationManager Configuration { get; }
 	public IServiceCollection Services { get; }
 	public ILoggingBuilder Logging { get; }
@@ -35,12 +37,15 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 
 	public NGameApplicationBuilder()
 	{
+		Environment = new NGameEnvironment(_builder.Environment);
+
+		_builder.Services.AddSingleton(Environment);
 		_builder.Services.AddSingleton<IApplicationEvents, ApplicationEvents>();
 		_builder.Services.AddSingleton<IGameRunner, GameRunner>();
 	}
 
 
-	public IHostEnvironment Environment => _builder.Environment;
+	public INGameEnvironment Environment { get; }
 	public ConfigurationManager Configuration => _builder.Configuration;
 	public IServiceCollection Services => _builder.Services;
 	public ILoggingBuilder Logging => _builder.Logging;

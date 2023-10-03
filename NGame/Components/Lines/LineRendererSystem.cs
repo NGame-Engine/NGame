@@ -1,5 +1,4 @@
-﻿using NGame.Components.Transforms;
-using NGame.Ecs;
+﻿using NGame.Ecs;
 using NGame.Renderers;
 using NGame.UpdateSchedulers;
 
@@ -7,10 +6,9 @@ namespace NGame.Components.Lines;
 
 
 
-internal class LineRendererSystem : ISystem, IDrawable
+internal class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDrawable
 {
 	private readonly INGameRenderer _renderer;
-	private readonly List<Data> _datas = new();
 
 
 	public LineRendererSystem(INGameRenderer renderer)
@@ -19,39 +17,35 @@ internal class LineRendererSystem : ISystem, IDrawable
 	}
 
 
-	public ICollection<Type> RequiredComponents => new[] { typeof(Transform), typeof(LineRenderer) };
+	protected override ICollection<Type> RequiredComponents =>
+		new[] { typeof(LineRenderer) };
 
 
-	void ISystem.Add(Entity entity, ISet<Type> componentTypes)
+	protected override Data CreateDataFromEntity(Entity entity)
 	{
-		if (!componentTypes.IsSupersetOf(RequiredComponents)) return;
-
 		var lineRenderer = entity.GetRequiredComponent<LineRenderer>();
-
 		var line = lineRenderer.Line;
-		if (line == null) return;
-
-		var data = new Data(line);
-		_datas.Add(data);
+		return new Data(line);
 	}
 
 
 	void IDrawable.Draw(GameTime gameTime)
 	{
-		foreach (var data in _datas)
+		foreach (var data in DataEntries)
 		{
+			if (data.Line == null) continue;
 			_renderer.Draw(data.Line);
 		}
 	}
 
 
 
-	private class Data
+	internal class Data
 	{
-		public readonly Line Line;
+		public readonly Line? Line;
 
 
-		public Data(Line line)
+		public Data(Line? line)
 		{
 			Line = line;
 		}

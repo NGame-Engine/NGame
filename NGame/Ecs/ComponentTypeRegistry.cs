@@ -4,7 +4,7 @@ namespace NGame.Ecs;
 
 public interface IComponentTypeRegistry
 {
-	void Register<T>() where T : IComponent;
+	void Register<T>() where T : Component;
 	ICollection<Type> GetComponentTypes();
 }
 

@@ -1,5 +1,8 @@
 namespace NGame.Ecs;
 
-public interface IComponent
+
+
+public class Component
 {
+	public Entity Entity { get; internal set; } = null!;
 }
