@@ -1,4 +1,6 @@
-﻿namespace NGame.UpdateSchedulers;
+﻿using Microsoft.Extensions.Logging;
+
+namespace NGame.UpdateSchedulers;
 
 
 
@@ -12,18 +14,41 @@ public interface IDrawableCollection
 
 internal class DrawableCollection : IDrawableCollection
 {
-	private readonly List<IDrawable> _drawableSystems = new();
+	private readonly ILogger<DrawableCollection> _logger;
+	private readonly List<IDrawable> _drawables = new();
 
 
-	public void Add(IDrawable drawable)
+	public DrawableCollection(ILogger<DrawableCollection> logger)
 	{
-		_drawableSystems.Add(drawable);
+		_logger = logger;
 	}
 
 
-	public void Draw(GameTime gameTime)
+	void IDrawableCollection.Add(IDrawable drawable)
 	{
-		foreach (var drawable in _drawableSystems)
+		_drawables.Add(drawable);
+
+
+		var newEntries =
+			_drawables
+				.Append(drawable)
+				.OrderBy(x => x.Order);
+
+		_drawables.Clear();
+
+		foreach (var entry in newEntries)
+		{
+			_drawables.Add(entry);
+		}
+
+
+		_logger.LogInformation("Drawable {Drawable} added", drawable);
+	}
+
+
+	void IDrawableCollection.Draw(GameTime gameTime)
+	{
+		foreach (var drawable in _drawables)
 		{
 			drawable.Draw(gameTime);
 		}

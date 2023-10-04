@@ -46,7 +46,7 @@ public abstract class DataListSystem<TData> : ISystem
 	}
 
 
-	public bool Contains(Entity entity) => _datas.ContainsKey(entity);
+	public virtual bool Contains(Entity entity) => _datas.ContainsKey(entity);
 
 
 	protected abstract ICollection<Type> RequiredComponents { get; }

@@ -7,7 +7,6 @@ namespace NGame.Ecs;
 public interface ISystemCollection
 {
 	void Add(ISystem system);
-	IEnumerable<ISystem> GetSystems();
 
 	void AddEntity(Entity entity);
 	void RemoveEntity(Entity entity);
@@ -21,7 +20,7 @@ public interface ISystemCollection
 internal class SystemCollection : ISystemCollection
 {
 	private readonly ILogger<SystemCollection> _logger;
-	private readonly ICollection<ISystem> _systems = new List<ISystem>();
+	private readonly List<ISystem> _systems = new();
 
 
 	public SystemCollection(ILogger<SystemCollection> logger)
@@ -37,17 +36,14 @@ internal class SystemCollection : ISystemCollection
 	}
 
 
-	public IEnumerable<ISystem> GetSystems() => _systems.ToList();
-
-
 	public void AddEntity(Entity entity)
 	{
 		var componentTypes = GetComponentTypes(entity);
 
-		foreach (var system in _systems)
-		{
-			if (!system.EntityIsMatch(componentTypes)) continue;
+		var relevantSystems = _systems.Where(system => system.EntityIsMatch(componentTypes));
 
+		foreach (var system in relevantSystems)
+		{
 			system.Add(entity);
 		}
 	}
@@ -66,11 +62,13 @@ internal class SystemCollection : ISystemCollection
 	{
 		var componentTypes = GetComponentTypes(entity);
 
-		foreach (var system in _systems)
-		{
-			if (system.Contains(entity)) continue;
-			if (!system.EntityIsMatch(componentTypes)) continue;
+		var relevantSystems =
+			_systems
+				.Where(system => !system.Contains(entity))
+				.Where(system => system.EntityIsMatch(componentTypes));
 
+		foreach (var system in relevantSystems)
+		{
 			system.Add(entity);
 		}
 	}
@@ -80,11 +78,13 @@ internal class SystemCollection : ISystemCollection
 	{
 		var componentTypes = GetComponentTypes(entity);
 
-		foreach (var system in _systems)
-		{
-			if (!system.Contains(entity)) continue;
-			if (system.EntityIsMatch(componentTypes)) continue;
+		var relevantSystems =
+			_systems
+				.Where(system => system.Contains(entity))
+				.Where(system => !system.EntityIsMatch(componentTypes));
 
+		foreach (var system in relevantSystems)
+		{
 			system.Remove(entity);
 		}
 	}

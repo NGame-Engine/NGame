@@ -17,6 +17,8 @@ public class LineRendererSystem : DataListSystem<LineRendererSystem.Data>, IDraw
 	}
 
 
+	public int Order { get; set; } = 60500;
+
 	protected override ICollection<Type> RequiredComponents =>
 		new[] { typeof(LineRenderer) };
 

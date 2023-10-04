@@ -26,6 +26,9 @@ internal class TransformProcessor : IDrawable
 	}
 
 
+	public int Order { get; set; } = 10000;
+
+
 	public void Draw(GameTime gameTime)
 	{
 		var rootScene = _rootSceneAccessor.RootScene;

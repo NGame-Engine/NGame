@@ -15,7 +15,7 @@ public interface IUpdatableCollection
 internal class UpdatableCollection : IUpdatableCollection
 {
 	private readonly ILogger<UpdatableCollection> _logger;
-	private readonly List<IUpdatable> _updatableSystems = new();
+	private readonly List<IUpdatable> _updatables = new();
 
 
 	public UpdatableCollection(ILogger<UpdatableCollection> logger)
@@ -24,15 +24,28 @@ internal class UpdatableCollection : IUpdatableCollection
 	}
 
 
-	public void Add(IUpdatable updatable)
+	void IUpdatableCollection.Add(IUpdatable updatable)
 	{
-		_updatableSystems.Add(updatable);
+		var newEntries =
+			_updatables
+				.Append(updatable)
+				.OrderBy(x => x.Order);
+
+		_updatables.Clear();
+
+		foreach (var systemEntry in newEntries)
+		{
+			_updatables.Add(systemEntry);
+		}
+
+
+		_logger.LogInformation("Updatable {Updatable} added", updatable);
 	}
 
 
-	public void Update(GameTime gameTime)
+	void IUpdatableCollection.Update(GameTime gameTime)
 	{
-		foreach (var updatableSystem in _updatableSystems)
+		foreach (var updatableSystem in _updatables)
 		{
 			updatableSystem.Update(gameTime);
 		}

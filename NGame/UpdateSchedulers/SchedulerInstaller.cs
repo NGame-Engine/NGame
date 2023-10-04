@@ -18,22 +18,24 @@ public static class SchedulerInstaller
 	}
 
 
-	public static NGameApplication UseUpdatable<T>(this NGameApplication app)
+	public static NGameApplication UseUpdatable<T>(this NGameApplication app, int? orderBy = null)
 		where T : IUpdatable
 	{
-		var systemCollection = app.Services.GetRequiredService<IUpdatableCollection>();
-		var system = app.Services.GetRequiredService<T>();
-		systemCollection.Add(system);
+		var updatableCollection = app.Services.GetRequiredService<IUpdatableCollection>();
+		var updatable = app.Services.GetRequiredService<T>();
+		updatable.Order = orderBy ?? updatable.Order;
+		updatableCollection.Add(updatable);
 		return app;
 	}
 
 
-	public static NGameApplication UseDrawable<T>(this NGameApplication app)
+	public static NGameApplication UseDrawable<T>(this NGameApplication app, int? orderBy = null)
 		where T : IDrawable
 	{
-		var systemCollection = app.Services.GetRequiredService<IDrawableCollection>();
-		var system = app.Services.GetRequiredService<T>();
-		systemCollection.Add(system);
+		var drawableCollection = app.Services.GetRequiredService<IDrawableCollection>();
+		var drawable = app.Services.GetRequiredService<T>();
+		drawable.Order = orderBy ?? drawable.Order;
+		drawableCollection.Add(drawable);
 		return app;
 	}
 }

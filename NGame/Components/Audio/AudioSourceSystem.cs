@@ -17,6 +17,8 @@ public class AudioSourceSystem : DataListSystem<AudioSourceSystem.Data>, IUpdata
 	}
 
 
+	public int Order { get; set; } = 40000;
+
 	protected override ICollection<Type> RequiredComponents { get; } =
 		new[] { typeof(AudioSource) };
 

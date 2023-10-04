@@ -18,6 +18,8 @@ public class SpriteRendererSystem : DataListSystem<SpriteRendererSystem.Data>, I
 	}
 
 
+	public int Order { get; set; } = 60000;
+
 	protected override ICollection<Type> RequiredComponents =>
 		new[] { typeof(SpriteRenderer) };
 

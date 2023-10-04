@@ -18,6 +18,8 @@ public class TextRendererSystem : DataListSystem<TextRendererSystem.Data>, IDraw
 	}
 
 
+	public int Order { get; set; } = 60200;
+
 	protected override ICollection<Type> RequiredComponents =>
 		new[] { typeof(TextRenderer) };
 

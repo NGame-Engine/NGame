@@ -26,6 +26,9 @@ public class AetherPhysicsSystem : ISystem, IUpdatable
 	private TimeSpan _nextDataUpdate;
 
 
+	public int Order { get; set; } = 50000;
+
+
 	public bool EntityIsMatch(IEnumerable<Type> componentTypes) =>
 		componentTypes.Any(x => x.IsAssignableTo(typeof(Collider2D)));
 

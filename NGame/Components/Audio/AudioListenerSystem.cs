@@ -24,6 +24,8 @@ public class AudioListenerSystem : DataListSystem<AudioListenerSystem.Data>, IUp
 	private bool _hasCheckedIfTooManyListeners;
 
 
+	public int Order { get; set; } = 40100;
+
 	protected override ICollection<Type> RequiredComponents { get; } =
 		new[] { typeof(AudioListener) };
 

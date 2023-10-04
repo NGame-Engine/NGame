@@ -26,6 +26,9 @@ public class CameraSystem : ISystem, IUpdatable
 	private Data? _data;
 
 
+	public int Order { get; set; } = 60300;
+
+
 	public bool EntityIsMatch(IEnumerable<Type> componentTypes) =>
 		componentTypes.Any(x => x.IsAssignableTo(typeof(Camera2D)));
 
