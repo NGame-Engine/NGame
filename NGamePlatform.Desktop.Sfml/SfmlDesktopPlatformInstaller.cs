@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NGame.Application;
 using NGame.Components.Audio;
+using NGame.Ecs;
 using NGame.Inputs;
 using NGame.OsWindows;
 using NGame.Renderers;
@@ -51,12 +52,16 @@ public static class SfmlDesktopPlatformInstaller
 
 		builder.Services.AddTransient<RenderWindowEventConnector>();
 
+		builder.AddSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
+
 		return builder;
 	}
 
 
 	public static NGameApplication UseSfmlDesktopPlatform(this NGameApplication app)
 	{
+		app.RegisterSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
+		
 		var renderWindowEventConnector = app.Services.GetRequiredService<RenderWindowEventConnector>();
 		renderWindowEventConnector.ConnectEvents();
 
