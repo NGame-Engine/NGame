@@ -20,4 +20,7 @@ public class SequentialTaskScheduler : ITaskScheduler
 			action(item);
 		}
 	}
+
+
+	public IEnumerable<T> AsParallel<T>(IEnumerable<T> source) => source;
 }

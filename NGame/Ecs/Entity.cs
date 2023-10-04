@@ -30,6 +30,7 @@ public sealed class Entity
 
 	public readonly Guid Id = Guid.NewGuid();
 	public string Name { get; set; } = "Entity";
+	public string Tag { get; set; } = "";
 
 
 	public readonly Transform Transform;

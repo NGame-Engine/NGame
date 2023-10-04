@@ -23,6 +23,8 @@ public static class EcsInstaller
 
 		builder.Services.AddTransient<EventConnector>();
 
+		builder.Services.AddSingleton<ITagRetriever, TagRetriever>();
+
 		builder.AddComponentsFromAssembly(typeof(EcsInstaller).Assembly);
 
 		return builder;
