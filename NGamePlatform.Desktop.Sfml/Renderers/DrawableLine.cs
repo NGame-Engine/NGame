@@ -11,18 +11,18 @@ namespace NGamePlatform.Desktop.Sfml.Renderers;
 public class DrawableLine : SfmlDrawable
 {
 	private readonly LineRenderer _lineRenderer;
-	private readonly GraphicsSettings2D _graphicsSettings2D;
+	private readonly SfmlDesktopConfiguration _configuration;
 
 
 	public DrawableLine(
 		Transform transform,
 		LineRenderer lineRenderer,
-		GraphicsSettings2D graphicsSettings2D
+		SfmlDesktopConfiguration configuration
 	)
 		: base(transform)
 	{
 		_lineRenderer = lineRenderer;
-		_graphicsSettings2D = graphicsSettings2D;
+		_configuration = configuration;
 	}
 
 
@@ -38,7 +38,7 @@ public class DrawableLine : SfmlDrawable
 		Vector2f GetPosition(Vector2 vertexValue)
 		{
 			var translated = basePosition + vertexValue;
-			var finalPosition = translated * _graphicsSettings2D.PixelPerUnit;
+			var finalPosition = translated * _configuration.PixelPerUnit;
 			return finalPosition.ToSfmlVector2YInverted();
 		}
 

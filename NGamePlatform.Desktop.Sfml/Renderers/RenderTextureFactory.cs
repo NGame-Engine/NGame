@@ -1,4 +1,4 @@
-using NGame.Renderers;
+using Microsoft.Extensions.Options;
 using SFML.Graphics;
 
 namespace NGamePlatform.Desktop.Sfml.Renderers;
@@ -7,19 +7,19 @@ namespace NGamePlatform.Desktop.Sfml.Renderers;
 
 internal class RenderTextureFactory
 {
-	private readonly GraphicsConfiguration _graphicsConfiguration;
+	private readonly SfmlDesktopConfiguration _sfmlDesktopConfiguration;
 
 
-	public RenderTextureFactory(GraphicsConfiguration graphicsConfiguration)
+	public RenderTextureFactory(IOptions<SfmlDesktopConfiguration> sfmlDesktopConfiguration)
 	{
-		_graphicsConfiguration = graphicsConfiguration;
+		_sfmlDesktopConfiguration = sfmlDesktopConfiguration.Value;
 	}
 
 
 	public RenderTexture Create()
 	{
-		var width = (uint)_graphicsConfiguration.Width;
-		var height = (uint)_graphicsConfiguration.Height;
+		var width = (uint)_sfmlDesktopConfiguration.Width;
+		var height = (uint)_sfmlDesktopConfiguration.Height;
 		return new RenderTexture(width, height);
 	}
 }

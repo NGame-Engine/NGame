@@ -16,7 +16,10 @@ namespace NGamePlatform.Desktop.Sfml;
 
 public static class SfmlDesktopPlatformInstaller
 {
-	public static INGameApplicationBuilder AddSfmlDesktopPlatform(this INGameApplicationBuilder builder)
+	public static INGameApplicationBuilder AddSfmlDesktopPlatform(
+		this INGameApplicationBuilder builder,
+		Action<SfmlDesktopConfiguration>? setupAction = null
+	)
 	{
 		builder.Services.AddSingleton<AssetLoader>();
 
@@ -56,6 +59,12 @@ public static class SfmlDesktopPlatformInstaller
 					.GetRequiredService<RenderWindowFactory>()
 					.Create()
 		);
+
+
+		if (setupAction != null)
+		{
+			builder.Services.Configure(setupAction);
+		}
 
 
 		return builder;

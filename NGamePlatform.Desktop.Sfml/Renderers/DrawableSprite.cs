@@ -16,7 +16,7 @@ public class DrawableSprite : SfmlDrawable
 {
 	private readonly SpriteRenderer _spriteRenderer;
 	private readonly AssetLoader _assetLoader;
-	private readonly GraphicsSettings2D _graphicsSettings2D;
+	private readonly SfmlDesktopConfiguration _configuration;
 	private readonly Sprite _sprite = new();
 
 
@@ -24,12 +24,12 @@ public class DrawableSprite : SfmlDrawable
 		NGameTransform transform,
 		SpriteRenderer spriteRenderer,
 		AssetLoader assetLoader,
-		GraphicsSettings2D graphicsSettings2D
+		SfmlDesktopConfiguration configuration
 	) : base(transform)
 	{
 		_spriteRenderer = spriteRenderer;
 		_assetLoader = assetLoader;
-		_graphicsSettings2D = graphicsSettings2D;
+		_configuration = configuration;
 		_currentTexture = null!;
 	}
 
@@ -61,7 +61,7 @@ public class DrawableSprite : SfmlDrawable
 
 		_sprite.Position =
 			Transform.Position.ToSfmlVector2YInverted() *
-			_graphicsSettings2D.PixelPerUnit;
+			_configuration.PixelPerUnit;
 
 		_sprite.Rotation = -Transform.EulerAngles.Z;
 

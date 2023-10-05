@@ -12,7 +12,7 @@ public class DrawableText : SfmlDrawable
 {
 	private readonly TextRenderer _textRenderer;
 	private readonly AssetLoader _assetLoader;
-	private readonly GraphicsSettings2D _graphicsSettings2D;
+	private readonly SfmlDesktopConfiguration _configuration;
 	private readonly Text _text = new();
 
 
@@ -20,12 +20,12 @@ public class DrawableText : SfmlDrawable
 		Transform transform,
 		TextRenderer textRenderer,
 		AssetLoader assetLoader,
-		GraphicsSettings2D graphicsSettings2D
+		SfmlDesktopConfiguration configuration
 	) : base(transform)
 	{
 		_textRenderer = textRenderer;
 		_assetLoader = assetLoader;
-		_graphicsSettings2D = graphicsSettings2D;
+		_configuration = configuration;
 		_currentFont = null!;
 	}
 
@@ -48,7 +48,7 @@ public class DrawableText : SfmlDrawable
 
 		_text.Position =
 			Transform.Position.ToSfmlVector2YInverted() *
-			_graphicsSettings2D.PixelPerUnit;
+			_configuration.PixelPerUnit;
 
 		_text.DisplayedString = nGameText.Content;
 		_text.CharacterSize = (uint)nGameText.CharacterSize;
