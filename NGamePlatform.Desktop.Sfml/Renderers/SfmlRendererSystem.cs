@@ -30,17 +30,30 @@ public class SfmlRendererSystem : DataListSystem<SfmlDrawable>, IDrawable
 	{
 		var transform = entity.Transform;
 
+
 		var spriteRenderer = entity.GetComponent<SpriteRenderer>();
 		if (spriteRenderer != null)
 		{
+			if (spriteRenderer.Sprite != null)
+			{
+				_assetLoader.LoadTexture(spriteRenderer.Sprite.Texture);
+			}
+
 			return new DrawableSprite(transform, spriteRenderer, _assetLoader);
 		}
+
 
 		var textRenderer = entity.GetComponent<TextRenderer>();
 		if (textRenderer != null)
 		{
+			if (textRenderer.Text != null)
+			{
+				_assetLoader.LoadFont(textRenderer.Text.Font);
+			}
+
 			return new DrawableText(transform, textRenderer, _assetLoader);
 		}
+
 
 		var lineRenderer = entity.GetComponent<LineRenderer>();
 		if (lineRenderer != null)
@@ -56,7 +69,8 @@ public class SfmlRendererSystem : DataListSystem<SfmlDrawable>, IDrawable
 
 	void IDrawable.Draw(GameTime gameTime)
 	{
-		foreach (var drawable in DataEntries.OrderBy(x => x.Transform.Position.Z))
+		var orderedEntries = DataEntries.OrderBy(x => -x.Transform.Position.Z);
+		foreach (var drawable in orderedEntries)
 		{
 			drawable.Draw(_renderWindow);
 		}

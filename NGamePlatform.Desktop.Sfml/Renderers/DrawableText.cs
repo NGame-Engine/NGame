@@ -1,7 +1,7 @@
 ﻿using NGame.Components.Renderer2Ds;
 using SFML.Graphics;
-using Font = SFML.Graphics.Font;
 using Text = SFML.Graphics.Text;
+using NGameFont = NGame.Components.Renderer2Ds.Font;
 using Transform = NGame.Components.Transforms.Transform;
 
 namespace NGamePlatform.Desktop.Sfml.Renderers;
@@ -12,6 +12,7 @@ public class DrawableText : SfmlDrawable
 {
 	private readonly TextRenderer _textRenderer;
 	private readonly AssetLoader _assetLoader;
+	private readonly Text _text = new();
 
 
 	public DrawableText(
@@ -22,7 +23,11 @@ public class DrawableText : SfmlDrawable
 	{
 		_textRenderer = textRenderer;
 		_assetLoader = assetLoader;
+		_currentFont = null!;
 	}
+
+
+	private NGameFont _currentFont;
 
 
 	public override void Draw(RenderWindow renderWindow)
@@ -31,18 +36,19 @@ public class DrawableText : SfmlDrawable
 		if (nGameText == null) return;
 
 		var nGameFont = nGameText.Font;
-		if (!_assetLoader.Fonts.ContainsKey(nGameFont))
+		if (nGameFont != _currentFont)
 		{
-			_assetLoader.Fonts.Add(nGameFont, new Font(nGameFont.FilePath));
+			_text.Font = _assetLoader.LoadFont(nGameFont);
+			_currentFont = nGameFont;
 		}
 
-		var font = _assetLoader.Fonts[nGameFont];
-		var text = new Text(nGameText.Content, font);
-		text.CharacterSize = (uint)nGameText.CharacterSize;
-		text.Origin = nGameText.TransformOrigin.ToSfmlVector2();
-		text.Position = Transform.Position.ToSfmlVector2YInverted();
-		text.FillColor = nGameText.Color.ToSfmlColor();
 
-		renderWindow.Draw(text);
+		_text.DisplayedString = nGameText.Content;
+		_text.CharacterSize = (uint)nGameText.CharacterSize;
+		_text.Origin = nGameText.TransformOrigin.ToSfmlVector2();
+		_text.Position = Transform.Position.ToSfmlVector2YInverted();
+		_text.FillColor = nGameText.Color.ToSfmlColor();
+
+		renderWindow.Draw(_text);
 	}
 }
