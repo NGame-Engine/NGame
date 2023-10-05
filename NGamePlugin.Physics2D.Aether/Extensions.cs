@@ -1,7 +1,7 @@
 ﻿using NGame.Components.Physics2D;
 using nkast.Aether.Physics2D.Common;
 using nkast.Aether.Physics2D.Dynamics;
-using BodyType = nkast.Aether.Physics2D.Dynamics.BodyType;
+using Vector3 = System.Numerics.Vector3;
 
 namespace NGamePlugin.Physics2D.Aether;
 
@@ -17,7 +17,7 @@ public static class Extensions
 		new(vector2.X, vector2.Y);
 
 
-	public static Vector2 ToAetherVector2(this System.Numerics.Vector3 vector3) =>
+	public static Vector2 ToAetherVector2(this Vector3 vector3) =>
 		new(vector3.X, vector3.Y);
 
 

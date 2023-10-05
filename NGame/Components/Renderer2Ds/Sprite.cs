@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace NGame.Components.Sprites;
+namespace NGame.Components.Renderer2Ds;
 
 public sealed class Sprite
 {

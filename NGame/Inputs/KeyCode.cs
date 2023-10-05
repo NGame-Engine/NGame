@@ -307,4 +307,4 @@ public enum KeyCode
 
 	/// <summary>The Pause key</summary>
 	Pause
-};
+}

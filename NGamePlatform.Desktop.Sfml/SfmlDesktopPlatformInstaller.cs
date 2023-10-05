@@ -4,7 +4,7 @@ using NGame.Components.Audio;
 using NGame.Ecs;
 using NGame.Inputs;
 using NGame.OsWindows;
-using NGame.Renderers;
+using NGame.UpdateSchedulers;
 using NGamePlatform.Desktop.Sfml.Audio;
 using NGamePlatform.Desktop.Sfml.Inputs;
 using NGamePlatform.Desktop.Sfml.Renderers;
@@ -18,10 +18,28 @@ public static class SfmlDesktopPlatformInstaller
 {
 	public static INGameApplicationBuilder AddSfmlDesktopPlatform(this INGameApplicationBuilder builder)
 	{
+		builder.Services.AddSingleton<AssetLoader>();
+
+
 		builder.Services.AddSingleton<IAudioPlugin, SfmlAudioPlugin>();
 
 
-		builder.Services.AddSingleton<INGameRenderer, SfmlRenderer>();
+		builder.Services.AddSingleton<SfmlWindow>();
+		builder.Services.AddTransient<IOsWindow>(
+			services => services.GetRequiredService<SfmlWindow>()
+		);
+		builder.Services.AddTransient<RenderWindowEventConnector>();
+
+
+		builder.Services.AddSingleton<RawInputListener>();
+		builder.Services.AddTransient<IRawInputListener>(
+			services => services.GetRequiredService<RawInputListener>()
+		);
+
+		builder.AddSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
+
+
+		builder.Services.AddSingleton<IRenderContext, SfmlRenderContext>();
 
 		builder.Services.AddTransient<RenderTextureFactory>();
 		builder.Services.AddSingleton(
@@ -31,7 +49,6 @@ public static class SfmlDesktopPlatformInstaller
 					.Create()
 		);
 
-
 		builder.Services.AddTransient<RenderWindowFactory>();
 		builder.Services.AddSingleton(
 			services =>
@@ -40,19 +57,6 @@ public static class SfmlDesktopPlatformInstaller
 					.Create()
 		);
 
-		builder.Services.AddSingleton<SfmlWindow>();
-		builder.Services.AddTransient<IOsWindow>(
-			services => services.GetRequiredService<SfmlWindow>()
-		);
-
-		builder.Services.AddSingleton<RawInputListener>();
-		builder.Services.AddTransient<IRawInputListener>(
-			services => services.GetRequiredService<RawInputListener>()
-		);
-
-		builder.Services.AddTransient<RenderWindowEventConnector>();
-
-		builder.AddSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
 
 		return builder;
 	}
@@ -61,7 +65,7 @@ public static class SfmlDesktopPlatformInstaller
 	public static NGameApplication UseSfmlDesktopPlatform(this NGameApplication app)
 	{
 		app.RegisterSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
-		
+
 		var renderWindowEventConnector = app.Services.GetRequiredService<RenderWindowEventConnector>();
 		renderWindowEventConnector.ConnectEvents();
 

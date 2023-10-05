@@ -24,8 +24,7 @@ internal class ThrottleChanger
 	public ThreadThrottler WindowMinimumUpdateRate { get; }
 
 	/// <summary>
-	/// Access to the throttler used to set the minimum time allowed between each updates while the window is minimized and,
-	/// depending on <see cref="TreatNotFocusedLikeMinimized"/>, while unfocused.
+	/// Access to the throttler used to set the minimum time allowed between each updates while the window is minimized.
 	/// </summary>
 	public ThreadThrottler MinimizedMinimumUpdateRate { get; }
 

@@ -20,5 +20,5 @@ public enum BodyType2D
 	/// <summary>
 	/// Positive mass, non-zero velocity determined by forces.
 	/// </summary>
-	Dynamic,
+	Dynamic
 }

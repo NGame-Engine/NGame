@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using NGame.Renderers;
 
 namespace NGame.UpdateSchedulers;
 
@@ -50,10 +49,9 @@ public interface IUpdateScheduler
 internal class UpdateScheduler : IUpdateScheduler
 {
 	private readonly ILogger<UpdateScheduler> _logger;
-	private readonly INGameRenderer _nGameRenderer;
 	private readonly IUpdatableCollection _updatableCollection;
+	private readonly IRenderContext _renderContext;
 	private readonly IDrawableCollection _drawableCollection;
-	private readonly IFrameEventBus _frameEventBus;
 
 	private readonly TimeSpan _maximumElapsedTime = TimeSpan.FromMilliseconds(500.0);
 	private readonly TimerTick _autoTickTimer = new();
@@ -62,17 +60,15 @@ internal class UpdateScheduler : IUpdateScheduler
 
 	public UpdateScheduler(
 		ILogger<UpdateScheduler> logger,
-		INGameRenderer nGameRenderer,
 		IUpdatableCollection updatableCollection,
-		IDrawableCollection drawableCollection,
-		IFrameEventBus frameEventBus
+		IRenderContext renderContext,
+		IDrawableCollection drawableCollection
 	)
 	{
 		_logger = logger;
-		_nGameRenderer = nGameRenderer;
 		_updatableCollection = updatableCollection;
+		_renderContext = renderContext;
 		_drawableCollection = drawableCollection;
-		_frameEventBus = frameEventBus;
 	}
 
 
@@ -98,12 +94,12 @@ internal class UpdateScheduler : IUpdateScheduler
 	{
 		try
 		{
-			_nGameRenderer.BeginDraw();
+			_renderContext.BeginDraw();
 
 			_autoTickTimer.Reset();
 			UpdateLoopTime.Reset(UpdateLoopTime.Total);
 
-			_nGameRenderer.EndDraw(false);
+			_renderContext.EndDraw(false);
 		}
 		catch (Exception ex)
 		{
@@ -143,7 +139,6 @@ internal class UpdateScheduler : IUpdateScheduler
 				elapsedAdjustedTime = _maximumElapsedTime;
 			}
 
-			bool drawFrame = true;
 			int updateCount = 1;
 			var singleFrameElapsedTime = elapsedAdjustedTime;
 			var drawLag = 0L;
@@ -183,7 +178,7 @@ internal class UpdateScheduler : IUpdateScheduler
 			}
 
 			var drawInterpolationFactor = drawLag / (float)FixedTimeStepTarget.Ticks;
-			RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor, drawFrame);
+			RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor);
 
 
 			ThreadThrottler.Throttle(out long _);
@@ -198,18 +193,15 @@ internal class UpdateScheduler : IUpdateScheduler
 
 	private void RawTick(
 		TimeSpan elapsedTimePerUpdate,
-		int updateCount = 1,
-		float drawInterpolationFactor = 0,
-		bool drawFrame = true
+		int updateCount,
+		float drawInterpolationFactor
 	)
 	{
 		bool beginDrawSuccessful = false;
 		TimeSpan totalElapsedTime = TimeSpan.Zero;
 		try
 		{
-			beginDrawSuccessful = _nGameRenderer.BeginDraw();
-
-			_frameEventBus.OnFrameStart();
+			beginDrawSuccessful = _renderContext.BeginDraw();
 
 			// Reset the time of the next frame
 			for (int i = 0; i < updateCount && !IsStopped; i++)
@@ -219,7 +211,7 @@ internal class UpdateScheduler : IUpdateScheduler
 				totalElapsedTime += elapsedTimePerUpdate;
 			}
 
-			if (drawFrame && !IsStopped && HasFinishedFirstUpdateLoop)
+			if (!IsStopped && HasFinishedFirstUpdateLoop)
 			{
 				DrawInterpolationFactor = drawInterpolationFactor;
 				DrawLoopTime.Factor = UpdateLoopTime.Factor;
@@ -232,7 +224,7 @@ internal class UpdateScheduler : IUpdateScheduler
 		{
 			if (beginDrawSuccessful)
 			{
-				_nGameRenderer.EndDraw(true);
+				_renderContext.EndDraw(true);
 			}
 		}
 	}

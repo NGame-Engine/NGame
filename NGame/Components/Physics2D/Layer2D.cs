@@ -40,5 +40,5 @@ public enum Layer2D
 
 	All = Cat31 | Cat30 | Cat29 | Cat28 | Cat27 | Cat26 | Cat25 | Cat24 | Cat23 | Cat22 | Cat21 | Cat20 | Cat19 |
 	      Cat18 | Cat17 | Cat16 | Cat15 | Cat14 | Cat13 | Cat12 | Cat11 | Cat10 | Cat9 | Cat8 | Cat7 | Cat6 | Cat5 |
-	      Cat4 | Cat3 | Cat2 | Cat1, // 0x7FFFFFFF
+	      Cat4 | Cat3 | Cat2 | Cat1 // 0x7FFFFFFF
 }

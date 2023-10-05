@@ -19,6 +19,9 @@ public static class EcsInstaller
 		builder.Services.AddSingleton<IEntityEventBus, EntityEventBus>();
 		builder.Services.AddSingleton<ITransformEventBus, TransformEventBus>();
 
+		builder.Services.AddSingleton<FrameStartCache>();
+		builder.Services.AddSingleton<IFrameStartCache>(services => services.GetRequiredService<FrameStartCache>());
+
 		builder.Services.AddSingleton<IEcsTypeFactory, EcsTypeFactory>();
 
 		builder.Services.AddTransient<EventConnector>();
@@ -33,6 +36,8 @@ public static class EcsInstaller
 
 	public static NGameApplication UseComponentSystem(this NGameApplication app)
 	{
+		app.UseUpdatable<FrameStartCache>();
+
 		var eventConnector = app.Services.GetRequiredService<EventConnector>();
 		eventConnector.ConnectEvents();
 
@@ -73,7 +78,7 @@ public static class EcsInstaller
 	{
 		var systemCollection = app.Services.GetRequiredService<ISystemCollection>();
 		var system = app.Services.GetRequiredService<T>();
-		systemCollection.Add(system);
+		systemCollection.AddSystem(system);
 		return app;
 	}
 
@@ -91,7 +96,7 @@ public static class EcsInstaller
 			var service = app.Services.GetService(type);
 			if (service is not ISystem system) continue;
 
-			systemCollection.Add(system);
+			systemCollection.AddSystem(system);
 
 			if (system is IUpdatable updatable) updatableCollection.Add(updatable);
 			if (system is IDrawable drawable) drawableCollection.Add(drawable);

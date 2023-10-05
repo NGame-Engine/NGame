@@ -1,6 +1,6 @@
 ﻿using NGame.Ecs;
 
-namespace NGame.Components.Lines;
+namespace NGame.Components.Renderer2Ds;
 
 
 

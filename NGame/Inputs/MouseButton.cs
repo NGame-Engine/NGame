@@ -18,4 +18,4 @@ public enum MouseButton
 
 	/// <summary>The second extra mouse button</summary>
 	XButton2
-};
+}

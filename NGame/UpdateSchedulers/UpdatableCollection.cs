@@ -26,18 +26,8 @@ internal class UpdatableCollection : IUpdatableCollection
 
 	void IUpdatableCollection.Add(IUpdatable updatable)
 	{
-		var newEntries =
-			_updatables
-				.Append(updatable)
-				.OrderBy(x => x.Order);
-
-		_updatables.Clear();
-
-		foreach (var systemEntry in newEntries)
-		{
-			_updatables.Add(systemEntry);
-		}
-
+		_updatables.Add(updatable);
+		_updatables.Sort((a, b) => a.Order.CompareTo(b.Order));
 
 		_logger.LogInformation("Updatable {Updatable} added", updatable);
 	}

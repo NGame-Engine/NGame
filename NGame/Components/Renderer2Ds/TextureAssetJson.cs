@@ -1,6 +1,6 @@
 ﻿using NGame.Assets;
 
-namespace NGame.Components.Sprites;
+namespace NGame.Components.Renderer2Ds;
 
 internal class TextureAssetJson : AssetJson
 {

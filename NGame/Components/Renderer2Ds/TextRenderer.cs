@@ -1,6 +1,6 @@
 ﻿using NGame.Ecs;
 
-namespace NGame.Components.Texts;
+namespace NGame.Components.Renderer2Ds;
 
 public sealed class TextRenderer : Component
 {

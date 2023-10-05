@@ -6,7 +6,7 @@ namespace NGame.Ecs;
 
 public interface ISystemCollection
 {
-	void Add(ISystem system);
+	void AddSystem(ISystem system);
 
 	void AddEntity(Entity entity);
 	void RemoveEntity(Entity entity);
@@ -29,7 +29,7 @@ internal class SystemCollection : ISystemCollection
 	}
 
 
-	public void Add(ISystem system)
+	public void AddSystem(ISystem system)
 	{
 		_systems.Add(system);
 		_logger.LogInformation("System {System} added", system);

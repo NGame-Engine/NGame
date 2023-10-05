@@ -1,4 +1,4 @@
-﻿namespace NGame.Components.Texts;
+﻿namespace NGame.Components.Renderer2Ds;
 
 public sealed class Font
 {

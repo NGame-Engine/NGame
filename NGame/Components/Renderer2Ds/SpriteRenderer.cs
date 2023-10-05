@@ -1,10 +1,9 @@
 ﻿using NGame.Assets;
-using NGame.Ecs;
 
-namespace NGame.Components.Sprites;
+namespace NGame.Components.Renderer2Ds;
 
 [Component(StableDiscriminator = "NGame.Sprites.SpriteRenderer")]
-public sealed class SpriteRenderer : Component
+public sealed class SpriteRenderer : Renderer2D
 {
 	public Sprite? Sprite { get; set; }
 }

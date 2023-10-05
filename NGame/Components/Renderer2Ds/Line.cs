@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Numerics;
 
-namespace NGame.Components.Lines;
+namespace NGame.Components.Renderer2Ds;
 
 
 

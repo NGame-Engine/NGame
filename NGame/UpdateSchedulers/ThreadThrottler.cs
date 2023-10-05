@@ -251,6 +251,6 @@ public sealed class ThreadThrottler
 	{
 		Standard,
 		PreciseManual,
-		PreciseAuto,
+		PreciseAuto
 	}
 }

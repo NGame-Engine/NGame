@@ -27,4 +27,4 @@ public enum JoystickAxis
 
 	/// <summary>TheY axis of the point-of-view hat</summary>
 	PovY
-};
+}

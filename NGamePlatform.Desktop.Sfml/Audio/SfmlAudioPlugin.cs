@@ -138,7 +138,7 @@ public class SfmlAudioPlugin : IAudioPlugin
 			SoundStatus.Playing => PlayStatus.Playing,
 			SoundStatus.Paused => PlayStatus.Paused,
 			SoundStatus.Stopped => PlayStatus.Stopped,
-			_ => PlayStatus.Unknown,
+			_ => PlayStatus.Unknown
 		};
 	}
 }
