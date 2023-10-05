@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NGame.Application;
-using NGame.Components.Audio;
 using NGame.Ecs;
 using NGame.Inputs;
 using NGame.OsWindows;
 using NGame.UpdateSchedulers;
+using NGamePlatform.Desktop.Sfml.Assets;
 using NGamePlatform.Desktop.Sfml.Audio;
 using NGamePlatform.Desktop.Sfml.Inputs;
 using NGamePlatform.Desktop.Sfml.Renderers;
@@ -21,10 +21,14 @@ public static class SfmlDesktopPlatformInstaller
 		Action<SfmlDesktopConfiguration>? setupAction = null
 	)
 	{
-		builder.Services.AddSingleton<AssetLoader>();
+		builder.AddSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
 
 
-		builder.Services.AddSingleton<IAudioPlugin, SfmlAudioPlugin>();
+		builder.Services.AddSingleton<IAssetLoader, AssetLoader>();
+		builder.Services.AddSingleton<IAssetDisposer, AssetDisposer>();
+
+
+		builder.Services.AddSingleton<IGlobalSoundPlayer, GlobalSoundPlayer>();
 
 
 		builder.Services.AddSingleton<SfmlWindow>();
@@ -38,8 +42,6 @@ public static class SfmlDesktopPlatformInstaller
 		builder.Services.AddTransient<IRawInputListener>(
 			services => services.GetRequiredService<RawInputListener>()
 		);
-
-		builder.AddSystemsFromAssembly(typeof(SfmlDesktopPlatformInstaller).Assembly);
 
 
 		builder.Services.AddSingleton<IRenderContext, SfmlRenderContext>();

@@ -1,4 +1,5 @@
 ﻿using NGame.Components.Renderer2Ds;
+using NGamePlatform.Desktop.Sfml.Assets;
 using SFML.Graphics;
 using SFML.System;
 using NGameSprite = NGame.Components.Renderer2Ds.Sprite;
@@ -15,7 +16,7 @@ namespace NGamePlatform.Desktop.Sfml.Renderers;
 public class DrawableSprite : SfmlDrawable
 {
 	private readonly SpriteRenderer _spriteRenderer;
-	private readonly AssetLoader _assetLoader;
+	private readonly IAssetLoader _assetLoader;
 	private readonly SfmlDesktopConfiguration _configuration;
 	private readonly Sprite _sprite = new();
 
@@ -23,7 +24,7 @@ public class DrawableSprite : SfmlDrawable
 	public DrawableSprite(
 		NGameTransform transform,
 		SpriteRenderer spriteRenderer,
-		AssetLoader assetLoader,
+		IAssetLoader assetLoader,
 		SfmlDesktopConfiguration configuration
 	) : base(transform)
 	{

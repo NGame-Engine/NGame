@@ -2,6 +2,7 @@
 using NGame.Components.Renderer2Ds;
 using NGame.Ecs;
 using NGame.UpdateSchedulers;
+using NGamePlatform.Desktop.Sfml.Assets;
 using SFML.Graphics;
 
 namespace NGamePlatform.Desktop.Sfml.Renderers;
@@ -10,13 +11,13 @@ namespace NGamePlatform.Desktop.Sfml.Renderers;
 
 public class SfmlRendererSystem : DataListSystem<SfmlDrawable>, IDrawable
 {
-	private readonly AssetLoader _assetLoader;
+	private readonly IAssetLoader _assetLoader;
 	private readonly RenderWindow _renderWindow;
 	private readonly SfmlDesktopConfiguration _sfmlDesktopConfiguration;
 
 
 	public SfmlRendererSystem(
-		AssetLoader assetLoader,
+		IAssetLoader assetLoader,
 		RenderWindow renderWindow,
 		IOptions<SfmlDesktopConfiguration> configuration
 	)

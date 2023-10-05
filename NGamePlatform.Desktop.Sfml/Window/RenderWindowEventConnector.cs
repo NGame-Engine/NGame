@@ -1,8 +1,11 @@
 ﻿using NGame.Application;
+using NGamePlatform.Desktop.Sfml.Assets;
 using NGamePlatform.Desktop.Sfml.Inputs;
 using SFML.Graphics;
 
 namespace NGamePlatform.Desktop.Sfml.Window;
+
+
 
 internal class RenderWindowEventConnector
 {
@@ -10,19 +13,22 @@ internal class RenderWindowEventConnector
 	private readonly SfmlWindow _sfmlWindow;
 	private readonly RawInputListener _rawInputListener;
 	private readonly IApplicationEvents _applicationEvents;
+	private readonly IAssetDisposer _assetDisposer;
 
 
 	public RenderWindowEventConnector(
 		RenderWindow renderWindow,
 		SfmlWindow sfmlWindow,
 		RawInputListener rawInputListener,
-		IApplicationEvents applicationEvents
+		IApplicationEvents applicationEvents,
+		IAssetDisposer assetDisposer
 	)
 	{
 		this._renderWindow = renderWindow;
 		_sfmlWindow = sfmlWindow;
 		_rawInputListener = rawInputListener;
 		_applicationEvents = applicationEvents;
+		_assetDisposer = assetDisposer;
 	}
 
 
@@ -30,6 +36,7 @@ internal class RenderWindowEventConnector
 	{
 		_renderWindow.Closed += (_, _) => _applicationEvents.RequestClose();
 		_applicationEvents.GameLoopStopped += (_, _) => _renderWindow.Close();
+		_applicationEvents.GameLoopStopped += (_, _) => _assetDisposer.Dispose();
 
 		_renderWindow.Resized += _sfmlWindow.OnResized;
 		_renderWindow.LostFocus += _sfmlWindow.OnLostFocus;

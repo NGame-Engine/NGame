@@ -1,4 +1,5 @@
 ﻿using NGame.Components.Renderer2Ds;
+using NGamePlatform.Desktop.Sfml.Assets;
 using SFML.Graphics;
 using Text = SFML.Graphics.Text;
 using NGameFont = NGame.Components.Renderer2Ds.Font;
@@ -11,7 +12,7 @@ namespace NGamePlatform.Desktop.Sfml.Renderers;
 public class DrawableText : SfmlDrawable
 {
 	private readonly TextRenderer _textRenderer;
-	private readonly AssetLoader _assetLoader;
+	private readonly IAssetLoader _assetLoader;
 	private readonly SfmlDesktopConfiguration _configuration;
 	private readonly Text _text = new();
 
@@ -19,7 +20,7 @@ public class DrawableText : SfmlDrawable
 	public DrawableText(
 		Transform transform,
 		TextRenderer textRenderer,
-		AssetLoader assetLoader,
+		IAssetLoader assetLoader,
 		SfmlDesktopConfiguration configuration
 	) : base(transform)
 	{

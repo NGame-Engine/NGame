@@ -39,8 +39,6 @@ public static class NGame2DDefaultInstaller
 		builder.AddTransforms();
 
 		builder.AddSceneSupport();
-
-		builder.AddAudio();
 	}
 
 
@@ -51,7 +49,5 @@ public static class NGame2DDefaultInstaller
 
 		app.RegisterSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 		app.RegisterComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
-
-		app.UseAudio();
 	}
 }
