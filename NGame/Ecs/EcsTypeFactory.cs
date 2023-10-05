@@ -8,7 +8,6 @@ namespace NGame.Ecs;
 public interface IEcsTypeFactory
 {
 	Entity CreateEntity(Scene scene);
-	T CreateComponent<T>() where T : Component;
 }
 
 
@@ -26,8 +25,4 @@ internal class EcsTypeFactory : IEcsTypeFactory
 
 	public Entity CreateEntity(Scene scene) =>
 		ActivatorUtilities.CreateInstance<Entity>(_serviceProvider, scene);
-
-
-	public T CreateComponent<T>() where T : Component =>
-		_serviceProvider.GetRequiredService<T>();
 }

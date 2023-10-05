@@ -25,7 +25,7 @@ public class MatrixUpdaterTests
 
 		ecsTypeFactory
 			.CreateEntity(scene)
-			.Returns(new Entity(scene, entityEventBus, ecsTypeFactory));
+			.Returns(new Entity(scene, entityEventBus));
 
 		return scene;
 	}

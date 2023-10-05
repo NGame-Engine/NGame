@@ -8,18 +8,12 @@ namespace NGame.Ecs;
 
 public sealed class Entity
 {
-	private readonly IEcsTypeFactory _ecsTypeFactory;
 	private readonly IEntityEventBus _entityEventBus;
 	private readonly List<Component> _components = new();
 
 
-	public Entity(
-		Scene scene,
-		IEntityEventBus entityEventBus,
-		IEcsTypeFactory ecsTypeFactory
-	)
+	public Entity(Scene scene, IEntityEventBus entityEventBus)
 	{
-		_ecsTypeFactory = ecsTypeFactory;
 		_entityEventBus = entityEventBus;
 		Scene = scene;
 		Transform = new Transform(this);
@@ -38,21 +32,20 @@ public sealed class Entity
 
 	public Entity CreateChildEntity()
 	{
-		var child = new Entity(Scene, _entityEventBus, _ecsTypeFactory);
+		var child = new Entity(Scene, _entityEventBus);
 		child.Transform.SetParent(Transform);
 		return child;
 	}
 
 
-	public T AddComponent<T>() where T : Component
+	public Entity AddComponent(Component component)
 	{
-		var component = _ecsTypeFactory.CreateComponent<T>();
 		_components.Add(component);
 		component.Entity = this;
 
 		_entityEventBus.NotifyComponentAdded(this, component);
 
-		return component;
+		return this;
 	}
 
 

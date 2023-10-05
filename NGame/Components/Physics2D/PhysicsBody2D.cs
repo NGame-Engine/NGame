@@ -6,5 +6,5 @@ namespace NGame.Components.Physics2D;
 
 public class PhysicsBody2D : Component
 {
-	public BodyType2D BodyType2D { get; set; }
+	public BodyType2D BodyType2D { get; set; } = BodyType2D.Dynamic;
 }
