@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NGame.Components.Cameras;
+using NGame.Components.Renderer2Ds;
 using NGame.Ecs;
 using NGame.UpdateSchedulers;
 using SFML.Graphics;
@@ -14,12 +15,14 @@ public class CameraSystem : ISystem, IUpdatable
 {
 	private readonly ILogger<CameraSystem> _logger;
 	private readonly RenderWindow _window;
+	private readonly GraphicsSettings2D _graphicsSettings2D;
 
 
-	public CameraSystem(ILogger<CameraSystem> logger, RenderWindow window)
+	public CameraSystem(ILogger<CameraSystem> logger, RenderWindow window, GraphicsSettings2D graphicsSettings2D)
 	{
 		_logger = logger;
 		_window = window;
+		_graphicsSettings2D = graphicsSettings2D;
 	}
 
 
@@ -67,9 +70,16 @@ public class CameraSystem : ISystem, IUpdatable
 	{
 		if (_data == null) return;
 
-		var position = _data.Transform.Position * 128;
-		_data.View.Center = position.ToSfmlVector2YInverted();
-		_data.View.Size = _data.Camera2D.Size.ToSfmlVector2();
+		var position = _data.Transform.Position;
+		_data.View.Center =
+			position.ToSfmlVector2YInverted() *
+			_graphicsSettings2D.PixelPerUnit;
+
+		_data.View.Size =
+			_data.Camera2D.Size.ToSfmlVector2() *
+			_graphicsSettings2D.PixelPerUnit;
+
+
 		_window.SetView(_data.View);
 	}
 

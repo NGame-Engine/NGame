@@ -1,10 +1,8 @@
-﻿using NGame.Ecs;
-
-namespace NGame.Components.Renderer2Ds;
+﻿namespace NGame.Components.Renderer2Ds;
 
 
 
-public sealed class LineRenderer : Component
+public sealed class LineRenderer : Renderer2D
 {
 	public Line? Line { get; set; }
 }

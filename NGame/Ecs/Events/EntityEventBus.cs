@@ -60,10 +60,4 @@ internal class EntityEventBus : IEntityEventBus
 		var eventArgs = new ComponentRemovedEventArgs(component);
 		ComponentRemoved?.Invoke(entity, eventArgs);
 	}
-
-
-	// TODO Queue a transform update
-	public void NotifyEntityAddedToScene()
-	{
-	}
 }

@@ -1,10 +1,11 @@
-﻿using System.Numerics;
-using NGame.Components.Physics2D;
-using NGame.Components.Transforms;
+﻿using NGame.Components.Physics2D;
 using NGame.Ecs;
 using NGame.NGameSystem;
 using NGame.UpdateSchedulers;
+using nkast.Aether.Physics2D.Common;
 using nkast.Aether.Physics2D.Dynamics;
+using Transform = NGame.Components.Transforms.Transform;
+using Vector3 = System.Numerics.Vector3;
 
 namespace NGamePlugin.Physics2D.Aether;
 
@@ -130,7 +131,7 @@ public class AetherPhysicsSystem : ISystem, IUpdatable
 
 			var newRotation = oldRotation with
 			{
-				Z = transform.q.Phase
+				Z = MathUtilities.RadiansToDegrees(transform.q.Phase)
 			};
 
 			data.Transform.EulerAngles = newRotation;

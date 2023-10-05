@@ -12,17 +12,20 @@ public class DrawableText : SfmlDrawable
 {
 	private readonly TextRenderer _textRenderer;
 	private readonly AssetLoader _assetLoader;
+	private readonly GraphicsSettings2D _graphicsSettings2D;
 	private readonly Text _text = new();
 
 
 	public DrawableText(
 		Transform transform,
 		TextRenderer textRenderer,
-		AssetLoader assetLoader
+		AssetLoader assetLoader,
+		GraphicsSettings2D graphicsSettings2D
 	) : base(transform)
 	{
 		_textRenderer = textRenderer;
 		_assetLoader = assetLoader;
+		_graphicsSettings2D = graphicsSettings2D;
 		_currentFont = null!;
 	}
 
@@ -43,11 +46,15 @@ public class DrawableText : SfmlDrawable
 		}
 
 
+		_text.Position =
+			Transform.Position.ToSfmlVector2YInverted() *
+			_graphicsSettings2D.PixelPerUnit;
+
 		_text.DisplayedString = nGameText.Content;
 		_text.CharacterSize = (uint)nGameText.CharacterSize;
 		_text.Origin = nGameText.TransformOrigin.ToSfmlVector2();
-		_text.Position = Transform.Position.ToSfmlVector2YInverted();
 		_text.FillColor = nGameText.Color.ToSfmlColor();
+
 
 		renderWindow.Draw(_text);
 	}
