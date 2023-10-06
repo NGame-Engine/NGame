@@ -1,6 +1,9 @@
 namespace NGame.Application;
 
+
+
 public interface INGameSetup
 {
-	NGameApplication SetUpGame();
+	void ConfigureApplication(INGameApplicationBuilder builder);
+	void SetUpApplicationStart(NGameApplication app);
 }
