@@ -1,9 +1,8 @@
 ﻿using System.Numerics;
-using NGame.Components.Transforms;
+using NGame.Assets;
 using NGame.Ecs;
-using NGame.Ecs.Events;
-using NGame.NGameSystem;
-using NGame.Scenes;
+using NGame.Services.Transforms;
+using NGame.Utilities;
 using NSubstitute;
 
 namespace NGame.UnitTests.Components.Transforms;
@@ -17,17 +16,10 @@ public class MatrixUpdaterTests
 
 	private static Scene CreateScene()
 	{
-		var ecsTypeFactory = Substitute.For<IEcsTypeFactory>();
-		var sceneEventBus = Substitute.For<ISceneEventBus>();
-		var entityEventBus = Substitute.For<IEntityEventBus>();
+		var entityRegistry = Substitute.For<IEntityRegistry>();
 
-		var scene = new Scene(ecsTypeFactory, sceneEventBus);
 
-		ecsTypeFactory
-			.CreateEntity(scene)
-			.Returns(new Entity(scene, entityEventBus));
-
-		return scene;
+		return new Scene(entityRegistry);
 	}
 
 

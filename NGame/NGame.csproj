@@ -16,5 +16,13 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NGame.Abstractions\NGame.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 
 </Project>

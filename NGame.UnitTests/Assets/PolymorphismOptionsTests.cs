@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using NGame.Assets;
+using NGame.Components;
 using NGame.Ecs;
 
 namespace NGame.UnitTests.Assets;

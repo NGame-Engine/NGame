@@ -1,33 +1,25 @@
-﻿using NGame.Ecs.Events;
-
-namespace NGame.Ecs;
+﻿namespace NGame.Ecs;
 
 
 
 internal class EventConnector
 {
-	private readonly ISceneEventBus _sceneEventBus;
-	private readonly IEntityEventBus _entityEventBus;
-	private readonly IFrameStartCache _frameStartCache;
+	private readonly IEntityRegistry _entityRegistry;
+	private readonly IActionCache _actionCache;
 
 
-	public EventConnector(
-		ISceneEventBus sceneEventBus,
-		IEntityEventBus entityEventBus,
-		IFrameStartCache frameStartCache
-	)
+	public EventConnector(IEntityRegistry entityRegistry, IActionCache actionCache)
 	{
-		_sceneEventBus = sceneEventBus;
-		_entityEventBus = entityEventBus;
-		_frameStartCache = frameStartCache;
+		_entityRegistry = entityRegistry;
+		_actionCache = actionCache;
 	}
 
 
 	public void ConnectEvents()
 	{
-		_sceneEventBus.EntityAdded += _frameStartCache.OnEntityAdded;
-		_sceneEventBus.EntityRemoved += _frameStartCache.OnEntityRemoved;
-		_entityEventBus.ComponentAdded += _frameStartCache.OnComponentAdded;
-		_entityEventBus.ComponentRemoved += _frameStartCache.OnComponentRemoved;
+		_entityRegistry.EntityAdded += _actionCache.OnEntityAdded;
+		_entityRegistry.EntityRemoved += _actionCache.OnEntityRemoved;
+		_entityRegistry.ComponentAdded += _actionCache.OnComponentAdded;
+		_entityRegistry.ComponentRemoved += _actionCache.OnComponentRemoved;
 	}
 }

@@ -1,14 +1,8 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using NGame.Setup;
 
 namespace NGame.Application;
-
-
-
-public interface INGameEnvironment : IHostEnvironment
-{
-	Platform Platform { get; }
-}
 
 
 

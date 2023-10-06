@@ -1,15 +1,7 @@
 using Microsoft.Extensions.Logging;
+using NGame.Services;
 
 namespace NGame.Ecs;
-
-
-
-public interface IComponentTypeRegistry
-{
-	void Register(Type type);
-	void Register<T>() where T : Component;
-	ICollection<Type> GetComponentTypes();
-}
 
 
 

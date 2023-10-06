@@ -3,24 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NGame.Setup;
 
 namespace NGame.Application;
 
 
 
-public interface INGameApplicationBuilder
-{
-	public INGameEnvironment Environment { get; }
-	public ConfigurationManager Configuration { get; }
-	public IServiceCollection Services { get; }
-	public ILoggingBuilder Logging { get; }
-
-	NGameApplication Build();
-}
-
-
-
-internal class NGameApplicationBuilder : INGameApplicationBuilder
+public class NGameApplicationBuilder : INGameApplicationBuilder
 {
 	private readonly HostApplicationBuilder _builder =
 		new(
@@ -46,7 +35,7 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 
 
 	public INGameEnvironment Environment { get; }
-	public ConfigurationManager Configuration => _builder.Configuration;
+	public IConfigurationRoot Configuration => _builder.Configuration;
 	public IServiceCollection Services => _builder.Services;
 	public ILoggingBuilder Logging => _builder.Logging;
 
@@ -54,6 +43,6 @@ internal class NGameApplicationBuilder : INGameApplicationBuilder
 	public NGameApplication Build()
 	{
 		var host = _builder.Build();
-		return new NGameApplication(host);
+		return new NGameApplication(Environment, host);
 	}
 }

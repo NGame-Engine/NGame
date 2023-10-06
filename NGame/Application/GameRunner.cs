@@ -1,4 +1,4 @@
-﻿using NGame.UpdateSchedulers;
+﻿using NGame.GameLoop;
 
 namespace NGame.Application;
 

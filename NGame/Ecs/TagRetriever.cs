@@ -1,15 +1,8 @@
-﻿using NGame.Components.Transforms;
-using NGame.NGameSystem.Parallelism;
-using NGame.Scenes;
+﻿using NGame.Assets;
+using NGame.Components;
+using NGame.Services;
 
 namespace NGame.Ecs;
-
-
-
-public interface ITagRetriever
-{
-	IEnumerable<Entity> GetEntitiesWithTag(string tag);
-}
 
 
 

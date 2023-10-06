@@ -1,26 +1,28 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGame.Setup;
 
 namespace NGame.Application;
 
 
 
-public sealed class NGameApplication
+public sealed class NGameApplication : INGameApplication
 {
 	private readonly IHost _host;
 
 
-	public NGameApplication(IHost host)
+	public NGameApplication(INGameEnvironment nGameEnvironment, IHost host)
 	{
+		NGameEnvironment = nGameEnvironment;
 		_host = host;
 	}
 
 
+	public INGameEnvironment NGameEnvironment { get; }
 	public IServiceProvider Services => _host.Services;
 
 
-	public static INGameApplicationBuilder CreateBuilder() =>
-		new NGameApplicationBuilder();
+	public static NGameApplicationBuilder CreateBuilder() => new();
 
 
 	public void Run()
