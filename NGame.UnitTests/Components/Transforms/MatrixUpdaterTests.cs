@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using NGame.Assets;
-using NGame.Ecs;
 using NGame.Services.Transforms;
 using NGame.Utilities;
 using NSubstitute;

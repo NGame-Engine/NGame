@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NGame.Application;
 using NGame.Assets;
 using NGame.Ecs;
 using NGame.GameLoop;
@@ -33,10 +34,12 @@ public static class NGame2DDefaultInstaller
 			builder.Services.AddSingleton<ITaskScheduler, ParallelTaskScheduler>();
 		}
 
+		builder.AddSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+		builder.AddComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+
 		builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
 		builder.Services.AddSingleton<IUpdatableCollection, UpdatableCollection>();
 		builder.Services.AddSingleton<IDrawableCollection, DrawableCollection>();
-
 
 		builder.Services.AddSingleton<ISystemCollection, SystemCollection>();
 		builder.Services.AddSingleton<IComponentTypeRegistry, ComponentTypeRegistry>();
@@ -50,9 +53,6 @@ public static class NGame2DDefaultInstaller
 
 		builder.Services.AddSingleton<ITagRetriever, TagRetriever>();
 
-		builder.AddSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
-		builder.AddComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
-
 		builder.Services.AddSingleton<TransformProcessor>();
 		builder.Services.AddSingleton<IMatrixUpdater, MatrixUpdater>();
 
@@ -62,6 +62,10 @@ public static class NGame2DDefaultInstaller
 
 		builder.Services.AddSingleton<IRootSceneAccessor, RootSceneAccessor>();
 		builder.Services.AddSingleton<Scene>();
+
+		builder.Services.AddSingleton(builder.Environment);
+		builder.Services.AddSingleton<IApplicationEvents, ApplicationEvents>();
+		builder.Services.AddSingleton<IGameRunner, GameRunner>();
 	}
 
 
@@ -76,5 +80,10 @@ public static class NGame2DDefaultInstaller
 
 		app.RegisterSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 		app.RegisterComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+		
+		var applicationEvents = app.Services.GetRequiredService<IApplicationEvents>();
+		var gameRunner = app.Services.GetRequiredService<IGameRunner>();
+		applicationEvents.Closing += (_, _) => gameRunner.Stop();
+
 	}
 }

@@ -1,14 +1,7 @@
 ﻿using NGame.GameLoop;
+using NGame.Services;
 
 namespace NGame.Application;
-
-
-
-public interface IGameRunner
-{
-	void RunGame();
-	void Stop();
-}
 
 
 

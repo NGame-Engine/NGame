@@ -1,6 +1,5 @@
 ﻿using NGame.Assets;
 using NGame.Components;
-using NGame.Ecs;
 
 namespace NGame.UnitTests.Scenes;
 
