@@ -6,7 +6,7 @@ namespace NGame.GameLoop;
 
 
 
-public interface IUpdateScheduler
+public interface ITickScheduler
 {
 	bool IsStopped { get; set; }
 	GameTime UpdateLoopTime { get; }
@@ -48,9 +48,9 @@ public interface IUpdateScheduler
 
 
 
-internal class UpdateScheduler : IUpdateScheduler
+internal class TickScheduler : ITickScheduler
 {
-	private readonly ILogger<UpdateScheduler> _logger;
+	private readonly ILogger<TickScheduler> _logger;
 	private readonly IUpdatableCollection _updatableCollection;
 	private readonly IRenderContext _renderContext;
 	private readonly IDrawableCollection _drawableCollection;
@@ -60,8 +60,8 @@ internal class UpdateScheduler : IUpdateScheduler
 	private readonly object _tickLock = new();
 
 
-	public UpdateScheduler(
-		ILogger<UpdateScheduler> logger,
+	public TickScheduler(
+		ILogger<TickScheduler> logger,
 		IUpdatableCollection updatableCollection,
 		IRenderContext renderContext,
 		IDrawableCollection drawableCollection
@@ -92,7 +92,7 @@ internal class UpdateScheduler : IUpdateScheduler
 	private TimeSpan AccumulatedElapsedGameTime { get; set; }
 
 
-	void IUpdateScheduler.Initialize()
+	void ITickScheduler.Initialize()
 	{
 		try
 		{
@@ -111,98 +111,95 @@ internal class UpdateScheduler : IUpdateScheduler
 	}
 
 
-	void IUpdateScheduler.Tick()
+	void ITickScheduler.Tick()
 	{
 		lock (_tickLock)
 		{
-			if (IsStopped)
-			{
-				return;
-			}
+			if (IsStopped) return;
 
-			RawTickProducer();
+			try
+			{
+				var tickTiming = CalculateTickTiming();
+				if (tickTiming.UpdateCount == 0) return;
+
+				ExecuteTick(tickTiming);
+				ThreadThrottler.Throttle(out long _);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Unexpected exception");
+				throw;
+			}
 		}
 
 		HasFinishedFirstUpdateLoop = true;
 	}
 
 
-	private void RawTickProducer()
+	private TickTiming CalculateTickTiming()
 	{
-		try
+		_autoTickTimer.Tick();
+
+		var elapsedAdjustedTime = _autoTickTimer.ElapsedTimeWithPause;
+
+		if (elapsedAdjustedTime > _maximumElapsedTime)
 		{
-			// Update the timer
-			_autoTickTimer.Tick();
+			elapsedAdjustedTime = _maximumElapsedTime;
+		}
 
-			var elapsedAdjustedTime = _autoTickTimer.ElapsedTimeWithPause;
+		int updateCount = 1;
+		var singleFrameElapsedTime = elapsedAdjustedTime;
+		var drawLag = 0L;
 
-			if (elapsedAdjustedTime > _maximumElapsedTime)
+
+		if (IsFixedTimeStep)
+		{
+			// If the rounded TargetElapsedTime is equivalent to current ElapsedAdjustedTime
+			// then make ElapsedAdjustedTime = TargetElapsedTime. We take the same internal rules as XNA
+			if (Math.Abs(elapsedAdjustedTime.Ticks - FixedTimeStepTarget.Ticks) < (FixedTimeStepTarget.Ticks >> 6))
 			{
-				elapsedAdjustedTime = _maximumElapsedTime;
+				elapsedAdjustedTime = FixedTimeStepTarget;
 			}
 
-			int updateCount = 1;
-			var singleFrameElapsedTime = elapsedAdjustedTime;
-			var drawLag = 0L;
+			// Update the accumulated time
+			AccumulatedElapsedGameTime += elapsedAdjustedTime;
 
+			// Calculate the number of update to issue
+			updateCount =
+				ForceOneUpdatePerDraw
+					? 1
+					: (int)(AccumulatedElapsedGameTime.Ticks / FixedTimeStepTarget.Ticks);
 
-			if (IsFixedTimeStep)
+			if (AllowDrawingBetweenFixedTimeSteps)
 			{
-				// If the rounded TargetElapsedTime is equivalent to current ElapsedAdjustedTime
-				// then make ElapsedAdjustedTime = TargetElapsedTime. We take the same internal rules as XNA
-				if (Math.Abs(elapsedAdjustedTime.Ticks - FixedTimeStepTarget.Ticks) < (FixedTimeStepTarget.Ticks >> 6))
-				{
-					elapsedAdjustedTime = FixedTimeStepTarget;
-				}
-
-				// Update the accumulated time
-				AccumulatedElapsedGameTime += elapsedAdjustedTime;
-
-				// Calculate the number of update to issue
-				updateCount =
-					ForceOneUpdatePerDraw
-						? 1
-						: (int)(AccumulatedElapsedGameTime.Ticks / FixedTimeStepTarget.Ticks);
-
-				if (AllowDrawingBetweenFixedTimeSteps)
-				{
-					drawLag = AccumulatedElapsedGameTime.Ticks % FixedTimeStepTarget.Ticks;
-				}
-				else if (updateCount == 0)
-				{
-					return;
-				}
-
-				// We are going to call Update updateCount times, so we can subtract this from accumulated elapsed game time
-				AccumulatedElapsedGameTime =
-					new TimeSpan(AccumulatedElapsedGameTime.Ticks - (updateCount * FixedTimeStepTarget.Ticks));
-				singleFrameElapsedTime = FixedTimeStepTarget;
+				drawLag = AccumulatedElapsedGameTime.Ticks % FixedTimeStepTarget.Ticks;
+			}
+			else if (updateCount == 0)
+			{
+				return new TickTiming(TimeSpan.Zero, 0, 0f);
 			}
 
-			var drawInterpolationFactor = drawLag / (float)FixedTimeStepTarget.Ticks;
-			RawTick(singleFrameElapsedTime, updateCount, drawInterpolationFactor);
-
-
-			ThreadThrottler.Throttle(out long _);
+			// We are going to call Update updateCount times, so we can subtract this from accumulated elapsed game time
+			AccumulatedElapsedGameTime =
+				new TimeSpan(AccumulatedElapsedGameTime.Ticks - (updateCount * FixedTimeStepTarget.Ticks));
+			singleFrameElapsedTime = FixedTimeStepTarget;
 		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Unexpected exception");
-			throw;
-		}
+
+		var drawInterpolationFactor = drawLag / (float)FixedTimeStepTarget.Ticks;
+		return new TickTiming(singleFrameElapsedTime, updateCount, drawInterpolationFactor);
 	}
 
 
-	private void RawTick(
-		TimeSpan elapsedTimePerUpdate,
-		int updateCount,
-		float drawInterpolationFactor
-	)
+	private void ExecuteTick(TickTiming tickTiming)
 	{
 		bool beginDrawSuccessful = false;
-		TimeSpan totalElapsedTime = TimeSpan.Zero;
 		try
 		{
+			var updateCount = tickTiming.UpdateCount;
+			var elapsedTimePerUpdate = tickTiming.ElapsedTimePerUpdate;
+			var drawInterpolationFactor = tickTiming.DrawInterpolationFactor;
+
+			var totalElapsedTime = TimeSpan.Zero;
 			beginDrawSuccessful = _renderContext.BeginDraw();
 
 			// Reset the time of the next frame
@@ -213,14 +210,13 @@ internal class UpdateScheduler : IUpdateScheduler
 				totalElapsedTime += elapsedTimePerUpdate;
 			}
 
-			if (!IsStopped && HasFinishedFirstUpdateLoop)
-			{
-				DrawInterpolationFactor = drawInterpolationFactor;
-				DrawLoopTime.Factor = UpdateLoopTime.Factor;
-				DrawLoopTime.Update(DrawLoopTime.Total + totalElapsedTime, totalElapsedTime, true);
+			if (IsStopped || !HasFinishedFirstUpdateLoop) return;
 
-				_drawableCollection.Draw(DrawLoopTime);
-			}
+			DrawInterpolationFactor = drawInterpolationFactor;
+			DrawLoopTime.Factor = UpdateLoopTime.Factor;
+			DrawLoopTime.Update(DrawLoopTime.Total + totalElapsedTime, totalElapsedTime, true);
+
+			_drawableCollection.Draw(DrawLoopTime);
 		}
 		finally
 		{
@@ -228,6 +224,23 @@ internal class UpdateScheduler : IUpdateScheduler
 			{
 				_renderContext.EndDraw(true);
 			}
+		}
+	}
+
+
+
+	private struct TickTiming
+	{
+		public readonly TimeSpan ElapsedTimePerUpdate;
+		public readonly int UpdateCount;
+		public readonly float DrawInterpolationFactor;
+
+
+		public TickTiming(TimeSpan elapsedTimePerUpdate, int updateCount, float drawInterpolationFactor)
+		{
+			ElapsedTimePerUpdate = elapsedTimePerUpdate;
+			UpdateCount = updateCount;
+			DrawInterpolationFactor = drawInterpolationFactor;
 		}
 	}
 }

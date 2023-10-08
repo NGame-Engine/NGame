@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NGame.Application;
 using NGame.Assets;
 using NGame.Ecs;
 using NGame.GameLoop;
@@ -18,8 +17,20 @@ namespace NGame;
 
 public static class NGame2DDefaultInstaller
 {
-	public static void AddNGame2DDefault(this INGameApplicationBuilder builder)
+	public static void AddNGame2DDefault(this INGameBuilder builder)
 	{
+		var callingAssemblyTitle =
+			Assembly
+				.GetCallingAssembly()
+				.GetCustomAttribute<AssemblyTitleAttribute>()?
+				.Title;
+
+		if (callingAssemblyTitle != null)
+		{
+			builder.Environment.ApplicationName = callingAssemblyTitle;
+		}
+
+
 		if (builder.Environment.IsDevelopment())
 		{
 			builder.Logging.AddConsole();
@@ -37,7 +48,7 @@ public static class NGame2DDefaultInstaller
 		builder.AddSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 		builder.AddComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 
-		builder.Services.AddSingleton<IUpdateScheduler, UpdateScheduler>();
+		builder.Services.AddSingleton<ITickScheduler, TickScheduler>();
 		builder.Services.AddSingleton<IUpdatableCollection, UpdatableCollection>();
 		builder.Services.AddSingleton<IDrawableCollection, DrawableCollection>();
 
@@ -63,27 +74,24 @@ public static class NGame2DDefaultInstaller
 		builder.Services.AddSingleton<IRootSceneAccessor, RootSceneAccessor>();
 		builder.Services.AddSingleton<Scene>();
 
+		builder.Services.AddSingleton<IResourceRegistry<Font>, ResourceRegistry<Font>>();
+		builder.Services.AddSingleton<IResourceRegistry<AudioClip>, ResourceRegistry<AudioClip>>();
+		builder.Services.AddSingleton<IResourceRegistry<Texture>, ResourceRegistry<Texture>>();
+
 		builder.Services.AddSingleton(builder.Environment);
-		builder.Services.AddSingleton<IApplicationEvents, ApplicationEvents>();
-		builder.Services.AddSingleton<IGameRunner, GameRunner>();
 	}
 
 
-	public static void UseNGame2DDefault(this INGameApplication app)
+	public static void UseNGame2DDefault(this INGame app)
 	{
+		app.RegisterSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+		app.RegisterComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
+
 		app.UseUpdatable<ActionCache>();
+		app.UseDrawable<TransformProcessor>();
+
 
 		var eventConnector = app.Services.GetRequiredService<EventConnector>();
 		eventConnector.ConnectEvents();
-
-		app.UseDrawable<TransformProcessor>();
-
-		app.RegisterSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
-		app.RegisterComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
-		
-		var applicationEvents = app.Services.GetRequiredService<IApplicationEvents>();
-		var gameRunner = app.Services.GetRequiredService<IGameRunner>();
-		applicationEvents.Closing += (_, _) => gameRunner.Stop();
-
 	}
 }

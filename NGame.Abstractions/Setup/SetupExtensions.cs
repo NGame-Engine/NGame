@@ -10,8 +10,8 @@ namespace NGame.Setup;
 
 public static class SetupExtensions
 {
-	public static INGameApplicationBuilder AddSystemsFromAssembly(
-		this INGameApplicationBuilder builder,
+	public static INGameBuilder AddSystemsFromAssembly(
+		this INGameBuilder builder,
 		Assembly assembly
 	)
 	{
@@ -24,8 +24,8 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplicationBuilder AddComponentsFromAssembly(
-		this INGameApplicationBuilder builder,
+	public static INGameBuilder AddComponentsFromAssembly(
+		this INGameBuilder builder,
 		Assembly assembly
 	)
 	{
@@ -38,7 +38,7 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplication RegisterSystem<T>(this INGameApplication app)
+	public static INGame RegisterSystem<T>(this INGame app)
 		where T : ISystem
 	{
 		var systemCollection = app.Services.GetRequiredService<ISystemCollection>();
@@ -48,8 +48,8 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplication RegisterSystemsFromAssembly(
-		this INGameApplication app,
+	public static INGame RegisterSystemsFromAssembly(
+		this INGame app,
 		Assembly assembly
 	)
 	{
@@ -72,7 +72,7 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplication RegisterComponent<T>(this INGameApplication app)
+	public static INGame RegisterComponent<T>(this INGame app)
 		where T : Component
 	{
 		var componentTypeRegistry = app.Services.GetRequiredService<IComponentTypeRegistry>();
@@ -82,8 +82,8 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplication RegisterComponentsFromAssembly(
-		this INGameApplication app,
+	public static INGame RegisterComponentsFromAssembly(
+		this INGame app,
 		Assembly assembly
 	)
 	{
@@ -97,7 +97,7 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplication UseUpdatable<T>(this INGameApplication app, int? orderBy = null)
+	public static INGame UseUpdatable<T>(this INGame app, int? orderBy = null)
 		where T : IUpdatable
 	{
 		var updatableCollection = app.Services.GetRequiredService<IUpdatableCollection>();
@@ -108,7 +108,7 @@ public static class SetupExtensions
 	}
 
 
-	public static INGameApplication UseDrawable<T>(this INGameApplication app, int? orderBy = null)
+	public static INGame UseDrawable<T>(this INGame app, int? orderBy = null)
 		where T : IDrawable
 	{
 		var drawableCollection = app.Services.GetRequiredService<IDrawableCollection>();

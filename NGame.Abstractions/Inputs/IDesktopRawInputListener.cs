@@ -1,6 +1,6 @@
 ﻿namespace NGame.Inputs;
 
-public interface IRawInputListener
+public interface IDesktopRawInputListener
 {
 	event EventHandler<TextEnteredEventArgs> TextEntered;
 	event EventHandler<KeyPressedEventArgs> KeyPressed;

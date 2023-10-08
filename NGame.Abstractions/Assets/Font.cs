@@ -1,6 +1,10 @@
 ﻿namespace NGame.Assets;
 
-public sealed class Font
+
+
+public sealed class Font : Asset
 {
-	public string FilePath { get; set; }
+	public Font(string filePath) : base(filePath)
+	{
+	}
 }

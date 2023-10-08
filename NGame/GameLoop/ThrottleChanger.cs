@@ -7,12 +7,12 @@ namespace NGame.GameLoop;
 /// </summary>
 internal class ThrottleChanger
 {
-	private readonly IUpdateScheduler _updateScheduler;
+	private readonly ITickScheduler _tickScheduler;
 
 
-	public ThrottleChanger(IUpdateScheduler updateScheduler)
+	public ThrottleChanger(ITickScheduler tickScheduler)
 	{
-		_updateScheduler = updateScheduler;
+		_tickScheduler = tickScheduler;
 		WindowMinimumUpdateRate = new ThreadThrottler(TimeSpan.FromSeconds(0d));
 		MinimizedMinimumUpdateRate = new ThreadThrottler(15);
 	}
@@ -31,12 +31,12 @@ internal class ThrottleChanger
 
 	public void OnMinimized()
 	{
-		_updateScheduler.ThreadThrottler = MinimizedMinimumUpdateRate;
+		_tickScheduler.ThreadThrottler = MinimizedMinimumUpdateRate;
 	}
 
 
 	public void OnMaximized()
 	{
-		_updateScheduler.ThreadThrottler = WindowMinimumUpdateRate;
+		_tickScheduler.ThreadThrottler = WindowMinimumUpdateRate;
 	}
 }

@@ -4,12 +4,12 @@ namespace NGame.Services.Scripts;
 
 
 
-public class NGameScript : Component
+public abstract class NGameScript : Component
 {
 	private readonly IComponentFactory _componentFactory;
 
 
-	public NGameScript(IComponentFactory componentFactory)
+	protected NGameScript(IComponentFactory componentFactory)
 	{
 		_componentFactory = componentFactory;
 	}

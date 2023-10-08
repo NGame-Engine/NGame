@@ -2,7 +2,7 @@
 
 
 
-public interface INGameApplication
+public interface INGame
 {
 	INGameEnvironment NGameEnvironment { get; }
 	IServiceProvider Services { get; }

@@ -2,7 +2,9 @@ namespace NGame.Assets;
 
 
 
-public class AudioClip
+public class AudioClip : Asset
 {
-	public string FilePath { get; set; }
+	public AudioClip(string filePath) : base(filePath)
+	{
+	}
 }

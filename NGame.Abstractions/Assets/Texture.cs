@@ -1,6 +1,10 @@
 ﻿namespace NGame.Assets;
 
-public sealed class Texture
+
+
+public sealed class Texture : Asset
 {
-	public string FilePath { get; set; }
+	public Texture(string filePath) : base(filePath)
+	{
+	}
 }

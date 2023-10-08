@@ -21,20 +21,7 @@ internal class DrawableCollection : IDrawableCollection
 	void IDrawableCollection.Add(IDrawable drawable)
 	{
 		_drawables.Add(drawable);
-
-
-		var newEntries =
-			_drawables
-				.Append(drawable)
-				.OrderBy(x => x.Order);
-
-		_drawables.Clear();
-
-		foreach (var entry in newEntries)
-		{
-			_drawables.Add(entry);
-		}
-
+		_drawables.Sort((a, b) => a.Order.CompareTo(b.Order));
 
 		_logger.LogInformation("Drawable {Drawable} added", drawable);
 	}

@@ -6,7 +6,7 @@ namespace NGame.Setup;
 
 
 
-public interface INGameApplicationBuilder
+public interface INGameBuilder
 {
 	public INGameEnvironment Environment { get; }
 	public IConfigurationRoot Configuration { get; }
