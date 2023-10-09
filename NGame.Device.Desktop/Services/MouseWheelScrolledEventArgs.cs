@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace NGame.Inputs;
+namespace NGame.Services;
 
 public sealed class MouseWheelScrolledEventArgs : EventArgs
 {

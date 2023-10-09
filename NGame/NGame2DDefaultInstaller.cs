@@ -74,9 +74,8 @@ public static class NGame2DDefaultInstaller
 		builder.Services.AddSingleton<IRootSceneAccessor, RootSceneAccessor>();
 		builder.Services.AddSingleton<Scene>();
 
-		builder.Services.AddSingleton<IResourceRegistry<Font>, ResourceRegistry<Font>>();
 		builder.Services.AddSingleton<IResourceRegistry<AudioClip>, ResourceRegistry<AudioClip>>();
-		builder.Services.AddSingleton<IResourceRegistry<Texture>, ResourceRegistry<Texture>>();
+
 
 		builder.Services.AddSingleton(builder.Environment);
 	}

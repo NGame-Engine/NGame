@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 
-namespace NGame.Inputs;
+namespace NGame.Services;
 
-public sealed class MouseButtonReleasedEventArgs : EventArgs
+public sealed class MouseButtonPressedEventArgs : EventArgs
 {
-	public MouseButtonReleasedEventArgs(MouseButton mouseButton, Point position)
+	public MouseButtonPressedEventArgs(MouseButton mouseButton, Point position)
 	{
 		MouseButton = mouseButton;
 		Position = position;
