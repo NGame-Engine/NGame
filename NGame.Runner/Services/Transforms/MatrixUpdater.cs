@@ -5,7 +5,7 @@ namespace NGame.Services.Transforms;
 
 
 
-internal interface IMatrixUpdater
+public interface IMatrixUpdater
 {
 	void UpdateWorldMatricesRecursive(Transform transform, Matrix4x4 parentWorldMatrix);
 	void UpdateLocalFromWorld(Transform transform);
@@ -13,7 +13,7 @@ internal interface IMatrixUpdater
 
 
 
-internal class MatrixUpdater : IMatrixUpdater
+public class MatrixUpdater : IMatrixUpdater
 {
 	public void UpdateWorldMatricesRecursive(Transform transform, Matrix4x4 parentWorldMatrix)
 	{

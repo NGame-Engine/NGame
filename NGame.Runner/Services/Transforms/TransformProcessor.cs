@@ -6,7 +6,7 @@ namespace NGame.Services.Transforms;
 
 
 
-internal class TransformProcessor : IDrawable
+public class TransformProcessor : IDrawable
 {
 	private readonly ITaskScheduler _taskScheduler;
 	private readonly IMatrixUpdater _matrixUpdater;

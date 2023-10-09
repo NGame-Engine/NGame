@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame", "NGame\NGame.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.UnitTests", "NGame.UnitTests\NGame.UnitTests.csproj", "{82737E31-46D2-4329-8810-30CA884E863E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.Abstractions", "NGame.Abstractions\NGame.Abstractions.csproj", "{8F684937-4F7A-44CF-A9BB-9CD553E64761}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.Runner", "NGame.Runner\NGame.Runner.csproj", "{4C616B7B-262A-4A42-95C2-E6A10F9059CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.Graphics.Graphics2D", "NGame.Graphics.Graphics2D\NGame.Graphics.Graphics2D.csproj", "{93EEB423-3E47-4BC4-B36A-0F2AEF327ABC}"
@@ -17,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.Device.Mobile", "NGame.Device.Mobile\NGame.Device.Mobile.csproj", "{DAE5D35C-4E85-4A08-8E23-200B65134E80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.Platform", "NGame.Platform\NGame.Platform.csproj", "{AAF58BA4-32E9-4B0C-BD95-FEDCAB0221B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGame.Runner.UnitTests", "NGame.Runner.UnitTests\NGame.Runner.UnitTests.csproj", "{CD161322-262B-497F-AC57-51AD304A4915}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{82737E31-46D2-4329-8810-30CA884E863E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82737E31-46D2-4329-8810-30CA884E863E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82737E31-46D2-4329-8810-30CA884E863E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F684937-4F7A-44CF-A9BB-9CD553E64761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F684937-4F7A-44CF-A9BB-9CD553E64761}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F684937-4F7A-44CF-A9BB-9CD553E64761}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F684937-4F7A-44CF-A9BB-9CD553E64761}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C616B7B-262A-4A42-95C2-E6A10F9059CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C616B7B-262A-4A42-95C2-E6A10F9059CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C616B7B-262A-4A42-95C2-E6A10F9059CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,5 +56,9 @@ Global
 		{AAF58BA4-32E9-4B0C-BD95-FEDCAB0221B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAF58BA4-32E9-4B0C-BD95-FEDCAB0221B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAF58BA4-32E9-4B0C-BD95-FEDCAB0221B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD161322-262B-497F-AC57-51AD304A4915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD161322-262B-497F-AC57-51AD304A4915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD161322-262B-497F-AC57-51AD304A4915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD161322-262B-497F-AC57-51AD304A4915}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

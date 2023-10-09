@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
+using NGame.Assets;
 using NGame.Services;
 
-namespace NGame.Assets;
+namespace NGame.Resources;
 
 
 

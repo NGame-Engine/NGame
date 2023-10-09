@@ -7,4 +7,8 @@
         <RootNamespace>NGame</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\NGame\NGame.csproj" />
+    </ItemGroup>
+
 </Project>

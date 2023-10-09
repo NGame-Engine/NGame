@@ -1,6 +1,6 @@
 ﻿using NGame.Components;
 
-namespace NGame.Services.Scripts;
+namespace NGame.Scripts;
 
 
 

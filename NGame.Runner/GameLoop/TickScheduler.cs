@@ -48,7 +48,7 @@ public interface ITickScheduler
 
 
 
-internal class TickScheduler : ITickScheduler
+public class TickScheduler : ITickScheduler
 {
 	private readonly ILogger<TickScheduler> _logger;
 	private readonly IUpdatableCollection _updatableCollection;
@@ -189,7 +189,7 @@ internal class TickScheduler : ITickScheduler
 		return new TickTiming(singleFrameElapsedTime, updateCount, drawInterpolationFactor);
 	}
 
-
+	// TODO split off into own class
 	private void ExecuteTick(TickTiming tickTiming)
 	{
 		bool beginDrawSuccessful = false;

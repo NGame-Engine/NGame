@@ -4,7 +4,7 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace NGame.Assets;
 
-internal static class PolymorphismOptions
+public static class PolymorphismOptions
 {
 	public static JsonPolymorphismOptions ForComponents(IEnumerable<Type> componentTypes)
 	{

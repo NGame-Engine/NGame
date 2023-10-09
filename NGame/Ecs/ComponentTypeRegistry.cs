@@ -5,7 +5,7 @@ namespace NGame.Ecs;
 
 
 
-internal class ComponentTypeRegistry : IComponentTypeRegistry
+public class ComponentTypeRegistry : IComponentTypeRegistry
 {
 	private readonly ILogger<ComponentTypeRegistry> _logger;
 	private readonly ISet<Type> _registeredTypes = new HashSet<Type>();

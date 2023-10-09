@@ -5,8 +5,8 @@ using Microsoft.Extensions.Logging;
 using NGame.Assets;
 using NGame.Ecs;
 using NGame.GameLoop;
+using NGame.Resources;
 using NGame.Services;
-using NGame.Services.Parallelism;
 using NGame.Services.Scenes;
 using NGame.Services.Transforms;
 using NGame.Setup;
@@ -17,7 +17,7 @@ namespace NGame;
 
 public static class NGame2DDefaultInstaller
 {
-	public static void AddNGame2DDefault(this INGameBuilder builder)
+	public static INGameBuilder AddNGame2DDefault(this INGameBuilder builder)
 	{
 		var callingAssemblyTitle =
 			Assembly
@@ -36,14 +36,6 @@ public static class NGame2DDefaultInstaller
 			builder.Logging.AddConsole();
 		}
 
-		if (builder.Environment.Platform.IsMobile())
-		{
-			builder.Services.AddSingleton<ITaskScheduler, SequentialTaskScheduler>();
-		}
-		else
-		{
-			builder.Services.AddSingleton<ITaskScheduler, ParallelTaskScheduler>();
-		}
 
 		builder.AddSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 		builder.AddComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
@@ -78,10 +70,13 @@ public static class NGame2DDefaultInstaller
 
 
 		builder.Services.AddSingleton(builder.Environment);
+
+
+		return builder;
 	}
 
 
-	public static void UseNGame2DDefault(this INGame app)
+	public static INGame UseNGame2DDefault(this INGame app)
 	{
 		app.RegisterSystemsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
 		app.RegisterComponentsFromAssembly(typeof(NGame2DDefaultInstaller).Assembly);
@@ -92,5 +87,7 @@ public static class NGame2DDefaultInstaller
 
 		var eventConnector = app.Services.GetRequiredService<EventConnector>();
 		eventConnector.ConnectEvents();
+
+		return app;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets;
+using NGame.Resources;
 using NGame.Services;
 using NGame.Setup;
 

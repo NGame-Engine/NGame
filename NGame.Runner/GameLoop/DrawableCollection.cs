@@ -6,7 +6,7 @@ namespace NGame.GameLoop;
 
 
 
-internal class DrawableCollection : IDrawableCollection
+public class DrawableCollection : IDrawableCollection
 {
 	private readonly ILogger<DrawableCollection> _logger;
 	private readonly List<IDrawable> _drawables = new();

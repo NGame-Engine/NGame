@@ -2,7 +2,7 @@
 
 
 
-internal class EventConnector
+public class EventConnector
 {
 	private readonly IEntityRegistry _entityRegistry;
 	private readonly IActionCache _actionCache;

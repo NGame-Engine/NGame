@@ -6,7 +6,7 @@ namespace NGame.GameLoop;
 
 
 
-internal class UpdatableCollection : IUpdatableCollection
+public class UpdatableCollection : IUpdatableCollection
 {
 	private readonly ILogger<UpdatableCollection> _logger;
 	private readonly List<IUpdatable> _updatables = new();

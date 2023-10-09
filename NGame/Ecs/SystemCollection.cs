@@ -6,7 +6,7 @@ namespace NGame.Ecs;
 
 
 
-internal class SystemCollection : ISystemCollection
+public class SystemCollection : ISystemCollection
 {
 	private readonly ILogger<SystemCollection> _logger;
 	private readonly List<ISystem> _systems = new();
