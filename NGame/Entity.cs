@@ -23,6 +23,12 @@ public sealed class Entity
 
 
 	public readonly Transform Transform;
+
+
+	public IEnumerable<Component> GetComponents() =>
+		Scene
+			.EntityRegistry
+			.GetComponents(this);
 }
 
 
@@ -53,12 +59,6 @@ public static class EntityExtensions
 		entity.Scene.EntityRegistry.RemoveComponent(entity, component);
 		return entity;
 	}
-
-
-	public static IEnumerable<Component> GetComponents(this Entity entity) =>
-		entity
-			.Scene.EntityRegistry
-			.GetComponents(entity);
 
 
 	public static T GetComponent<T>(this Entity entity) where T : Component =>
