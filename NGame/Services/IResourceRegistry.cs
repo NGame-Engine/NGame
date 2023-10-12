@@ -22,10 +22,10 @@ public static class ResourceRegistryExtensions
 
 
 
-public interface IResourceRegistry<T> where T : Asset
+public interface IResourceRegistry<T>
 {
 	void Register(T asset, Assembly assembly);
-	IEnumerable<KeyValuePair<T, Entry>> GetAll();
+	IEnumerable<Entry> GetAll();
 	Entry GetEntry(T asset);
 	Stream GetStream(T asset);
 

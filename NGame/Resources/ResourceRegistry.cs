@@ -37,7 +37,7 @@ public class ResourceRegistry<T> : IResourceRegistry<T> where T : Asset
 	}
 
 
-	public IEnumerable<KeyValuePair<T, IResourceRegistry<T>.Entry>> GetAll() => _assets;
+	public IEnumerable<IResourceRegistry<T>.Entry> GetAll() => _assets.Values;
 
 
 	public IResourceRegistry<T>.Entry GetEntry(T asset) => _assets[asset];
