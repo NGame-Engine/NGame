@@ -44,7 +44,14 @@ public abstract class DataListSystem<TData> : ISystem
 
 	public virtual void Remove(Entity entity)
 	{
+		var data = _datas[entity];
+		OnRemove(entity, data);
 		_datas.Remove(entity);
+	}
+
+
+	public virtual void OnRemove(Entity entity, TData data)
+	{
 	}
 
 

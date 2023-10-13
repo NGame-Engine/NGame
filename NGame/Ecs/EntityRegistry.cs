@@ -1,50 +1,62 @@
 ﻿using NGame.Components;
+using NGame.Services;
 
 namespace NGame.Ecs;
 
 
 
-
 public class EntityRegistry : IEntityRegistry
 {
+	private readonly IActionCache _actionCache;
+	private readonly ISystemCollection _systemCollection;
 	private readonly Dictionary<Entity, List<Component>> _components = new();
 
-	public event Action<EntityAddedEventArgs>? EntityAdded;
-	public event Action<EntityRemovedEventArgs>? EntityRemoved;
-	public event Action<Entity, ComponentAddedEventArgs>? ComponentAdded;
-	public event Action<Entity, ComponentRemovedEventArgs>? ComponentRemoved;
+
+	public EntityRegistry(IActionCache actionCache, ISystemCollection systemCollection)
+	{
+		_actionCache = actionCache;
+		_systemCollection = systemCollection;
+	}
 
 
 	public void AddEntity(Entity entity)
 	{
-		_components.Add(entity, new List<Component>());
-		var eventArgs = new EntityAddedEventArgs(entity);
-		EntityAdded?.Invoke(eventArgs);
+		_actionCache.AddAction(() =>
+		{
+			_components.Add(entity, new List<Component>());
+			_systemCollection.AddEntity(entity);
+		});
 	}
 
 
 	public void RemoveEntity(Entity entity)
 	{
-		_components.Remove(entity);
-		var eventArgs = new EntityRemovedEventArgs(entity);
-		EntityRemoved?.Invoke(eventArgs);
+		_actionCache.AddAction(() =>
+		{
+			_components.Remove(entity);
+			_systemCollection.RemoveEntity(entity);
+		});
 	}
 
 
 	public void AddComponent(Entity entity, Component component)
 	{
-		_components[entity].Add(component);
-		component.Entity = entity;
-		var eventArgs = new ComponentAddedEventArgs(component);
-		ComponentAdded?.Invoke(entity, eventArgs);
+		_actionCache.AddAction(() =>
+		{
+			_components[entity].Add(component);
+			component.Entity = entity;
+			_systemCollection.AddComponent(entity);
+		});
 	}
 
 
 	public void RemoveComponent(Entity entity, Component component)
 	{
-		_components[entity].Remove(component);
-		var eventArgs = new ComponentRemovedEventArgs(component);
-		ComponentRemoved?.Invoke(entity, eventArgs);
+		_actionCache.AddAction(() =>
+		{
+			_components[entity].Remove(component);
+			_systemCollection.RemoveComponent(entity);
+		});
 	}
 
 
