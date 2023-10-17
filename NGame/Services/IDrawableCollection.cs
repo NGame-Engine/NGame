@@ -1,4 +1,4 @@
-﻿using NGame.Systems;
+﻿using NGame.Ecs;
 
 namespace NGame.Services;
 

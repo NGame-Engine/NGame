@@ -1,13 +1,41 @@
 using Microsoft.Extensions.DependencyInjection;
+using NGame.Assets;
+using NGame.Components;
+using NGame.Ecs;
 using NGame.Services;
-using NGame.Systems;
 
-namespace NGame.Setup;
-
+namespace NGame.Startup;
 
 
-public static class SetupExtensions
+
+public static class NGameBuilderExtensions
 {
+	public static INGameBuilder AddAssetType<T>(this INGameBuilder builder)
+		where T : Asset
+	{
+		builder.ApplicationStarting += app =>
+		{
+			var typeRegistry = app.Services.GetRequiredService<ITypeRegistry>();
+			typeRegistry.AddType<Asset, T>();
+		};
+
+		return builder;
+	}
+
+
+	public static INGameBuilder AddComponentType<T>(this INGameBuilder builder)
+		where T : Component
+	{
+		builder.ApplicationStarting += app =>
+		{
+			var typeRegistry = app.Services.GetRequiredService<ITypeRegistry>();
+			typeRegistry.AddType<Component, T>();
+		};
+
+		return builder;
+	}
+
+
 	public static INGameBuilder RegisterSystem<T>(this INGameBuilder builder)
 		where T : class, ISystem
 	{

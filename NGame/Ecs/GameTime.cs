@@ -1,4 +1,4 @@
-namespace NGame;
+namespace NGame.Ecs;
 
 /// <summary>
 /// Current timing used for variable-step (real time) or fixed-step (game time) games.

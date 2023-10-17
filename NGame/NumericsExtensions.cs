@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace NGame.Utilities;
+namespace NGame;
 
 
 

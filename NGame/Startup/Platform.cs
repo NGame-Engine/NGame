@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace NGame.Setup;
+namespace NGame.Startup;
 
 
 
@@ -26,7 +26,7 @@ public class Platform
 
 public enum OperatingSystem
 {
-	Unkown,
+	Unknown,
 	Windows,
 	MacOs,
 	Linux,
@@ -50,7 +50,7 @@ public static class PlatformFinder
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return OperatingSystem.Windows;
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) return OperatingSystem.MacOs;
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return OperatingSystem.Linux;
-		return OperatingSystem.Unkown;
+		return OperatingSystem.Unknown;
 	}
 
 

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets;
-using NGame.Setup;
+using NGame.Startup;
 
 namespace NGame.Services;
 
@@ -12,7 +12,7 @@ public static class ResourceRegistryExtensions
 	public static INGame RegisterAsset<T>(
 		this INGame app,
 		T asset
-	) where T : Asset
+	) where T : FileAsset
 	{
 		var resourceRegistry = app.Services.GetRequiredService<IResourceRegistry<T>>();
 		resourceRegistry.Register(asset, Assembly.GetCallingAssembly());

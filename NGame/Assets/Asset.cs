@@ -1,14 +1,20 @@
-﻿namespace NGame.Assets;
+﻿using Semver;
+
+namespace NGame.Assets;
 
 
 
 public abstract class Asset
 {
-	protected Asset(string filePath)
-	{
-		FilePath = filePath;
-	}
+	public Guid Id { get; init; }
+	
+	
+	public SemVersion SerializerVersion { get; init; } = new(0);
+}
 
 
-	public string FilePath { get; }
+
+public abstract class FileAsset : Asset
+{
+	public string FilePath { get; init; }
 }

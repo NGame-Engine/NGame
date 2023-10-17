@@ -1,4 +1,4 @@
-﻿namespace NGame.Utilities;
+﻿namespace NGame;
 
 
 

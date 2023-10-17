@@ -1,6 +1,6 @@
-﻿using NGame.Systems;
+﻿using NGame.Ecs;
 
-namespace NGame.Services;
+namespace NGame.Startup;
 
 
 

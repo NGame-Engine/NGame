@@ -1,21 +1,19 @@
-using NGame.Assets;
 using NGame.Components;
 
-namespace NGame;
+namespace NGame.Ecs;
 
 
 
 public sealed class Entity
 {
-	public Entity(Scene scene)
+	private readonly List<Component> _components = new();
+
+
+	public Entity(IScene scene)
 	{
-		Scene = scene;
-		Transform = new Transform(this);
+		Transform = new Transform(this, scene);
 	}
 
-
-	// TODO remove internal set before moving to abstractions
-	public Scene Scene { get; internal set; }
 
 	public readonly Guid Id = Guid.NewGuid();
 	public string Name { get; set; } = "Entity";
@@ -24,11 +22,25 @@ public sealed class Entity
 
 	public readonly Transform Transform;
 
+	public IReadOnlyCollection<Component> Components => _components;
 
-	public IEnumerable<Component> GetComponents() =>
-		Scene
-			.EntityRegistry
-			.GetComponents(this);
+
+	public Entity AddComponent(Component component)
+	{
+		_components.Add(component);
+		component.Entity = this;
+		Transform.Scene.NotifyComponentAdded(this, component);
+		return this;
+	}
+
+
+	public Entity RemoveComponent(Component component)
+	{
+		_components.Remove(component);
+		component.Entity = null;
+		Transform.Scene.NotifyComponentRemoved(this, component);
+		return this;
+	}
 }
 
 
@@ -37,33 +49,19 @@ public static class EntityExtensions
 {
 	public static Entity CreateChildEntity(this Entity entity)
 	{
-		var childEntity = entity.Scene.CreateEntity();
+		var childEntity = entity.Transform.Scene.CreateEntity();
 		childEntity.Transform.SetParent(entity.Transform);
 		return childEntity;
 	}
 
 
 	public static void Destroy(this Entity entity) =>
-		entity.Scene.Destroy(entity);
-
-
-	public static Entity AddComponent(this Entity entity, Component component)
-	{
-		entity.Scene.EntityRegistry.AddComponent(entity, component);
-		return entity;
-	}
-
-
-	public static Entity RemoveComponent(this Entity entity, Component component)
-	{
-		entity.Scene.EntityRegistry.RemoveComponent(entity, component);
-		return entity;
-	}
+		entity.Transform.Scene.DestroyEntity(entity);
 
 
 	public static T GetComponent<T>(this Entity entity) where T : Component =>
 		entity
-			.GetComponents()
+			.Components
 			.Where(x => x.GetType() == typeof(T))
 			.Cast<T>()
 			.First();
@@ -71,7 +69,7 @@ public static class EntityExtensions
 
 	public static T? TryGetComponent<T>(this Entity entity) where T : Component =>
 		entity
-			.GetComponents()
+			.Components
 			.Where(x => x.GetType() == typeof(T))
 			.Cast<T>()
 			.FirstOrDefault();
@@ -79,14 +77,14 @@ public static class EntityExtensions
 
 	public static IEnumerable<T> GetComponents<T>(this Entity entity) where T : Component =>
 		entity
-			.GetComponents()
+			.Components
 			.Where(x => x.GetType() == typeof(T))
 			.Cast<T>();
 
 
 	public static IEnumerable<T> GetComponentsInChildren<T>(this Entity entity) where T : Component =>
 		entity
-			.GetComponents()
+			.Components
 			.Where(x => x.GetType() == typeof(T))
 			.Cast<T>()
 			.Concat(
@@ -100,7 +98,7 @@ public static class EntityExtensions
 
 	public static T GetRequiredSubTypeComponent<T>(this Entity entity) where T : Component =>
 		entity
-			.GetComponents()
+			.Components
 			.Where(x => x.GetType().IsAssignableTo(typeof(T)))
 			.Cast<T>()
 			.First();

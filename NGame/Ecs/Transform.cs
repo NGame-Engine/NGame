@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
-using NGame.Utilities;
 
-namespace NGame.Components;
+namespace NGame.Ecs;
 
 
 
@@ -10,9 +9,10 @@ public sealed class Transform
 	private readonly List<Transform> _children = new();
 
 
-	public Transform(Entity entity)
+	public Transform(Entity entity, IScene scene)
 	{
 		Entity = entity;
+		Scene = scene;
 	}
 
 
@@ -66,25 +66,33 @@ public sealed class Transform
 	}
 
 
+	public IScene Scene { get; private set; }
 	public Transform? Parent { get; private set; }
 	public IReadOnlyCollection<Transform> Children => _children;
 
 
 	public void SetParent(Transform? newParent)
 	{
-		if (newParent == Parent) return;
-
-		if (newParent != null)
-		{
-			var parentEntity = newParent.Entity;
-			var otherScene = parentEntity.Scene;
-			otherScene.AddEntity(Entity);
-		}
-
 		Parent?._children.Remove(this);
-		newParent?._children.Add(this);
+		Parent = null;
+		Scene.RemoveTransform(this);
 
 		Parent = newParent;
+		Parent?._children.Add(this);
+
+		Scene = Parent?.Scene ?? Scene;
+		Scene.AddTransform(this);
+	}
+
+
+	public void MoveToScene(IScene scene)
+	{
+		Parent?._children.Remove(this);
+		Parent = null;
+		Scene.RemoveTransform(this);
+
+		Scene = scene;
+		Scene.AddTransform(this);
 	}
 
 

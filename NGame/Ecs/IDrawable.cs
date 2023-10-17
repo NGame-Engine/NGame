@@ -1,6 +1,6 @@
 ﻿using NGame.Services;
 
-namespace NGame.Systems;
+namespace NGame.Ecs;
 
 
 

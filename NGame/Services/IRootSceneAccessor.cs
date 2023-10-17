@@ -1,4 +1,4 @@
-﻿using NGame.Assets;
+﻿using NGame.Ecs;
 
 namespace NGame.Services;
 
@@ -6,5 +6,7 @@ namespace NGame.Services;
 
 public interface IRootSceneAccessor
 {
-	Scene RootScene { get; }
+	IScene RootScene { get; }
+
+	void SetRootScene(IScene scene);
 }

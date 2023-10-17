@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using NGame.Utilities;
 
 namespace NGame.UnitTests.NGameSystem;
 

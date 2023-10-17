@@ -1,10 +1,12 @@
+using NGame.Ecs;
+
 namespace NGame.Components;
 
 
 
 public class Component
 {
-	public readonly Guid Id = Guid.NewGuid();
+	public Guid Id { get; init; } = Guid.NewGuid();
 	public Entity? Entity;
 }
 
@@ -13,5 +15,5 @@ public class Component
 public static class ComponentExtensions
 {
 	public static void Destroy(this Component component) =>
-		component.Entity!.Scene.Destroy(component);
+		component.Entity!.Transform.Scene.DestroyComponent(component);
 }

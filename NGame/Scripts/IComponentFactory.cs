@@ -1,4 +1,5 @@
 ﻿using NGame.Components;
+using NGame.Ecs;
 
 namespace NGame.Scripts;
 

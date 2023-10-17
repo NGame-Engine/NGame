@@ -1,4 +1,5 @@
 ﻿using NGame.Components;
+using NGame.Ecs;
 
 namespace NGame.Scripts;
 
@@ -33,8 +34,4 @@ public abstract class NGameScript : Component
 
 	public IEnumerable<T> GetComponentsInChildren<T>() where T : Component =>
 		Entity!.GetComponentsInChildren<T>();
-
-
-	public Entity Instantiate(Entity entity) =>
-		Entity!.Scene.Instantiate(entity);
 }
