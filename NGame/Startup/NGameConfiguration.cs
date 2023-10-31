@@ -4,8 +4,8 @@
 
 public class NGameConfiguration
 {
-	public static string JsonElementName = "NGame";
+	public static readonly string JsonElementName = "NGame";
 
-	public List<Guid> Scenes { get; init; } = new();
-	public Guid StartScene { get; init; }
+	public List<Guid> Scenes { get; set; } = new();
+	public Guid StartScene { get; set; }
 }

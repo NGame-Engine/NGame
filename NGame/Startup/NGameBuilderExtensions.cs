@@ -41,47 +41,46 @@ public static class NGameBuilderExtensions
 	{
 		builder.Services.AddSingleton<T>();
 
-		builder.ApplicationStarting += app =>
+		builder.Services.AddSingleton<ISystem>(services => services.GetRequiredService<T>());
+
+		if (typeof(T).IsAssignableTo(typeof(IUpdatable)))
 		{
-			var systemCollection = app.Services.GetRequiredService<ISystemCollection>();
-			var system = app.Services.GetRequiredService<T>();
-			systemCollection.AddSystem(system);
+			builder.Services.AddSingleton<IUpdatable>(services => (IUpdatable)services.GetRequiredService<T>());
+		}
 
-			if (system is IUpdatable updatable)
-			{
-				var updatableCollection = app.Services.GetRequiredService<IUpdatableCollection>();
-				updatableCollection.Add(updatable);
-			}
-
-			if (system is IDrawable drawable)
-			{
-				var drawableCollection = app.Services.GetRequiredService<IDrawableCollection>();
-				drawableCollection.Add(drawable);
-			}
-		};
+		if (typeof(T).IsAssignableTo(typeof(IDrawable)))
+		{
+			builder.Services.AddSingleton<IDrawable>(services => (IDrawable)services.GetRequiredService<T>());
+		}
 
 		return builder;
 	}
 
 
-	public static INGame UseUpdatable<T>(this INGame app, int? orderBy = null)
+	public static INGameBuilder RegisterUpdatable<T>(this INGameBuilder builder, int? orderBy = null)
 		where T : IUpdatable
 	{
-		var updatableCollection = app.Services.GetRequiredService<IUpdatableCollection>();
-		var updatable = app.Services.GetRequiredService<T>();
-		updatable.Order = orderBy ?? updatable.Order;
-		updatableCollection.Add(updatable);
-		return app;
+		builder.Services.AddSingleton<IUpdatable>(services =>
+		{
+			var updatable = services.GetRequiredService<T>();
+			updatable.Order = orderBy ?? updatable.Order;
+			return updatable;
+		});
+
+		return builder;
 	}
 
 
-	public static INGame UseDrawable<T>(this INGame app, int? orderBy = null)
+	public static INGameBuilder RegisterDrawable<T>(this INGameBuilder builder, int? orderBy = null)
 		where T : IDrawable
 	{
-		var drawableCollection = app.Services.GetRequiredService<IDrawableCollection>();
-		var drawable = app.Services.GetRequiredService<T>();
-		drawable.Order = orderBy ?? drawable.Order;
-		drawableCollection.Add(drawable);
-		return app;
+		builder.Services.AddSingleton<IDrawable>(services =>
+		{
+			var drawable = services.GetRequiredService<T>();
+			drawable.Order = orderBy ?? drawable.Order;
+			return drawable;
+		});
+
+		return builder;
 	}
 }
