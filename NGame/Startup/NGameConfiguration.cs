@@ -4,6 +4,8 @@
 
 public class NGameConfiguration
 {
-	public List<Guid> Scenes { get; init; }
+	public static string JsonElementName = "NGame";
+
+	public List<Guid> Scenes { get; init; } = new();
 	public Guid StartScene { get; init; }
 }
