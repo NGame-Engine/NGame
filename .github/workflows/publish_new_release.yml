@@ -10,7 +10,7 @@ permissions:
 
 jobs:
 
-  build:
+  publish:
     runs-on: ubuntu-22.04
     env:
       Version: 0.${{ github.run_number }}.${{ github.run_attempt }}-alpha
