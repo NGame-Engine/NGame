@@ -1,4 +1,4 @@
-name: Pull Request Checks
+name: Publish New Release
 
 on:
   push:
@@ -28,7 +28,14 @@ jobs:
     - name: Execute unit tests
       run: dotnet test
 
-    - name: Create NuGet Package
+    - name: Create NuGet Packages
       env:
         Version: 0.${{ github.run_number }}.${{ github.run_attempt }}-alpha
-      run: dotnet pack -p:PackageVersion=$Version --include-source
+      run: dotnet pack -p:PackageVersion=$Version
+
+    - name: Push Packages to NuGet
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: |
+      dotnet nuget push "*.nupkg" -k $NUGET_API_KEY
+      dotnet nuget push "*.snupkg" -k $NUGET_API_KEY
