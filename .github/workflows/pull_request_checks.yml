@@ -8,19 +8,11 @@ on:
 jobs:
 
   test:
-
     runs-on: ubuntu-22.04
-
-
     steps:
-
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        global-json-file: global.json
-
-    - name: Execute unit tests
-      run: dotnet test /warnaserror
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v3
+        with:
+          global-json-file: global.json
+      - run: dotnet format --verify-no-changes --verbosity diagnostic
+      - run: dotnet test /warnaserror

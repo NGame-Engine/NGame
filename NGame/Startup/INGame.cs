@@ -1,4 +1,4 @@
-﻿namespace NGame.Startup;
+namespace NGame.Startup;
 
 
 

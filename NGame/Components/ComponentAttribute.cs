@@ -1,4 +1,4 @@
-﻿namespace NGame.Components;
+namespace NGame.Components;
 
 
 

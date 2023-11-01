@@ -1,4 +1,4 @@
-﻿namespace NGame.Assets;
+namespace NGame.Assets;
 
 
 
