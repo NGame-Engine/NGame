@@ -43,13 +43,15 @@ jobs:
     - name: TEsto
       run: echo $Version
 
-#    - name: Create tag
-#      uses: actions/github-script@v6
-#      with:
-#        script: |
-#          github.rest.git.createRef({
-#            owner: context.repo.owner,
-#            repo: context.repo.repo,
-#            ref: 'refs/tags/$Version',
-#            sha: context.sha
-#          })
+    - name: Create tag
+      uses: actions/github-script@v6
+      env:
+        RefString: 'refs/tags/$Version'
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: $RefString,
+            sha: context.sha
+          })
