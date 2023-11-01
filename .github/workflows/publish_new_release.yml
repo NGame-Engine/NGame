@@ -1,0 +1,46 @@
+name: Publish New Release
+
+on:
+  push:
+    branches: [ "release" ]
+
+permissions:
+  contents: write
+
+
+jobs:
+
+  publish:
+    runs-on: ubuntu-22.04
+    env:
+      Version: 0.${{ github.run_number }}.${{ github.run_attempt }}-alpha
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        global-json-file: global.json
+
+    - name: Execute unit tests
+      run: dotnet test
+
+    - name: Create NuGet Packages
+      run: dotnet pack -p:PackageVersion=${{env.Version}}
+
+    - name: Push Packages to NuGet
+      run: dotnet nuget push "**/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+
+    - name: Create tag
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/${{env.Version}}',
+            sha: context.sha
+          })
