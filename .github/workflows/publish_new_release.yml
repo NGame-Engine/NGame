@@ -40,13 +40,16 @@ jobs:
 #        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 #      run: dotnet nuget push "**/*.nupkg" -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json
 
-    - name: Create tag
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.git.createRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: 'refs/tags/$Version',
-            sha: context.sha
-          })
+    - name: TEsto
+      run: echo $Version
+
+#    - name: Create tag
+#      uses: actions/github-script@v6
+#      with:
+#        script: |
+#          github.rest.git.createRef({
+#            owner: context.repo.owner,
+#            repo: context.repo.repo,
+#            ref: 'refs/tags/$Version',
+#            sha: context.sha
+#          })
