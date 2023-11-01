@@ -10,6 +10,8 @@ jobs:
   check-formatting:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Format
         run: dotnet format --verify-no-changes --verbosity diagnostic
 
