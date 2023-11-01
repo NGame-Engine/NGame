@@ -19,9 +19,10 @@ jobs:
         continue-on-error: true
       - if: steps.check-format.outcome == 'failure'
         run: |
-          dotnet format
           git config --local user.name "auto-formatter[bot]"
           git config --local user.email "auto-formatter[bot]@users.noreply.github.com"
+          git checkout ${{ github.head_ref }}
+          dotnet format
           git commit -am 'Automated dotnet-format update'
           git push
       - if: steps.check-format.outcome == 'success'
