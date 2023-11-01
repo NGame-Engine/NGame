@@ -9,15 +9,13 @@ on:
 permissions:
   contents: write
 
-env:
-  Version: 0.${{ github.run_number }}.${{ github.run_attempt }}-alpha
-
 
 jobs:
 
   build:
-
     runs-on: ubuntu-22.04
+    env:
+      Version: 0.${{ github.run_number }}.${{ github.run_attempt }}-alpha
 
     steps:
 
