@@ -46,12 +46,12 @@ jobs:
     - name: Create tag
       uses: actions/github-script@v6
       env:
-        RefString: 'refs/tags/$Version'
+        Versiono: 0.${{ github.run_number }}.${{ github.run_attempt }}-alpha
       with:
         script: |
           github.rest.git.createRef({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            ref: $RefString,
+            ref: 'refs/tags/$Versiono',
             sha: context.sha
           })
