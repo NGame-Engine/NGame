@@ -1,4 +1,4 @@
-﻿using NGame.Services;
+using NGame.Services;
 
 namespace NGame.Startup;
 
