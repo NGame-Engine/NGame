@@ -10,19 +10,40 @@ jobs:
   check-formatting:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Format
-        run: dotnet format --verify-no-changes --verbosity diagnostic
+      - uses: actions/checkout@v3
+      - run: dotnet format --verify-no-changes --verbosity diagnostic
+        id: check-format
+        continue-on-error: true
+      - if: steps.check-format.outcome == 'failure'
+        run: |
+          dotnet format
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -a -m 'Automated dotnet-format update
+          git push origin ${{ github.head_ref }}
+          
+          
+#      - name: Commit files
+#        if: steps.command.outputs.command-name && steps.command.outputs.command-arguments == 'format' && steps.format.outputs.has-changes == 'true'
+#        run: |
+#          git config --local user.name "github-actions[bot]"
+#          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#          git commit -a -m 'Automated dotnet-format update
+#
+#          Co-authored-by: ${{ github.event.comment.user.login }} <${{ github.event.comment.user.id }}+${{ github.event.comment.user.login }}@users.noreply.github.com>'
+#
+#      - name: Push changes
+#        if: steps.command.outputs.command-name && steps.command.outputs.command-arguments == 'format' && steps.format.outputs.has-changes == 'true'
+#        uses: ad-m/github-push-action@v0.5.0
+#        with:
+#          branch: ${{ steps.comment-branch.outputs.ref }}
+#          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   test:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install .NET Core
-        uses: actions/setup-dotnet@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
         with:
           global-json-file: global.json
-      - name: Execute unit tests
-        run: dotnet test /warnaserror
+      - run: dotnet test /warnaserror
