@@ -23,4 +23,4 @@ jobs:
         global-json-file: global.json
 
     - name: Execute unit tests
-      run: dotnet test
+      run: dotnet test /warnaserror
