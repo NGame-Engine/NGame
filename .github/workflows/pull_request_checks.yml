@@ -21,7 +21,7 @@ jobs:
         run: |
           git config --local user.name "auto-formatter[bot]"
           git config --local user.email "auto-formatter[bot]@users.noreply.github.com"
-          git checkout ${{ github.head_ref }}
+          git checkout origin ${{ github.head_ref }}
           dotnet format
           git commit -am 'Automated dotnet-format update'
           git push
