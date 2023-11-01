@@ -16,5 +16,5 @@ public abstract class Asset
 
 public abstract class FileAsset : Asset
 {
-	public string FilePath { get; init; }
+	public string FilePath { get; init; } = "";
 }

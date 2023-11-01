@@ -7,7 +7,7 @@ namespace NGame.Assets;
 [Asset(Discriminator = "NGame.SceneAsset")]
 public class SceneAsset : Asset
 {
-	public List<EntityEntry> Entities { get; init; }
+	public List<EntityEntry> Entities { get; init; } = new();
 }
 
 
