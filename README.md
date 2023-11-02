@@ -1,0 +1,14 @@
+
+# NGame
+
+![Publish Release](https://github.com/NGame-Engine/NGame/actions/workflows/publish_new_release.yml/badge.svg?branch=release)
+![Nuget](https://img.shields.io/nuget/v/NGame)
+[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/NGame-Engine/NGame/blob/master/LICENSE.md)
+
+A Game Engine Embracing the .NET Ecosystem
+
+---
+
+## Get Started
+
+TBD (Still in prerelease mode)

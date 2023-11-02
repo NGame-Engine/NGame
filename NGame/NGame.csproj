@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Authors>Raphael Schmitz</Authors>
+    <Authors>NGame Contributors</Authors>
     <Description>A Game Engine Embracing the .NET Ecosystem</Description>
-    <Copyright>Copyright © Raphael Schmitz 2023</Copyright>
+    <Copyright>Copyright © NGame Contributors 2023</Copyright>
     <PackageReadmeFile>_NuGet/README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/NGame-Engine/NGame/wiki</PackageProjectUrl>
     <PackageIcon>_NuGet/logo-128x128.png</PackageIcon>
