@@ -7,6 +7,7 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <RootNamespace>NGame.Core.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,8 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\NGame.Core.Helpers\NGame.Core.Helpers.csproj" />
-      <ProjectReference Include="..\NGame.Core\NGame.Core.csproj" />
+      <ProjectReference Include="..\NGame.Implementations\NGame.Implementations.csproj" />
     </ItemGroup>
 
 </Project>
