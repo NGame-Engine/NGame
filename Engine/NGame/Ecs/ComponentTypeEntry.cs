@@ -4,7 +4,7 @@ namespace NGame.Ecs;
 
 public class ComponentTypeEntry
 {
-	private ComponentTypeEntry(Type subType)
+	public ComponentTypeEntry(Type subType)
 	{
 		SubType = subType;
 	}

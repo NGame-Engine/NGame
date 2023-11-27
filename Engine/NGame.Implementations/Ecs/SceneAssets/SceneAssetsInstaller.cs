@@ -4,8 +4,6 @@ using NGame.Setup;
 
 namespace NGame.Core.Ecs.SceneAssets;
 
-
-
 public static class SceneAssetsInstaller
 {
 	public static INGameBuilder AddSceneAssets(this INGameBuilder builder)
@@ -24,7 +22,6 @@ public static class SceneAssetsInstaller
 
 		builder.Services.AddTransient<IAssetReferenceReplacer, AssetReferenceReplacer>();
 
-		builder.Services.AddTransient<ISceneAssetOptionsProvider, SceneAssetOptionsProvider>();
 
 		builder.Services.AddTransient<IBeforeApplicationStartListener, GameStartLoader>();
 

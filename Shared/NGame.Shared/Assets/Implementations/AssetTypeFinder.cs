@@ -3,14 +3,13 @@ using NGame.Ecs;
 
 namespace NGame.Assets.Implementations;
 
-
-
 public class AssetTypeFinder : IAssetTypeFinder
 {
 	public ISet<Type> FindAssetSubTypes(Assembly assembly) =>
 		GetTypesRecursive(
 				assembly,
 				x =>
+					x.IsAbstract == false &&
 					x.IsAssignableTo(typeof(Asset)) &&
 					x != typeof(Asset)
 			)
@@ -18,12 +17,13 @@ public class AssetTypeFinder : IAssetTypeFinder
 			.ToHashSet();
 
 
-	public ISet<Type> FindEntityComponentSubTypes(Assembly assembly) =>
+	public ISet<Type> FindComponentTypes(Assembly assembly) =>
 		GetTypesRecursive(
 				assembly,
 				x =>
+					x.IsAbstract == false &&
 					x.IsAssignableTo(typeof(EntityComponent)) &&
-					x != typeof(Asset)
+					x != typeof(EntityComponent)
 			)
 			.Distinct()
 			.ToHashSet();

@@ -34,9 +34,9 @@ public class SceneDeserializerOptionsFactory : ISceneDeserializerOptionsFactory
 	}
 
 
-	private static DefaultJsonTypeInfoResolver CreateTypeInfoResolver(IEnumerable<Type> assetTypes)
+	private static DefaultJsonTypeInfoResolver CreateTypeInfoResolver(IEnumerable<Type> componentTypes)
 	{
-		var assetPolymorphismOptions = CreatePolymorphismOptions(assetTypes);
+		var polymorphismOptions = CreatePolymorphismOptions(componentTypes);
 
 
 		return new DefaultJsonTypeInfoResolver
@@ -46,7 +46,7 @@ public class SceneDeserializerOptionsFactory : ISceneDeserializerOptionsFactory
 				x =>
 				{
 					if (x.Type != typeof(EntityComponent)) return;
-					x.PolymorphismOptions = assetPolymorphismOptions;
+					x.PolymorphismOptions = polymorphismOptions;
 				}
 			}
 		};
