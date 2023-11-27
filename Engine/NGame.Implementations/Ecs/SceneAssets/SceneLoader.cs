@@ -1,7 +1,7 @@
 using NGame.Assets;
 using NGame.Ecs;
-using NGame.Ecs.SceneAssets;
 using NGame.Parallelism;
+using NGame.SceneAssets;
 
 namespace NGame.Core.Ecs.SceneAssets;
 

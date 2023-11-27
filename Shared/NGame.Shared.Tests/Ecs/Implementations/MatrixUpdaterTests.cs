@@ -2,7 +2,7 @@ using System.Numerics;
 using NGame.Ecs;
 using NGame.Ecs.Implementations;
 
-namespace NGame.Core.Tests.Ecs;
+namespace NGame.Shared.Tests.Ecs.Implementations;
 
 
 

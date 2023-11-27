@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Options;
 using NGame.Assets;
-using NGame.Ecs.SceneAssets;
 using NGame.SceneAssets;
 
 namespace NGame.Core.Ecs.SceneAssets;

@@ -1,15 +1,12 @@
 using System.Text.Json;
-using Microsoft.Extensions.Hosting.Internal;
 using NGame.Assets.Implementations;
-using NGame.Core.Assets.Json;
-using NGame.Ecs.SceneAssets;
 using NGame.SceneAssets;
 
-namespace NGame.Core.Tests.Ecs.SceneAssets;
+namespace NGame.Core.Tests.SceneAssets;
 
 
 
-public class NGameConfigurationInstallerTests
+public class NGameConfigurationTests
 {
 	[Fact]
 	public void NGameConfiguration_ExampleJson_CanBeDeserialized()

@@ -3,7 +3,7 @@ using NGame.Assets;
 using NGame.Core.Ecs.SceneAssets;
 using NSubstitute;
 
-namespace NGame.Core.Tests.Ecs.SceneAssets;
+namespace NGame.Core.Tests.SceneAssets;
 
 
 

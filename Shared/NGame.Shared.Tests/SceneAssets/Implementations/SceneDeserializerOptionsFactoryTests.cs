@@ -3,11 +3,10 @@ using System.Text.Json.Serialization;
 using FluentAssertions;
 using NGame.Assets.Implementations;
 using NGame.Ecs;
-using NGame.Ecs.SceneAssets;
 using NGame.SceneAssets;
 using NGame.SceneAssets.Implementations;
 
-namespace NGame.Core.Tests.Ecs.SceneAssets;
+namespace NGame.Shared.Tests.SceneAssets.Implementations;
 
 
 

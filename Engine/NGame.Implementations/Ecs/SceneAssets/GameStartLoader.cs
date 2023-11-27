@@ -1,5 +1,5 @@
 using NGame.Ecs;
-using NGame.Ecs.SceneAssets;
+using NGame.SceneAssets;
 using NGame.Setup;
 
 namespace NGame.Core.Ecs.SceneAssets;

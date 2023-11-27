@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Reflection;
 using NGame.Assets;
-using NGame.Ecs.SceneAssets;
 using NGame.SceneAssets;
 
 namespace NGame.Core.Ecs.SceneAssets;

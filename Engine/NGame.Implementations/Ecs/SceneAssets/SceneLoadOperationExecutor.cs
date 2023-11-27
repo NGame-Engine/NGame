@@ -1,7 +1,6 @@
 using System.Text.Json;
 using NGame.Assets;
 using NGame.Ecs;
-using NGame.Ecs.SceneAssets;
 using NGame.SceneAssets;
 
 namespace NGame.Core.Ecs.SceneAssets;

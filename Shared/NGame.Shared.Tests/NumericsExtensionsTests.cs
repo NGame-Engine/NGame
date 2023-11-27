@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace NGame.Core.Tests.Ecs;
+namespace NGame.Shared.Tests;
 
 
 

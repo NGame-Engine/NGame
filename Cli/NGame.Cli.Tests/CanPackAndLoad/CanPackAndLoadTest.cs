@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets;
 using NGame.Core.Assets.Readers;
 using NGame.Core.Setup;
-using NGame.Ecs.SceneAssets;
 using NGame.SceneAssets;
 using Xunit.Abstractions;
 

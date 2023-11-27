@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using NGame.Core.Setup;
 using NGame.Setup;
 
 namespace NGame.Core.Tests.Setup;
