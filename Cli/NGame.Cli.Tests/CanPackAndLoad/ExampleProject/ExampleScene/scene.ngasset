@@ -1,0 +1,25 @@
+{
+  "$type": "NGame.SceneAsset",
+  "Id": "0F85A235-5A85-4BFB-8BCB-2B7CAF7BF8CC",
+  "SerializerVersion": "0.0.1",
+  "Assets": [
+    "82D5C696-A2DC-4E4E-ADBE-03D024332150",
+    "82D5C696-A2DC-4E6E-ADBE-03D024332150"
+  ],
+  "Entities": [
+    {
+      "Id": "251D97B8-433B-4618-BD06-72898C91D86F",
+      "Name": "First Entity",
+      "Components": [
+        {
+          "$type": "ComponentWithImage",
+          "Id": "39E36192-5447-4C11-BF48-24319A0882D0",
+          "Image": {
+              "$type": "NGame.Texture2D",
+              "Id": "82D5C696-A2DC-4E4E-ADBE-03D024332150"
+          }
+        }
+      ]
+    }
+  ]
+}
