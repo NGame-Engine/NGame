@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Core.Ecs.Scenes;
 using NGame.Ecs;
 using NGame.Setup;
 using NGame.UpdateLoop;

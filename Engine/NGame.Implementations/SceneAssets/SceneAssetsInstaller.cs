@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NGame.SceneAssets;
 using NGame.Setup;
 
-namespace NGame.Core.Ecs.SceneAssets;
+namespace NGame.Core.SceneAssets;
 
 public static class SceneAssetsInstaller
 {

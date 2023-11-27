@@ -5,7 +5,7 @@ namespace NGame.Assets.Implementations;
 
 public class AssetTypeFinder : IAssetTypeFinder
 {
-	public ISet<Type> FindAssetSubTypes(Assembly assembly) =>
+	public ISet<Type> FindAssetTypes(Assembly assembly) =>
 		GetTypesRecursive(
 				assembly,
 				x =>

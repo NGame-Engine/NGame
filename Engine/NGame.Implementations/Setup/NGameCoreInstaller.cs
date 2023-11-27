@@ -1,7 +1,7 @@
 using NGame.Core.Assets;
 using NGame.Core.Ecs;
-using NGame.Core.Ecs.SceneAssets;
 using NGame.Core.Parallelism;
+using NGame.Core.SceneAssets;
 using NGame.Core.UpdateLoop;
 using NGame.Setup;
 
