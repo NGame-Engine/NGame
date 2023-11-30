@@ -3,8 +3,6 @@ using NGame.Ecs;
 
 namespace NGame.SceneAssets;
 
-
-
 [Asset(Discriminator = "NGame.SceneAsset")]
 public class SceneAsset : Asset
 {
@@ -17,5 +15,6 @@ public class SceneAsset : Asset
 public class EntityEntry
 {
 	public Guid Id { get; init; }
+	public string Name { get; set; } = "";
 	public List<EntityComponent> Components { get; init; } = new();
 }
