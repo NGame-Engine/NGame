@@ -1,10 +1,20 @@
 using System.Reflection;
+using Microsoft.Extensions.Logging;
 using NGame.Ecs;
 
 namespace NGame.Assets.Implementations;
 
 public class AssetTypeFinder : IAssetTypeFinder
 {
+	private readonly ILogger<AssetTypeFinder> _logger;
+
+
+	public AssetTypeFinder(ILogger<AssetTypeFinder> logger)
+	{
+		_logger = logger;
+	}
+
+
 	public ISet<Type> FindAssetTypes(Assembly assembly) =>
 		GetTypesRecursive(
 				assembly,
@@ -41,10 +51,15 @@ public class AssetTypeFinder : IAssetTypeFinder
 		Func<Type, bool> predicate
 	)
 	{
-		if (searchedAssemblies.Add(assembly) == false || assembly.FullName!.StartsWith("System."))
+		if (
+			searchedAssemblies.Add(assembly) == false ||
+			assembly.FullName!.StartsWith("System.") ||
+			assembly.FullName!.StartsWith("Microsoft."))
 		{
 			yield break;
 		}
+		
+		_logger.LogDebug("Checking Assembly {Assembly}", assembly.FullName);
 
 		var childTypes =
 			assembly
