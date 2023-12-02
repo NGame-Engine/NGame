@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Hosting;
 using NGame.Core.Assets;
 using NGame.Core.Ecs;
 using NGame.Core.Parallelism;
@@ -11,7 +12,7 @@ namespace NGame.Core.Setup;
 
 public static class NGameCoreInstaller
 {
-	public static INGameBuilder AddNGameCore(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddNGameCore(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddNGameCommon();
 		builder.AddUpdateLoop();

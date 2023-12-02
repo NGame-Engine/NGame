@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Setup;
+using Microsoft.Extensions.Hosting;
 
 namespace NGame.UpdateLoop;
 
@@ -7,7 +7,7 @@ namespace NGame.UpdateLoop;
 
 public static class NGameBuilderExtensions
 {
-	public static INGameBuilder RegisterUpdatable<T>(this INGameBuilder builder, int? orderBy = null)
+	public static IHostApplicationBuilder RegisterUpdatable<T>(this IHostApplicationBuilder builder, int? orderBy = null)
 		where T : IUpdatable
 	{
 		builder.Services.AddSingleton<IUpdatable>(services =>
@@ -21,7 +21,7 @@ public static class NGameBuilderExtensions
 	}
 
 
-	public static INGameBuilder RegisterDrawable<T>(this INGameBuilder builder, int? orderBy = null)
+	public static IHostApplicationBuilder RegisterDrawable<T>(this IHostApplicationBuilder builder, int? orderBy = null)
 		where T : IDrawable
 	{
 		builder.Services.AddSingleton<IDrawable>(services =>

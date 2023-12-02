@@ -1,15 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGame.Parallelism;
-using NGame.Setup;
 using NGame.UpdateLoop;
 
 namespace NGame.Core.Parallelism;
 
-
-
 public static class ParallelismInstaller
 {
-	public static INGameBuilder AddSequentialParallelism(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddSequentialParallelism(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<OperationRequestScheduler>();
 		builder.Services.AddSingleton<IOperationRequestScheduler>(
@@ -23,7 +21,7 @@ public static class ParallelismInstaller
 	}
 
 
-	public static INGameBuilder AddParallelism(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddParallelism(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<OperationRequestScheduler>();
 		builder.Services.AddSingleton<IOperationRequestScheduler>(

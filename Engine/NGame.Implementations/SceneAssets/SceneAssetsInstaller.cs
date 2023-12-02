@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGame.SceneAssets;
 using NGame.Setup;
 
@@ -6,7 +7,7 @@ namespace NGame.Core.SceneAssets;
 
 public static class SceneAssetsInstaller
 {
-	public static INGameBuilder AddSceneAssets(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddSceneAssets(this IHostApplicationBuilder builder)
 	{
 		builder.Services.Configure<SceneAssetsConfiguration>(
 			builder.Configuration.GetSection(SceneAssetsConfiguration.JsonElementName));

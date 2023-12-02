@@ -1,17 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGame.Assets;
 using NGame.Core.Assets.ContentTables;
 using NGame.Core.Assets.Json;
 using NGame.Core.Assets.Readers;
 using NGame.Core.Assets.Registries;
-using NGame.Setup;
 
 namespace NGame.Core.Assets;
 
 public static class AssetsInstaller
 {
-	public static INGameBuilder AddAssets(
-		this INGameBuilder builder
+	public static IHostApplicationBuilder AddAssets(
+		this IHostApplicationBuilder builder
 	)
 	{
 		builder.Services.AddTransient<IAssetProcessorCollection, AssetProcessorCollection>();

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Setup;
+using Microsoft.Extensions.Hosting;
 using NGame.UpdateLoop;
 
 namespace NGame.Ecs;
@@ -8,7 +8,7 @@ namespace NGame.Ecs;
 
 public static class EcsSetupExtensions
 {
-	public static INGameBuilder RegisterSystem<T>(this INGameBuilder builder)
+	public static IHostApplicationBuilder RegisterSystem<T>(this IHostApplicationBuilder builder)
 		where T : class, ISystem
 	{
 		builder.Services.AddSingleton<T>();
