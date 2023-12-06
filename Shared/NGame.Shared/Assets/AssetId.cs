@@ -7,6 +7,12 @@ public readonly struct AssetId : IEquatable<AssetId>
 	public readonly Guid Id;
 
 
+	public AssetId()
+	{
+		Id = Guid.NewGuid();
+	}
+
+
 	private AssetId(Guid id)
 	{
 		Id = id;
