@@ -1,6 +1,6 @@
 using NGame.Ecs;
 
-namespace NGame.Core.Ecs.Scenes;
+namespace NGame.Core.Ecs;
 
 
 

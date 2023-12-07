@@ -1,20 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGame.Assets;
-using NGame.Assets.Implementations;
 using NGame.Core.Assets.ContentTables;
 using NGame.Core.Assets.Json;
 using NGame.Core.Assets.Readers;
 using NGame.Core.Assets.Registries;
-using NGame.Setup;
 
 namespace NGame.Core.Assets;
 
-
-
 public static class AssetsInstaller
 {
-	public static INGameBuilder AddAssets(
-		this INGameBuilder builder
+	public static IHostApplicationBuilder AddAssets(
+		this IHostApplicationBuilder builder
 	)
 	{
 		builder.Services.AddTransient<IAssetProcessorCollection, AssetProcessorCollection>();
@@ -27,8 +24,6 @@ public static class AssetsInstaller
 		builder.Services.AddTransient<IAssetFromPackReader, AssetFromPackReader>();
 
 		builder.Services.AddSingleton<IAssetStreamProvider>(FileAssetStreamProvider.CreateDefault());
-
-		builder.Services.AddTransient<IAssetTypeFinder, AssetTypeFinder>();
 
 		return builder;
 	}

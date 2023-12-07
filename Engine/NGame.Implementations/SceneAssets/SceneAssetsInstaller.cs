@@ -1,14 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGame.SceneAssets;
 using NGame.Setup;
 
-namespace NGame.Core.Ecs.SceneAssets;
-
-
+namespace NGame.Core.SceneAssets;
 
 public static class SceneAssetsInstaller
 {
-	public static INGameBuilder AddSceneAssets(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddSceneAssets(this IHostApplicationBuilder builder)
 	{
 		builder.Services.Configure<SceneAssetsConfiguration>(
 			builder.Configuration.GetSection(SceneAssetsConfiguration.JsonElementName));
@@ -24,7 +23,6 @@ public static class SceneAssetsInstaller
 
 		builder.Services.AddTransient<IAssetReferenceReplacer, AssetReferenceReplacer>();
 
-		builder.Services.AddTransient<ISceneAssetOptionsProvider, SceneAssetOptionsProvider>();
 
 		builder.Services.AddTransient<IBeforeApplicationStartListener, GameStartLoader>();
 

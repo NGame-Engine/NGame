@@ -13,7 +13,12 @@ public class EntityComponent
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public sealed class ComponentAttribute : Attribute
 {
+	public string? Name { get; set; }
 	public string? Discriminator { get; set; }
+
+
+	public static string GetName(Type type) =>
+		GetAttribute(type)?.Name ?? type.Name!;
 
 
 	public static string GetDiscriminator(Type type) =>

@@ -3,14 +3,13 @@ using NGame.Ecs;
 
 namespace NGame.Assets.Implementations;
 
-
-
 public class AssetTypeFinder : IAssetTypeFinder
 {
-	public ISet<Type> FindAssetSubTypes(Assembly assembly) =>
+	public ISet<Type> FindAssetTypes(Assembly assembly) =>
 		GetTypesRecursive(
 				assembly,
 				x =>
+					x.IsAbstract == false &&
 					x.IsAssignableTo(typeof(Asset)) &&
 					x != typeof(Asset)
 			)
@@ -18,12 +17,13 @@ public class AssetTypeFinder : IAssetTypeFinder
 			.ToHashSet();
 
 
-	public ISet<Type> FindEntityComponentSubTypes(Assembly assembly) =>
+	public ISet<Type> FindComponentTypes(Assembly assembly) =>
 		GetTypesRecursive(
 				assembly,
 				x =>
+					x.IsAbstract == false &&
 					x.IsAssignableTo(typeof(EntityComponent)) &&
-					x != typeof(Asset)
+					x != typeof(EntityComponent)
 			)
 			.Distinct()
 			.ToHashSet();
@@ -41,7 +41,10 @@ public class AssetTypeFinder : IAssetTypeFinder
 		Func<Type, bool> predicate
 	)
 	{
-		if (searchedAssemblies.Add(assembly) == false || assembly.FullName!.StartsWith("System."))
+		if (
+			searchedAssemblies.Add(assembly) == false ||
+			assembly.FullName!.StartsWith("System.") ||
+			assembly.FullName!.StartsWith("Microsoft."))
 		{
 			yield break;
 		}

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Core.Ecs.Scenes;
+using Microsoft.Extensions.Hosting;
 using NGame.Ecs;
 using NGame.Setup;
 using NGame.UpdateLoop;
@@ -10,7 +10,7 @@ namespace NGame.Core.Ecs;
 
 public static class EcsInstaller
 {
-	public static INGameBuilder AddEcs(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddEcs(this IHostApplicationBuilder builder)
 	{
 
 		builder.Services.AddSingleton<ActionCache>();

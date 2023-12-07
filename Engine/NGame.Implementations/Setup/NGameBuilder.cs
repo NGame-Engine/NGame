@@ -1,43 +1,16 @@
 using System.Reflection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NGame.Setup;
 
 namespace NGame.Core.Setup;
 
-
-
-public class NGameBuilder : INGameBuilder
+public static class NGameBuilder
 {
-	private readonly HostApplicationBuilder _hostApplicationBuilder;
-
-
-	public NGameBuilder(HostApplicationBuilder hostApplicationBuilder)
+	public static HostApplicationBuilder CreateDefault(params string[] args)
 	{
-		_hostApplicationBuilder = hostApplicationBuilder;
-	}
-
-
-	public IHostEnvironment Environment => _hostApplicationBuilder.Environment;
-	public ConfigurationManager Configuration => _hostApplicationBuilder.Configuration;
-	public IServiceCollection Services => _hostApplicationBuilder.Services;
-	public ILoggingBuilder Logging => _hostApplicationBuilder.Logging;
-
-
-	public static NGameBuilder CreateDefault(params string[] args)
-	{
-		var settings = new HostApplicationBuilderSettings { Args = args };
-#if DEBUG
-		settings.EnvironmentName = Environments.Development;
-#endif
-
-		var builder = new HostApplicationBuilder(settings);
+		var builder = Host.CreateApplicationBuilder(args);
 
 		builder.Services.AddOptions();
-		builder.Services.AddLogging();
-
 
 		var callingAssemblyTitle =
 			Assembly
@@ -51,14 +24,6 @@ public class NGameBuilder : INGameBuilder
 		}
 
 
-		if (builder.Environment.IsDevelopment())
-		{
-			builder.Logging.AddConsole();
-		}
-
-		return new NGameBuilder(builder);
+		return builder;
 	}
-
-
-	public IHost Build() => _hostApplicationBuilder.Build();
 }

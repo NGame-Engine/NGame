@@ -1,7 +1,8 @@
+using Microsoft.Extensions.Hosting;
 using NGame.Core.Assets;
 using NGame.Core.Ecs;
-using NGame.Core.Ecs.SceneAssets;
 using NGame.Core.Parallelism;
+using NGame.Core.SceneAssets;
 using NGame.Core.UpdateLoop;
 using NGame.Setup;
 
@@ -11,7 +12,7 @@ namespace NGame.Core.Setup;
 
 public static class NGameCoreInstaller
 {
-	public static INGameBuilder AddNGameCore(this INGameBuilder builder)
+	public static IHostApplicationBuilder AddNGameCore(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddNGameCommon();
 		builder.AddUpdateLoop();
