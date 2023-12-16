@@ -13,7 +13,7 @@ public static class NGameCoreAssetsInstaller
 	{
 		services.AddTransient<IAssetTypeFinder, AssetTypeFinder>();
 		services.AddTransient<IAssetDeserializerOptionsFactory, AssetDeserializerOptionsFactory>();
-		services.AddTransient<ISceneDeserializerOptionsFactory, SceneDeserializerOptionsFactory>();
+		services.AddTransient<ISceneSerializerOptionsFactory, SceneSerializerOptionsFactory>();
 
 		services.AddTransient<JsonConverter, SemVersionConverter>();
 		services.AddTransient<JsonConverter, AssetIdConverter>();

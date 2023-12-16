@@ -10,7 +10,7 @@ namespace NGame.Shared.Tests.SceneAssets.Implementations;
 
 
 
-public class SceneDeserializerOptionsFactoryTests
+public class SceneSerializerOptionsFactoryTests
 {
 	[Component(Discriminator = "TestComponent")]
 	public class TestComponent : EntityComponent
@@ -20,7 +20,7 @@ public class SceneDeserializerOptionsFactoryTests
 
 
 
-	private static SceneDeserializerOptionsFactory CreateOptionsFactory() =>
+	private static SceneSerializerOptionsFactory CreateOptionsFactory() =>
 		new(
 			new JsonConverter[]
 			{

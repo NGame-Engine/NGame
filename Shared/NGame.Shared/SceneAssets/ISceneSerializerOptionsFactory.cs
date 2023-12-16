@@ -4,7 +4,7 @@ namespace NGame.SceneAssets;
 
 
 
-public interface ISceneDeserializerOptionsFactory
+public interface ISceneSerializerOptionsFactory
 {
 	JsonSerializerOptions Create(IEnumerable<Type> componentTypes);
 }

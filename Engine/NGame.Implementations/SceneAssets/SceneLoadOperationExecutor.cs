@@ -17,14 +17,14 @@ public class SceneLoadOperationExecutor : ISceneLoadOperationExecutor
 	private readonly IAssetReferenceReplacer _assetReferenceReplacer;
 	private readonly IScenePopulator _scenePopulator;
 	private readonly IPackedAssetStreamReader _packedAssetStreamReader;
-	private readonly ISceneDeserializerOptionsFactory _optionsFactory;
+	private readonly ISceneSerializerOptionsFactory _optionsFactory;
 	private readonly IEnumerable<ComponentTypeEntry> _componentTypes;
 
 
 	public SceneLoadOperationExecutor(
 		IAssetReferenceReplacer assetReferenceReplacer,
 		IScenePopulator scenePopulator,
-		IPackedAssetStreamReader packedAssetStreamReader, ISceneDeserializerOptionsFactory optionsFactory,
+		IPackedAssetStreamReader packedAssetStreamReader, ISceneSerializerOptionsFactory optionsFactory,
 		IEnumerable<ComponentTypeEntry> componentTypes)
 	{
 		_assetReferenceReplacer = assetReferenceReplacer;
