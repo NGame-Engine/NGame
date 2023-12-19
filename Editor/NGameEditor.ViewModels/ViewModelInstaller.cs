@@ -47,6 +47,7 @@ public static class ViewModelInstaller
 
 		builder.Services.AddSingleton<InspectorViewModel>();
 		builder.Services.AddSingleton<InspectorEntityViewModel>();
+		builder.Services.AddTransient<IInspectorComponentViewModelMapper, InspectorComponentViewModelMapper>();
 
 		builder.Services.AddSingleton<LogWindowModel>();
 	}

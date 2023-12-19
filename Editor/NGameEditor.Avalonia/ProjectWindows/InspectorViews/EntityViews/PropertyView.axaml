@@ -9,7 +9,7 @@
 
 	<StackPanel Orientation="Horizontal">
 		<Label Content="{Binding Name}" />
-		<Label Content="{Binding Value}" />
+		<ContentControl Content="{Binding EditorViewModel}"/>
 	</StackPanel>
 
 </UserControl>

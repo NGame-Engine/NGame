@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 
 namespace NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
@@ -8,10 +7,10 @@ namespace NGameEditor.ViewModels.ProjectWindows.SceneStates;
 public class ComponentState(
 	string name,
 	bool isRecognized,
-	IEnumerable<PropertyViewModel> properties
+	IEnumerable<PropertyState> properties
 ) : ViewModelBase
 {
 	public string Name => name;
 	public bool IsRecognized { get; } = isRecognized;
-	public ObservableCollection<PropertyViewModel> Properties { get; } = new(properties);
+	public ObservableCollection<PropertyState> Properties { get; } = new(properties);
 }

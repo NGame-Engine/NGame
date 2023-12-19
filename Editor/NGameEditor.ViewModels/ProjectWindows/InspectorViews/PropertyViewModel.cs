@@ -1,12 +1,33 @@
-﻿namespace NGameEditor.ViewModels.ProjectWindows.InspectorViews;
+﻿using NGameEditor.ViewModels.ProjectWindows.InspectorViews.Properties;
+using NGameEditor.ViewModels.ProjectWindows.SceneStates;
+
+namespace NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 
 
 
-public class PropertyViewModel(
-	string name,
-	string value
-) : ViewModelBase
+public class PropertyViewModel : ViewModelBase
 {
-	public string Name => $"{name}:";
-	public string Value => value;
+	public PropertyViewModel(
+		PropertyState propertyState,
+		EditorViewModel editorViewModel
+	)
+	{
+		_name = propertyState.Name;
+		EditorViewModel = editorViewModel;
+
+		propertyState.WhenAnyValue(x => x.Name)
+			.BindTo(this, x => x.Name);
+	}
+
+
+	private string _name;
+
+	public string Name
+	{
+		get => _name;
+		set => this.RaiseAndSetIfChanged(ref _name, value);
+	}
+
+
+	public EditorViewModel EditorViewModel { get; }
 }

@@ -12,14 +12,15 @@ public class InspectorEntityViewModel : ViewModelBase
 {
 	public InspectorEntityViewModel(
 		SelectedEntitiesState selectedEntitiesState,
-		IEntityController entityController
+		IEntityController entityController,
+		IInspectorComponentViewModelMapper inspectorComponentViewModelMapper
 	)
 	{
 		selectedEntitiesState
 			.SelectedEntities
 			.ToObservableChangeSet()
 			.TransformMany(x => x.Components)
-			.Transform(Map)
+			.Transform(inspectorComponentViewModelMapper.Map)
 			.Bind(Components)
 			.Subscribe();
 
@@ -75,10 +76,4 @@ public class InspectorEntityViewModel : ViewModelBase
 	}
 
 	public ObservableCollectionExtended<InspectorComponentViewModel> Components { get; } = new();
-
-
-	private static InspectorComponentViewModel Map(ComponentState componentState)
-	{
-		return new InspectorComponentViewModel(componentState, componentState.Properties);
-	}
 }
