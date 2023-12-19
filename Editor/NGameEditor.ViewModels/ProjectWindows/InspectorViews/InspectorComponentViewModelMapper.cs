@@ -36,11 +36,11 @@ public class InspectorComponentViewModelMapper : IInspectorComponentViewModelMap
 	{
 		var typeIdentifier = propertyState.TypeIdentifier;
 
-		if (typeIdentifier == typeof(string).FullName)
+		if (typeIdentifier == typeof(bool).FullName)
 		{
-			return new StringEditorViewModel
+			return new CheckBoxEditorViewModel
 			{
-				Value = propertyState.Value
+				Value = bool.Parse(propertyState.Value)
 			};
 		}
 
