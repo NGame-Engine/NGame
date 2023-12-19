@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\NGame.Shared\NGame.Shared.csproj" />
+      <ProjectReference Include="..\NGameEditor.Bridge\NGameEditor.Bridge.csproj" />
+      <ProjectReference Include="..\NGameEditor.ViewModels\NGameEditor.ViewModels.csproj" />
+    </ItemGroup>
+
+</Project>

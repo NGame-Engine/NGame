@@ -1,0 +1,4 @@
+{
+  "GameProjectFile": "Example.Game/Example.Game.csproj",
+  "EditorProjectFile": "Example.Game.Editor/Example.Game.Editor.csproj"
+}

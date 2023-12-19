@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:launcherWindows="clr-namespace:NGameEditor.ViewModels.LauncherWindows;assembly=NGameEditor.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:DataType="launcherWindows:ProjectOperationsViewModel"
+             x:Class="NGameEditor.Avalonia.LauncherWindows.ProjectOperationsViews.ProjectOperationsView">
+
+	<StackPanel>
+		<Label>Project Operations</Label>
+	
+		<Button 
+			x:Name="CreateNewProjectButton"
+			Command="{Binding CreateNewProject}">
+			Create New Project
+		</Button>
+	
+		<Button 
+			x:Name="OpenProjectButton"
+			Command="{Binding OpenExistingProject}"
+		>Open Project</Button>
+		
+	</StackPanel>
+
+</UserControl>
