@@ -7,12 +7,12 @@ namespace NGame.SceneAssets.Implementations;
 
 
 
-public class SceneDeserializerOptionsFactory : ISceneDeserializerOptionsFactory
+public class SceneSerializerOptionsFactory : ISceneSerializerOptionsFactory
 {
 	private readonly IEnumerable<JsonConverter> _jsonConverters;
 
 
-	public SceneDeserializerOptionsFactory(IEnumerable<JsonConverter> jsonConverters)
+	public SceneSerializerOptionsFactory(IEnumerable<JsonConverter> jsonConverters)
 	{
 		_jsonConverters = jsonConverters;
 	}
