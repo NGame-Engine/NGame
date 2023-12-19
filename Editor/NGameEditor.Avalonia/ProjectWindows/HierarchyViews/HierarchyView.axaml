@@ -1,0 +1,32 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:hierarchyViews="clr-namespace:NGameEditor.ViewModels.ProjectWindows.HierarchyViews;assembly=NGameEditor.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="hierarchyViews:HierarchyViewModel"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.HierarchyViews.HierarchyView">
+
+	<StackPanel>
+		<Label>HIERARCHY</Label>
+		<DockPanel Dock="Left">
+			<Button Content="➕" Command="{Binding  AddEntity}" />
+			<TextBox Text="{Binding SearchFilter}" />
+		</DockPanel>
+
+		<TreeView
+			ItemsSource="{Binding SearchResults}"
+			SelectedItems="{Binding SelectedEntities}">
+			<TreeView.ItemTemplate>
+				<TreeDataTemplate ItemsSource="{Binding Children}">
+					<TextBlock
+						Foreground="{Binding TextColor, Converter={StaticResource SystemDrawingColorConverter}}"
+						Text="{Binding Name}"
+						ContextMenu="{Binding ContextMenu, Converter={StaticResource ContextMenuConverter}}" />
+				</TreeDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+
+	</StackPanel>
+
+</UserControl>

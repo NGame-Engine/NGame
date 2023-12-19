@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:historyViews="clr-namespace:NGameEditor.ViewModels.LauncherWindows.HistoryViews;assembly=NGameEditor.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="historyViews:HistoryEntryViewModel"
+             x:Class="NGameEditor.Avalonia.LauncherWindows.ProjectHistoryViews.HistoryEntryView">
+
+	<Border Background="Gray" CornerRadius="4" Padding="4">
+		<StackPanel>
+			<Label Content="{Binding Name}" />
+			<Label Content="{Binding  FilePath}" />
+			<Label Content="{Binding  LastUsed}" />
+		</StackPanel>
+	</Border>
+
+</UserControl>

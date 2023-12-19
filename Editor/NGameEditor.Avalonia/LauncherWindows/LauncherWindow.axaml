@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:launcherWindows="clr-namespace:NGameEditor.ViewModels.LauncherWindows;assembly=NGameEditor.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="NGameEditor.Avalonia.LauncherWindows.LauncherWindow"
+        x:DataType="launcherWindows:LauncherWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="NGame Studio Launcher">
+
+	<Grid>
+		<Grid ColumnDefinitions="*, 4, *">
+
+			<ContentControl Grid.Column="0" Content="{Binding ProjectOperationsViewModel}" />
+
+			<GridSplitter Grid.Column="1" Background="Gray" ResizeDirection="Columns" />
+
+			<ContentControl Grid.Column="2" Content="{Binding ProjectHistoryViewModel}" />
+
+		</Grid>
+
+		<Border HorizontalAlignment="Right" VerticalAlignment="Bottom">
+			<ContentControl Content="{Binding LauncherLogViewModel}" />
+		</Border>
+	</Grid>
+
+
+</Window>

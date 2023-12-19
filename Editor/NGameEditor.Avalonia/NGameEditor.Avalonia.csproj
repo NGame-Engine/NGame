@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**"/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.6"/>
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.6"/>
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.6"/>
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.6"/>
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.6"/>
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.6"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0"/>
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.8.6"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MainWindows\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ProjectWindows\ProjectWindow.axaml.cs">
+      <DependentUpon>LauncherWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ProjectWindows\Logs\LogEntryView.axaml.cs">
+      <DependentUpon>LogEntryView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ProjectWindows\Logs\LogWindow.axaml.cs">
+      <DependentUpon>LogWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="SplashScreenWindows\SplashScreenWindow.axaml" />
+    <UpToDateCheckInput Remove="LauncherWindows\CreateProjectDialogs\CreateProjectDialog.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NGameEditor.Functionality\NGameEditor.Functionality.csproj" />
+  </ItemGroup>
+
+</Project>
