@@ -23,4 +23,12 @@ public interface IBackendService
 		Guid entityId,
 		ComponentTypeDefinition componentTypeDefinition
 	);
+
+
+	Result UpdateComponentValue(
+		Guid entityId,
+		Guid componentId,
+		string valueName,
+		string? serializedNewValue
+	);
 }

@@ -16,6 +16,7 @@ public class ComponentStateMapper : IComponentStateMapper
 {
 	public ComponentState MapComponent(ComponentDescription componentDescription) =>
 		new(
+			componentDescription.Id,
 			componentDescription.Name,
 			componentDescription.IsRecognized,
 			componentDescription

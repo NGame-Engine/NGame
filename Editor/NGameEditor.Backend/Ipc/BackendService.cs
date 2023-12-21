@@ -3,6 +3,7 @@ using NGame.SceneAssets;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
+using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Results;
@@ -15,7 +16,8 @@ public class BackendService(
 	ProjectDefinition projectDefinition,
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
-	ISceneSaver sceneSaver
+	ISceneSaver sceneSaver,
+	IDeserializerProvider deserializerProvider
 )
 	: IBackendService
 {
@@ -39,7 +41,7 @@ public class BackendService(
 			Id = Guid.NewGuid(),
 			Name = "New Entity"
 		};
-		
+
 		var entityDescription = sceneDescriptionMapper.Map(entityEntry);
 
 		if (parentEntityId != null)
@@ -47,11 +49,11 @@ public class BackendService(
 			return
 				sceneAsset
 					.GetEntityById(parentEntityId.Value)
-					.Then(x=> x.Children.Add(entityEntry))
-					.Then(()=> entityDescription);
+					.Then(x => x.Children.Add(entityEntry))
+					.Then(() => entityDescription);
 		}
-		
-	
+
+
 		sceneAsset.Entities.Add(entityEntry);
 		return Result.Success(entityDescription);
 	}
@@ -137,5 +139,68 @@ public class BackendService(
 
 		var componentDescription = sceneDescriptionMapper.Map(newComponent);
 		return Result.Success(componentDescription);
+	}
+
+
+	public Result UpdateComponentValue(
+		Guid entityId,
+		Guid componentId,
+		string valueName,
+		string? serializedNewValue
+	)
+	{
+		var entityEntryResult =
+			sceneState
+				.LoadedBackendScene
+				.SceneAsset
+				.GetEntityById(entityId);
+
+		if (entityEntryResult.HasError)
+		{
+			return Result.Error(entityEntryResult.ErrorValue!);
+		}
+
+		var entityEntry = entityEntryResult.SuccessValue!;
+
+
+		var entityComponent =
+			entityEntry
+				.Components
+				.FirstOrDefault(x => x.Id == componentId);
+
+		if (entityComponent == null)
+		{
+			return Result.Error($"Unable to find component with ID '{componentId}'");
+		}
+
+
+		var propertyInfo =
+			entityComponent
+				.GetType()
+				.GetProperty(valueName);
+
+		if (propertyInfo == null)
+		{
+			return Result.Error($"Unable to find property with name '{valueName}'");
+		}
+
+
+		var valueDeserializer = deserializerProvider.Get(propertyInfo.PropertyType);
+		if (valueDeserializer == null)
+		{
+			return Result.Error($"Unable to find deserializer for type '{propertyInfo.PropertyType}'");
+		}
+
+
+		var newValue =
+			serializedNewValue != null
+				? valueDeserializer.Deserialize(serializedNewValue)
+				: null;
+
+
+		propertyInfo.SetValue(entityComponent, newValue);
+
+
+		return Result.Success();
 	}
 }

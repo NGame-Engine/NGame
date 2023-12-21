@@ -1,15 +1,10 @@
 ﻿using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.Controllers;
+using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
+using ReactiveUI;
 
-namespace NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
-
-
-
-public interface IEntityNodeViewModelMapper
-{
-	EntityNodeViewModel Map(EntityState entityState);
-}
+namespace NGameEditor.Functionality.Scenes;
 
 
 

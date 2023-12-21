@@ -19,8 +19,11 @@ public class InspectorEntityViewModel : ViewModelBase
 		selectedEntitiesState
 			.SelectedEntities
 			.ToObservableChangeSet()
-			.TransformMany(x => x.Components)
-			.Transform(inspectorComponentViewModelMapper.Map)
+			.TransformMany(x => 
+				x
+					.Components
+					.Select(state => inspectorComponentViewModelMapper.Map(state, x))
+				)
 			.Bind(Components)
 			.Subscribe();
 
