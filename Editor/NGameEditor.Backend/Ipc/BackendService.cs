@@ -6,6 +6,7 @@ using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.Ipc;
@@ -17,7 +18,8 @@ public class BackendService(
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
 	ISceneSaver sceneSaver,
-	IDeserializerProvider deserializerProvider
+	IDeserializerProvider deserializerProvider,
+	ICustomEditorListener customEditorListener
 )
 	: IBackendService
 {
@@ -140,6 +142,14 @@ public class BackendService(
 		var componentDescription = sceneDescriptionMapper.Map(newComponent);
 		return Result.Success(componentDescription);
 	}
+
+
+	public Result<UiElement> GetEditorForEntity(Guid entityId) =>
+		customEditorListener.GetEditorForComponent(entityId);
+
+
+	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
+		customEditorListener.UpdateEditorValue(uiElementId, serializedNewValue);
 
 
 	public Result UpdateComponentValue(

@@ -4,7 +4,7 @@ namespace NGameEditor.Avalonia.ProjectWindows.InspectorViews.Properties;
 
 
 
-public partial class CheckBoxEditorView : ReactiveUserControl<CheckBoxEditorViewModel>
+public partial class CheckBoxEditorView : ReactiveUserControl<CheckBoxEditorViewModelOld>
 {
 	public CheckBoxEditorView()
 	{

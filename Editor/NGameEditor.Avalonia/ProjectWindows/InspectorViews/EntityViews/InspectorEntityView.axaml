@@ -9,6 +9,7 @@
 
 	<StackPanel>
 		<TextBox Text="{Binding EntityName}" IsEnabled="{Binding CanEditName}" />
+		<ListBox ItemsSource="{Binding ComponentEditors}" />
 		<ListBox ItemsSource="{Binding Components}" />
 	</StackPanel>
 

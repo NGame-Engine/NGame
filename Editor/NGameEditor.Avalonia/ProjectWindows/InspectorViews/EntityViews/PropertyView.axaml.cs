@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
+﻿using NGameEditor.ViewModels.ProjectWindows.InspectorViews.Properties;
 
 namespace NGameEditor.Avalonia.ProjectWindows.InspectorViews.EntityViews;
 

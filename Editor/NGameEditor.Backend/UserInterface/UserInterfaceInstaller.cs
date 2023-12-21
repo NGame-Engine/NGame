@@ -28,8 +28,6 @@ public class ColorValueUi(Color color)
 				//new StringEditor()
 			]
 		);
-
-		;
 	}
 }
 
@@ -39,6 +37,8 @@ public static class UserInterfaceInstaller
 {
 	public static void AddUserInterface(this IHostApplicationBuilder builder)
 	{
+		builder.Services.AddTransient<ICustomEditorListener, CustomEditorListener>();
+
 		builder.Services.AddTransient<IDeserializerProvider, DeserializerProvider>();
 		builder.Services.AddTransient<IValueDeserializer, BoolDeserializer>();
 	}

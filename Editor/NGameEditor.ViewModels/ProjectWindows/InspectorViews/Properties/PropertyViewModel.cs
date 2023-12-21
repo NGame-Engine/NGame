@@ -1,12 +1,11 @@
-﻿using NGameEditor.ViewModels.ProjectWindows.InspectorViews.Properties;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
+﻿using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
-namespace NGameEditor.ViewModels.ProjectWindows.InspectorViews;
+namespace NGameEditor.ViewModels.ProjectWindows.InspectorViews.Properties;
 
 
 
 public class PropertyViewModel : ViewModelBase
-{
+	{
 	public PropertyViewModel(
 		PropertyState propertyState,
 		EditorViewModel editorViewModel

@@ -1,8 +1,10 @@
 ﻿using DynamicData;
 using DynamicData.Binding;
+using NGameEditor.ViewModels.Components.CustomEditors;
+using NGameEditor.ViewModels.ProjectWindows.InspectorViews.Properties;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
-namespace NGameEditor.ViewModels.ProjectWindows.InspectorViews;
+namespace NGameEditor.ViewModels.ProjectWindows.InspectorViews.Components;
 
 
 
@@ -10,12 +12,12 @@ public class InspectorComponentViewModel : ViewModelBase
 {
 	public InspectorComponentViewModel(
 		ComponentState componentState,
-		Func<PropertyState, PropertyViewModel> mapPropertyState
+		Func<PropertyState, PropertyViewModel> mapPropertyState,
+		ComponentEditorViewModel componentEditorViewModel
 	)
 	{
 		ComponentState = componentState;
-		Name = componentState.Name;
-		IsRecognized = componentState.IsRecognized;
+		ComponentEditorViewModel = componentEditorViewModel;
 
 		ComponentState
 			.Properties
@@ -27,7 +29,7 @@ public class InspectorComponentViewModel : ViewModelBase
 
 
 	public ComponentState ComponentState { get; }
-	public string Name { get; }
-	public bool IsRecognized { get; }
+	public ComponentEditorViewModel ComponentEditorViewModel { get; }
+
 	public ObservableCollectionExtended<PropertyViewModel> Properties { get; } = new();
 }

@@ -2,7 +2,7 @@
 
 
 
-public class CheckBoxEditorViewModel : EditorViewModel
+public class CheckBoxEditorViewModelOld : EditorViewModel
 {
 	private bool? _value;
 

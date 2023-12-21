@@ -3,8 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inspectorViews="clr-namespace:NGameEditor.ViewModels.ProjectWindows.InspectorViews;assembly=NGameEditor.ViewModels"
+             xmlns:components="clr-namespace:NGameEditor.ViewModels.ProjectWindows.InspectorViews.Components;assembly=NGameEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="inspectorViews:InspectorComponentViewModel"
+             x:DataType="components:InspectorComponentViewModel"
              x:Class="NGameEditor.Avalonia.ProjectWindows.InspectorViews.EntityViews.InspectorComponentView">
 	<StackPanel>
 		<Label Content="{Binding  ComponentState.Name}" />
