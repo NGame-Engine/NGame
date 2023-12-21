@@ -33,12 +33,4 @@ public interface IBackendService
 		Guid uiElementId,
 		string? serializedNewValue
 	);
-
-
-	Result UpdateComponentValue(
-		Guid entityId,
-		Guid componentId,
-		string valueName,
-		string? serializedNewValue
-	);
 }

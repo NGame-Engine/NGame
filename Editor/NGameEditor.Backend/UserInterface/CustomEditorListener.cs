@@ -9,7 +9,7 @@ namespace NGameEditor.Backend.UserInterface;
 
 public interface ICustomEditorListener
 {
-	Result<UiElement> GetEditorForComponent(Guid entityId);
+	Result<UiElement> GetEditorForEntity(Guid entityId);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
 }
 
@@ -45,7 +45,7 @@ public class CustomEditorListener(ISceneState sceneState) : ICustomEditorListene
 	private readonly Dictionary<Guid, IValueEditor> _editors = new();
 
 
-	public Result<UiElement> GetEditorForComponent(Guid entityId)
+	public Result<UiElement> GetEditorForEntity(Guid entityId)
 	{
 		_editors.Clear();
 
@@ -135,7 +135,7 @@ public class CustomEditorListener(ISceneState sceneState) : ICustomEditorListene
 					uiElements.Add(
 						new UiElement(
 							id,
-							UiElementType.CheckBox,
+							UiElementType.TextEditor,
 							currentValue,
 							[]
 						)

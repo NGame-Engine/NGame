@@ -18,7 +18,6 @@ public class BackendService(
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
 	ISceneSaver sceneSaver,
-	IDeserializerProvider deserializerProvider,
 	ICustomEditorListener customEditorListener
 )
 	: IBackendService
@@ -145,72 +144,9 @@ public class BackendService(
 
 
 	public Result<UiElement> GetEditorForEntity(Guid entityId) =>
-		customEditorListener.GetEditorForComponent(entityId);
+		customEditorListener.GetEditorForEntity(entityId);
 
 
 	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
 		customEditorListener.UpdateEditorValue(uiElementId, serializedNewValue);
-
-
-	public Result UpdateComponentValue(
-		Guid entityId,
-		Guid componentId,
-		string valueName,
-		string? serializedNewValue
-	)
-	{
-		var entityEntryResult =
-			sceneState
-				.LoadedBackendScene
-				.SceneAsset
-				.GetEntityById(entityId);
-
-		if (entityEntryResult.HasError)
-		{
-			return Result.Error(entityEntryResult.ErrorValue!);
-		}
-
-		var entityEntry = entityEntryResult.SuccessValue!;
-
-
-		var entityComponent =
-			entityEntry
-				.Components
-				.FirstOrDefault(x => x.Id == componentId);
-
-		if (entityComponent == null)
-		{
-			return Result.Error($"Unable to find component with ID '{componentId}'");
-		}
-
-
-		var propertyInfo =
-			entityComponent
-				.GetType()
-				.GetProperty(valueName);
-
-		if (propertyInfo == null)
-		{
-			return Result.Error($"Unable to find property with name '{valueName}'");
-		}
-
-
-		var valueDeserializer = deserializerProvider.Get(propertyInfo.PropertyType);
-		if (valueDeserializer == null)
-		{
-			return Result.Error($"Unable to find deserializer for type '{propertyInfo.PropertyType}'");
-		}
-
-
-		var newValue =
-			serializedNewValue != null
-				? valueDeserializer.Deserialize(serializedNewValue)
-				: null;
-
-
-		propertyInfo.SetValue(entityComponent, newValue);
-
-
-		return Result.Success();
-	}
 }
