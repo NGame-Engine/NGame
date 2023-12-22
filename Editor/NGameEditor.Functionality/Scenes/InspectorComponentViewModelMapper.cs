@@ -37,21 +37,21 @@ public class InspectorComponentViewModelMapper(
 	}
 
 
-	private ComponentEditorViewModel Map(UiElement uiElement)
+	private ComponentEditorViewModel Map(UiElementDto uiElementDto)
 	{
-		if (uiElement.Type == UiElementType.StackPanel)
+		if (uiElementDto.Type == UiElementType.StackPanel)
 		{
 			return new StackPanelEditorViewModel(
-				uiElement
+				uiElementDto
 					.Children
 					.Select(Map)
 			);
 		}
 
-		if (uiElement.Type == UiElementType.CheckBox)
+		if (uiElementDto.Type == UiElementType.CheckBox)
 		{
 			var currentSerializedValue =
-				bool.TryParse(uiElement.CurrentSerializedValue, out var value) &&
+				bool.TryParse(uiElementDto.CurrentSerializedValue, out var value) &&
 				value;
 
 			var checkBoxEditorViewModel = new CheckBoxEditorViewModel(currentSerializedValue);
@@ -66,7 +66,7 @@ public class InspectorComponentViewModelMapper(
 						.Then(backendService =>
 							backendService
 								.UpdateEditorValue(
-									uiElement.Id,
+									uiElementDto.Id,
 									x.ToString()
 								)
 						)
@@ -78,9 +78,9 @@ public class InspectorComponentViewModelMapper(
 		}
 
 
-		if (uiElement.Type == UiElementType.TextEditor)
+		if (uiElementDto.Type == UiElementType.TextEditor)
 		{
-			var currentSerializedValue = uiElement.CurrentSerializedValue;
+			var currentSerializedValue = uiElementDto.CurrentSerializedValue;
 
 			var checkBoxEditorViewModel = new TextEditorViewModel(currentSerializedValue);
 
@@ -94,7 +94,7 @@ public class InspectorComponentViewModelMapper(
 						.Then(backendService =>
 							backendService
 								.UpdateEditorValue(
-									uiElement.Id,
+									uiElementDto.Id,
 									x
 								)
 						)

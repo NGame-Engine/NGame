@@ -26,7 +26,7 @@ public interface IBackendService
 	);
 
 
-	Result<UiElement> GetEditorForEntity(Guid entityId);
+	Result<UiElementDto> GetEditorForEntity(Guid entityId);
 
 
 	Result UpdateEditorValue(

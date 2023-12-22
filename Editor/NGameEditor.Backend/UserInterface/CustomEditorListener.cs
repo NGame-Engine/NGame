@@ -1,5 +1,5 @@
-﻿using NGame.Ecs;
-using NGameEditor.Backend.Scenes.SceneStates;
+﻿using NGameEditor.Backend.Scenes.SceneStates;
+using NGameEditor.Backend.UserInterface.ComponentEditors;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -9,43 +9,25 @@ namespace NGameEditor.Backend.UserInterface;
 
 public interface ICustomEditorListener
 {
-	Result<UiElement> GetEditorForEntity(Guid entityId);
+	Result<UiElementDto> GetEditorForEntity(Guid entityId);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
 }
 
 
 
-public interface IComponentEditorFactory
+public class CustomEditorListener(
+	ISceneState sceneState,
+	IEnumerable<IComponentEditorElementFactory> componentEditorElementFactories,
+	IDefaultComponentEditorElementFactory defaultComponentEditorElementFactory
+) : ICustomEditorListener
 {
-	Type Type { get; }
-	UiElement Create(EntityComponent entityComponent);
-}
+	private readonly Dictionary<Guid, IValueUpdater> _editors = new();
+
+	private readonly Dictionary<Type, IComponentEditorElementFactory> _componentEditorElementFactories =
+		componentEditorElementFactories.ToDictionary(x => x.Type);
 
 
-
-public interface IValueEditor
-{
-	Result SetValue(string? serializedNewValue);
-}
-
-
-
-public class GenericValueEditor(Guid uiElementId, Func<string?, Result> applyValue) : IValueEditor
-{
-	public Guid Id { get; } = uiElementId;
-
-
-	public Result SetValue(string? serializedNewValue) => applyValue(serializedNewValue);
-}
-
-
-
-public class CustomEditorListener(ISceneState sceneState) : ICustomEditorListener
-{
-	private readonly Dictionary<Guid, IValueEditor> _editors = new();
-
-
-	public Result<UiElement> GetEditorForEntity(Guid entityId)
+	public Result<UiElementDto> GetEditorForEntity(Guid entityId)
 	{
 		_editors.Clear();
 
@@ -59,93 +41,36 @@ public class CustomEditorListener(ISceneState sceneState) : ICustomEditorListene
 		var entityEntry = entityResult.SuccessValue!;
 
 
-		var uiElements = new List<UiElement>();
-		foreach (var entityComponent in entityEntry.Components)
+		var editorElements =
+			entityEntry
+				.Components
+				.SelectMany(
+					entityComponent =>
+					{
+						var componentEditorElementFactory =
+							_componentEditorElementFactories.GetValueOrDefault(
+								entityComponent.GetType(),
+								defaultComponentEditorElementFactory
+							);
+
+						return componentEditorElementFactory.Create(entityComponent);
+					}
+				);
+
+		var uiElements = new List<UiElementDto>();
+		foreach (var editorElement in editorElements)
 		{
-			var editablePropertyInfos =
-				entityComponent
-					.GetType()
-					.GetProperties()
-					.Where(x => x.CanRead && x.CanWrite);
+			var uiElementDto = editorElement.UiElementDto;
+			uiElements.Add(uiElementDto);
 
-			foreach (var propertyInfo in editablePropertyInfos)
-			{
-				if (propertyInfo.PropertyType == typeof(bool))
-				{
-					var id = Guid.NewGuid();
+			var valueEditor = editorElement.ValueEditor;
+			if (valueEditor == null) continue;
 
-
-					var boolEditor = new GenericValueEditor(
-						id,
-						x =>
-						{
-							if (bool.TryParse(x, out var value) == false)
-							{
-								return Result.Error($"Unable to parse bool '{x}'");
-							}
-
-							propertyInfo.SetValue(entityComponent, value);
-							return Result.Success();
-						}
-					);
-
-					_editors.Add(id, boolEditor);
-
-
-					var rawValue = propertyInfo.GetValue(entityComponent);
-					var currentValue = (bool)rawValue!;
-					var currentSerializedValue = currentValue.ToString();
-					uiElements.Add(
-						new UiElement(
-							id,
-							UiElementType.CheckBox,
-							currentSerializedValue,
-							[]
-						)
-					);
-
-					continue;
-				}
-
-
-				if (propertyInfo.PropertyType == typeof(string))
-				{
-					var id = Guid.NewGuid();
-
-
-					var stringEditor = new GenericValueEditor(
-						id,
-						x =>
-						{
-							if (x == null)
-							{
-								return Result.Error("Unable to read null string");
-							}
-
-							propertyInfo.SetValue(entityComponent, x);
-							return Result.Success();
-						}
-					);
-
-					_editors.Add(id, stringEditor);
-
-
-					var rawValue = propertyInfo.GetValue(entityComponent);
-					var currentValue = (string)rawValue!;
-					uiElements.Add(
-						new UiElement(
-							id,
-							UiElementType.TextEditor,
-							currentValue,
-							[]
-						)
-					);
-				}
-			}
+			_editors.Add(uiElementDto.Id, valueEditor);
 		}
 
 		var uiElement =
-			new UiElement(
+			new UiElementDto(
 				Guid.NewGuid(),
 				UiElementType.StackPanel,
 				null,

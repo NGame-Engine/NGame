@@ -143,7 +143,7 @@ public class BackendService(
 	}
 
 
-	public Result<UiElement> GetEditorForEntity(Guid entityId) =>
+	public Result<UiElementDto> GetEditorForEntity(Guid entityId) =>
 		customEditorListener.GetEditorForEntity(entityId);
 
 
