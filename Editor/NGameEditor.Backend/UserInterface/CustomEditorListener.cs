@@ -27,6 +27,12 @@ public class CustomEditorListener(
 		componentEditorElementFactories.ToDictionary(x => x.Type);
 
 
+	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
+		_editors.TryGetValue(uiElementId, out var editor)
+			? editor.SetValue(serializedNewValue)
+			: Result.Error($"Unable to find value editor with ID '{uiElementId}'");
+
+
 	public Result<UiElementDto> GetEditorForEntity(Guid entityId)
 	{
 		_editors.Clear();
@@ -55,34 +61,44 @@ public class CustomEditorListener(
 
 						return componentEditorElementFactory.Create(entityComponent);
 					}
-				);
+				)
+				.ToList();
 
-		var uiElements = new List<UiElementDto>();
 		foreach (var editorElement in editorElements)
 		{
-			var uiElementDto = editorElement.UiElementDto;
-			uiElements.Add(uiElementDto);
-
-			var valueEditor = editorElement.ValueEditor;
-			if (valueEditor == null) continue;
-
-			_editors.Add(uiElementDto.Id, valueEditor);
+			DiscoverEditorsRecursive(editorElement);
 		}
+
+
+		var uiElements =
+			editorElements
+				.Select(x => x.UiElementDto)
+				.ToArray();
 
 		var uiElement =
 			new UiElementDto(
 				Guid.NewGuid(),
 				UiElementType.StackPanel,
 				null,
-				uiElements.ToArray()
+				uiElements
 			);
 
 		return Result.Success(uiElement);
 	}
 
 
-	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
-		_editors.TryGetValue(uiElementId, out var editor)
-			? editor.SetValue(serializedNewValue)
-			: Result.Error($"Unable to find value editor with ID '{uiElementId}'");
+	private void DiscoverEditorsRecursive(EditorElement editorElement)
+	{
+		var uiElementDto = editorElement.UiElementDto;
+
+		foreach (var child in editorElement.Children)
+		{
+			DiscoverEditorsRecursive(child);
+		}
+
+		var valueEditor = editorElement.ValueEditor;
+		if (valueEditor == null) return;
+
+		_editors.Add(uiElementDto.Id, valueEditor);
+	}
 }

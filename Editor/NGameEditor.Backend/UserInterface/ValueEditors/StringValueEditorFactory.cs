@@ -17,8 +17,8 @@ public class StringValueEditorFactory : IValueEditorFactory
 		return new EditorElement(
 			new UiElementDto(
 				id,
-				UiElementType.CheckBox,
-				((bool?)value)?.ToString(),
+				UiElementType.TextEditor,
+				((string?)value),
 				[]
 			),
 			new ValueUpdater(
