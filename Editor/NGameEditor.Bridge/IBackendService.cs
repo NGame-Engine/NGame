@@ -1,4 +1,5 @@
 ﻿using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
 namespace NGameEditor.Bridge;
@@ -22,5 +23,14 @@ public interface IBackendService
 	Result<ComponentDescription> AddComponent(
 		Guid entityId,
 		ComponentTypeDefinition componentTypeDefinition
+	);
+
+
+	Result<UiElementDto> GetEditorForEntity(Guid entityId);
+
+
+	Result UpdateEditorValue(
+		Guid uiElementId,
+		string? serializedNewValue
 	);
 }

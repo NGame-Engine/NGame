@@ -6,6 +6,7 @@ using NGameEditor.Backend.Ipc.Setup;
 using NGameEditor.Backend.Projects.Setup;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Setup.ApplicationConfigurations;
+using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge.Setup;
 
 namespace NGameEditor.Backend.Setup;
@@ -28,6 +29,7 @@ public static class BackendInstaller
 		builder.AddProjects();
 		builder.AddScenes();
 		builder.AddIpc();
+		builder.AddUserInterface();
 		builder.Services.AddNGameCommon();
 	}
 }

@@ -1,6 +1,7 @@
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
+using NGameEditor.ViewModels.Components.CustomEditors;
 using NGameEditor.ViewModels.Controllers;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
@@ -12,17 +13,10 @@ public class InspectorEntityViewModel : ViewModelBase
 {
 	public InspectorEntityViewModel(
 		SelectedEntitiesState selectedEntitiesState,
-		IEntityController entityController
+		IEntityController entityController,
+		IInspectorComponentViewModelMapper inspectorComponentViewModelMapper
 	)
 	{
-		selectedEntitiesState
-			.SelectedEntities
-			.ToObservableChangeSet()
-			.TransformMany(x => x.Components)
-			.Transform(Map)
-			.Bind(Components)
-			.Subscribe();
-
 		selectedEntitiesState
 			.SelectedEntities
 			.ToObservableChangeSet()
@@ -41,6 +35,17 @@ public class InspectorEntityViewModel : ViewModelBase
 			.Select(x =>
 			{
 				CanEditName = x.Count == 1;
+				return x;
+			})
+			.Select(x =>
+			{
+				ComponentEditors.Clear();
+				if (x.Count != 1) return x;
+
+				var entityState = x.First();
+				var componentEditors = inspectorComponentViewModelMapper.Map(entityState);
+				ComponentEditors.AddRange(componentEditors);
+
 				return x;
 			})
 			.Subscribe();
@@ -74,11 +79,5 @@ public class InspectorEntityViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _entityName, value);
 	}
 
-	public ObservableCollectionExtended<InspectorComponentViewModel> Components { get; } = new();
-
-
-	private static InspectorComponentViewModel Map(ComponentState componentState)
-	{
-		return new InspectorComponentViewModel(componentState, componentState.Properties);
-	}
+	public ObservableCollectionExtended<ComponentEditorViewModel> ComponentEditors { get; } = new();
 }

@@ -55,6 +55,7 @@ public class SceneSaver(
 
 		var componentTypes = projectDefinition.ComponentTypes;
 		var options = sceneSerializerOptionsFactory.Create(componentTypes);
+		options.WriteIndented = true;
 
 		var json = JsonSerializer.Serialize(sceneAsset, options);
 

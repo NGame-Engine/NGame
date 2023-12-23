@@ -1,17 +1,18 @@
 ﻿using System.Collections.ObjectModel;
-using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 
 namespace NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 
 
 public class ComponentState(
+	Guid id,
 	string name,
 	bool isRecognized,
-	IEnumerable<PropertyViewModel> properties
+	IEnumerable<PropertyState> properties
 ) : ViewModelBase
 {
+	public Guid Id => id;
 	public string Name => name;
 	public bool IsRecognized { get; } = isRecognized;
-	public ObservableCollection<PropertyViewModel> Properties { get; } = new(properties);
+	public ObservableCollection<PropertyState> Properties { get; } = new(properties);
 }

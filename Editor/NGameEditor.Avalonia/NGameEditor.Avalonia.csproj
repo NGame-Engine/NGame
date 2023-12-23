@@ -46,6 +46,8 @@
   <ItemGroup>
     <UpToDateCheckInput Remove="SplashScreenWindows\SplashScreenWindow.axaml" />
     <UpToDateCheckInput Remove="LauncherWindows\CreateProjectDialogs\CreateProjectDialog.axaml" />
+    <UpToDateCheckInput Remove="ProjectWindows\InspectorViews\Properties\CheckBoxEditorView.axaml" />
+    <UpToDateCheckInput Remove="ProjectWindows\InspectorViews\Properties\StringEditorView.axaml" />
   </ItemGroup>
 
   <ItemGroup>

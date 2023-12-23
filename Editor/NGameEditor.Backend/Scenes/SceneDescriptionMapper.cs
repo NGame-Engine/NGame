@@ -58,6 +58,7 @@ public class SceneDescriptionMapper : ISceneDescriptionMapper
 		if (componentType == typeof(EntityComponent))
 		{
 			return new(
+				entityComponent.Id,
 				"Unrecognized component",
 				false,
 				new List<PropertyDescription>()
@@ -65,6 +66,7 @@ public class SceneDescriptionMapper : ISceneDescriptionMapper
 		}
 
 		var componentDescription = new ComponentDescription(
+			entityComponent.Id,
 			ComponentAttribute.GetName(componentType),
 			true,
 			new List<PropertyDescription>()

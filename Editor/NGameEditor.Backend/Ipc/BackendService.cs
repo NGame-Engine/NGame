@@ -3,8 +3,10 @@ using NGame.SceneAssets;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
+using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.Ipc;
@@ -15,7 +17,8 @@ public class BackendService(
 	ProjectDefinition projectDefinition,
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
-	ISceneSaver sceneSaver
+	ISceneSaver sceneSaver,
+	ICustomEditorListener customEditorListener
 )
 	: IBackendService
 {
@@ -39,7 +42,7 @@ public class BackendService(
 			Id = Guid.NewGuid(),
 			Name = "New Entity"
 		};
-		
+
 		var entityDescription = sceneDescriptionMapper.Map(entityEntry);
 
 		if (parentEntityId != null)
@@ -47,11 +50,11 @@ public class BackendService(
 			return
 				sceneAsset
 					.GetEntityById(parentEntityId.Value)
-					.Then(x=> x.Children.Add(entityEntry))
-					.Then(()=> entityDescription);
+					.Then(x => x.Children.Add(entityEntry))
+					.Then(() => entityDescription);
 		}
-		
-	
+
+
 		sceneAsset.Entities.Add(entityEntry);
 		return Result.Success(entityDescription);
 	}
@@ -138,4 +141,12 @@ public class BackendService(
 		var componentDescription = sceneDescriptionMapper.Map(newComponent);
 		return Result.Success(componentDescription);
 	}
+
+
+	public Result<UiElementDto> GetEditorForEntity(Guid entityId) =>
+		customEditorListener.GetEditorForEntity(entityId);
+
+
+	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
+		customEditorListener.UpdateEditorValue(uiElementId, serializedNewValue);
 }
