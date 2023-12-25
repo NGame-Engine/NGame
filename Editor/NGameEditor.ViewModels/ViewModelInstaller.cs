@@ -5,6 +5,7 @@ using NGameEditor.ViewModels.LauncherWindows;
 using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 using NGameEditor.ViewModels.LauncherWindows.Logs;
 using NGameEditor.ViewModels.ProjectWindows;
+using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
@@ -46,6 +47,10 @@ public static class ViewModelInstaller
 
 		builder.Services.AddSingleton<InspectorViewModel>();
 		builder.Services.AddSingleton<InspectorEntityViewModel>();
+
+
+		builder.Services.AddSingleton<FileBrowserViewModel>();
+
 
 		builder.Services.AddSingleton<LogWindowModel>();
 	}
