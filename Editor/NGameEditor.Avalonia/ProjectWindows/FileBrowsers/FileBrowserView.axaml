@@ -11,17 +11,10 @@
 
 	<StackPanel>
 		<Label>File Browser</Label>
-		<TreeView
-			ItemsSource="{Binding Directories}"
-			SelectedItems="{Binding SelectedDirectories}">
-			<TreeView.ItemTemplate>
-				<TreeDataTemplate ItemsSource="{Binding Directories}">
-					<TextBlock
-						Text="{Binding Name}"
-						ContextMenu="{Binding ContextMenu, Converter={StaticResource ContextMenuConverter}}" />
-				</TreeDataTemplate>
-			</TreeView.ItemTemplate>
-		</TreeView>
-
+		<DockPanel Dock="Left">
+			<ContentControl Content="{Binding DirectoryOverviewViewModel}" />
+			<ContentControl Content="{Binding DirectoryContentViewModel}" />
+		</DockPanel>
 	</StackPanel>
+
 </UserControl>

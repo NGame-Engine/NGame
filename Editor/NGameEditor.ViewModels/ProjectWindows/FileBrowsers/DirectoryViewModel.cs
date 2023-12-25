@@ -11,6 +11,8 @@ public class DirectoryViewModel(
 ) : ViewModelBase
 {
 	public string Name { get; } = name;
+	public string DisplayName => $"📁 {Name}";
+	
 	public ObservableCollectionExtended<DirectoryViewModel> Directories { get; } = new();
 	public ObservableCollectionExtended<FileViewModel> Files { get; } = new();
 

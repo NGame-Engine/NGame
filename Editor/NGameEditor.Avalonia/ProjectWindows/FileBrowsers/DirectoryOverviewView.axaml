@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.ProjectWindows.FileBrowsers"
+             xmlns:fileBrowsers="clr-namespace:NGameEditor.ViewModels.ProjectWindows.FileBrowsers;assembly=NGameEditor.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.FileBrowsers.DirectoryOverviewView"
+             x:DataType="fileBrowsers:DirectoryOverviewViewModel"
+             d:DataContext="{x:Static example:FileBrowserDesignData.DirectoryOverviewExample}">
+
+	<StackPanel>
+		
+		<TreeView
+			ItemsSource="{Binding Directories}"
+			SelectedItems="{Binding SelectedDirectories}">
+			<TreeView.ItemTemplate>
+				<TreeDataTemplate ItemsSource="{Binding Directories}">
+					<TextBlock
+						Text="{Binding DisplayName}"
+						ContextMenu="{Binding ContextMenu, Converter={StaticResource ContextMenuConverter}}" />
+				</TreeDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+
+	</StackPanel>
+	
+</UserControl>
+

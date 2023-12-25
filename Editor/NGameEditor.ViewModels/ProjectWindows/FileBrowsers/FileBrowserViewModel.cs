@@ -10,4 +10,7 @@ public class FileBrowserViewModel : ViewModelBase
 	public ObservableCollectionExtended<FileViewModel> Files { get; } = new();
 
 	public ObservableCollectionExtended<DirectoryViewModel> SelectedDirectories { get; } = new();
+
+	public DirectoryOverviewViewModel DirectoryOverviewViewModel { get; } = new();
+	public DirectoryContentViewModel DirectoryContentViewModel { get; } = new();
 }
