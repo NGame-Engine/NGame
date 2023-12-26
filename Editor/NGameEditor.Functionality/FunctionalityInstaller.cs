@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using DynamicData;
+using DynamicData.Binding;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGame.Setup;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Setup;
@@ -9,6 +12,7 @@ using NGameEditor.Functionality.Scenes;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Users;
 using NGameEditor.Functionality.Windows;
+using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 
 namespace NGameEditor.Functionality;
 
@@ -30,5 +34,31 @@ public static class FunctionalityInstaller
 		builder.Services.AddConfigurations();
 		builder.Services.AddScenes();
 		builder.Services.AddProjects();
+
+		builder.AddFileBrowserViewModel();
+	}
+
+
+	public static void AddFileBrowserViewModel(this IHostApplicationBuilder builder)
+	{
+		builder.Services.AddSingleton<FileBrowserViewModel>(_ =>
+			{
+				var viewModel = new FileBrowserViewModel();
+
+				viewModel
+					.DirectoryOverviewViewModel
+					.SelectedDirectories
+					.ToObservableChangeSet()
+					.Bind(
+						viewModel
+							.DirectoryContentViewModel
+							.Directories
+					)
+					.Subscribe();
+
+
+				return viewModel;
+			}
+		);
 	}
 }

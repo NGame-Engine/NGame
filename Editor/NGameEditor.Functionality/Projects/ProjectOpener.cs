@@ -4,6 +4,8 @@ using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Functionality.Windows;
 using NGameEditor.Results;
+using NGameEditor.ViewModels.Components.Menus;
+using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.Functionality.Projects;
@@ -24,7 +26,8 @@ public class ProjectOpener(
 	IProjectWindow projectWindow,
 	ILogger<ProjectOpener> logger,
 	IEntityStateMapper entityStateMapper,
-	SceneState sceneState
+	SceneState sceneState,
+	FileBrowserViewModel fileBrowserViewModel
 )
 	: IProjectOpener
 {
@@ -60,6 +63,26 @@ public class ProjectOpener(
 		{
 			sceneState.SceneEntities.Add(entityNodeViewModel);
 		}
+
+
+		fileBrowserViewModel.DirectoryOverviewViewModel.Directories.Clear();
+		fileBrowserViewModel
+			.DirectoryOverviewViewModel
+			.Directories
+			.AddRange(
+				[
+					new DirectoryViewModel("Fake Folder", new ContextMenuViewModel([]))
+					{
+						Directories =
+						{
+							new DirectoryViewModel("Sub Folder 1", new ContextMenuViewModel([])),
+							new DirectoryViewModel("Sub Folder 2", new ContextMenuViewModel([]))
+						}
+					},
+					new DirectoryViewModel("Fake Folder 2", new ContextMenuViewModel([])),
+					new DirectoryViewModel("Fake Folder 3", new ContextMenuViewModel([]))
+				]
+			);
 
 
 		launcherWindow.Close();

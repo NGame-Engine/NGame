@@ -49,8 +49,7 @@ public static class ViewModelInstaller
 		builder.Services.AddSingleton<InspectorEntityViewModel>();
 
 
-		builder.Services.AddSingleton<FileBrowserViewModel>();
-
+	
 
 		builder.Services.AddSingleton<LogWindowModel>();
 	}
