@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
+namespace NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 
 
 

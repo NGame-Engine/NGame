@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.ProjectWindows.SceneStates;
+using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 

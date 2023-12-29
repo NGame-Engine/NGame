@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
+using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 using NGameEditor.ViewModels.LauncherWindows.Logs;
 
 namespace NGameEditor.ViewModels.LauncherWindows;

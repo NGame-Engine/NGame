@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Functionality.Logging;
+namespace NGameEditor.Functionality.Logging;
 
 
 

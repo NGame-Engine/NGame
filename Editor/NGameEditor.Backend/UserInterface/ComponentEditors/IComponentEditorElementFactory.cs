@@ -1,4 +1,4 @@
-﻿using NGame.Ecs;
+using NGame.Ecs;
 
 namespace NGameEditor.Backend.UserInterface.ComponentEditors;
 

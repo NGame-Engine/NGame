@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.Scenes;
 
 namespace NGameEditor.Functionality.Projects;
 

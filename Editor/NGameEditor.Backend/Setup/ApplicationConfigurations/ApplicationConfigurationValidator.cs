@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using Microsoft.Extensions.Configuration;
 using NGameEditor.Bridge.Shared;
 
@@ -34,8 +34,8 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		}
 
 		var ipEndPoint = new IPEndPoint(IPAddress.Loopback, port);
-		
-		
+
+
 		var solutionPath = argumentsConfiguration.Solution;
 		if (string.IsNullOrEmpty(solutionPath))
 		{
@@ -49,7 +49,7 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 			var message = $"Solution file '{absoluteSolutionPath}' does not exist";
 			throw new InvalidOperationException(message);
 		}
-		
+
 		var solutionFilePath = new AbsolutePath(solutionPath);
 
 

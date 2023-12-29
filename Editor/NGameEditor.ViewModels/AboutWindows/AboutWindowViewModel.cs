@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.ViewModels.AboutWindows;
+namespace NGameEditor.ViewModels.AboutWindows;
 
 
 

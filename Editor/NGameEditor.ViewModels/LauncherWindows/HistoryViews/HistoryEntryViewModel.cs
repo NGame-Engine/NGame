@@ -1,4 +1,4 @@
-﻿using System.Reactive;
+using System.Reactive;
 using System.Windows.Input;
 
 namespace NGameEditor.ViewModels.LauncherWindows.HistoryViews;

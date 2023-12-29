@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using Avalonia.Controls;
@@ -20,7 +20,7 @@ public class ContextMenuConverter : IValueConverter
 	)
 	{
 		if (value is not ContextMenuViewModel contextMenuViewModel ||
-		    targetType.IsAssignableTo(typeof(ContextMenu)) == false)
+			targetType.IsAssignableTo(typeof(ContextMenu)) == false)
 		{
 			return new BindingNotification(new InvalidCastException(), BindingErrorType.Error);
 		}

@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.ViewModels.Shared;
+namespace NGameEditor.ViewModels.Shared;
 
 
 

@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Bridge.Shared;
+namespace NGameEditor.Bridge.Shared;
 
 
 

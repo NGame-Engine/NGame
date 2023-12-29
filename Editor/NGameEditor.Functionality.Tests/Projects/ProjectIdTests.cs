@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;
 

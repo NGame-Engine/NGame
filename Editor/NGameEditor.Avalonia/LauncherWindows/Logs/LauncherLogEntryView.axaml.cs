@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.LauncherWindows.Logs;
+using NGameEditor.ViewModels.LauncherWindows.Logs;
 
 namespace NGameEditor.Avalonia.LauncherWindows.Logs;
 

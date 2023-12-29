@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.Components.Menus;
+using NGameEditor.ViewModels.Components.Menus;
 
 namespace NGameEditor.Avalonia.Shared;
 

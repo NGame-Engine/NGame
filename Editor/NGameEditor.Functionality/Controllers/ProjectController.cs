@@ -1,4 +1,4 @@
-﻿using System.Reactive;
+using System.Reactive;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;

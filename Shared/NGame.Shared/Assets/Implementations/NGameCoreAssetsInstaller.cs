@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.SceneAssets;
 using NGame.SceneAssets.Implementations;

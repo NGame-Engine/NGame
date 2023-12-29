@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.ViewModels.ProjectWindows.SceneStates;
+namespace NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 
 

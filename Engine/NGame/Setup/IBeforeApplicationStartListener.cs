@@ -1,4 +1,4 @@
-﻿namespace NGame.Setup;
+namespace NGame.Setup;
 
 
 

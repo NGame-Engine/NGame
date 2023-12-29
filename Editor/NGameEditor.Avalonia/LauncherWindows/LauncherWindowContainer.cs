@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NGameEditor.Functionality.Windows;
 
 namespace NGameEditor.Avalonia.LauncherWindows;

@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.Components.Menus;
+using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.Controllers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;

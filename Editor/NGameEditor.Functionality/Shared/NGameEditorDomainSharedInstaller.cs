@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using NGameEditor.Functionality.Shared.Files;
 using NGameEditor.Functionality.Shared.Json;
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using ServiceWire.TcpIp;
 
 namespace NGameEditor.Backend.Ipc.Setup;

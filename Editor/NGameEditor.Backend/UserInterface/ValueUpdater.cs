@@ -1,4 +1,4 @@
-﻿using NGameEditor.Results;
+using NGameEditor.Results;
 
 namespace NGameEditor.Backend.UserInterface;
 

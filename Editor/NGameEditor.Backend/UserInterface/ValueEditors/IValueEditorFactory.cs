@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Backend.UserInterface.ValueEditors;
+namespace NGameEditor.Backend.UserInterface.ValueEditors;
 
 
 

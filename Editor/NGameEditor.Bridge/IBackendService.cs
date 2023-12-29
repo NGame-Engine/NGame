@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Files;
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;

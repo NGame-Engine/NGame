@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
 using NGameEditor.Backend.Setup.ApplicationConfigurations;

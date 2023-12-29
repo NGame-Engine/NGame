@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Results;
 

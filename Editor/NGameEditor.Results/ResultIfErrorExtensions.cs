@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Results;
+namespace NGameEditor.Results;
 
 
 

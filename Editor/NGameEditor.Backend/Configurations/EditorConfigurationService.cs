@@ -1,4 +1,4 @@
-﻿using NGameEditor.Backend.Projects;
+using NGameEditor.Backend.Projects;
 
 namespace NGameEditor.Backend.Configurations;
 

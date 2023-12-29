@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Bridge.UserInterface;
+namespace NGameEditor.Bridge.UserInterface;
 
 
 
@@ -14,7 +14,7 @@ public enum UiElementType
 public class UiElementDto(
 	Guid id,
 	UiElementType type,
-	string? currentSerializedValue, 
+	string? currentSerializedValue,
 	UiElementDto[] children
 )
 {

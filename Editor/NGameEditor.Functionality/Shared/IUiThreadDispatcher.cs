@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Functionality.Shared;
+namespace NGameEditor.Functionality.Shared;
 
 
 

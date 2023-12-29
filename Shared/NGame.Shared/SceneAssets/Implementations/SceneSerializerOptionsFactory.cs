@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using NGame.Ecs;
@@ -68,7 +68,7 @@ public class SceneSerializerOptionsFactory : ISceneSerializerOptionsFactory
 				var message = $"Type {type} is not a subtype of {nameof(EntityComponent)}";
 				throw new InvalidOperationException(message);
 			}
-			
+
 			var typeDiscriminator = ComponentAttribute.GetDiscriminator(type);
 			var jsonDerivedType = new JsonDerivedType(type, typeDiscriminator);
 			jsonPolymorphismOptions.DerivedTypes.Add(jsonDerivedType);

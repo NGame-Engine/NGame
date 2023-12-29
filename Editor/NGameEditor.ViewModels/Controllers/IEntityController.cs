@@ -1,4 +1,4 @@
-﻿using NGameEditor.Results;
+using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 

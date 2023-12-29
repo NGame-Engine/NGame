@@ -1,4 +1,4 @@
-﻿using NGameEditor.Functionality.Projects;
+using NGameEditor.Functionality.Projects;
 using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 using ReactiveUI;
 
@@ -31,7 +31,7 @@ public class LauncherWindowOpener(
 						x.ProjectId.SolutionFilePath.Path,
 						x.LastUsed,
 						ReactiveCommand.CreateFromTask(
-							()=> projectOpener.OpenProject(x.ProjectId))
+							() => projectOpener.OpenProject(x.ProjectId))
 					)
 				);
 

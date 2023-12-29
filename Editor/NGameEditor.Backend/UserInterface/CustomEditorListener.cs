@@ -1,4 +1,4 @@
-﻿using NGameEditor.Backend.Scenes.SceneStates;
+using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface.ComponentEditors;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;

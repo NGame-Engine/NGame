@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.Components.CustomEditors;
+using NGameEditor.ViewModels.Components.CustomEditors;
 
 namespace NGameEditor.Avalonia.Components.CustomEditors;
 

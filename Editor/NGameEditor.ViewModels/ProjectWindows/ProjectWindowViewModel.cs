@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using NGameEditor.ViewModels.Controllers;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
