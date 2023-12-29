@@ -20,15 +20,15 @@ public class NGameStudioConfigurationTests
 				ProjectHistory =
 				{
 					new ProjectUsage(
-						new ProjectId(new AbsolutePath("C:/name1")),
+						new ProjectId(new AbsolutePath(Path.Combine(AppContext.BaseDirectory, "name1"))),
 						DateTime.UnixEpoch
 					),
 					new ProjectUsage(
-						new ProjectId(new AbsolutePath("C:/name2")),
+						new ProjectId(new AbsolutePath(Path.Combine(AppContext.BaseDirectory, "name2"))),
 						DateTime.UnixEpoch
 					),
 					new ProjectUsage(
-						new ProjectId(new AbsolutePath("C:/name3")),
+						new ProjectId(new AbsolutePath(Path.Combine(AppContext.BaseDirectory, "name3"))),
 						DateTime.UnixEpoch
 					)
 				}
