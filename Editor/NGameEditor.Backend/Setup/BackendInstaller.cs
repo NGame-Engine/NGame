@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using NGame.Setup;
 using NGameEditor.Backend.Configurations;
+using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Ipc.Setup;
 using NGameEditor.Backend.Projects.Setup;
 using NGameEditor.Backend.Scenes;
@@ -31,5 +32,6 @@ public static class BackendInstaller
 		builder.AddIpc();
 		builder.AddUserInterface();
 		builder.Services.AddNGameCommon();
+		builder.AddProjectFiles();
 	}
 }

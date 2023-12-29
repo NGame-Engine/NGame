@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Functionality.Windows;
@@ -65,26 +66,50 @@ public class ProjectOpener(
 		}
 
 
-		fileBrowserViewModel.DirectoryOverviewViewModel.Directories.Clear();
-		fileBrowserViewModel
-			.DirectoryOverviewViewModel
-			.Directories
-			.AddRange(
-				[
-					new DirectoryViewModel("Fake Folder", new ContextMenuViewModel([]))
-					{
-						Directories =
-						{
-							new DirectoryViewModel("Sub Folder 1", new ContextMenuViewModel([])),
-							new DirectoryViewModel("Sub Folder 2", new ContextMenuViewModel([]))
-						}
-					},
-					new DirectoryViewModel("Fake Folder 2", new ContextMenuViewModel([])),
-					new DirectoryViewModel("Fake Folder 3", new ContextMenuViewModel([]))
-				]
-			);
+		UpdateProjectFiles(backendService);
 
 
 		launcherWindow.Close();
+	}
+
+
+	private void UpdateProjectFiles(IBackendService backendService)
+	{
+		backendService
+			.GetProjectFiles()
+			.Then(x =>
+			{
+				fileBrowserViewModel.DirectoryOverviewViewModel.Directories.Clear();
+				fileBrowserViewModel
+					.DirectoryOverviewViewModel
+					.Directories
+					.AddRange(
+						x
+							.SubDirectories
+							.Select(MapDirectoryDescriptionRecursively)
+					);
+			})
+			.IfError(logger.Log);
+	}
+
+
+	private DirectoryViewModel MapDirectoryDescriptionRecursively(
+		DirectoryDescription directoryDescription
+	)
+	{
+		var directoryViewModel =
+			new DirectoryViewModel(
+				directoryDescription.Name,
+				new ContextMenuViewModel([])
+			);
+
+		foreach (var subDirectory in directoryDescription.SubDirectories)
+		{
+			directoryViewModel
+				.Directories
+				.Add(MapDirectoryDescriptionRecursively(subDirectory));
+		}
+
+		return directoryViewModel;
 	}
 }

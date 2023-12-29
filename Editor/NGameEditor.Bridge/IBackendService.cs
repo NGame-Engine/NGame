@@ -1,4 +1,5 @@
-﻿using NGameEditor.Bridge.Scenes;
+﻿using NGameEditor.Bridge.Files;
+using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -8,6 +9,9 @@ namespace NGameEditor.Bridge;
 
 public interface IBackendService
 {
+	Result<DirectoryDescription> GetProjectFiles();
+
+
 	SceneDescription GetLoadedScene();
 	Result SaveCurrentScene();
 
