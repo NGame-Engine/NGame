@@ -2,7 +2,9 @@
 
 
 
-public class FileViewModel : ViewModelBase
+public class FileViewModel(
+	string name
+) : ViewModelBase
 {
-	
+	public string Name { get; } = name;
 }

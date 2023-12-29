@@ -110,6 +110,13 @@ public class ProjectOpener(
 				.Add(MapDirectoryDescriptionRecursively(subDirectory));
 		}
 
+		foreach (var fileDescription in directoryDescription.Files)
+		{
+			directoryViewModel
+				.Files
+				.Add(new FileViewModel(fileDescription.Name));
+		}
+
 		return directoryViewModel;
 	}
 }

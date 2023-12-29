@@ -6,7 +6,14 @@ namespace NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 
 public class DirectoryContentViewModel : ViewModelBase
 {
-	public string DirectoryName { get; set; } = "";
+	private string _directoryName = "";
+
+	public string DirectoryName
+	{
+		get => _directoryName;
+		set => this.RaiseAndSetIfChanged(ref _directoryName, value);
+	}
+
 	public ObservableCollectionExtended<DirectoryViewModel> Directories { get; } = new();
 	public ObservableCollectionExtended<FileViewModel> Files { get; } = new();
 }

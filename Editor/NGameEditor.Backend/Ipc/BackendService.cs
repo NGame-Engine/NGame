@@ -30,7 +30,8 @@ public class BackendService(
 		return Result.Success(
 			new DirectoryDescription(
 				"root",
-				projectFileStatus.Directories
+				projectFileStatus.Directories,
+				[] // TODO show files in root folder 
 			)
 		);
 	}
