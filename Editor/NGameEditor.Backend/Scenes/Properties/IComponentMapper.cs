@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using NGameEditor.Bridge.Scenes;
 
 namespace NGameEditor.Backend.Scenes.Properties;

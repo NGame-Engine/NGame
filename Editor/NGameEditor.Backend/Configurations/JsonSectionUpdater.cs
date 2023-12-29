@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Nodes;
+using System.Text.Json.Nodes;
 using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Backend.Configurations;

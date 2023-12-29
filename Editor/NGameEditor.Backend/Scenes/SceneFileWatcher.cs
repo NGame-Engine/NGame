@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Shared;
+using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.Scenes;

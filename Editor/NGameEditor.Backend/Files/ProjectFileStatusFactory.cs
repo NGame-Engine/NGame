@@ -1,4 +1,4 @@
-﻿using NGameEditor.Backend.Projects;
+using NGameEditor.Backend.Projects;
 using NGameEditor.Bridge.Files;
 
 namespace NGameEditor.Backend.Files;
@@ -47,7 +47,7 @@ internal class ProjectFileStatusFactory(
 		var files =
 			Directory
 				.GetFiles(directoryPath)
-				.Select(x=> new FileDescription(x))
+				.Select(x => new FileDescription(x))
 				.ToList();
 
 		return

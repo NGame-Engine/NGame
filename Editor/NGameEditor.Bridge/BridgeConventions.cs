@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Bridge;
+namespace NGameEditor.Bridge;
 
 
 

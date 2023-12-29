@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Windows.Input;
 using NGameEditor.Functionality.Windows;
 using NGameEditor.ViewModels.Controllers;

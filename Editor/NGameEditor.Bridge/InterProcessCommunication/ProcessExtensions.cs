@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace NGameEditor.Bridge.InterProcessCommunication;
 
@@ -23,7 +23,7 @@ public static class ProcessExtensions
 
 		process.OutputDataReceived += ListenForBackendStart;
 		process.Start();
-		
+
 		process.BeginOutputReadLine();
 		process.BeginErrorReadLine();
 

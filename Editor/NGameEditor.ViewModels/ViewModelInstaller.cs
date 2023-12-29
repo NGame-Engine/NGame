@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.ViewModels.AboutWindows;
 using NGameEditor.ViewModels.LauncherWindows;
@@ -48,7 +48,7 @@ public static class ViewModelInstaller
 		builder.Services.AddSingleton<InspectorEntityViewModel>();
 
 
-	
+
 
 		builder.Services.AddSingleton<LogWindowModel>();
 	}

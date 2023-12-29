@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.ViewModels.Components.CustomEditors;
+namespace NGameEditor.ViewModels.Components.CustomEditors;
 
 
 

@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
+using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 
 namespace NGameEditor.Avalonia.LauncherWindows.ProjectHistoryViews;
 

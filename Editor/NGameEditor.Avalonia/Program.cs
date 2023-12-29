@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

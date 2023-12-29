@@ -1,4 +1,4 @@
-﻿using System.Reactive;
+using System.Reactive;
 
 namespace NGameEditor.ViewModels.LauncherWindows;
 

@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using NGameEditor.ViewModels.Controllers;
 
 namespace NGameEditor.ViewModels.ProjectWindows.MenuViews;

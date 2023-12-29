@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Functionality.Windows;
+namespace NGameEditor.Functionality.Windows;
 
 
 

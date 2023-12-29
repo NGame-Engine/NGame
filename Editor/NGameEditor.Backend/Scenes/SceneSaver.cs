@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using NGame.Ecs;
 using NGame.SceneAssets;
 using NGameEditor.Backend.Projects;

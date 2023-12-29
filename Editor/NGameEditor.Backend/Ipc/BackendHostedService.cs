@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting;
 using NGameEditor.Backend.Ipc.Setup;
 
 namespace NGameEditor.Backend.Ipc;

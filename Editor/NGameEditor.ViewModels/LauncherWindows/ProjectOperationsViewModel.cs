@@ -25,7 +25,7 @@ public class ProjectOperationsViewModel(
 {
 	public ViewModelActivator Activator { get; } = new();
 
-	
+
 	public ReactiveCommand<CreateProjectDialogArgs, Unit> CreateNewProject { get; set; } =
 		projectController.CreateProject();
 

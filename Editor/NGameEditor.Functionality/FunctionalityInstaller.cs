@@ -1,4 +1,4 @@
-﻿using System.Reactive.Linq;
+using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Alias;
 using DynamicData.Binding;

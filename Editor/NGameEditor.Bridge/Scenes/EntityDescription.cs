@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Bridge.Scenes;
+namespace NGameEditor.Bridge.Scenes;
 
 
 

@@ -1,4 +1,4 @@
-﻿using NGame.SceneAssets;
+using NGame.SceneAssets;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;

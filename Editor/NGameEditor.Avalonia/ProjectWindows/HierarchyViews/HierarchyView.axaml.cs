@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
+using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 
 namespace NGameEditor.Avalonia.ProjectWindows.HierarchyViews;
 

@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Backend.Configurations;
+namespace NGameEditor.Backend.Configurations;
 
 
 

@@ -1,4 +1,4 @@
-﻿using NGameEditor.Backend.Configurations.UserDatas;
+using NGameEditor.Backend.Configurations.UserDatas;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Results;
 

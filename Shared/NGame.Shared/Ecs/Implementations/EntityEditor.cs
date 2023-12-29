@@ -1,4 +1,4 @@
-﻿namespace NGame.Ecs.Implementations;
+namespace NGame.Ecs.Implementations;
 
 
 
@@ -42,6 +42,13 @@ public class EntityEditor : IEntityEditor
 
 	public void MoveToScene(Entity entity, Scene scene) =>
 		ChangeParent(entity, scene, null);
+
+
+	public void RemoveEntity(Entity entity)
+	{
+		EntityRemoving?.Invoke(entity);
+		throw new NotImplementedException();
+	}
 
 
 	private void ChangeParent(Entity child, Scene newScene, Entity? newParent)

@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.UserInterface;
+using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.UserInterface.ValueEditors;

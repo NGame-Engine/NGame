@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
 

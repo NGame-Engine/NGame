@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 

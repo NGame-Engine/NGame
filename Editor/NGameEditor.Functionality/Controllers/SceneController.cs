@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Functionality.Scenes;

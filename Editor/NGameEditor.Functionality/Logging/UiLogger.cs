@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.ViewModels.LauncherWindows.Logs;
 using NGameEditor.ViewModels.ProjectWindows.Logs;

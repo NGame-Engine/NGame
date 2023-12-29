@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NGameEditor.Functionality.Logging;
 using NGameEditor.Functionality.Windows;
 

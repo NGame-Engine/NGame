@@ -1,4 +1,4 @@
-﻿using NGameEditor.Backend.Setup.ApplicationConfigurations;
+using NGameEditor.Backend.Setup.ApplicationConfigurations;
 using NGameEditor.Bridge;
 using ServiceWire.TcpIp;
 

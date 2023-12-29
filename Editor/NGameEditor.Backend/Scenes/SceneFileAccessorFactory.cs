@@ -1,4 +1,4 @@
-﻿using NGame.Assets;
+using NGame.Assets;
 using NGameEditor.Backend.Projects;
 
 namespace NGameEditor.Backend.Scenes;

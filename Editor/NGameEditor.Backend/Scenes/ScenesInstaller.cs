@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.Backend.Scenes.Properties;
 using NGameEditor.Backend.Scenes.SceneStates;

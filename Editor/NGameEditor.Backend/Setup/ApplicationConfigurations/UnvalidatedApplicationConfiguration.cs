@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Backend.Setup.ApplicationConfigurations;
+namespace NGameEditor.Backend.Setup.ApplicationConfigurations;
 
 
 
