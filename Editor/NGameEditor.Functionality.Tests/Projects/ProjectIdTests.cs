@@ -12,7 +12,7 @@ public class ProjectIdTests
 	public void GetAbsoluteSolutionFolder_ReturnsCorrectFolder()
 	{
 		// Arrange
-		var configFilePath = "C:/some_folder/solution_folder/.ngameeditor/config.json";
+		var configFilePath = "C:/some_folder/solution_folder/solution.sln";
 		var absolutePath = new AbsolutePath(configFilePath);
 		var projectId = new ProjectId(absolutePath);
 
@@ -23,10 +23,12 @@ public class ProjectIdTests
 
 		// Assert
 		result.Should().Be(
-			Path.Combine(
-				"C:",
-				"some_folder",
-				"solution_folder"
+			new AbsolutePath(
+				Path.Combine(
+					"C:",
+					"some_folder",
+					"solution_folder"
+				)
 			)
 		);
 	}

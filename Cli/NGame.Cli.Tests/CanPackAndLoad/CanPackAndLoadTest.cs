@@ -64,7 +64,7 @@ public class CanPackAndLoadTest
 		var cliExePath =
 			Directory.GetFiles(
 					Path.Combine(cliProjectFolder, "bin"),
-					"NGame.Cli",
+					"NGame.Cli*",
 					SearchOption.AllDirectories
 				)
 				.First(x => x.EndsWith("NGame.Cli.exe") || x.EndsWith("NGame.Cli"));
