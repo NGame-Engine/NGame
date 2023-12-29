@@ -12,7 +12,16 @@ public class ProjectIdTests
 	public void GetAbsoluteSolutionFolder_ReturnsCorrectFolder()
 	{
 		// Arrange
-		var configFilePath = "C:/some_folder/solution_folder/solution.sln";
+
+		var localRoot = Path.GetPathRoot(AppContext.BaseDirectory)!;
+		var configFilePath =
+			Path.Combine(
+				localRoot,
+				"some_folder",
+				"solution_folder",
+				"solution.sln"
+			);
+
 		var absolutePath = new AbsolutePath(configFilePath);
 		var projectId = new ProjectId(absolutePath);
 
@@ -25,7 +34,7 @@ public class ProjectIdTests
 		result.Should().Be(
 			new AbsolutePath(
 				Path.Combine(
-					"C:",
+					localRoot,
 					"some_folder",
 					"solution_folder"
 				)
