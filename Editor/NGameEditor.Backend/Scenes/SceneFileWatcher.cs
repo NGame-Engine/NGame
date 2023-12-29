@@ -12,21 +12,14 @@ public interface ISceneFileWatcher
 
 
 
-internal class SceneFileWatcher : ISceneFileWatcher, IDisposable
+internal class SceneFileWatcher(
+	FileSystemWatcher fileSystemWatcher,
+	ISceneFileIdReader sceneFileIdReader,
+	HashSet<string> allFiles
+)
+	: ISceneFileWatcher, IDisposable
 {
-	private readonly FileSystemWatcher _fileSystemWatcher;
-	private readonly ISceneFileIdReader _sceneFileIdReader;
-
-
-	public SceneFileWatcher(FileSystemWatcher fileSystemWatcher, ISceneFileIdReader sceneFileIdReader, HashSet<string> allFiles)
-	{
-		_fileSystemWatcher = fileSystemWatcher;
-		_sceneFileIdReader = sceneFileIdReader;
-		AllFiles = allFiles;
-	}
-
-
-	private HashSet<string> AllFiles { get; }
+	private HashSet<string> AllFiles { get; } = allFiles;
 	private bool HasChanges { get; set; } = true;
 	private Dictionary<Guid, AbsolutePath> SceneFilesById { get; } = new();
 
@@ -53,7 +46,7 @@ internal class SceneFileWatcher : ISceneFileWatcher, IDisposable
 		foreach (var filePath in AllFiles)
 		{
 			var absolutePath = new AbsolutePath(filePath);
-			var result = _sceneFileIdReader.GetId(absolutePath);
+			var result = sceneFileIdReader.GetId(absolutePath);
 			if (result.HasError) return result;
 
 			var id = result.SuccessValue;
@@ -100,6 +93,6 @@ internal class SceneFileWatcher : ISceneFileWatcher, IDisposable
 
 	void IDisposable.Dispose()
 	{
-		_fileSystemWatcher.Dispose();
+		fileSystemWatcher.Dispose();
 	}
 }

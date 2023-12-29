@@ -5,22 +5,14 @@ namespace NGameEditor.Backend.Scenes;
 
 
 
-internal class SceneFileAccessorFactory
+internal class SceneFileAccessorFactory(
+	ProjectDefinition projectDefinition,
+	ISceneFileIdReader sceneFileIdReader
+)
 {
-	private readonly ProjectDefinition _projectDefinition;
-	private readonly ISceneFileIdReader _sceneFileIdReader;
-
-
-	public SceneFileAccessorFactory(ProjectDefinition projectDefinition, ISceneFileIdReader sceneFileIdReader)
-	{
-		_projectDefinition = projectDefinition;
-		_sceneFileIdReader = sceneFileIdReader;
-	}
-
-
 	public ISceneFileWatcher Create()
 	{
-		var gameProjectFile = _projectDefinition.GameProjectFile;
+		var gameProjectFile = projectDefinition.GameProjectFile;
 		var gameFolder = gameProjectFile.GetParentDirectory()!;
 
 		var fileSystemWatcher = new FileSystemWatcher(gameFolder.Path);
@@ -50,19 +42,19 @@ internal class SceneFileAccessorFactory
 				)
 				.ToHashSet();
 
-		var sceneFileAccessor = new SceneFileWatcher(
+		var sceneFileWatcher = new SceneFileWatcher(
 			fileSystemWatcher,
-			_sceneFileIdReader,
+			sceneFileIdReader,
 			currentFiles
 		);
 
 
-		fileSystemWatcher.Changed += sceneFileAccessor.OnChanged;
-		fileSystemWatcher.Created += sceneFileAccessor.OnCreated;
-		fileSystemWatcher.Deleted += sceneFileAccessor.OnDeleted;
-		fileSystemWatcher.Renamed += sceneFileAccessor.OnRenamed;
-		fileSystemWatcher.Error += sceneFileAccessor.OnError;
+		fileSystemWatcher.Changed += sceneFileWatcher.OnChanged;
+		fileSystemWatcher.Created += sceneFileWatcher.OnCreated;
+		fileSystemWatcher.Deleted += sceneFileWatcher.OnDeleted;
+		fileSystemWatcher.Renamed += sceneFileWatcher.OnRenamed;
+		fileSystemWatcher.Error += sceneFileWatcher.OnError;
 
-		return sceneFileAccessor;
+		return sceneFileWatcher;
 	}
 }

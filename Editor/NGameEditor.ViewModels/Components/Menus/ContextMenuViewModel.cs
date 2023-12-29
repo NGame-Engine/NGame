@@ -1,8 +1,10 @@
+using DynamicData.Binding;
+
 namespace NGameEditor.ViewModels.Components.Menus;
 
 
 
 public class ContextMenuViewModel(IEnumerable<MenuEntryViewModel> children) : ViewModelBase
 {
-	public List<MenuEntryViewModel> Children { get; } = new(children);
+	public ObservableCollectionExtended<MenuEntryViewModel> Children { get; } = new(children);
 }

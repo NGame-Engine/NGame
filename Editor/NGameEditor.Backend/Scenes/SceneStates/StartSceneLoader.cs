@@ -13,28 +13,16 @@ public interface IStartSceneLoader
 
 
 
-public class StartSceneLoader : IStartSceneLoader
+public class StartSceneLoader(
+	IGameConfigurationService gameConfigurationService,
+	ISceneFileWatcher sceneFileWatcher,
+	ISceneFileReader sceneFileReader
+)
+	: IStartSceneLoader
 {
-	private readonly IGameConfigurationService _gameConfigurationService;
-	private readonly ISceneFileWatcher _sceneFileWatcher;
-	private readonly ISceneFileReader _sceneFileReader;
-
-
-	public StartSceneLoader(
-		IGameConfigurationService gameConfigurationService,
-		ISceneFileWatcher sceneFileWatcher,
-		ISceneFileReader sceneFileReader
-	)
-	{
-		_gameConfigurationService = gameConfigurationService;
-		_sceneFileWatcher = sceneFileWatcher;
-		_sceneFileReader = sceneFileReader;
-	}
-
-
 	public Result<BackendScene> GetStartScene() =>
-		_gameConfigurationService
+		gameConfigurationService
 			.GetSection<SceneAssetsConfiguration>(SceneAssetsConfiguration.JsonElementName)
-			.Then(x => _sceneFileWatcher.GetPathToSceneFile(x.StartScene))
-			.Then(_sceneFileReader.ReadSceneFile);
+			.Then(x => sceneFileWatcher.GetPathToSceneFile(x.StartScene))
+			.Then(sceneFileReader.ReadSceneFile);
 }

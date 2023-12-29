@@ -10,6 +10,10 @@ namespace NGameEditor.Avalonia;
 
 
 
+public interface IView<T> where T : class;
+
+
+
 public class ViewLocator : IDataTemplate
 {
 	private static readonly Dictionary<Type, Type> ViewsByViewModel =
@@ -41,24 +45,27 @@ public class ViewLocator : IDataTemplate
 	private static Dictionary<Type, Type> GetViewsByViewModel(params Assembly[] assemblies) =>
 		assemblies
 			.SelectMany(x => x.GetTypes())
-			.Where(x =>
-				x.GetInterfaces()
-					.Any(
-						i =>
-							i.IsGenericType &&
-							i.GetGenericTypeDefinition() == typeof(IViewFor<>)
-					)
+			.Select(
+				x =>
+				(
+					viewType: x,
+					viewModelType: GetViewModelType(x)
+				)
 			)
-			.ToDictionary(
-				viewType =>
-					viewType
-						.GetInterfaces()
-						.Where(x =>
-							x.IsGenericType &&
-							x.GetGenericTypeDefinition() == typeof(IViewFor<>)
-						)
-						.Select(x => x.GenericTypeArguments.First())
-						.First(),
-				viewType => viewType
-			);
+			.Where(x => x.viewModelType != null)
+			.ToDictionary(x => x.viewModelType!, x => x.viewType);
+
+
+	private static Type? GetViewModelType(Type viewType) =>
+		viewType
+			.GetInterfaces()
+			.Where(x =>
+				x.IsGenericType &&
+				(
+					x.GetGenericTypeDefinition() == typeof(IViewFor<>) ||
+					x.GetGenericTypeDefinition() == typeof(IView<>)
+				)
+			)
+			.Select(x => x.GenericTypeArguments.First())
+			.FirstOrDefault();
 }

@@ -1,0 +1,20 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:example="using:NGameEditor.Avalonia.ProjectWindows.FileBrowsers"
+             xmlns:fileBrowsers="clr-namespace:NGameEditor.ViewModels.ProjectWindows.FileBrowsers;assembly=NGameEditor.ViewModels"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.FileBrowsers.FileBrowserView"
+             x:DataType="fileBrowsers:FileBrowserViewModel"
+             d:DataContext="{x:Static example:FileBrowserDesignData.FileBrowserExample}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+
+	<StackPanel>
+		<Label>File Browser</Label>
+		<DockPanel Dock="Left">
+			<ContentControl Content="{Binding DirectoryOverviewViewModel}" />
+			<ContentControl Content="{Binding DirectoryContentViewModel}" />
+		</DockPanel>
+	</StackPanel>
+
+</UserControl>
