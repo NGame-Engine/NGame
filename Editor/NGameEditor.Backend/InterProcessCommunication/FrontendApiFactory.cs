@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Bridge.InterProcessCommunication;
 
 namespace NGameEditor.Backend.InterProcessCommunication;
 

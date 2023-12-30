@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Functionality.Scenes;

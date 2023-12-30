@@ -1,4 +1,4 @@
-﻿using ServiceWire.TcpIp;
+using ServiceWire.TcpIp;
 
 namespace NGameEditor.Bridge.InterProcessCommunication;
 
