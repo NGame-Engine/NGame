@@ -83,18 +83,6 @@ public class BackendApi(
 			.Then(x => x.Name = newName);
 
 
-	public List<ComponentTypeDefinition> GetComponentTypes() =>
-		projectDefinition
-			.ComponentTypes
-			.Select(x =>
-				new ComponentTypeDefinition(
-					ComponentAttribute.GetName(x),
-					x.FullName!
-				)
-			)
-			.ToList();
-
-
 	public Result<ComponentDescription> AddComponent(
 		Guid entityId,
 		ComponentTypeDefinition componentTypeDefinition

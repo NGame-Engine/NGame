@@ -1,4 +1,5 @@
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Bridge.Projects;
 using NGameEditor.Functionality.Users;
 
 namespace NGameEditor.Functionality.Projects;

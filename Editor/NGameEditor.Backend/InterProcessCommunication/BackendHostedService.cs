@@ -10,7 +10,8 @@ namespace NGameEditor.Backend.InterProcessCommunication;
 public class BackendHostedService(
 	ILogger<BackendHostedService> logger,
 	IBackendApi backendApi,
-	IHostRunner hostRunner
+	IHostRunner hostRunner,
+	IEnumerable<IBackendStartListener> backendStartListeners
 ) : IHostedService
 {
 	public Task StartAsync(CancellationToken cancellationToken)
@@ -21,6 +22,11 @@ public class BackendHostedService(
 		var port = hostRunner.Port;
 		var startedMessage = $"{BridgeConventions.ProcessStartedMessage}{port}";
 		logger.LogInformation("{StartedMessage}", startedMessage);
+
+		foreach (var backendStartListener in backendStartListeners.OrderBy(x => x.Priority))
+		{
+			backendStartListener.OnBackendStarted();
+		}
 
 		return Task.CompletedTask;
 	}

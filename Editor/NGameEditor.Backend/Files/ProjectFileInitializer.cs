@@ -1,4 +1,4 @@
-using NGameEditor.Backend.Projects;
+﻿using NGameEditor.Backend.Projects;
 using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 
@@ -6,21 +6,17 @@ namespace NGameEditor.Backend.Files;
 
 
 
-public interface IProjectFileStatusFactory
-{
-	ProjectFileStatus Create();
-}
-
-
-
-internal class ProjectFileStatusFactory(
+public class ProjectFileInitializer(
 	ProjectDefinition projectDefinition,
-	IFrontendApi frontendApi
-) : IProjectFileStatusFactory
+	IFrontendApi frontendApi,
+	ProjectFileStatus projectFileStatus
+) : IBackendStartListener
 {
-	public ProjectFileStatus Create()
+	public int Priority => 100;
+
+
+	public void OnBackendStarted()
 	{
-		var projectFileStatus = new ProjectFileStatus();
 		projectFileStatus.DirectoriesChanged += frontendApi.UpdateFiles;
 
 
@@ -34,9 +30,6 @@ internal class ProjectFileStatusFactory(
 				.ToList();
 
 		projectFileStatus.SetDirectories(directoryDescriptions);
-
-
-		return projectFileStatus;
 	}
 
 

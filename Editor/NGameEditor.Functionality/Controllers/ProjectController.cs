@@ -1,6 +1,7 @@
 using System.Reactive;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Projects;
 using NGameEditor.Results;

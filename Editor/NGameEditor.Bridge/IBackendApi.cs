@@ -16,9 +16,6 @@ public interface IBackendApi
 	Result SetEntityName(Guid entityId, string newName);
 
 
-	List<ComponentTypeDefinition> GetComponentTypes();
-
-
 	Result<ComponentDescription> AddComponent(
 		Guid entityId,
 		ComponentTypeDefinition componentTypeDefinition
