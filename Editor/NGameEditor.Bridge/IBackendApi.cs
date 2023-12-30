@@ -7,7 +7,7 @@ namespace NGameEditor.Bridge;
 
 
 
-public interface IBackendService
+public interface IBackendApi
 {
 	Result<DirectoryDescription> GetProjectFiles();
 

@@ -3,14 +3,12 @@ using Microsoft.Extensions.Hosting;
 using NGame.Setup;
 using NGameEditor.Backend.Configurations;
 using NGameEditor.Backend.Files;
-using NGameEditor.Backend.Ipc.Setup;
+using NGameEditor.Backend.InterProcessCommunication;
 using NGameEditor.Backend.Projects.Setup;
 using NGameEditor.Backend.Scenes;
-using NGameEditor.Backend.Setup.ApplicationConfigurations;
 using NGameEditor.Backend.UserInterface;
-using NGameEditor.Bridge.Setup;
 
-namespace NGameEditor.Backend.Setup;
+namespace NGameEditor.Backend;
 
 
 
@@ -25,11 +23,11 @@ public static class BackendInstaller
 				.Validate(builder.Configuration)
 		);
 
-		builder.AddBridge();
+
 		builder.AddConfigurations();
 		builder.AddProjects();
 		builder.AddScenes();
-		builder.AddIpc();
+		builder.AddBackendIpc();
 		builder.AddUserInterface();
 		builder.Services.AddNGameCommon();
 		builder.AddProjectFiles();

@@ -1,13 +1,11 @@
 using System.Reactive.Linq;
 using DynamicData;
-using DynamicData.Alias;
 using DynamicData.Binding;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGame.Setup;
-using NGameEditor.Bridge.InterProcessCommunication;
-using NGameEditor.Bridge.Setup;
 using NGameEditor.Functionality.Controllers;
+using NGameEditor.Functionality.InterProcessCommunication;
 using NGameEditor.Functionality.Logging;
 using NGameEditor.Functionality.Projects;
 using NGameEditor.Functionality.Scenes;
@@ -29,11 +27,11 @@ public static class FunctionalityInstaller
 		builder.AddControllers();
 
 		builder.AddLogging();
-		builder.AddBridge();
+
+		builder.AddFrontendIpc();
 
 		builder.Services.AddNGameCommon();
 		builder.Services.AddNGameEditorDomainShared();
-		builder.Services.AddBackend();
 		builder.Services.AddConfigurations();
 		builder.Services.AddScenes();
 		builder.Services.AddProjects();

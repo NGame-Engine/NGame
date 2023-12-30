@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
 using NGame.SceneAssets;
+using NGameEditor.Bridge.InterProcessCommunication;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;
 
@@ -16,7 +17,9 @@ public interface ISceneStateFactory
 class SceneStateFactory(
 	ILastOpenedSceneLoader lastOpenedSceneLoader,
 	IStartSceneLoader startSceneLoader,
-	ILogger<SceneStateFactory> logger
+	ILogger<SceneStateFactory> logger,
+	ISceneDescriptionMapper sceneDescriptionMapper,
+	IFrontendApi frontendApi
 )
 	: ISceneStateFactory
 {
@@ -26,7 +29,10 @@ class SceneStateFactory(
 	public ISceneState Create()
 	{
 		var backendScene = GetBackendScene();
-		return new SceneState(backendScene);
+		var sceneState = new SceneState(backendScene);
+		var sceneDescription = sceneDescriptionMapper.Map(backendScene);
+		frontendApi.UpdateLoadedScene(sceneDescription);
+		return sceneState;
 	}
 
 

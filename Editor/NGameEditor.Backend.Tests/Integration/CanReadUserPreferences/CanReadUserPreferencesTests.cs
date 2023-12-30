@@ -5,7 +5,6 @@ using NGame.Assets;
 using NGame.Ecs;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
-using NGameEditor.Backend.Setup;
 using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Backend.Tests.Integration.CanReadUserPreferences;

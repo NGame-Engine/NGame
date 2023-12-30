@@ -1,5 +1,6 @@
 using System.Reactive.Linq;
 using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
@@ -13,15 +14,15 @@ namespace NGameEditor.Functionality.Scenes;
 
 
 public class InspectorComponentViewModelMapper(
-	IBackendRunner backendRunner,
+	IClientRunner<IBackendApi> clientRunner,
 	ILogger<InspectorComponentViewModelMapper> logger
 ) : IInspectorComponentViewModelMapper
 {
 	public IEnumerable<ComponentEditorViewModel> Map(EntityState entityState)
 	{
 		var viewModelsResult =
-			backendRunner
-				.GetBackendService()
+			clientRunner
+				.GetClientService()
 				.Then(x => x.GetEditorForEntity(entityState.Id))
 				.Then(x =>
 					x
@@ -61,8 +62,8 @@ public class InspectorComponentViewModelMapper(
 				.Throttle(TimeSpan.FromMilliseconds(100))
 				.ObserveOn(RxApp.MainThreadScheduler)
 				.Select(x =>
-					backendRunner
-						.GetBackendService()
+					clientRunner
+						.GetClientService()
 						.Then(backendService =>
 							backendService
 								.UpdateEditorValue(
@@ -89,8 +90,8 @@ public class InspectorComponentViewModelMapper(
 				.Throttle(TimeSpan.FromMilliseconds(100))
 				.ObserveOn(RxApp.MainThreadScheduler)
 				.Select(x =>
-					backendRunner
-						.GetBackendService()
+					clientRunner
+						.GetClientService()
 						.Then(backendService =>
 							backendService
 								.UpdateEditorValue(

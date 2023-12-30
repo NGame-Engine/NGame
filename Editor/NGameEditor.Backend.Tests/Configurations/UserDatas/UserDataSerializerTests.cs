@@ -2,7 +2,6 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.Backend.Configurations.UserDatas;
-using NGameEditor.Backend.Setup;
 
 namespace NGameEditor.Backend.Tests.Configurations.UserDatas;
 
