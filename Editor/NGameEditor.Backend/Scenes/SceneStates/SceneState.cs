@@ -19,7 +19,7 @@ public interface ISceneState
 
 
 
-public class SceneState(BackendScene loadedBackendScene, IFrontendApi frontendApi) : ISceneState
+public class SceneState(BackendScene loadedBackendScene) : ISceneState
 {
 	public event Action<LoadedSceneChangedEventArgs>? LoadedSceneChanged;
 
