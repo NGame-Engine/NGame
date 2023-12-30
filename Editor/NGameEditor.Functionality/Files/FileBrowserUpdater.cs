@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Files;
+using NGameEditor.Bridge.Files;
 using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 

@@ -1,4 +1,4 @@
-﻿using NGame.Ecs;
+using NGame.Ecs;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Scenes;

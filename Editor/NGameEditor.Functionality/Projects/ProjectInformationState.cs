@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Projects;
+using NGameEditor.Bridge.Projects;
 
 namespace NGameEditor.Functionality.Projects;
 
@@ -8,7 +8,7 @@ public class ProjectInformationState
 {
 	public event Action<ProjectInformation>? ProjectInformationUpdated;
 
-	public ProjectInformation ProjectInformation { get; private set; } = 
+	public ProjectInformation ProjectInformation { get; private set; } =
 		new ProjectInformation([]);
 
 
