@@ -30,8 +30,15 @@ class SceneStateFactory(
 	{
 		var backendScene = GetBackendScene();
 		var sceneState = new SceneState(backendScene);
-		var sceneDescription = sceneDescriptionMapper.Map(backendScene);
-		frontendApi.UpdateLoadedScene(sceneDescription);
+
+		sceneState.LoadedSceneChanged += args =>
+		{
+			var sceneDescription = sceneDescriptionMapper.Map(args.NewBackendScene);
+			frontendApi.UpdateLoadedScene(sceneDescription);
+		};
+		
+		sceneState.SetLoadedScene(backendScene);
+
 		return sceneState;
 	}
 

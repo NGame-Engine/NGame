@@ -1,12 +1,10 @@
 using NGame.Ecs;
 using NGame.SceneAssets;
-using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
-using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
@@ -20,30 +18,10 @@ public class BackendApi(
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
 	ISceneSaver sceneSaver,
-	ICustomEditorListener customEditorListener,
-	ProjectFileStatus projectFileStatus
+	ICustomEditorListener customEditorListener
 )
 	: IBackendApi
 {
-	public Result<DirectoryDescription> GetProjectFiles()
-	{
-		return Result.Success(
-			new DirectoryDescription(
-				"root",
-				projectFileStatus.Directories,
-				[] // TODO show files in root folder 
-			)
-		);
-	}
-
-
-	public SceneDescription GetLoadedScene()
-	{
-		var backendScene = sceneState.LoadedBackendScene;
-		return sceneDescriptionMapper.Map(backendScene);
-	}
-
-
 	public Result SaveCurrentScene() => sceneSaver.SaveCurrentScene();
 
 

@@ -1,10 +1,9 @@
-using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Scenes;
+using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Functionality.Shared;
-using NGameEditor.Functionality.Windows;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.Functionality.InterProcessCommunication;
 
@@ -12,30 +11,18 @@ namespace NGameEditor.Functionality.InterProcessCommunication;
 
 public class FrontendApi(
 	IUiThreadDispatcher uiThreadDispatcher,
-	IProjectWindow projectWindow,
-	ILogger<FrontendApi> logger,
-	IEntityStateMapper entityStateMapper,
-	SceneState sceneState
+	IFileBrowserUpdater fileBrowserUpdater,
+	ISceneUpdater sceneUpdater
 ) : IFrontendApi
 {
-	public void UpdateLoadedScene(SceneDescription sceneDescription)
-	{
-		uiThreadDispatcher.DoOnUiThread(() =>
-		{
-			logger.LogError("FrontendApi CALLED");
-
-			var sceneFileName = sceneDescription.FileName;
-			projectWindow.SetSceneName(sceneFileName ?? "*");
+	public void UpdateFiles(DirectoryDescription rootDirectory) =>
+		uiThreadDispatcher.DoOnUiThread(
+			() => fileBrowserUpdater.UpdateProjectFiles(rootDirectory)
+		);
 
 
-			sceneState.RemoveAllEntities();
-			var entityNodeViewModels = sceneDescription
-				.Entities
-				.Select(entityStateMapper.Map);
-			foreach (var entityNodeViewModel in entityNodeViewModels)
-			{
-				sceneState.SceneEntities.Add(entityNodeViewModel);
-			}
-		});
-	}
+	public void UpdateLoadedScene(SceneDescription sceneDescription) =>
+		uiThreadDispatcher.DoOnUiThread(
+			() => sceneUpdater.UpdateLoadedScene(sceneDescription)
+		);
 }
