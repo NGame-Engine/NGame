@@ -29,7 +29,7 @@ class SceneStateFactory(
 	public ISceneState Create()
 	{
 		var backendScene = GetBackendScene();
-		var sceneState = new SceneState(backendScene, frontendApi);
+		var sceneState = new SceneState(backendScene);
 		var sceneDescription = sceneDescriptionMapper.Map(backendScene);
 		frontendApi.UpdateLoadedScene(sceneDescription);
 		return sceneState;
