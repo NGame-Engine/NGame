@@ -10,10 +10,9 @@ namespace NGameEditor.Bridge.InterProcessCommunication;
 
 public interface IBackendProcessRunner
 {
-	Task StartNewProcess(
+	Task<int> StartNewProcess(
 		AbsolutePath editorProjectFile,
 		IPEndPoint frontendIpEndPoint,
-		IPEndPoint backendIpEndPoint,
 		ProjectId projectId
 	);
 
@@ -23,30 +22,22 @@ public interface IBackendProcessRunner
 
 
 
-public class BackendProcessRunner : IBackendProcessRunner, IDisposable
+public class BackendProcessRunner(
+	ILogger<BackendProcessRunner> logger
+) : IBackendProcessRunner, IDisposable
 {
-	private readonly ILogger<BackendProcessRunner> _logger;
-
-
-	public BackendProcessRunner(ILogger<BackendProcessRunner> logger)
-	{
-		_logger = logger;
-	}
-
-
 	private Process? Process { get; set; }
 
 
-	public async Task StartNewProcess(
+	public async Task<int> StartNewProcess(
 		AbsolutePath editorProjectFile,
 		IPEndPoint frontendIpEndPoint,
-		IPEndPoint backendIpEndPoint,
 		ProjectId projectId
 	)
 	{
 		StopCurrentProcess();
 
-		Process = CreateProcess(editorProjectFile, frontendIpEndPoint,backendIpEndPoint, projectId);
+		Process = CreateProcess(editorProjectFile, frontendIpEndPoint, projectId);
 
 
 		StringBuilder? infoStringBuilder = null;
@@ -63,25 +54,37 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 			if (infoStringBuilder != null)
 			{
 				infoStringBuilder.AppendLine(e.Data);
-				_logger.LogInformation("[BackendProcess] {Output}", infoStringBuilder.ToString());
+				logger.LogInformation("[BackendProcess] {Output}", infoStringBuilder.ToString());
 				infoStringBuilder = null;
 				return;
 			}
 
-			_logger.LogInformation("[BackendProcess] {Output}", e.Data);
+			logger.LogInformation("[BackendProcess] {Output}", e.Data);
 		}
 
 		Process.OutputDataReceived += LogOutputData;
 
 
 		Process.ErrorDataReceived += (_, e) =>
-			_logger.LogError("[BackendProcess] {Output}", e.Data);
+			logger.LogError("[BackendProcess] {Output}", e.Data);
 
 
-		await Process.StartAndWaitForOutput(
-			BridgeConventions.ProcessStartedMessage,
-			TimeSpan.FromSeconds(15)
+		var backendStartedOutput = await Process.StartAndWaitForOutput(
+			output => output.Contains(BridgeConventions.ProcessStartedMessage),
+			TimeSpan.FromSeconds(30)
 		);
+
+		
+		var outputIndex = backendStartedOutput.IndexOf(
+			BridgeConventions.ProcessStartedMessage, 
+			StringComparison.OrdinalIgnoreCase
+			);
+		
+		var portStringStart = outputIndex + BridgeConventions.ProcessStartedMessage.Length;
+		
+		var portString = backendStartedOutput[portStringStart..];
+		var port = int.Parse(portString);
+		return port;
 	}
 
 
@@ -91,7 +94,7 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 		if (Process == null || Process.HasExited)
 		{
 			logString.AppendLine("already stopped");
-			_logger.LogInformation("{LogString}", logString.ToString());
+			logger.LogInformation("{LogString}", logString.ToString());
 			return;
 		}
 
@@ -100,7 +103,7 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 		Process.Dispose();
 
 		logString.AppendLine("stopped successfully");
-		_logger.LogInformation("{LogString}", logString.ToString());
+		logger.LogInformation("{LogString}", logString.ToString());
 	}
 
 
@@ -113,7 +116,6 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 	private static Process CreateProcess(
 		AbsolutePath editorProjectFile,
 		IPEndPoint frontendIpEndPoint,
-		IPEndPoint backendIpEndPoint,
 		ProjectId projectId
 	) =>
 		new()
@@ -127,7 +129,6 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 					$"--project={editorProjectFile.Path}",
 					"--",
 					$"--frontendport={frontendIpEndPoint.Port}",
-					$"--backendport={backendIpEndPoint.Port}",
 					$"--solution={projectId.SolutionFilePath.Path}"
 				},
 				RedirectStandardOutput = true,

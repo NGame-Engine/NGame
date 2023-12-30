@@ -8,7 +8,6 @@ namespace NGameEditor.Backend.Setup.ApplicationConfigurations;
 
 public record ApplicationConfiguration(
 	IPEndPoint FrontendIpEndPoint,
-	IPEndPoint BackendIpEndPoint,
 	AbsolutePath SolutionFilePath
 );
 
@@ -40,16 +39,6 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		var frontendIpEndPoint = new IPEndPoint(IPAddress.Loopback, frontendPort);
 
 
-		var backendPort = argumentsConfiguration.BackendPort;
-		if (backendPort == 0)
-		{
-			var message = "No valid backend port provided";
-			throw new InvalidOperationException(message);
-		}
-
-		var backendIpEndPoint = new IPEndPoint(IPAddress.Loopback, backendPort);
-
-
 		var solutionPath = argumentsConfiguration.Solution;
 		if (string.IsNullOrEmpty(solutionPath))
 		{
@@ -67,6 +56,6 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		var solutionFilePath = new AbsolutePath(solutionPath);
 
 
-		return new ApplicationConfiguration(frontendIpEndPoint, backendIpEndPoint, solutionFilePath);
+		return new ApplicationConfiguration(frontendIpEndPoint, solutionFilePath);
 	}
 }

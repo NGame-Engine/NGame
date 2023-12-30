@@ -6,13 +6,13 @@ namespace NGameEditor.Bridge.InterProcessCommunication;
 
 public static class ProcessExtensions
 {
-	public static Task StartAndWaitForOutput(
+	public static Task<string> StartAndWaitForOutput(
 		this Process process,
-		string output,
+		Func<string, bool> outputIsMatch,
 		TimeSpan timeout
 	)
 	{
-		var taskCompletionSource = new TaskCompletionSource();
+		var taskCompletionSource = new TaskCompletionSource<string>();
 
 		new CancellationTokenSource(timeout)
 			.Token
@@ -31,10 +31,10 @@ public static class ProcessExtensions
 
 		void ListenForBackendStart(object sender, DataReceivedEventArgs e)
 		{
-			if (e.Data?.Contains(output) != true) return;
+			if (e.Data == null || outputIsMatch(e.Data) == false) return;
 
 			process.OutputDataReceived -= ListenForBackendStart;
-			taskCompletionSource.TrySetResult();
+			taskCompletionSource.TrySetResult(e.Data);
 		}
 	}
 }

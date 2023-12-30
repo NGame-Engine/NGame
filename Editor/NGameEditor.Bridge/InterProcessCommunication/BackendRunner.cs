@@ -19,8 +19,7 @@ public interface IBackendRunner
 public class BackendRunner(
 	IBackendProcessRunner backendProcessRunner,
 	ISolutionConfigurationReader solutionConfigurationReader,
-	TcpHost host,
-	IFreePortFinder freePortFinder
+	TcpHost host
 )
 	: IBackendRunner
 {
@@ -46,16 +45,14 @@ public class BackendRunner(
 
 
 		var frontendIpEndPoint = host.EndPoint;
-		var availablePort = freePortFinder.GetAvailablePort(IPAddress.Loopback);
-		var backendIpEndPoint = new IPEndPoint(IPAddress.Loopback, availablePort);
 
-		await backendProcessRunner.StartNewProcess(
+		var backendPort = await backendProcessRunner.StartNewProcess(
 			editorProjectFile,
 			frontendIpEndPoint,
-			backendIpEndPoint,
 			projectId
 		);
 
+		var backendIpEndPoint = new IPEndPoint(IPAddress.Loopback, backendPort);
 		TcpClient = new TcpClient<IBackendService>(backendIpEndPoint);
 		var backendService = TcpClient.Proxy;
 
