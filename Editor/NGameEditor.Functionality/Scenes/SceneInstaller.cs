@@ -14,5 +14,6 @@ public static class SceneInstaller
 		services.AddTransient<IEntityNodeViewModelMapper, EntityNodeViewModelMapper>();
 		services.AddTransient<IComponentStateMapper, ComponentStateMapper>();
 		services.AddTransient<IInspectorComponentViewModelMapper, InspectorComponentViewModelMapper>();
+		services.AddTransient<ISceneUpdater, SceneUpdater>();
 	}
 }

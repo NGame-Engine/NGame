@@ -1,18 +1,12 @@
 using NGameEditor.Bridge.Shared;
 
-namespace NGameEditor.Bridge.InterProcessCommunication;
+namespace NGameEditor.Bridge.Projects;
 
 
 
-public class ProjectId : IEquatable<ProjectId>
+public class ProjectId(AbsolutePath solutionFilePath) : IEquatable<ProjectId>
 {
-	public ProjectId(AbsolutePath solutionFilePath)
-	{
-		SolutionFilePath = solutionFilePath;
-	}
-
-
-	public AbsolutePath SolutionFilePath { get; }
+	public AbsolutePath SolutionFilePath { get; } = solutionFilePath;
 
 
 	public AbsolutePath GetAbsoluteSolutionFolder() =>

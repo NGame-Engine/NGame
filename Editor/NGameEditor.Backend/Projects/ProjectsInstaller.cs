@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace NGameEditor.Backend.Projects.Setup;
+namespace NGameEditor.Backend.Projects;
 
 
 
@@ -14,9 +14,7 @@ public static class ProjectsInstaller
 			services.GetRequiredService<IProjectDefinitionFactory>().Create()
 		);
 
-		builder.Services.AddTransient<IProjectStateFactory, ProjectStateFactory>();
-		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<IProjectStateFactory>().Create()
-		);
+
+		builder.Services.AddTransient<IBackendStartListener, ProjectInformationInitializer>();
 	}
 }

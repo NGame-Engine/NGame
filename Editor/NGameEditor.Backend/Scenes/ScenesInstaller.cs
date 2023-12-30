@@ -11,10 +11,8 @@ public static class ScenesInstaller
 {
 	public static void AddScenes(this IHostApplicationBuilder builder)
 	{
-		builder.Services.AddTransient<ISceneStateFactory, SceneStateFactory>();
-		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<ISceneStateFactory>().Create()
-		);
+		builder.Services.AddSingleton<ISceneState, SceneState>();
+
 
 		builder.Services.AddTransient<SceneFileAccessorFactory>();
 		builder.Services.AddSingleton(services =>
@@ -33,5 +31,8 @@ public static class ScenesInstaller
 		builder.Services.AddTransient<IComponentMapper, IntComponentMapper>();
 		builder.Services.AddTransient<IComponentMapper, FloatComponentMapper>();
 		builder.Services.AddTransient<IComponentMapper, StringComponentMapper>();
+
+
+		builder.Services.AddTransient<IBackendStartListener, SceneStateInitializer>();
 	}
 }

@@ -17,5 +17,7 @@ public static class ProjectsInstaller
 		services.AddTransient<IProjectOpener, ProjectOpener>();
 		services.AddTransient<IProjectUsageRepository, ProjectUsageRepository>();
 		services.AddTransient<IEntityStateMapper, EntityStateMapper>();
+
+		services.AddSingleton<ProjectInformationState>();
 	}
 }

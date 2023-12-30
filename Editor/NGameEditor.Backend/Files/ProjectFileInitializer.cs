@@ -1,23 +1,25 @@
 using NGameEditor.Backend.Projects;
 using NGameEditor.Bridge.Files;
+using NGameEditor.Bridge.InterProcessCommunication;
 
 namespace NGameEditor.Backend.Files;
 
 
 
-public interface IProjectFileStatusFactory
+public class ProjectFileInitializer(
+	ProjectDefinition projectDefinition,
+	IFrontendApi frontendApi,
+	ProjectFileStatus projectFileStatus
+) : IBackendStartListener
 {
-	ProjectFileStatus Create();
-}
+	public int Priority => 100;
 
 
-
-internal class ProjectFileStatusFactory(
-	ProjectDefinition projectDefinition
-) : IProjectFileStatusFactory
-{
-	public ProjectFileStatus Create()
+	public void OnBackendStarted()
 	{
+		projectFileStatus.DirectoriesChanged += frontendApi.UpdateFiles;
+
+
 		var solutionFilePath = projectDefinition.SolutionFilePath;
 		var solutionDirectory = solutionFilePath.GetParentDirectory()!;
 
@@ -27,8 +29,7 @@ internal class ProjectFileStatusFactory(
 				.Select(GetDirectoryDescriptionsRecursive)
 				.ToList();
 
-
-		return new ProjectFileStatus(directoryDescriptions);
+		projectFileStatus.SetDirectories(directoryDescriptions);
 	}
 
 

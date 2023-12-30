@@ -1,5 +1,6 @@
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Setup;
 using NGameEditor.Results;
 

@@ -1,4 +1,4 @@
-using NGameEditor.Bridge.InterProcessCommunication;
+using NGame.SceneAssets;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;
 
@@ -19,11 +19,11 @@ public interface ISceneState
 
 
 
-public class SceneState(BackendScene loadedBackendScene) : ISceneState
+public class SceneState : ISceneState
 {
 	public event Action<LoadedSceneChangedEventArgs>? LoadedSceneChanged;
 
-	public BackendScene LoadedBackendScene { get; private set; } = loadedBackendScene;
+	public BackendScene LoadedBackendScene { get; private set; } = new(null, new SceneAsset());
 
 
 	public void SetLoadedScene(BackendScene backendSceneDescription)

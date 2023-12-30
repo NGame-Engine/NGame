@@ -7,32 +7,29 @@ namespace NGameEditor.Backend.Scenes.SceneStates;
 
 
 
-public interface ISceneStateFactory
-{
-	ISceneState Create();
-}
-
-
-
-class SceneStateFactory(
+public class SceneStateInitializer(
 	ILastOpenedSceneLoader lastOpenedSceneLoader,
 	IStartSceneLoader startSceneLoader,
-	ILogger<SceneStateFactory> logger,
+	ILogger<SceneStateInitializer> logger,
+	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
 	IFrontendApi frontendApi
-)
-	: ISceneStateFactory
+) : IBackendStartListener
 {
-	private readonly ILogger _logger = logger;
+	public int Priority => 1000;
 
 
-	public ISceneState Create()
+	public void OnBackendStarted()
 	{
 		var backendScene = GetBackendScene();
-		var sceneState = new SceneState(backendScene);
-		var sceneDescription = sceneDescriptionMapper.Map(backendScene);
-		frontendApi.UpdateLoadedScene(sceneDescription);
-		return sceneState;
+
+		sceneState.LoadedSceneChanged += args =>
+		{
+			var sceneDescription = sceneDescriptionMapper.Map(args.NewBackendScene);
+			frontendApi.UpdateLoadedScene(sceneDescription);
+		};
+
+		sceneState.SetLoadedScene(backendScene);
 	}
 
 
@@ -44,7 +41,7 @@ class SceneStateFactory(
 			return lastOpenedScene;
 		}
 
-		_logger.LogInformation("{Error}", lastOpenedSceneResult.ErrorValue!.Title);
+		logger.LogInformation("{Error}", lastOpenedSceneResult.ErrorValue!.Title);
 
 		var startSceneResult = startSceneLoader.GetStartScene();
 

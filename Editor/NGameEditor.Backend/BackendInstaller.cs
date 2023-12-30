@@ -4,7 +4,7 @@ using NGame.Setup;
 using NGameEditor.Backend.Configurations;
 using NGameEditor.Backend.Files;
 using NGameEditor.Backend.InterProcessCommunication;
-using NGameEditor.Backend.Projects.Setup;
+using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.UserInterface;
 

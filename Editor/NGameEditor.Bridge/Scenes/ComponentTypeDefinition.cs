@@ -2,15 +2,11 @@ namespace NGameEditor.Bridge.Scenes;
 
 
 
-public class ComponentTypeDefinition
+public class ComponentTypeDefinition(
+	string name,
+	string fullTypeName
+)
 {
-	public ComponentTypeDefinition(string name, string fullTypeName)
-	{
-		Name = name;
-		FullTypeName = fullTypeName;
-	}
-
-
-	public string Name { get; }
-	public string FullTypeName { get; }
+	public string Name { get; } = name;
+	public string FullTypeName { get; } = fullTypeName;
 }

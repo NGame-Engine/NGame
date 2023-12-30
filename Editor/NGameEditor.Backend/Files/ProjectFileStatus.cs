@@ -4,9 +4,18 @@ namespace NGameEditor.Backend.Files;
 
 
 
-public class ProjectFileStatus(
-	List<DirectoryDescription> directories
-)
+public class ProjectFileStatus
 {
-	public List<DirectoryDescription> Directories { get; } = directories;
+	public event Action<DirectoryDescription>? DirectoriesChanged;
+
+
+	public DirectoryDescription RootDirectory { get; } = new("root", [], []);
+
+
+	public void SetDirectories(List<DirectoryDescription> directoryDescriptions)
+	{
+		RootDirectory.SubDirectories.Clear();
+		RootDirectory.SubDirectories.AddRange(directoryDescriptions);
+		DirectoriesChanged?.Invoke(RootDirectory);
+	}
 }

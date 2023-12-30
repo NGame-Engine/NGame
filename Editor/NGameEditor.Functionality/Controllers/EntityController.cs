@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Functionality.Projects;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.Menus;
@@ -14,32 +15,20 @@ namespace NGameEditor.Functionality.Controllers;
 public class EntityController(
 	IComponentController componentController,
 	IClientRunner<IBackendApi> clientRunner,
-	ILogger<EntityStateMapper> logger
+	ILogger<EntityStateMapper> logger,
+	ProjectInformationState projectInformationState
 ) : IEntityController
 {
-	public IEnumerable<MenuEntryViewModel> GetAddComponentMenuEntries(EntityState entityState)
-	{
-		var menuEntryResults =
-			clientRunner
-				.GetClientService()
-				.Then(x => x.GetComponentTypes())
-				.Then(definitions => definitions
-					.Select(definition =>
-						new MenuEntryViewModel(
-							definition.Name,
-							componentController.AddComponent(definition, entityState)
-						)
-					)
-					.ToList()
-				);
-
-
-		if (!menuEntryResults.HasError) return menuEntryResults.SuccessValue!;
-
-
-		logger.Log(menuEntryResults.ErrorValue!);
-		return new List<MenuEntryViewModel>();
-	}
+	public IEnumerable<MenuEntryViewModel> GetAddComponentMenuEntries(EntityState entityState) =>
+		projectInformationState
+			.ProjectInformation
+			.ComponentTypeDefinitions
+			.Select(definition =>
+				new MenuEntryViewModel(
+					definition.Name,
+					componentController.AddComponent(definition, entityState)
+				)
+			);
 
 
 	public Result SetName(EntityState entity, string newName) =>

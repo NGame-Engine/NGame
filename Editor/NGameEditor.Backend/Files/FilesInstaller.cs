@@ -9,9 +9,8 @@ public static class FilesInstaller
 {
 	public static void AddProjectFiles(this IHostApplicationBuilder builder)
 	{
-		builder.Services.AddTransient<IProjectFileStatusFactory, ProjectFileStatusFactory>();
-		builder.Services.AddSingleton<ProjectFileStatus>(services =>
-			services.GetRequiredService<IProjectFileStatusFactory>().Create()
-		);
+		builder.Services.AddSingleton<ProjectFileStatus>();
+
+		builder.Services.AddTransient<IBackendStartListener, ProjectFileInitializer>();
 	}
 }

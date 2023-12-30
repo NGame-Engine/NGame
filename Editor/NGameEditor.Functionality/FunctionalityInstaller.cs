@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGame.Setup;
 using NGameEditor.Functionality.Controllers;
+using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.InterProcessCommunication;
 using NGameEditor.Functionality.Logging;
 using NGameEditor.Functionality.Projects;
@@ -33,6 +34,7 @@ public static class FunctionalityInstaller
 		builder.Services.AddNGameCommon();
 		builder.Services.AddNGameEditorDomainShared();
 		builder.Services.AddConfigurations();
+		builder.AddFiles();
 		builder.Services.AddScenes();
 		builder.Services.AddProjects();
 
