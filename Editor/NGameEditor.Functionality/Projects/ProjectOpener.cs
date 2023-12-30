@@ -51,6 +51,7 @@ public class ProjectOpener(
 		projectWindow.Open();
 
 
+		/*
 		var sceneDescription = backendService.GetLoadedScene();
 		var sceneFileName = sceneDescription.FileName;
 		projectWindow.SetSceneName(sceneFileName ?? "*");
@@ -64,6 +65,7 @@ public class ProjectOpener(
 		{
 			sceneState.SceneEntities.Add(entityNodeViewModel);
 		}
+		*/
 
 
 		UpdateProjectFiles(backendService);

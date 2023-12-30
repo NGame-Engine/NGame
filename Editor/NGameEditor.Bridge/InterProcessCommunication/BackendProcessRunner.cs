@@ -12,7 +12,8 @@ public interface IBackendProcessRunner
 {
 	Task StartNewProcess(
 		AbsolutePath editorProjectFile,
-		IPEndPoint ipEndPoint,
+		IPEndPoint frontendIpEndPoint,
+		IPEndPoint backendIpEndPoint,
 		ProjectId projectId
 	);
 
@@ -38,13 +39,14 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 
 	public async Task StartNewProcess(
 		AbsolutePath editorProjectFile,
-		IPEndPoint ipEndPoint,
+		IPEndPoint frontendIpEndPoint,
+		IPEndPoint backendIpEndPoint,
 		ProjectId projectId
 	)
 	{
 		StopCurrentProcess();
 
-		Process = CreateProcess(editorProjectFile, ipEndPoint, projectId);
+		Process = CreateProcess(editorProjectFile, frontendIpEndPoint,backendIpEndPoint, projectId);
 
 
 		StringBuilder? infoStringBuilder = null;
@@ -110,7 +112,8 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 
 	private static Process CreateProcess(
 		AbsolutePath editorProjectFile,
-		IPEndPoint ipEndPoint,
+		IPEndPoint frontendIpEndPoint,
+		IPEndPoint backendIpEndPoint,
 		ProjectId projectId
 	) =>
 		new()
@@ -123,7 +126,8 @@ public class BackendProcessRunner : IBackendProcessRunner, IDisposable
 					"run",
 					$"--project={editorProjectFile.Path}",
 					"--",
-					$"--port={ipEndPoint.Port}",
+					$"--frontendport={frontendIpEndPoint.Port}",
+					$"--backendport={backendIpEndPoint.Port}",
 					$"--solution={projectId.SolutionFilePath.Path}"
 				},
 				RedirectStandardOutput = true,

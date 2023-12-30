@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using ServiceWire.TcpIp;
+using ServiceWire;
 
 namespace NGameEditor.Backend.Ipc.Setup;
 
@@ -12,27 +12,16 @@ public interface IIpcRunner
 
 
 
-public class IpcRunner : IIpcRunner, IDisposable
+public class IpcRunner(
+	ILogger<IpcRunner> logger,
+	Host tcpHost
+) : IIpcRunner, IDisposable
 {
-	private readonly ILogger<IpcRunner> _logger;
-	private readonly TcpHost _tcpHost;
-
-
-	public IpcRunner(
-		ILogger<IpcRunner> logger,
-		TcpHost tcpHost
-	)
-	{
-		_logger = logger;
-		_tcpHost = tcpHost;
-	}
-
-
 	public void Start()
 	{
-		_tcpHost.Open();
+		tcpHost.Open();
 
-		_logger.LogInformation(
+		logger.LogInformation(
 			"{StartedMessage}",
 			Bridge.BridgeConventions.ProcessStartedMessage
 		);
@@ -41,8 +30,8 @@ public class IpcRunner : IIpcRunner, IDisposable
 
 	public void Dispose()
 	{
-		_logger.LogInformation("Stopping IcpRunner...");
-		_tcpHost.Dispose();
-		_logger.LogInformation("IcpRunner stopped");
+		logger.LogInformation("Stopping IcpRunner...");
+		tcpHost.Dispose();
+		logger.LogInformation("IcpRunner stopped");
 	}
 }

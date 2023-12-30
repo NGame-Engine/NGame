@@ -4,7 +4,14 @@ using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Backend.Setup.ApplicationConfigurations;
 
-public record ApplicationConfiguration(IPEndPoint IpEndPoint, AbsolutePath SolutionFilePath);
+
+
+public record ApplicationConfiguration(
+	IPEndPoint FrontendIpEndPoint,
+	IPEndPoint BackendIpEndPoint,
+	AbsolutePath SolutionFilePath
+);
+
 
 
 public interface IApplicationConfigurationValidator
@@ -26,14 +33,21 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 			throw new InvalidOperationException(message);
 		}
 
-		var port = argumentsConfiguration.Port;
-		if (port == 0)
+		var frontendPort =
+			argumentsConfiguration.FrontendPort ??
+			throw new InvalidOperationException("No frontend port provided");
+
+		var frontendIpEndPoint = new IPEndPoint(IPAddress.Loopback, frontendPort);
+
+
+		var backendPort = argumentsConfiguration.BackendPort;
+		if (backendPort == 0)
 		{
-			var message = "No valid port provided";
+			var message = "No valid backend port provided";
 			throw new InvalidOperationException(message);
 		}
 
-		var ipEndPoint = new IPEndPoint(IPAddress.Loopback, port);
+		var backendIpEndPoint = new IPEndPoint(IPAddress.Loopback, backendPort);
 
 
 		var solutionPath = argumentsConfiguration.Solution;
@@ -53,6 +67,6 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		var solutionFilePath = new AbsolutePath(solutionPath);
 
 
-		return new ApplicationConfiguration(ipEndPoint, solutionFilePath);
+		return new ApplicationConfiguration(frontendIpEndPoint, backendIpEndPoint, solutionFilePath);
 	}
 }

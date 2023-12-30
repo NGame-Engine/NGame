@@ -1,5 +1,4 @@
 using System.Net;
-using System.Net.Sockets;
 using NGameEditor.Bridge.Setup;
 using NGameEditor.Results;
 using ServiceWire.TcpIp;
@@ -19,11 +18,13 @@ public interface IBackendRunner
 
 public class BackendRunner(
 	IBackendProcessRunner backendProcessRunner,
-	ISolutionConfigurationReader solutionConfigurationReader
+	ISolutionConfigurationReader solutionConfigurationReader,
+	TcpHost host,
+	IFreePortFinder freePortFinder
 )
 	: IBackendRunner
 {
-	public IBackendService? BackendService => TcpClient?.Proxy;
+	private IBackendService? BackendService => TcpClient?.Proxy;
 	private TcpClient<IBackendService>? TcpClient { get; set; }
 
 
@@ -44,10 +45,18 @@ public class BackendRunner(
 		var editorProjectFile = solutionFolder.CombineWith(relativeEditorProjectPath);
 
 
-		var ipEndPoint = GetIpEndpoint();
-		await backendProcessRunner.StartNewProcess(editorProjectFile, ipEndPoint, projectId);
+		var frontendIpEndPoint = host.EndPoint;
+		var availablePort = freePortFinder.GetAvailablePort(IPAddress.Loopback);
+		var backendIpEndPoint = new IPEndPoint(IPAddress.Loopback, availablePort);
 
-		TcpClient = new TcpClient<IBackendService>(ipEndPoint);
+		await backendProcessRunner.StartNewProcess(
+			editorProjectFile,
+			frontendIpEndPoint,
+			backendIpEndPoint,
+			projectId
+		);
+
+		TcpClient = new TcpClient<IBackendService>(backendIpEndPoint);
 		var backendService = TcpClient.Proxy;
 
 		return Result.Success(backendService);
@@ -70,16 +79,4 @@ public class BackendRunner(
 		BackendService == null
 			? Result.Error("Backend service not running")
 			: Result.Success(BackendService);
-
-
-	private static IPEndPoint GetIpEndpoint()
-	{
-		var defaultLoopbackEndpoint = new IPEndPoint(IPAddress.Loopback, port: 0);
-		using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		socket.Bind(defaultLoopbackEndpoint);
-		var boundEndPoint = socket.LocalEndPoint!;
-		var ipEndPoint = (IPEndPoint)boundEndPoint;
-		var availablePort = ipEndPoint.Port;
-		return new IPEndPoint(IPAddress.Loopback, availablePort);
-	}
 }
