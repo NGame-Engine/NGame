@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Results;
@@ -12,7 +13,7 @@ namespace NGameEditor.Functionality.Controllers;
 
 
 public class SceneController(
-	IBackendRunner backendRunner,
+	IClientRunner<IBackendApi> clientRunner,
 	IEntityStateMapper entityStateMapper,
 	ISceneSaver sceneSaver,
 	SceneState sceneState,
@@ -20,8 +21,8 @@ public class SceneController(
 ) : ISceneController
 {
 	public Result CreateEntity(EntityState? parentEntity) =>
-		backendRunner
-			.GetBackendService()
+		clientRunner
+			.GetClientService()
 			.Then(x => x.AddEntity(parentEntity?.Id))
 			.Then(entityStateMapper.Map)
 			.Then(x =>
@@ -33,8 +34,8 @@ public class SceneController(
 
 
 	public Result Remove(EntityState entityState) =>
-		backendRunner
-			.GetBackendService()
+		clientRunner
+			.GetClientService()
 			.Then(x => x.RemoveEntity(entityState.Id))
 			.Then(() =>
 				sceneState

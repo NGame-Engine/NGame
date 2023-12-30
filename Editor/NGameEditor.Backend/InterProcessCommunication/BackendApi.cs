@@ -11,11 +11,11 @@ using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
-namespace NGameEditor.Backend.Ipc;
+namespace NGameEditor.Backend.InterProcessCommunication;
 
 
 
-public class BackendService(
+public class BackendApi(
 	ProjectDefinition projectDefinition,
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
@@ -23,7 +23,7 @@ public class BackendService(
 	ICustomEditorListener customEditorListener,
 	ProjectFileStatus projectFileStatus
 )
-	: IBackendService
+	: IBackendApi
 {
 	public Result<DirectoryDescription> GetProjectFiles()
 	{

@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Functionality.Scenes;
@@ -22,9 +23,9 @@ public interface IComponentController
 
 
 public class ComponentController(
-	IBackendRunner backendRunner,
 	ILogger<ComponentController> logger,
-	IComponentStateMapper componentStateMapper
+	IComponentStateMapper componentStateMapper,
+	IClientRunner<IBackendApi> clientRunner
 ) : IComponentController
 {
 	public ICommand AddComponent(
@@ -32,8 +33,8 @@ public class ComponentController(
 		EntityState entityState
 	) =>
 		ReactiveCommand.Create(() =>
-			backendRunner
-				.GetBackendService()
+			clientRunner
+				.GetClientService()
 				.Then(x => x.AddComponent(entityState.Id, componentTypeDefinition))
 				.Then(componentStateMapper.MapComponent)
 				.Then(entityState.Components.Add)

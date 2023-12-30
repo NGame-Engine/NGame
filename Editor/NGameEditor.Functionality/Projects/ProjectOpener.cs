@@ -2,12 +2,11 @@ using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
-using NGameEditor.Functionality.Scenes;
+using NGameEditor.Functionality.InterProcessCommunication;
 using NGameEditor.Functionality.Windows;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.Functionality.Projects;
 
@@ -22,18 +21,16 @@ public interface IProjectOpener
 
 public class ProjectOpener(
 	IProjectUsageRepository projectUsageRepository,
-	IBackendRunner backendRunner,
+	IBackendStarter backendStarter,
 	ILauncherWindow launcherWindow,
 	IProjectWindow projectWindow,
 	ILogger<ProjectOpener> logger,
-	IEntityStateMapper entityStateMapper,
-	SceneState sceneState,
 	FileBrowserViewModel fileBrowserViewModel
 )
 	: IProjectOpener
 {
 	public Task OpenProject(ProjectId projectId) =>
-		backendRunner
+		backendStarter
 			.StartBackend(projectId)
 			.FinallyAsync(
 				x => OpenProject(x, projectId),
@@ -41,7 +38,7 @@ public class ProjectOpener(
 			);
 
 
-	private void OpenProject(IBackendService backendService, ProjectId projectId)
+	private void OpenProject(IBackendApi backendApi, ProjectId projectId)
 	{
 		var solutionFilePath = projectId.SolutionFilePath.Path;
 		var solutionName = Path.GetFileNameWithoutExtension(solutionFilePath);
@@ -68,16 +65,16 @@ public class ProjectOpener(
 		*/
 
 
-		UpdateProjectFiles(backendService);
+		UpdateProjectFiles(backendApi);
 
 
 		launcherWindow.Close();
 	}
 
 
-	private void UpdateProjectFiles(IBackendService backendService)
+	private void UpdateProjectFiles(IBackendApi backendApi)
 	{
-		backendService
+		backendApi
 			.GetProjectFiles()
 			.Then(x =>
 			{

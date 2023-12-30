@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Results;
 
@@ -14,13 +15,13 @@ public interface ISceneSaver
 
 
 public class SceneSaver(
-	IBackendRunner backendRunner,
+	IClientRunner<IBackendApi> clientRunner,
 	ILogger<SceneSaver> logger
 ) : ISceneSaver
 {
 	public void SaveCurrentScene() =>
-		backendRunner
-			.GetBackendService()
+		clientRunner
+			.GetClientService()
 			.Then(x => x.SaveCurrentScene())
 			.Then(() => logger.LogInformation("Scene saved"))
 			.IfError(logger.Log);

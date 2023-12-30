@@ -2,10 +2,11 @@
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Functionality.Scenes;
+using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Windows;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
-namespace NGameEditor.Functionality.Shared;
+namespace NGameEditor.Functionality.InterProcessCommunication;
 
 
 

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Results;
@@ -12,24 +13,25 @@ namespace NGameEditor.Functionality.Controllers;
 
 public class EntityController(
 	IComponentController componentController,
-	IBackendRunner backendRunner,
+	IClientRunner<IBackendApi> clientRunner,
 	ILogger<EntityStateMapper> logger
 ) : IEntityController
 {
 	public IEnumerable<MenuEntryViewModel> GetAddComponentMenuEntries(EntityState entityState)
 	{
-		var menuEntryResults = backendRunner
-			.GetBackendService()
-			.Then(x => x.GetComponentTypes())
-			.Then(definitions => definitions
-				.Select(definition =>
-					new MenuEntryViewModel(
-						definition.Name,
-						componentController.AddComponent(definition, entityState)
+		var menuEntryResults =
+			clientRunner
+				.GetClientService()
+				.Then(x => x.GetComponentTypes())
+				.Then(definitions => definitions
+					.Select(definition =>
+						new MenuEntryViewModel(
+							definition.Name,
+							componentController.AddComponent(definition, entityState)
+						)
 					)
-				)
-				.ToList()
-			);
+					.ToList()
+				);
 
 
 		if (!menuEntryResults.HasError) return menuEntryResults.SuccessValue!;
@@ -41,8 +43,8 @@ public class EntityController(
 
 
 	public Result SetName(EntityState entity, string newName) =>
-		backendRunner
-			.GetBackendService()
+		clientRunner
+			.GetClientService()
 			.Then(x => x.SetEntityName(entity.Id, newName))
 			.IfError(logger.Log);
 }

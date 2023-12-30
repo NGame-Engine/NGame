@@ -4,13 +4,13 @@ using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 
-namespace NGameEditor.Backend.Ipc;
+namespace NGameEditor.Backend.InterProcessCommunication;
 
 
 
 public class BackendHostedService(
 	ILogger<BackendHostedService> logger,
-	IBackendService backendService,
+	IBackendApi backendApi,
 	IBackendHostFactory backendHostFactory,
 	IFreePortFinder freePortFinder
 ) : IHostedService
@@ -21,7 +21,7 @@ public class BackendHostedService(
 	{
 		var availablePort = freePortFinder.GetAvailablePort(IPAddress.Loopback);
 		var ipEndPoint = new IPEndPoint(IPAddress.Loopback, availablePort);
-		Host = backendHostFactory.Create(ipEndPoint, backendService);
+		Host = backendHostFactory.Create(ipEndPoint, backendApi);
 		Host.Open();
 
 		var port = ipEndPoint.Port;

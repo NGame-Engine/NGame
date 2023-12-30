@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
-using NGameEditor.Backend.Setup.ApplicationConfigurations;
+using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Setup;
 
 namespace NGameEditor.Backend.Projects.Setup;
@@ -19,27 +19,27 @@ public class ProjectDefinitionFactory : IProjectDefinitionFactory
 {
 	private readonly ILogger<ProjectDefinitionFactory> _logger;
 	private readonly IAssetTypeFinder _assetTypeFinder;
-	private readonly ApplicationConfiguration _applicationConfiguration;
+	private readonly BackendApplicationArguments _backendApplicationArguments;
 	private readonly ISolutionConfigurationReader _solutionConfigurationReader;
 
 
 	public ProjectDefinitionFactory(
 		ILogger<ProjectDefinitionFactory> logger,
 		IAssetTypeFinder assetTypeFinder,
-		ApplicationConfiguration applicationConfiguration,
+		BackendApplicationArguments backendApplicationArguments,
 		ISolutionConfigurationReader solutionConfigurationReader
 	)
 	{
 		_logger = logger;
 		_assetTypeFinder = assetTypeFinder;
-		_applicationConfiguration = applicationConfiguration;
+		_backendApplicationArguments = backendApplicationArguments;
 		_solutionConfigurationReader = solutionConfigurationReader;
 	}
 
 
 	public ProjectDefinition Create()
 	{
-		var solutionFilePath = _applicationConfiguration.SolutionFilePath;
+		var solutionFilePath = _backendApplicationArguments.SolutionFilePath;
 
 		var configurationResult = _solutionConfigurationReader.Read(solutionFilePath);
 		if (configurationResult.HasError)

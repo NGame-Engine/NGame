@@ -1,28 +1,21 @@
-using System.Net;
 using Microsoft.Extensions.Configuration;
+using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Backend.Setup.ApplicationConfigurations;
 
 
 
-public record ApplicationConfiguration(
-	IPEndPoint FrontendIpEndPoint,
-	AbsolutePath SolutionFilePath
-);
-
-
-
 public interface IApplicationConfigurationValidator
 {
-	ApplicationConfiguration Validate(IConfiguration configuration);
+	BackendApplicationArguments Validate(IConfiguration configuration);
 }
 
 
 
 public class ApplicationConfigurationValidator : IApplicationConfigurationValidator
 {
-	public ApplicationConfiguration Validate(IConfiguration configuration)
+	public BackendApplicationArguments Validate(IConfiguration configuration)
 	{
 		var argumentsConfiguration = configuration.Get<UnvalidatedApplicationConfiguration>();
 
@@ -35,8 +28,6 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		var frontendPort =
 			argumentsConfiguration.FrontendPort ??
 			throw new InvalidOperationException("No frontend port provided");
-
-		var frontendIpEndPoint = new IPEndPoint(IPAddress.Loopback, frontendPort);
 
 
 		var solutionPath = argumentsConfiguration.Solution;
@@ -56,6 +47,6 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		var solutionFilePath = new AbsolutePath(solutionPath);
 
 
-		return new ApplicationConfiguration(frontendIpEndPoint, solutionFilePath);
+		return new BackendApplicationArguments(frontendPort, solutionFilePath);
 	}
 }
