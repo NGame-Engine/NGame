@@ -14,9 +14,11 @@ public static class FrontendIpcInstaller
 		builder.AddIpcCommon();
 
 
-		builder.AddFrontendCommandReceiver();
-
 		builder.Services.AddTransient<IFrontendApi, FrontendApi>();
+		builder.Services.AddTransient<IFrontendHostRunnerFactory, FrontendHostRunnerRunnerFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IFrontendHostRunnerFactory>().Create()
+		);
 
 
 		builder.AddBackendCommandSender();

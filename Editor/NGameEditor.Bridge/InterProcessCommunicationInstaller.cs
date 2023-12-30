@@ -13,6 +13,8 @@ public static class InterProcessCommunicationInstaller
 	{
 		builder.Services.AddTransient<ISolutionConfigurationReader, SolutionConfigurationReader>();
 		builder.Services.AddTransient<IFreePortFinder, FreePortFinder>();
+
+		builder.Services.AddTransient<IHostRunnerFactory, HostRunnerFactory>();
 	}
 
 
@@ -23,23 +25,8 @@ public static class InterProcessCommunicationInstaller
 	}
 
 
-	public static void AddBackendCommandReceiver(this IHostApplicationBuilder builder)
-	{
-		builder.Services.AddTransient<IBackendHostFactory, BackendHostFactory>();
-	}
-
-
 	public static void AddFrontendCommandSender(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<IClientRunner<IFrontendApi>, ClientRunner<IFrontendApi>>();
-	}
-
-
-	public static void AddFrontendCommandReceiver(this IHostApplicationBuilder builder)
-	{
-		builder.Services.AddTransient<IFrontendTcpHostFactory, FrontendTcpHostFactory>();
-		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<IFrontendTcpHostFactory>().Create()
-		);
 	}
 }

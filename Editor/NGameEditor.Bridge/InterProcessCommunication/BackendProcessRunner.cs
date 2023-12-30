@@ -11,7 +11,7 @@ public interface IBackendProcessRunner
 {
 	Task<int> StartNewProcess(
 		AbsolutePath editorProjectFile,
-		BackendApplicationArguments backendApplicationArguments
+		AbsolutePath solutionFilePath
 	);
 
 
@@ -21,7 +21,8 @@ public interface IBackendProcessRunner
 
 
 public class BackendProcessRunner(
-	ILogger<BackendProcessRunner> logger
+	ILogger<BackendProcessRunner> logger,
+	IHostRunner hostRunner
 ) : IBackendProcessRunner, IDisposable
 {
 	private Process? Process { get; set; }
@@ -29,10 +30,14 @@ public class BackendProcessRunner(
 
 	public async Task<int> StartNewProcess(
 		AbsolutePath editorProjectFile,
-		BackendApplicationArguments backendApplicationArguments
+		AbsolutePath solutionFilePath
 	)
 	{
 		StopCurrentProcess();
+
+		var frontendPort = hostRunner.Port;
+		var backendApplicationArguments =
+			new BackendApplicationArguments(frontendPort, solutionFilePath);
 
 		Process = CreateProcess(editorProjectFile, backendApplicationArguments);
 
@@ -71,14 +76,14 @@ public class BackendProcessRunner(
 			TimeSpan.FromSeconds(30)
 		);
 
-		
+
 		var outputIndex = backendStartedOutput.IndexOf(
-			BridgeConventions.ProcessStartedMessage, 
+			BridgeConventions.ProcessStartedMessage,
 			StringComparison.OrdinalIgnoreCase
-			);
-		
+		);
+
 		var portStringStart = outputIndex + BridgeConventions.ProcessStartedMessage.Length;
-		
+
 		var portString = backendStartedOutput[portStringStart..];
 		var port = int.Parse(portString);
 		return port;

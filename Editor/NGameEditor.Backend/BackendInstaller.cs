@@ -6,10 +6,9 @@ using NGameEditor.Backend.Files;
 using NGameEditor.Backend.InterProcessCommunication;
 using NGameEditor.Backend.Projects.Setup;
 using NGameEditor.Backend.Scenes;
-using NGameEditor.Backend.Setup.ApplicationConfigurations;
 using NGameEditor.Backend.UserInterface;
 
-namespace NGameEditor.Backend.Setup;
+namespace NGameEditor.Backend;
 
 
 

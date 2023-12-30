@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;
 
-namespace NGameEditor.Backend.Setup.ApplicationConfigurations;
+namespace NGameEditor.Backend.Configurations;
 
 
 

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.Bridge;
+using NGameEditor.Bridge.InterProcessCommunication;
 
 namespace NGameEditor.Backend.InterProcessCommunication;
 
@@ -13,10 +14,11 @@ public static class BackendIpcInstaller
 		builder.AddIpcCommon();
 
 
-		builder.AddBackendCommandReceiver();
-
 		builder.Services.AddHostedService<BackendHostedService>();
 		builder.Services.AddTransient<IBackendApi, BackendApi>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IHostRunnerFactory>().Create()
+		);
 
 
 		builder.AddFrontendCommandSender();

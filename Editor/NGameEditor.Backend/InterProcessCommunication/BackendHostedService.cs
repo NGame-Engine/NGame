@@ -1,4 +1,3 @@
-using System.Net;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
@@ -11,20 +10,15 @@ namespace NGameEditor.Backend.InterProcessCommunication;
 public class BackendHostedService(
 	ILogger<BackendHostedService> logger,
 	IBackendApi backendApi,
-	IBackendHostFactory backendHostFactory,
-	IFreePortFinder freePortFinder
+	IHostRunner hostRunner
 ) : IHostedService
 {
-	private ServiceWire.Host? Host { get; set; }
-	
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		var availablePort = freePortFinder.GetAvailablePort(IPAddress.Loopback);
-		var ipEndPoint = new IPEndPoint(IPAddress.Loopback, availablePort);
-		Host = backendHostFactory.Create(ipEndPoint, backendApi);
-		Host.Open();
+		hostRunner.AddService(backendApi);
+		hostRunner.Open();
 
-		var port = ipEndPoint.Port;
+		var port = hostRunner.Port;
 		var startedMessage = $"{BridgeConventions.ProcessStartedMessage}{port}";
 		logger.LogInformation("{StartedMessage}", startedMessage);
 
@@ -34,6 +28,8 @@ public class BackendHostedService(
 
 	public Task StopAsync(CancellationToken cancellationToken)
 	{
+		hostRunner.Close();
+
 		return Task.CompletedTask;
 	}
 }

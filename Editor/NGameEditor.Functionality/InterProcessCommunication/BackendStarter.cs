@@ -2,7 +2,6 @@ using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Setup;
 using NGameEditor.Results;
-using ServiceWire.TcpIp;
 
 namespace NGameEditor.Functionality.InterProcessCommunication;
 
@@ -18,7 +17,6 @@ public interface IBackendStarter
 public class BackendStarter(
 	IBackendProcessRunner backendProcessRunner,
 	ISolutionConfigurationReader solutionConfigurationReader,
-	TcpHost host,
 	IClientRunner<IBackendApi> clientRunner
 )
 	: IBackendStarter
@@ -42,14 +40,9 @@ public class BackendStarter(
 		var editorProjectFile = solutionFolder.CombineWith(relativeEditorProjectPath);
 
 
-		var frontendIpEndPoint = host.EndPoint;
-		var frontendPort = frontendIpEndPoint.Port;
-
-		var backendApplicationArguments = new BackendApplicationArguments(frontendPort, solutionFilePath);
-
 		var backendPort = await backendProcessRunner.StartNewProcess(
 			editorProjectFile,
-			backendApplicationArguments
+			solutionFilePath
 		);
 
 		clientRunner.StartClient(backendPort);
