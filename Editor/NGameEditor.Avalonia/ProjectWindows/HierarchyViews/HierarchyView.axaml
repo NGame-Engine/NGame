@@ -23,7 +23,7 @@
 				<TreeDataTemplate ItemsSource="{Binding Children}">
 					<TextBlock
 						Foreground="{Binding TextColor, Converter={StaticResource SystemDrawingColorConverter}}"
-						Text="{Binding Name}"
+						Text="{Binding DisplayName}"
 						ContextMenu="{Binding ContextMenu, Converter={StaticResource ContextMenuConverter}}" />
 				</TreeDataTemplate>
 			</TreeView.ItemTemplate>

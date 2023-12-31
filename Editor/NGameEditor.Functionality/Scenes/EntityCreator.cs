@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.Results;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.Functionality.Scenes;
 

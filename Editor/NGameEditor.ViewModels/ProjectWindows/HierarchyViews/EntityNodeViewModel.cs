@@ -1,30 +1,33 @@
 using System.Drawing;
 using DynamicData.Binding;
 using NGameEditor.ViewModels.Components.Menus;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 
 
 
 public class EntityNodeViewModel(
-	EntityState entityState,
-	ContextMenuViewModel contextMenu
+	Guid id,
+	string name,
+	bool isRecognized
 ) : ViewModelBase
 {
-	public EntityState EntityState { get; } = entityState;
+	public Guid Id { get; } = id;
+	public bool IsRecognized { get; } = isRecognized;
 
-	public string Name =>
-		EntityState.Components.All(x => x.IsRecognized)
-			? EntityState.Name
-			: $" 🚫 {EntityState.Name}";
+	public string Name { get; } = name;
+
+	public string DisplayName =>
+		IsRecognized
+			? Name
+			: $" 🚫 {Name}";
 
 	public Color TextColor =>
-		EntityState.Components.All(x => x.IsRecognized)
+		IsRecognized
 			? Color.White
 			: Color.Red;
 
 
-	public ContextMenuViewModel ContextMenu { get; } = contextMenu;
+	public ContextMenuViewModel ContextMenu { get; } = new([]);
 	public ObservableCollectionExtended<EntityNodeViewModel> Children { get; set; } = new();
 }

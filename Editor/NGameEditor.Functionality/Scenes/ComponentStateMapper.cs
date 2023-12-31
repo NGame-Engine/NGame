@@ -1,5 +1,5 @@
 using NGameEditor.Bridge.Scenes;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
+using NGameEditor.Functionality.Scenes.State;
 
 namespace NGameEditor.Functionality.Scenes;
 
@@ -18,17 +18,9 @@ public class ComponentStateMapper : IComponentStateMapper
 		new(
 			componentDescription.Id,
 			componentDescription.Name,
-			componentDescription.IsRecognized,
-			componentDescription
-				.Properties
-				.Select(MapProperty)
+			componentDescription.IsRecognized
 		);
 
 
-	private static PropertyState MapProperty(PropertyDescription propertyDescription) =>
-		new(
-			propertyDescription.Name,
-			propertyDescription.TypeIdentifier,
-			propertyDescription.SerializedValue
-		);
+
 }

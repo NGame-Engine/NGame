@@ -17,12 +17,7 @@ public class HierarchyViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _searchFilter, value);
 	}
 
-	public ObservableCollectionExtended<EntityNodeViewModel> SceneEntities { get; } = new();
-
-
-	public ObservableAsPropertyHelper<IEnumerable<EntityNodeViewModel>> SearchResultsHelper { get; set; } = null!;
-	public IEnumerable<EntityNodeViewModel> SearchResults => SearchResultsHelper.Value;
-
+	public ObservableCollectionExtended<EntityNodeViewModel> SearchResults { get; } = new();
 	public ObservableCollection<EntityNodeViewModel> SelectedEntities { get; } = new();
 
 
