@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Shared;
+using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.Results;
 
@@ -20,12 +21,12 @@ public class ProjectCreator(
 	ICommandRunner commandRunner,
 	IProjectOpener projectOpener,
 	ILogger<ProjectCreator> logger,
-	IProjectWindow projectWindow
+	ILauncherWindow launcherWindow
 ) : IProjectCreator
 {
 	public async Task CreateProject()
 	{
-		var filePaths = await projectWindow.AskUserToPickFolder(
+		var filePaths = await launcherWindow.AskUserToPickFolder(
 			new OpenFolderOptions
 			{
 				Title = "Select folder",
