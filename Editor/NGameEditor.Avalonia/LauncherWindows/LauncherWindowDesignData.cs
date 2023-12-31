@@ -13,6 +13,6 @@ public static class LauncherWindowDesignData
 		new(
 			ProjectOperationsDesignData.ProjectOperationsExample,
 			ProjectHistoryDesignData.ProjectHistoryExample,
-			LauncherLogDesignData.LauncherLogExample
+			LauncherLogDesignData.Example
 		);
 }

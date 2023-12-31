@@ -3,9 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inspectorViews="clr-namespace:NGameEditor.ViewModels.ProjectWindows.InspectorViews;assembly=NGameEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.InspectorViews.EntityViews.InspectorEntityView"
              x:DataType="inspectorViews:InspectorEntityViewModel"
-             x:Class="NGameEditor.Avalonia.ProjectWindows.InspectorViews.EntityViews.InspectorEntityView">
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
 
 	<StackPanel>
 		<TextBox Text="{Binding EntityName}" IsEnabled="{Binding CanEditName}" />

@@ -6,7 +6,7 @@
              xmlns:example="clr-namespace:NGameEditor.Avalonia.LauncherWindows.Logs"
              x:Class="NGameEditor.Avalonia.LauncherWindows.Logs.LauncherLogView"
              x:DataType="logs:LauncherLogViewModel"
-             d:DataContext="{x:Static example:LauncherLogDesignData.LauncherLogExample}"
+             d:DataContext="{x:Static example:LauncherLogDesignData.Example}"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
 
 	<StackPanel>

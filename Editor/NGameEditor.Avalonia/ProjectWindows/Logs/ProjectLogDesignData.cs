@@ -1,26 +1,26 @@
 ﻿using System;
-using NGameEditor.ViewModels.LauncherWindows.Logs;
+using NGameEditor.ViewModels.ProjectWindows.Logs;
 
-namespace NGameEditor.Avalonia.LauncherWindows.Logs;
+namespace NGameEditor.Avalonia.ProjectWindows.Logs;
 
 
 
-public static class LauncherLogDesignData
+public static class ProjectLogDesignData
 {
-	public static LauncherLogViewModel Example { get; } =
+	public static LogWindowModel Example { get; } =
 		new()
 		{
 			LogEntries =
 			{
-				new LauncherLogEntryViewModel(
-					"This is a message",
+				new LogEntryViewModel(
+					"First Message",
 					DateTime.UnixEpoch
 				),
-				new LauncherLogEntryViewModel(
-					"This is another message",
+				new LogEntryViewModel(
+					"Second Message",
 					DateTime.UnixEpoch
 				),
-				new LauncherLogEntryViewModel(
+				new LogEntryViewModel(
 					"This is a long message. Lorem ipsum dolor sit amet consectetur " +
 					"adipisicing elit. Maxime mollitia,\nmolestiae quas vel sint commodi " +
 					"repudiandae consequuntur voluptatum laborum\nnumquam blanditiis " +
@@ -30,6 +30,7 @@ public static class LauncherLogDesignData
 					"aliquam\nnihil, eveniet aliquid culpa officia aut!",
 					DateTime.UnixEpoch
 				)
+
 			}
 		};
 }
