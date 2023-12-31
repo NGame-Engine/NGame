@@ -32,7 +32,8 @@ public class LauncherWindowOpener(
 						x.ProjectId.SolutionFilePath.Path,
 						x.LastUsed,
 						ReactiveCommand.CreateFromTask(
-							() => projectOpener.OpenProject(x.ProjectId))
+							() => projectOpener.OpenProject(x.ProjectId)
+						)
 					)
 				);
 

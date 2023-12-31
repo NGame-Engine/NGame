@@ -4,9 +4,9 @@ using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Functionality.Projects;
 using NGameEditor.Functionality.Scenes;
+using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.Menus;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 using ReactiveUI;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;

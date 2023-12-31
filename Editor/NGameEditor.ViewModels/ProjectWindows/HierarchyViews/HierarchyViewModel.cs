@@ -6,9 +6,7 @@ namespace NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 
 
 
-public class HierarchyViewModel(
-	ICommand addEntityCommand
-) : ViewModelBase
+public class HierarchyViewModel : ViewModelBase
 {
 	private string _searchFilter = "";
 
@@ -19,14 +17,9 @@ public class HierarchyViewModel(
 		set => this.RaiseAndSetIfChanged(ref _searchFilter, value);
 	}
 
-	public ObservableCollectionExtended<EntityNodeViewModel> SceneEntities { get; set; } = new();
+	public ObservableCollectionExtended<EntityNodeViewModel> SearchResults { get; } = new();
+	public ObservableCollection<EntityNodeViewModel> SelectedEntities { get; } = new();
 
 
-	public ObservableAsPropertyHelper<IEnumerable<EntityNodeViewModel>> SearchResultsHelper { get; set; } = null!;
-	public IEnumerable<EntityNodeViewModel> SearchResults => SearchResultsHelper.Value;
-
-	public ObservableCollection<EntityNodeViewModel> SelectedEntities { get; set; } = new();
-
-
-	public ICommand? AddEntity { get; set; } = addEntityCommand;
+	public ICommand? AddEntity { get; set; }
 }

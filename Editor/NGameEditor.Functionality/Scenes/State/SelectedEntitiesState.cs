@@ -1,6 +1,7 @@
 using DynamicData.Binding;
+using NGameEditor.ViewModels;
 
-namespace NGameEditor.ViewModels.ProjectWindows.SceneStates;
+namespace NGameEditor.Functionality.Scenes.State;
 
 
 

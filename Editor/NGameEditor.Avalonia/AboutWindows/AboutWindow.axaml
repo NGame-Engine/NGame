@@ -3,11 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:aboutWindows="clr-namespace:NGameEditor.ViewModels.AboutWindows;assembly=NGameEditor.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="200"
-        x:DataType="aboutWindows:AboutWindowViewModel"
+        xmlns:example="clr-namespace:NGameEditor.Avalonia.AboutWindows"
         x:Class="NGameEditor.Avalonia.AboutWindows.AboutWindow"
+        x:DataType="aboutWindows:AboutWindowViewModel"
+        d:DataContext="{x:Static example:AboutWindowDesignData.AboutWindowExample}"
         SizeToContent="WidthAndHeight"
-        Title="About NGame Editor">
+        Title="About NGame Editor"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="200">
 
 	<StackPanel>
 		<Label Content="Version:" />

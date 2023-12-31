@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:hierarchyViews="clr-namespace:NGameEditor.ViewModels.ProjectWindows.HierarchyViews;assembly=NGameEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.ProjectWindows.HierarchyViews"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.HierarchyViews.HierarchyView"
              x:DataType="hierarchyViews:HierarchyViewModel"
-             x:Class="NGameEditor.Avalonia.ProjectWindows.HierarchyViews.HierarchyView">
+             d:DataContext="{x:Static example:HierarchyDesignData.Example}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
 
 	<StackPanel>
 		<Label>HIERARCHY</Label>
@@ -21,7 +23,7 @@
 				<TreeDataTemplate ItemsSource="{Binding Children}">
 					<TextBlock
 						Foreground="{Binding TextColor, Converter={StaticResource SystemDrawingColorConverter}}"
-						Text="{Binding Name}"
+						Text="{Binding DisplayName}"
 						ContextMenu="{Binding ContextMenu, Converter={StaticResource ContextMenuConverter}}" />
 				</TreeDataTemplate>
 			</TreeView.ItemTemplate>

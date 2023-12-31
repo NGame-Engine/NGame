@@ -4,9 +4,10 @@ using DynamicData.Binding;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Functionality.Scenes;
+using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 using ReactiveUI;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;

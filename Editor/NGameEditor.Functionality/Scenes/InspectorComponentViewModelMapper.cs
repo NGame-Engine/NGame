@@ -3,13 +3,19 @@ using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.UserInterface;
+using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.CustomEditors;
-using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 using ReactiveUI;
 
 namespace NGameEditor.Functionality.Scenes;
+
+
+
+public interface IInspectorComponentViewModelMapper
+{
+	IEnumerable<ComponentEditorViewModel> Map(EntityState entityState);
+}
 
 
 

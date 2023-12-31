@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.ViewModels.ProjectWindows;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
-using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;
 

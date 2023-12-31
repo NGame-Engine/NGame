@@ -1,7 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
-using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 
 namespace NGameEditor.Functionality.Scenes;
 
