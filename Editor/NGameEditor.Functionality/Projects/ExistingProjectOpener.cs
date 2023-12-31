@@ -1,5 +1,6 @@
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
+using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Functionality.Windows.ProjectWindow;
 
 namespace NGameEditor.Functionality.Projects;
@@ -15,12 +16,12 @@ public interface IExistingProjectOpener
 
 public class ExistingExistingProjectOpener(
 	IProjectOpener projectOpener,
-	IProjectWindow projectWindow
+	ILauncherWindow launcherWindow
 ) : IExistingProjectOpener
 {
 	public async Task OnOpenExistingProject()
 	{
-		var filePaths = await projectWindow.AskUserToPickFile(
+		var filePaths = await launcherWindow.AskUserToPickFile(
 			new OpenFileOptions
 			{
 				Title = "Select project to open",
