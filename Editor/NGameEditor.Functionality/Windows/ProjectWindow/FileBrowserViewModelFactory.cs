@@ -6,6 +6,8 @@ using ReactiveUI;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;
 
+
+
 public interface IFileBrowserViewModelFactory
 {
 	FileBrowserViewModel Create();
@@ -37,18 +39,24 @@ public class FileBrowserViewModelFactory : IFileBrowserViewModelFactory
 			)
 			.BindTo(viewModel.DirectoryContentViewModel, x => x.DirectoryName);
 
+
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Directories)
-			.Bind(
-				viewModel
-					.DirectoryContentViewModel
-					.Directories
+			.Transform(x =>
+				new DirectoryContentItemViewModel(x.Name)
+				{
+					Icon = "📁"
+				}
 			)
+			.Bind(viewModel.DirectoryContentViewModel.Items)
 			.Subscribe();
 
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Files)
-			.Bind(viewModel.DirectoryContentViewModel.Files)
+			.Transform(x =>
+				new DirectoryContentItemViewModel(x.Name)
+			)
+			.Bind(viewModel.DirectoryContentViewModel.Items)
 			.Subscribe();
 
 

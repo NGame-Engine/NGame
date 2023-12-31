@@ -7,6 +7,10 @@ namespace NGameEditor.Avalonia.ProjectWindows.FileBrowsers;
 
 public static class FileBrowserDesignData
 {
+	public static DirectoryContentItemViewModel DirectoryContentItemExample { get; } =
+		new("Example File");
+
+
 	public static DirectoryViewModel DirectoryExample { get; } =
 		new("Example Folder", new ContextMenuViewModel([]))
 		{
@@ -36,10 +40,10 @@ public static class FileBrowserDesignData
 		new()
 		{
 			DirectoryName = "Selected Parent Folder",
-			Directories =
+			Items =
 			{
-				DirectoryExample,
-				DirectoryExample
+				DirectoryContentItemExample,
+				DirectoryContentItemExample
 			}
 		};
 
@@ -51,7 +55,7 @@ public static class FileBrowserDesignData
 			DirectoryContentViewModel =
 			{
 				DirectoryName = "Selected Directory",
-				Directories = { DirectoryExample }
+				Items = { DirectoryContentItemExample }
 			}
 		};
 }

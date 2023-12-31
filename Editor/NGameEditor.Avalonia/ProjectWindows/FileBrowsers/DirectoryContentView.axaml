@@ -4,15 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:fileBrowsers="clr-namespace:NGameEditor.ViewModels.ProjectWindows.FileBrowsers;assembly=NGameEditor.ViewModels"
              xmlns:example="clr-namespace:NGameEditor.Avalonia.ProjectWindows.FileBrowsers"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NGameEditor.Avalonia.ProjectWindows.FileBrowsers.DirectoryContentView"
              x:DataType="fileBrowsers:DirectoryContentViewModel"
-             d:DataContext="{x:Static example:FileBrowserDesignData.DirectoryContentExample}">
+             d:DataContext="{x:Static example:FileBrowserDesignData.DirectoryContentExample}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
 
 	<DockPanel>
 		<Label DockPanel.Dock="Top" Content="{Binding DirectoryName}" />
-		<ListBox ItemsSource="{Binding Directories}" />
-		<ListBox ItemsSource="{Binding Files}" />
+		<ListBox ItemsSource="{Binding Items}" />
 	</DockPanel>
 
 </UserControl>
