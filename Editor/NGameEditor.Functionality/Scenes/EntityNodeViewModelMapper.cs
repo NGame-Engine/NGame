@@ -1,3 +1,5 @@
+using DynamicData;
+using DynamicData.Binding;
 using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.Controllers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
@@ -11,12 +13,22 @@ namespace NGameEditor.Functionality.Scenes;
 public class EntityNodeViewModelMapper(ISceneController sceneController, IEntityController entityController)
 	: IEntityNodeViewModelMapper
 {
-	public EntityNodeViewModel Map(EntityState entityState) =>
-		new(
+	public EntityNodeViewModel Map(EntityState entityState)
+	{
+		var entityNodeViewModel = new EntityNodeViewModel(
 			entityState,
-			CreateContextMenu(entityState),
-			Map
+			CreateContextMenu(entityState)
 		);
+
+		entityState
+			.Children
+			.ToObservableChangeSet()
+			.Transform(Map)
+			.Bind(entityNodeViewModel.Children)
+			.Subscribe();
+
+		return entityNodeViewModel;
+	}
 
 
 	private ContextMenuViewModel CreateContextMenu(EntityState entityState) =>

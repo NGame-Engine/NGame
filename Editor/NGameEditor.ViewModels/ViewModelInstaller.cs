@@ -5,7 +5,6 @@ using NGameEditor.ViewModels.LauncherWindows;
 using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 using NGameEditor.ViewModels.LauncherWindows.Logs;
 using NGameEditor.ViewModels.ProjectWindows;
-using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
 using NGameEditor.ViewModels.ProjectWindows.MenuViews;
