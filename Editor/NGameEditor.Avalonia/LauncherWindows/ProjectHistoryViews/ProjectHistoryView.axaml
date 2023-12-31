@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:historyViews="clr-namespace:NGameEditor.ViewModels.LauncherWindows.HistoryViews;assembly=NGameEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.LauncherWindows.ProjectHistoryViews"
+             x:Class="NGameEditor.Avalonia.LauncherWindows.ProjectHistoryViews.ProjectHistoryView"
              x:DataType="historyViews:ProjectHistoryViewModel"
-             x:Class="NGameEditor.Avalonia.LauncherWindows.ProjectHistoryViews.ProjectHistoryView">
+             d:DataContext="{x:Static example:ProjectHistoryDesignData.ProjectHistoryExample}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
 
 	<StackPanel>
 		<Label>History</Label>
