@@ -1,11 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Avalonia.Controls;
+using NGameEditor.Avalonia.Shared;
 using NGameEditor.Functionality.Windows.ProjectWindow;
 
 namespace NGameEditor.Avalonia.ProjectWindows;
 
 
 
-public class ProjectWindowContainer(Func<ProjectWindow> factoryMethod) : IProjectWindow
+public class ProjectWindowContainer(
+	Func<ProjectWindow> factoryMethod,
+	IFilePickerOpener filePickerOpener
+) : IProjectWindow
 {
 	public event Action? Closing;
 
@@ -39,6 +46,22 @@ public class ProjectWindowContainer(Func<ProjectWindow> factoryMethod) : IProjec
 	{
 		SceneFileName = sceneFileName;
 		UpdateTitle();
+	}
+
+
+	public Task<IReadOnlyList<string>> AskUserToPickFile(OpenFileOptions openFileOptions)
+	{
+		var topLevel = TopLevel.GetTopLevel(ProjectWindow)!;
+		var storageProvider = topLevel.StorageProvider;
+		return filePickerOpener.OpenFilePicker(storageProvider, openFileOptions);
+	}
+
+
+	public Task<IReadOnlyList<string>> AskUserToPickFolder(OpenFolderOptions openFolderOptions)
+	{
+		var topLevel = TopLevel.GetTopLevel(ProjectWindow)!;
+		var storageProvider = topLevel.StorageProvider;
+		return filePickerOpener.OpenFolderPicker(storageProvider, openFolderOptions);
 	}
 
 

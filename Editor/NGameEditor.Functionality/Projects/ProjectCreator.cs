@@ -2,9 +2,8 @@ using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Shared;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.Results;
-using NGameEditor.ViewModels.LauncherWindows;
-using NGameEditor.ViewModels.Shared;
 
 namespace NGameEditor.Functionality.Projects;
 
@@ -12,7 +11,7 @@ namespace NGameEditor.Functionality.Projects;
 
 public interface IProjectCreator
 {
-	Task CreateProject(CreateProjectDialogArgs createProjectDialogArgs);
+	Task CreateProject();
 }
 
 
@@ -20,22 +19,21 @@ public interface IProjectCreator
 public class ProjectCreator(
 	ICommandRunner commandRunner,
 	IProjectOpener projectOpener,
-	ILogger<ProjectCreator> logger
+	ILogger<ProjectCreator> logger,
+	IProjectWindow projectWindow
 ) : IProjectCreator
 {
-	public async Task CreateProject(CreateProjectDialogArgs createProjectDialogArgs)
+	public async Task CreateProject()
 	{
-		var folderPicker = createProjectDialogArgs.FolderPicker;
-
-		var filePaths = await folderPicker.AskUserToPickFolder(
-			new IFolderPicker.OpenOptions
+		var filePaths = await projectWindow.AskUserToPickFolder(
+			new OpenFolderOptions
 			{
 				Title = "Select folder",
 				AllowMultiple = false
 			}
 		);
 
-		var projectParentPath = filePaths.First();
+		var projectParentPath = filePaths.Fir st();
 		var projectParentFolder = new AbsolutePath(projectParentPath);
 		// TODO dialog for project name and folder
 		var projectName = "UI-Created";

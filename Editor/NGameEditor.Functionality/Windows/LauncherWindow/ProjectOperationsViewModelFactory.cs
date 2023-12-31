@@ -23,10 +23,10 @@ public class ProjectOperationsViewModelFactory(
 		var projectOperationsViewModel = new ProjectOperationsViewModel();
 
 		projectOperationsViewModel.CreateNewProject =
-			ReactiveCommand.CreateFromTask<CreateProjectDialogArgs>(projectCreator.CreateProject);
+			ReactiveCommand.CreateFromTask(projectCreator.CreateProject);
 
 		projectOperationsViewModel.OpenExistingProject =
-			ReactiveCommand.CreateFromTask<OpenExistingProjectArgs>(existingProjectOpener.OnOpenExistingProject);
+			ReactiveCommand.CreateFromTask(existingProjectOpener.OnOpenExistingProject);
 
 		return projectOperationsViewModel;
 	}

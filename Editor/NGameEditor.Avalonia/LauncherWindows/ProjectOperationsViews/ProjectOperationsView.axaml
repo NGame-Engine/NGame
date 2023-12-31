@@ -12,15 +12,11 @@
 	<StackPanel>
 		<Label>Project Operations</Label>
 
-		<Button
-			x:Name="CreateNewProjectButton"
-			Command="{Binding CreateNewProject}">
+		<Button Command="{Binding CreateNewProject}">
 			Create New Project
 		</Button>
 
-		<Button
-			x:Name="OpenProjectButton"
-			Command="{Binding OpenExistingProject}">
+		<Button Command="{Binding OpenExistingProject}">
 			Open Project
 		</Button>
 

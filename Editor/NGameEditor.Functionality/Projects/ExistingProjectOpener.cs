@@ -1,8 +1,7 @@
 using System.Reactive;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
-using NGameEditor.ViewModels.LauncherWindows;
-using NGameEditor.ViewModels.Shared;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 
 namespace NGameEditor.Functionality.Projects;
 
@@ -10,27 +9,26 @@ namespace NGameEditor.Functionality.Projects;
 
 public interface IExistingProjectOpener
 {
-	Task<Unit> OnOpenExistingProject(OpenExistingProjectArgs openExistingProjectArgs);
+	Task<Unit> OnOpenExistingProject();
 }
 
 
 
 public class ExistingExistingProjectOpener(
-	IProjectOpener projectOpener
+	IProjectOpener projectOpener,
+	IProjectWindow projectWindow
 ) : IExistingProjectOpener
 {
-	public async Task<Unit> OnOpenExistingProject(OpenExistingProjectArgs openExistingProjectArgs)
+	public async Task<Unit> OnOpenExistingProject()
 	{
-		var filePicker = openExistingProjectArgs.FilePicker;
-
-		var filePaths = await filePicker.AskUserToPickFile(
-			new IFilePicker.OpenOptions
+		var filePaths = await projectWindow.AskUserToPickFile(
+			new OpenFileOptions
 			{
 				Title = "Select project to open",
 				AllowMultiple = false,
 				FileTypeFilter = new[]
 				{
-					new IFilePicker.FileType
+					new FileType
 					{
 						Name = "NGame Project",
 						Patterns = new[] { "*.sln" }
@@ -39,7 +37,7 @@ public class ExistingExistingProjectOpener(
 			}
 		);
 
-		var firstFilePath = filePaths.First();
+		var firstFilePath = filePaths.Fir st();
 		var solutionFilePath = new AbsolutePath(firstFilePath);
 		var projectId = new ProjectId(solutionFilePath);
 
