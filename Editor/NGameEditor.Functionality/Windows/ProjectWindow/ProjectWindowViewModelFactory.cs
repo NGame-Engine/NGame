@@ -1,4 +1,4 @@
-﻿using NGameEditor.Functionality.Scenes;
+using NGameEditor.Functionality.Scenes;
 using NGameEditor.ViewModels.ProjectWindows;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;

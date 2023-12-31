@@ -1,4 +1,4 @@
-﻿using System.Reactive.Linq;
+using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;

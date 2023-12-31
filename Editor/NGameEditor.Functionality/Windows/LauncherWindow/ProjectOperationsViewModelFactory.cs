@@ -1,4 +1,4 @@
-﻿using NGameEditor.Functionality.Projects;
+using NGameEditor.Functionality.Projects;
 using NGameEditor.ViewModels.LauncherWindows;
 using ReactiveUI;
 

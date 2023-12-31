@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.ViewModels.ProjectWindows.MenuViews;
 using ReactiveUI;
@@ -22,12 +22,12 @@ public class MenuViewModelFactory(
 	public MenuViewModel Create()
 	{
 		var menuViewModel = new MenuViewModel();
-		
-		menuViewModel.SaveScene =ReactiveCommand.Create(sceneSaver.SaveCurrentScene);
-		
+
+		menuViewModel.SaveScene = ReactiveCommand.Create(sceneSaver.SaveCurrentScene);
+
 		menuViewModel.OpenAboutWindow = ReactiveCommand.Create(aboutWindow.Open);
-		
-		menuViewModel.OpenDocumentation = 
+
+		menuViewModel.OpenDocumentation =
 			ReactiveCommand.Create(() =>
 				Process.Start(
 					new ProcessStartInfo
