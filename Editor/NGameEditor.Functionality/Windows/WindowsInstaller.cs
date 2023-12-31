@@ -20,11 +20,15 @@ public static class WindowsInstaller
 		builder.Services.AddSingleton(services =>
 			services.GetRequiredService<IInspectorEntityViewModelFactory>().Create()
 		);
-
-
+		
 		builder.Services.AddTransient<IMenuViewModelFactory, MenuViewModelFactory>();
 		builder.Services.AddSingleton(services =>
 			services.GetRequiredService<IMenuViewModelFactory>().Create()
+		);
+		
+		builder.Services.AddTransient<IProjectWindowViewModelFactory,ProjectWindowViewModelFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IProjectWindowViewModelFactory>().Create()
 		);
 	}
 }
