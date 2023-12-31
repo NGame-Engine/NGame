@@ -20,7 +20,7 @@ static void RunPackAssetsCommand(string[] args)
 	var builder = Host.CreateApplicationBuilder(args);
 
 
-	builder.Services.AddNGameCommon();
+	builder.AddNGameCommon();
 	builder.InstallPackAssetsCommand();
 
 

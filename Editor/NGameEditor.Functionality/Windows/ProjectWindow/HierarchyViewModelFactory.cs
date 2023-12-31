@@ -2,12 +2,12 @@
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using NGameEditor.ViewModels.Controllers;
+using NGameEditor.Functionality.Scenes;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 using ReactiveUI;
 
-namespace NGameEditor.Functionality.Windows;
+namespace NGameEditor.Functionality.Windows.ProjectWindow;
 
 
 
@@ -19,7 +19,7 @@ public interface IHierarchyViewModelFactory
 
 
 public class HierarchyViewModelFactory(
-	ISceneController sceneController,
+	IEntityCreator entityCreator,
 	SceneState sceneState,
 	SelectedEntitiesState selectedEntitiesState,
 	IEntityNodeViewModelMapper entityNodeViewModelMapper
@@ -27,7 +27,7 @@ public class HierarchyViewModelFactory(
 {
 	public HierarchyViewModel Create()
 	{
-		var addEntityCommand = ReactiveCommand.Create(() => sceneController.CreateEntity(null));
+		var addEntityCommand = ReactiveCommand.Create(() => entityCreator.CreateEntity(null));
 		var hierarchyViewModel = new HierarchyViewModel(addEntityCommand);
 
 		hierarchyViewModel.AddEntity = addEntityCommand;

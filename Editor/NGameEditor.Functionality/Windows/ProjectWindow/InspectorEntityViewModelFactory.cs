@@ -1,12 +1,15 @@
 ﻿using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
-using NGameEditor.ViewModels.Controllers;
+using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
+using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Results;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 using ReactiveUI;
 
-namespace NGameEditor.Functionality.Windows;
+namespace NGameEditor.Functionality.Windows.ProjectWindow;
 
 
 
@@ -19,8 +22,9 @@ public interface IInspectorEntityViewModelFactory
 
 public class InspectorEntityViewModelFactory(
 	SelectedEntitiesState selectedEntitiesState,
-	IEntityController entityController,
-	IInspectorComponentViewModelMapper inspectorComponentViewModelMapper
+	IInspectorComponentViewModelMapper inspectorComponentViewModelMapper,
+	IClientRunner<IBackendApi> clientRunner,
+	ILogger<InspectorEntityViewModelFactory> logger
 ) : IInspectorEntityViewModelFactory
 {
 	public InspectorEntityViewModel Create()
@@ -65,7 +69,12 @@ public class InspectorEntityViewModelFactory(
 				selectedEntitiesState.SelectedEntities.Count == 1
 			)
 			.Select(x => (name: x, entity: selectedEntitiesState.SelectedEntities.First()))
-			.Select(x => entityController.SetName(x.entity, x.name))
+			.Select(x =>
+				clientRunner
+					.GetClientService()
+					.Then(api => api.SetEntityName(x.entity.Id, x.name))
+					.IfError(logger.Log)
+			)
 			.Subscribe();
 
 

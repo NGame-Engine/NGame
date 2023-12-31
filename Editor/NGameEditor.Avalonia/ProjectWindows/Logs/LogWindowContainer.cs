@@ -1,6 +1,6 @@
 using System;
 using NGameEditor.Functionality.Logging;
-using NGameEditor.Functionality.Windows;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 
 namespace NGameEditor.Avalonia.ProjectWindows.Logs;
 

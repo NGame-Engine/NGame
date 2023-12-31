@@ -1,4 +1,5 @@
 using NGameEditor.Functionality.Projects;
+using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 using ReactiveUI;
 

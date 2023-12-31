@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Functionality.InterProcessCommunication;
-using NGameEditor.Functionality.Windows;
+using NGameEditor.Functionality.Windows.LauncherWindow;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.Results;
 
 namespace NGameEditor.Functionality.Projects;

@@ -3,7 +3,6 @@ using Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.Functionality;
-using NGameEditor.ViewModels;
 using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 
@@ -50,7 +49,6 @@ class Program
 		RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
 
 
-		builder.AddViewModels();
 		builder.AddFunctionality();
 		builder.AddAvaloniaImplementations();
 

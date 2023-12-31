@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NGameEditor.Functionality.Scenes;
 
 namespace NGameEditor.Functionality.Projects;
@@ -7,17 +8,17 @@ namespace NGameEditor.Functionality.Projects;
 
 public static class ProjectsInstaller
 {
-	public static void AddProjects(this IServiceCollection services)
+	public static void AddProjects(this IHostApplicationBuilder builder)
 	{
-		services.AddTransient<IProjectCreator, ProjectCreator>();
+		builder.Services.AddSingleton<IProjectState, ProjectState>();
 
-		services.AddSingleton<IProjectState, ProjectState>();
+		builder.Services.AddTransient<IProjectCreator, ProjectCreator>();
+		builder.Services.AddTransient<IExistingProjectOpener, ExistingExistingProjectOpener>();
 
+		builder.Services.AddTransient<IProjectOpener, ProjectOpener>();
+		builder.Services.AddTransient<IProjectUsageRepository, ProjectUsageRepository>();
+		builder.Services.AddTransient<IEntityStateMapper, EntityStateMapper>();
 
-		services.AddTransient<IProjectOpener, ProjectOpener>();
-		services.AddTransient<IProjectUsageRepository, ProjectUsageRepository>();
-		services.AddTransient<IEntityStateMapper, EntityStateMapper>();
-
-		services.AddSingleton<ProjectInformationState>();
+		builder.Services.AddSingleton<ProjectInformationState>();
 	}
 }

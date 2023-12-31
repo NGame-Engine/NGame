@@ -1,11 +1,12 @@
-﻿using NGameEditor.ViewModels.Controllers;
+﻿using NGameEditor.Functionality.Scenes;
 using NGameEditor.ViewModels.ProjectWindows;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 using NGameEditor.ViewModels.ProjectWindows.MenuViews;
+using ReactiveUI;
 
-namespace NGameEditor.Functionality.Windows;
+namespace NGameEditor.Functionality.Windows.ProjectWindow;
 
 
 
@@ -20,8 +21,8 @@ public class ProjectWindowViewModelFactory(
 	HierarchyViewModel hierarchy,
 	InspectorViewModel inspectorViewModel,
 	MenuViewModel menuViewModel,
-	ISceneController sceneController,
-	FileBrowserViewModel fileBrowserViewModel
+	FileBrowserViewModel fileBrowserViewModel,
+	ISceneSaver sceneSaver
 ) : IProjectWindowViewModelFactory
 {
 	public ProjectWindowViewModel Create()
@@ -34,7 +35,7 @@ public class ProjectWindowViewModelFactory(
 				fileBrowserViewModel
 			)
 			{
-				SaveScene = sceneController.SaveScene()
+				SaveScene = ReactiveCommand.Create(sceneSaver.SaveCurrentScene)
 			};
 
 

@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Reactive.Linq;
 using DynamicData;
 
 namespace NGameEditor.ViewModels.LauncherWindows.HistoryViews;
@@ -8,15 +7,6 @@ namespace NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 
 public class ProjectHistoryViewModel : ViewModelBase
 {
-	public ProjectHistoryViewModel()
-	{
-		this.WhenAnyValue(x => x.SelectedEntry)
-			.Where(x => x != null)
-			.Select(x => x!.OpenProject())
-			.Subscribe();
-	}
-
-
 	public ObservableCollection<HistoryEntryViewModel> ProjectUsages { get; } = new();
 
 

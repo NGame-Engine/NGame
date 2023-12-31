@@ -1,5 +1,5 @@
 using System;
-using NGameEditor.Functionality.Windows;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 
 namespace NGameEditor.Avalonia.ProjectWindows;
 

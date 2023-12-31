@@ -1,7 +1,11 @@
 using DynamicData;
 using DynamicData.Binding;
+using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
+using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Functionality.Windows.ProjectWindow;
+using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.Menus;
-using NGameEditor.ViewModels.Controllers;
 using NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 using ReactiveUI;
@@ -10,7 +14,13 @@ namespace NGameEditor.Functionality.Scenes;
 
 
 
-public class EntityNodeViewModelMapper(ISceneController sceneController, IEntityController entityController)
+public class EntityNodeViewModelMapper(
+	IEntityCreator entityCreator,
+	IAddComponentMenuEntryFactory addComponentMenuEntryFactory,
+	IClientRunner<IBackendApi> clientRunner,
+	SceneState sceneState,
+	ILogger<EntityNodeViewModelMapper> logger
+)
 	: IEntityNodeViewModelMapper
 {
 	public EntityNodeViewModel Map(EntityState entityState)
@@ -37,16 +47,26 @@ public class EntityNodeViewModelMapper(ISceneController sceneController, IEntity
 				new MenuEntryViewModel(
 					"Add child",
 					ReactiveCommand.Create(() =>
-						sceneController.CreateEntity(entityState))
+						entityCreator.CreateEntity(entityState))
 				),
 				new MenuEntryViewModel(
 					"Delete",
 					ReactiveCommand.Create(() =>
-						sceneController.Remove(entityState))
+						clientRunner
+							.GetClientService()
+							.Then(x => x.RemoveEntity(entityState.Id))
+							.Then(() =>
+								sceneState
+									.SceneEntities
+									.FindCollectionWithEntity(entityState.Id)!
+									.Remove(entityState)
+							)
+							.IfError(logger.Log)
+						)
 				),
 				new MenuEntryViewModel(
 					"Add component",
-					entityController.GetAddComponentMenuEntries(entityState)
+					addComponentMenuEntryFactory.Create(entityState)
 				)
 			]
 		);

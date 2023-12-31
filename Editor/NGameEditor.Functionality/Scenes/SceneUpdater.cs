@@ -1,5 +1,5 @@
 using NGameEditor.Bridge.Scenes;
-using NGameEditor.Functionality.Windows;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
 
 namespace NGameEditor.Functionality.Scenes;

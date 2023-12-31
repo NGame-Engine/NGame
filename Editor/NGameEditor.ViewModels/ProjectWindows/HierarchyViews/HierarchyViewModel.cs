@@ -1,15 +1,13 @@
 using System.Collections.ObjectModel;
-using System.Reactive;
 using System.Windows.Input;
 using DynamicData.Binding;
-using NGameEditor.Results;
 
 namespace NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 
 
 
 public class HierarchyViewModel(
-	ReactiveCommand<Unit, Result> addEntityCommand
+	ICommand addEntityCommand
 ) : ViewModelBase
 {
 	private string _searchFilter = "";

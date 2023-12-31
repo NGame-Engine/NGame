@@ -1,4 +1,3 @@
-using System.Reactive;
 using System.Windows.Input;
 
 namespace NGameEditor.ViewModels.LauncherWindows.HistoryViews;
@@ -16,9 +15,8 @@ public class HistoryEntryViewModel(
 	public string LastUsed => lastUsed.ToString("u");
 
 
-	public Unit OpenProject()
+	public void OpenProject()
 	{
 		openProject.Execute(null);
-		return Unit.Default;
 	}
 }
