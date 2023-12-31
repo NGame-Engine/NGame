@@ -3,9 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:customEditors="clr-namespace:NGameEditor.ViewModels.Components.CustomEditors;assembly=NGameEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.Components.CustomEditors"
+             x:Class="NGameEditor.Avalonia.Components.CustomEditors.CheckBoxEditorView"
              x:DataType="customEditors:CheckBoxEditorViewModel"
-             x:Class="NGameEditor.Avalonia.Components.CustomEditors.CheckBoxEditorView">
+             d:DataContext="{x:Static example:CustomEditorsDesignData.CheckBoxExample}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+ >
 
 	<CheckBox IsChecked="{Binding IsChecked}" />
 
