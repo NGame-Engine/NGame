@@ -27,6 +27,9 @@ public static class AvaloniaImplementationsInstaller
 {
 	public static void AddAvaloniaImplementations(this IHostApplicationBuilder builder)
 	{
+		builder.Services.AddTransient<IFilePickerOpener, FilePickerOpener>();
+
+
 		builder.Services.AddWindow<LauncherWindow, LauncherWindowViewModel>();
 		builder.Services.AddSingleton<ILauncherWindow, LauncherWindowContainer>();
 
