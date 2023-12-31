@@ -10,5 +10,10 @@ public static class WindowsInstaller
 	public static void AddWindows(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddTransient<ILauncherWindowOpener, LauncherWindowOpener>();
+
+		builder.Services.AddTransient<IHierarchyViewModelFactory, HierarchyViewModelFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IHierarchyViewModelFactory>().Create()
+		);
 	}
 }
