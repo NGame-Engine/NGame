@@ -3,24 +3,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:launcherWindows="clr-namespace:NGameEditor.ViewModels.LauncherWindows;assembly=NGameEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.LauncherWindows.ProjectOperationsViews"
+             x:Class="NGameEditor.Avalonia.LauncherWindows.ProjectOperationsViews.ProjectOperationsView"
              x:DataType="launcherWindows:ProjectOperationsViewModel"
-             x:Class="NGameEditor.Avalonia.LauncherWindows.ProjectOperationsViews.ProjectOperationsView">
+             d:DataContext="{x:Static example:ProjectOperationsDesignData.ProjectOperationsExample}"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450">
 
 	<StackPanel>
 		<Label>Project Operations</Label>
-	
-		<Button 
+
+		<Button
 			x:Name="CreateNewProjectButton"
 			Command="{Binding CreateNewProject}">
 			Create New Project
 		</Button>
-	
-		<Button 
+
+		<Button
 			x:Name="OpenProjectButton"
-			Command="{Binding OpenExistingProject}"
-		>Open Project</Button>
-		
+			Command="{Binding OpenExistingProject}">
+			Open Project
+		</Button>
+
 	</StackPanel>
 
 </UserControl>
