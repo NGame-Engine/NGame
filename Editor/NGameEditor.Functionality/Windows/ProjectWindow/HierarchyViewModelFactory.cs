@@ -27,10 +27,7 @@ public class HierarchyViewModelFactory(
 {
 	public HierarchyViewModel Create()
 	{
-		var addEntityCommand = ReactiveCommand.Create(() => entityCreator.CreateEntity(null));
-		var hierarchyViewModel = new HierarchyViewModel(addEntityCommand);
-
-		hierarchyViewModel.AddEntity = addEntityCommand;
+		var hierarchyViewModel = new HierarchyViewModel();
 
 		sceneState
 			.SceneEntities
@@ -62,6 +59,10 @@ public class HierarchyViewModelFactory(
 			.Transform(x => x.EntityState)
 			.Bind(selectedEntitiesState.SelectedEntities)
 			.Subscribe();
+
+
+		hierarchyViewModel.AddEntity = ReactiveCommand.Create(() => entityCreator.CreateEntity(null));
+
 
 		return hierarchyViewModel;
 	}
