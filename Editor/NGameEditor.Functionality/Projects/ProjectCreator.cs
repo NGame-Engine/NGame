@@ -33,11 +33,11 @@ public class ProjectCreator(
 			}
 		);
 
-		var projectParentPath = filePaths.Fir st();
-		var projectParentFolder = new AbsolutePath(projectParentPath);
-		// TODO dialog for project name and folder
-		var projectName = "UI-Created";
+		var projectParentPath = filePaths.FirstOrDefault();
+		if (projectParentPath == null) return;
 
+		var projectParentFolder = new AbsolutePath(projectParentPath);
+		var projectName = "UI-Created";
 
 		await
 			CreateProject(projectParentFolder, projectName)

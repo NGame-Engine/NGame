@@ -1,4 +1,3 @@
-using System.Reactive;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Windows.ProjectWindow;
@@ -9,7 +8,7 @@ namespace NGameEditor.Functionality.Projects;
 
 public interface IExistingProjectOpener
 {
-	Task<Unit> OnOpenExistingProject();
+	Task OnOpenExistingProject();
 }
 
 
@@ -19,7 +18,7 @@ public class ExistingExistingProjectOpener(
 	IProjectWindow projectWindow
 ) : IExistingProjectOpener
 {
-	public async Task<Unit> OnOpenExistingProject()
+	public async Task OnOpenExistingProject()
 	{
 		var filePaths = await projectWindow.AskUserToPickFile(
 			new OpenFileOptions
@@ -37,13 +36,13 @@ public class ExistingExistingProjectOpener(
 			}
 		);
 
-		var firstFilePath = filePaths.Fir st();
+		var firstFilePath = filePaths.FirstOrDefault();
+		if (firstFilePath == null) return;
+
+
 		var solutionFilePath = new AbsolutePath(firstFilePath);
 		var projectId = new ProjectId(solutionFilePath);
 
 		await projectOpener.OpenProject(projectId);
-
-
-		return Unit.Default;
 	}
 }
