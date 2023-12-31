@@ -46,7 +46,7 @@ public static class AvaloniaImplementationsInstaller
 
 
 	private static void AddWindow<TWindow, TViewModel>(this IServiceCollection serviceCollection)
-		where TWindow : StyledElement, IViewFor<TViewModel>, new()
+		where TWindow : StyledElement, IView<TViewModel>, new()
 		where TViewModel : class
 	{
 		serviceCollection.AddTransient(services =>
