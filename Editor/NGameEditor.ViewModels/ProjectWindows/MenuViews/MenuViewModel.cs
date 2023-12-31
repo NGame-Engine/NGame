@@ -1,16 +1,12 @@
 using System.Windows.Input;
-using NGameEditor.ViewModels.Controllers;
 
 namespace NGameEditor.ViewModels.ProjectWindows.MenuViews;
 
 
 
-public class MenuViewModel(
-	ISceneController sceneController,
-	IMenuController menuController
-) : ViewModelBase
+public class MenuViewModel : ViewModelBase
 {
-	public ICommand SaveScene { get; } = sceneController.SaveScene();
-	public ICommand OpenAboutWindow { get; } = menuController.OpenAboutWindow();
-	public ICommand OpenDocumentation { get; } = menuController.OpenDocumentation();
+	public ICommand? SaveScene { get; set; }
+	public ICommand? OpenAboutWindow { get; set; }
+	public ICommand? OpenDocumentation { get; set; }
 }

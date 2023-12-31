@@ -39,8 +39,6 @@ public static class ViewModelInstaller
 
 		builder.Services.AddSingleton<ProjectWindowViewModel>();
 
-		builder.Services.AddSingleton<MenuViewModel>();
-
 		builder.Services.AddSingleton<InspectorViewModel>();
 
 
