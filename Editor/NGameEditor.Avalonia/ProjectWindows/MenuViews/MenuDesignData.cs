@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.ProjectWindows.MenuViews;
+using NGameEditor.ViewModels.ProjectWindows.MenuViews;
 
 namespace NGameEditor.Avalonia.ProjectWindows.MenuViews;
 

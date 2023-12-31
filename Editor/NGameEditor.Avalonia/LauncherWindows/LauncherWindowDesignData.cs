@@ -1,4 +1,4 @@
-﻿using NGameEditor.Avalonia.LauncherWindows.Logs;
+using NGameEditor.Avalonia.LauncherWindows.Logs;
 using NGameEditor.Avalonia.LauncherWindows.ProjectHistoryViews;
 using NGameEditor.Avalonia.LauncherWindows.ProjectOperationsViews;
 using NGameEditor.ViewModels.LauncherWindows;

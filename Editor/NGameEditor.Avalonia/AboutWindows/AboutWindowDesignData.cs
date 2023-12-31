@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.AboutWindows;
+using NGameEditor.ViewModels.AboutWindows;
 
 namespace NGameEditor.Avalonia.AboutWindows;
 

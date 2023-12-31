@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.LauncherWindows;
+using NGameEditor.ViewModels.LauncherWindows;
 
 namespace NGameEditor.Avalonia.LauncherWindows.ProjectOperationsViews;
 
