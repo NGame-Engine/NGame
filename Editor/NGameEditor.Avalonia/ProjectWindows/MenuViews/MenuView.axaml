@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:menuViews="clr-namespace:NGameEditor.ViewModels.ProjectWindows.MenuViews;assembly=NGameEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.ProjectWindows.MenuViews"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.MenuViews.MenuView"
              x:DataType="menuViews:MenuViewModel"
-             x:Class="NGameEditor.Avalonia.ProjectWindows.MenuViews.MenuView">
+             d:DataContext="{x:Static example:MenuDesignData.Example}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
 
 	<Menu Name="Menu">
 		<MenuItem Header="Scenes">
