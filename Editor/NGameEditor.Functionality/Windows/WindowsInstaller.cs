@@ -15,5 +15,10 @@ public static class WindowsInstaller
 		builder.Services.AddSingleton(services =>
 			services.GetRequiredService<IHierarchyViewModelFactory>().Create()
 		);
+
+		builder.Services.AddTransient<IInspectorEntityViewModelFactory, InspectorEntityViewModelFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IInspectorEntityViewModelFactory>().Create()
+		);
 	}
 }
