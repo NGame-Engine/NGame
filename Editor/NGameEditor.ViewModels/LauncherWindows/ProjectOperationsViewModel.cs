@@ -1,4 +1,4 @@
-using System.Reactive;
+using System.Windows.Input;
 using NGameEditor.ViewModels.Shared;
 
 namespace NGameEditor.ViewModels.LauncherWindows;
@@ -19,16 +19,12 @@ public class OpenExistingProjectArgs(IFilePicker filePicker)
 
 
 
-public class ProjectOperationsViewModel(
-	IProjectController projectController
-) : ViewModelBase, IActivatableViewModel
+public class ProjectOperationsViewModel : ViewModelBase, IActivatableViewModel
 {
 	public ViewModelActivator Activator { get; } = new();
 
 
-	public ReactiveCommand<CreateProjectDialogArgs, Unit> CreateNewProject { get; set; } =
-		projectController.CreateProject();
+	public ICommand? CreateNewProject { get; set; }
 
-	public ReactiveCommand<OpenExistingProjectArgs, Unit> OpenExistingProject { get; set; } =
-		projectController.OpenExistingProject();
+	public ICommand? OpenExistingProject { get; set; }
 }

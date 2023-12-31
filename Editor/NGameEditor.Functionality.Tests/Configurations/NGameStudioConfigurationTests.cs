@@ -1,5 +1,4 @@
 using System.Text.Json;
-using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Shared.Json;

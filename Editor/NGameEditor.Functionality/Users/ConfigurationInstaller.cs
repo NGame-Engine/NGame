@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace NGameEditor.Functionality.Users;
 
@@ -6,8 +7,8 @@ namespace NGameEditor.Functionality.Users;
 
 public static class ConfigurationInstaller
 {
-	public static void AddConfigurations(this IServiceCollection services)
+	public static void AddConfigurations(this IHostApplicationBuilder builder)
 	{
-		services.AddTransient<IConfigRepository, ConfigRepository>();
+		builder.Services.AddTransient<IConfigRepository, ConfigRepository>();
 	}
 }

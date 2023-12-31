@@ -14,7 +14,7 @@ public static class NGameCoreInstaller
 {
 	public static IHostApplicationBuilder AddNGameCore(this IHostApplicationBuilder builder)
 	{
-		builder.Services.AddNGameCommon();
+		builder.AddNGameCommon();
 		builder.AddUpdateLoop();
 		builder.AddAssets();
 		builder.AddParallelism();

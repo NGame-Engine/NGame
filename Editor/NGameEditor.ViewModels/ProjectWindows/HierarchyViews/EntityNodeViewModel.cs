@@ -1,5 +1,4 @@
 using System.Drawing;
-using DynamicData;
 using DynamicData.Binding;
 using NGameEditor.ViewModels.Components.Menus;
 using NGameEditor.ViewModels.ProjectWindows.SceneStates;
@@ -8,27 +7,12 @@ namespace NGameEditor.ViewModels.ProjectWindows.HierarchyViews;
 
 
 
-public class EntityNodeViewModel : ViewModelBase
+public class EntityNodeViewModel(
+	EntityState entityState,
+	ContextMenuViewModel contextMenu
+) : ViewModelBase
 {
-	public EntityNodeViewModel(
-		EntityState entityState,
-		ContextMenuViewModel contextMenu,
-		Func<EntityState, EntityNodeViewModel> map
-	)
-	{
-		EntityState = entityState;
-		ContextMenu = contextMenu;
-
-		entityState
-			.Children
-			.ToObservableChangeSet()
-			.Transform(map)
-			.Bind(Children)
-			.Subscribe();
-	}
-
-
-	public EntityState EntityState { get; }
+	public EntityState EntityState { get; } = entityState;
 
 	public string Name =>
 		EntityState.Components.All(x => x.IsRecognized)
@@ -41,6 +25,6 @@ public class EntityNodeViewModel : ViewModelBase
 			: Color.Red;
 
 
-	public ContextMenuViewModel ContextMenu { get; }
+	public ContextMenuViewModel ContextMenu { get; } = contextMenu;
 	public ObservableCollectionExtended<EntityNodeViewModel> Children { get; set; } = new();
 }

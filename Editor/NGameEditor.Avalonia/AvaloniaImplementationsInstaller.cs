@@ -11,6 +11,8 @@ using NGameEditor.Avalonia.Shared;
 using NGameEditor.Functionality.Logging;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Windows;
+using NGameEditor.Functionality.Windows.LauncherWindow;
+using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.ViewModels.AboutWindows;
 using NGameEditor.ViewModels.LauncherWindows;
 using NGameEditor.ViewModels.ProjectWindows;
