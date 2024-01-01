@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 
 namespace NGameEditor.Avalonia.ProjectWindows.FileBrowsers;
