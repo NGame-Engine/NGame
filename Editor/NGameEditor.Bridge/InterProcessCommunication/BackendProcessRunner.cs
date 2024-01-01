@@ -23,7 +23,7 @@ public interface IBackendProcessRunner
 public class BackendProcessRunner(
 	ILogger<BackendProcessRunner> logger,
 	IHostRunner hostRunner
-) : IBackendProcessRunner, IDisposable
+) : IBackendProcessRunner
 {
 	private Process? Process { get; set; }
 
@@ -106,12 +106,6 @@ public class BackendProcessRunner(
 
 		logString.AppendLine("stopped successfully");
 		logger.LogInformation("{LogString}", logString.ToString());
-	}
-
-
-	void IDisposable.Dispose()
-	{
-		StopCurrentProcess();
 	}
 
 

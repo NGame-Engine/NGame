@@ -11,6 +11,7 @@ namespace NGameEditor.Functionality.InterProcessCommunication;
 public interface IBackendStarter
 {
 	Task<Result<IBackendApi>> StartBackend(ProjectId projectId);
+	void CloseBackend();
 }
 
 
@@ -20,12 +21,11 @@ public class BackendStarter(
 	ISolutionConfigurationReader solutionConfigurationReader,
 	IClientRunner<IBackendApi> clientRunner
 )
-	: IBackendStarter
+	: IBackendStarter, IDisposable
 {
 	public async Task<Result<IBackendApi>> StartBackend(ProjectId projectId)
 	{
-		clientRunner.CloseCurrentClient();
-		backendProcessRunner.StopCurrentProcess();
+		CloseBackend();
 
 
 		var solutionFilePath = projectId.SolutionFilePath;
@@ -48,5 +48,18 @@ public class BackendStarter(
 
 		clientRunner.StartClient(backendPort);
 		return clientRunner.GetClientService();
+	}
+
+
+	public void CloseBackend()
+	{
+		clientRunner.CloseCurrentClient();
+		backendProcessRunner.StopCurrentProcess();
+	}
+
+
+	public void Dispose()
+	{
+		CloseBackend();
 	}
 }
