@@ -9,6 +9,7 @@ public partial class DirectoryContentItemView : UserControl, IView<DirectoryCont
 {
 	public DirectoryContentItemView()
 	{
+		this.DoubleTapped += (_, _) => DoubleClick.Command?.Execute(null);
 		InitializeComponent();
 	}
 }

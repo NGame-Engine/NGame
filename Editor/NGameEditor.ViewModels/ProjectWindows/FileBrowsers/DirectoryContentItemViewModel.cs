@@ -11,5 +11,5 @@ public class DirectoryContentItemViewModel(
 	public string Name { get; } = name;
 	public string DisplayName => Path.GetFileName(Name);
 	public string Icon { get; set; } = "❔";
-	public ICommand? Open { get; }
+	public ICommand? Open { get; set; }
 }

@@ -15,14 +15,12 @@
 		</Style>
 	</UserControl.Styles>
 
-	<StackPanel >
-		<Label x:Name="Icon" Content="{Binding Icon}" />
-		<Label x:Name="Text" Content="{Binding DisplayName}" />
-
-		<!--
-        	<Label Content="{Binding Name}" DoubleTapped="{Binding Open}" />-->
-
-	</StackPanel>
-
-
+	<Button>
+		<StackPanel>
+			<Label x:Name="Icon" Content="{Binding Icon}" />
+			<Label x:Name="Text" Content="{Binding DisplayName}" />
+			<Button x:Name="DoubleClick" IsVisible="False" Command="{Binding Open}" />
+		</StackPanel>
+	</Button>
+	
 </UserControl>

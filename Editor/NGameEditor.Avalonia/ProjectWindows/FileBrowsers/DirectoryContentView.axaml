@@ -11,7 +11,13 @@
 
 	<DockPanel>
 		<Label DockPanel.Dock="Top" Content="{Binding DirectoryName}" />
-		<ListBox ItemsSource="{Binding Items}" />
+		<ListBox ItemsSource="{Binding Items}">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+		</ListBox>
 	</DockPanel>
 
 </UserControl>

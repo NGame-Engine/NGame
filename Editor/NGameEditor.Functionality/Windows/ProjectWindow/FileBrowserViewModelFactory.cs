@@ -1,6 +1,11 @@
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
+using Microsoft.Extensions.Logging;
+using NGameEditor.Bridge;
+using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Bridge.Shared;
+using NGameEditor.Results;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using ReactiveUI;
 
@@ -15,7 +20,10 @@ public interface IFileBrowserViewModelFactory
 
 
 
-public class FileBrowserViewModelFactory : IFileBrowserViewModelFactory
+public class FileBrowserViewModelFactory(
+	IClientRunner<IBackendApi> clientRunner,
+	ILogger<FileBrowserViewModelFactory> logger
+) : IFileBrowserViewModelFactory
 {
 	public FileBrowserViewModel Create()
 	{
@@ -42,24 +50,48 @@ public class FileBrowserViewModelFactory : IFileBrowserViewModelFactory
 
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Directories)
-			.Transform(x =>
-				new DirectoryContentItemViewModel(x.Name)
-				{
-					Icon = "📁"
-				}
-			)
+			.Transform(x => Map(x, viewModel))
 			.Bind(viewModel.DirectoryContentViewModel.Items)
 			.Subscribe();
 
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Files)
-			.Transform(x =>
-				new DirectoryContentItemViewModel(x.Name)
-			)
+			.Transform(Map)
 			.Bind(viewModel.DirectoryContentViewModel.Items)
 			.Subscribe();
 
 
 		return viewModel;
 	}
+
+
+	private static DirectoryContentItemViewModel Map(
+		DirectoryViewModel directoryViewModel,
+		FileBrowserViewModel viewModel
+	) =>
+		new(directoryViewModel.Name)
+		{
+			Icon = "📁",
+			Open = ReactiveCommand.Create(() =>
+			{
+				var selectedDirectories = viewModel
+					.DirectoryOverviewViewModel
+					.SelectedDirectories;
+
+				selectedDirectories.Clear();
+				selectedDirectories.Add(directoryViewModel);
+			})
+		};
+
+
+	private DirectoryContentItemViewModel Map(FileViewModel fileViewModel) =>
+		new(fileViewModel.Name)
+		{
+			Open = ReactiveCommand.Create(() =>
+				clientRunner
+					.GetClientService()
+					.Then(x => x.OpenFile(new AbsolutePath(fileViewModel.Name)))
+					.IfError(logger.Log)
+			)
+		};
 }
