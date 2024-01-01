@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.ViewModels.ProjectWindows;
-using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
+using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;
@@ -33,11 +33,6 @@ public static class ProjectWindowInstaller
 			services.GetRequiredService<IInspectorViewModelFactory>().Create()
 		);
 
-		builder.Services.AddTransient<IInspectorEntityViewModelFactory, InspectorEntityViewModelFactory>();
-		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<IInspectorEntityViewModelFactory>().Create()
-		);
-
 
 		builder.Services.AddTransient<IMenuViewModelFactory, MenuViewModelFactory>();
 		builder.Services.AddSingleton(services =>
@@ -49,10 +44,15 @@ public static class ProjectWindowInstaller
 			services.GetRequiredService<IProjectWindowViewModelFactory>().Create()
 		);
 
-		builder.Services.AddTransient<IFileBrowserViewModelFactory, FileBrowserViewModelFactory>();
+
+		builder.Services.AddSingleton<FileBrowserViewModel>();
+		builder.Services.AddSingleton<DirectoryOverviewViewModel>();
+
+		builder.Services.AddTransient<IDirectoryContentViewModelFactory, DirectoryContentViewModelFactory>();
 		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<IFileBrowserViewModelFactory>().Create()
+			services.GetRequiredService<IDirectoryContentViewModelFactory>().Create()
 		);
+
 
 		builder.Services.AddTransient<IAddComponentMenuEntryFactory, AddComponentMenuEntryFactory>();
 	}

@@ -1,5 +1,4 @@
 ﻿using NGameEditor.Avalonia.Components.CustomEditors;
-using NGameEditor.Avalonia.ProjectWindows.InspectorViews.EntityViews;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 
 namespace NGameEditor.Avalonia.ProjectWindows.InspectorViews;
@@ -9,10 +8,10 @@ namespace NGameEditor.Avalonia.ProjectWindows.InspectorViews;
 public static class InspectorDesignData
 {
 	public static InspectorViewModel Example { get; } =
-		new(EntityInspectorDesignData.Example)
+		new()
 		{
 			Title = "Example Entity",
-			CanEditTitle = true,
+			//CanEditTitle = true,
 			CustomEditors =
 			{
 				CustomEditorsDesignData.CheckBoxExample,

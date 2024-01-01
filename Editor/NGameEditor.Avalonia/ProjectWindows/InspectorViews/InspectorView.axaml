@@ -16,11 +16,6 @@
 			<TextBox DockPanel.Dock="Top" Text="{Binding Title}" IsEnabled="{Binding CanEditTitle}" />
 		</DockPanel>
 		<ListBox ItemsSource="{Binding CustomEditors}" />
-
-
-		<ContentControl Content="{Binding Entity}" />
-
-
 	</StackPanel>
 
 </UserControl>

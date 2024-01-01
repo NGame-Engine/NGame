@@ -3,7 +3,6 @@ using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Windows.LauncherWindow;
-using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.Results;
 
 namespace NGameEditor.Functionality.Projects;

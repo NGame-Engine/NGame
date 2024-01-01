@@ -15,4 +15,5 @@ public class DirectoryContentViewModel : ViewModelBase
 	}
 
 	public ObservableCollectionExtended<DirectoryContentItemViewModel> Items { get; } = new();
+	public ObservableCollectionExtended<DirectoryContentItemViewModel> SelectedItems { get; } = new();
 }
