@@ -1,4 +1,5 @@
 using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -10,6 +11,7 @@ public interface IBackendApi
 {
 	Result SaveCurrentScene();
 
+	Result OpenFile(AbsolutePath filePath);
 
 	Result<EntityDescription> AddEntity(Guid? parentEntityId);
 	Result RemoveEntity(Guid entityId);

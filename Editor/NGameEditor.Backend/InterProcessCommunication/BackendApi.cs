@@ -1,11 +1,13 @@
 using NGame.Ecs;
 using NGame.SceneAssets;
+using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -18,11 +20,15 @@ public class BackendApi(
 	ISceneState sceneState,
 	ISceneDescriptionMapper sceneDescriptionMapper,
 	ISceneSaver sceneSaver,
-	ICustomEditorListener customEditorListener
+	ICustomEditorListener customEditorListener,
+	IFileOpener fileOpener
 )
 	: IBackendApi
 {
 	public Result SaveCurrentScene() => sceneSaver.SaveCurrentScene();
+
+
+	public Result OpenFile(AbsolutePath filePath) => fileOpener.Open(filePath);
 
 
 	public Result<EntityDescription> AddEntity(Guid? parentEntityId)

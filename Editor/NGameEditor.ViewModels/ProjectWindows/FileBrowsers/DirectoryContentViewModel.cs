@@ -14,6 +14,5 @@ public class DirectoryContentViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _directoryName, value);
 	}
 
-	public ObservableCollectionExtended<DirectoryViewModel> Directories { get; } = new();
-	public ObservableCollectionExtended<FileViewModel> Files { get; } = new();
+	public ObservableCollectionExtended<DirectoryContentItemViewModel> Items { get; } = new();
 }

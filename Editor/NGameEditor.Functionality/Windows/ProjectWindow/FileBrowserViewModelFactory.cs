@@ -1,10 +1,18 @@
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
+using Microsoft.Extensions.Logging;
+using NGame.Assets;
+using NGameEditor.Bridge;
+using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Bridge.Shared;
+using NGameEditor.Results;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using ReactiveUI;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;
+
+
 
 public interface IFileBrowserViewModelFactory
 {
@@ -13,7 +21,10 @@ public interface IFileBrowserViewModelFactory
 
 
 
-public class FileBrowserViewModelFactory : IFileBrowserViewModelFactory
+public class FileBrowserViewModelFactory(
+	IClientRunner<IBackendApi> clientRunner,
+	ILogger<FileBrowserViewModelFactory> logger
+) : IFileBrowserViewModelFactory
 {
 	public FileBrowserViewModel Create()
 	{
@@ -37,21 +48,55 @@ public class FileBrowserViewModelFactory : IFileBrowserViewModelFactory
 			)
 			.BindTo(viewModel.DirectoryContentViewModel, x => x.DirectoryName);
 
+
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Directories)
-			.Bind(
-				viewModel
-					.DirectoryContentViewModel
-					.Directories
-			)
+			.Transform(x => Map(x, viewModel))
+			.Bind(viewModel.DirectoryContentViewModel.Items)
 			.Subscribe();
 
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Files)
-			.Bind(viewModel.DirectoryContentViewModel.Files)
+			.Transform(Map)
+			.Bind(viewModel.DirectoryContentViewModel.Items)
 			.Subscribe();
 
 
 		return viewModel;
 	}
+
+
+	private static DirectoryContentItemViewModel Map(
+		DirectoryViewModel directoryViewModel,
+		FileBrowserViewModel viewModel
+	) =>
+		new(directoryViewModel.Name)
+		{
+			Icon = "📁",
+			Open = ReactiveCommand.Create(() =>
+			{
+				var selectedDirectories = viewModel
+					.DirectoryOverviewViewModel
+					.SelectedDirectories;
+
+				selectedDirectories.Clear();
+				selectedDirectories.Add(directoryViewModel);
+			})
+		};
+
+
+	private DirectoryContentItemViewModel Map(FileViewModel fileViewModel) =>
+		new(fileViewModel.Name)
+		{
+			Icon =
+				fileViewModel.Name.EndsWith(AssetConventions.SceneFileEnding)
+					? "🏞️"
+					: "❔",
+			Open = ReactiveCommand.Create(() =>
+				clientRunner
+					.GetClientService()
+					.Then(x => x.OpenFile(new AbsolutePath(fileViewModel.Name)))
+					.IfError(logger.Log)
+			)
+		};
 }
