@@ -28,7 +28,10 @@ public static class ProjectWindowInstaller
 		);
 
 
-		builder.Services.AddSingleton<InspectorViewModel>();
+		builder.Services.AddTransient<IInspectorViewModelFactory, InspectorViewModelFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IInspectorViewModelFactory>().Create()
+		);
 
 		builder.Services.AddTransient<IInspectorEntityViewModelFactory, InspectorEntityViewModelFactory>();
 		builder.Services.AddSingleton(services =>

@@ -11,7 +11,7 @@ public static class CustomEditorsDesignData
 
 	public static TextEditorViewModel TextEditorExample { get; } = new("editable text");
 
-	public static UnrecognizedComponentEditorViewModel UnrecognizedExample { get; } = new();
+	public static UnrecognizedCustomEditorViewModel UnrecognizedExample { get; } = new();
 
 	public static StackPanelEditorViewModel StackPanelExample { get; } = new(
 	[

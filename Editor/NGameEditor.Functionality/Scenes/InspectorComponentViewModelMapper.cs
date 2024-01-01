@@ -14,7 +14,7 @@ namespace NGameEditor.Functionality.Scenes;
 
 public interface IInspectorComponentViewModelMapper
 {
-	IEnumerable<ComponentEditorViewModel> Map(EntityState entityState);
+	IEnumerable<CustomEditorViewModel> Map(EntityState entityState);
 }
 
 
@@ -25,7 +25,7 @@ public class InspectorComponentViewModelMapper(
 )
 	: IInspectorComponentViewModelMapper
 {
-	public IEnumerable<ComponentEditorViewModel> Map(EntityState entityState)
+	public IEnumerable<CustomEditorViewModel> Map(EntityState entityState)
 	{
 		var viewModelsResult =
 			clientRunner
@@ -40,12 +40,12 @@ public class InspectorComponentViewModelMapper(
 
 		return
 			viewModelsResult.HasError
-				? Array.Empty<ComponentEditorViewModel>()
+				? Array.Empty<CustomEditorViewModel>()
 				: viewModelsResult.SuccessValue!;
 	}
 
 
-	private ComponentEditorViewModel Map(UiElementDto uiElementDto)
+	private CustomEditorViewModel Map(UiElementDto uiElementDto)
 	{
 		if (uiElementDto.Type == UiElementType.StackPanel)
 		{
@@ -114,6 +114,6 @@ public class InspectorComponentViewModelMapper(
 		}
 
 
-		return new UnrecognizedComponentEditorViewModel();
+		return new UnrecognizedCustomEditorViewModel();
 	}
 }

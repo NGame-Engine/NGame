@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:customEditors="clr-namespace:NGameEditor.ViewModels.Components.CustomEditors;assembly=NGameEditor.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="customEditors:UnrecognizedComponentEditorViewModel"
+             x:DataType="customEditors:UnrecognizedCustomEditorViewModel"
              x:Class="NGameEditor.Avalonia.Components.CustomEditors.UnrecognizedComponentEditorView">
 
 	Component not recognized

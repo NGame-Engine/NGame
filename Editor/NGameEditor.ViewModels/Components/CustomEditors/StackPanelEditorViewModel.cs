@@ -3,8 +3,8 @@ namespace NGameEditor.ViewModels.Components.CustomEditors;
 
 
 public class StackPanelEditorViewModel(
-	IEnumerable<ComponentEditorViewModel> items
-) : ComponentEditorViewModel
+	IEnumerable<CustomEditorViewModel> items
+) : CustomEditorViewModel
 {
-	public List<ComponentEditorViewModel> Items { get; } = new(items);
+	public List<CustomEditorViewModel> Items { get; } = new(items);
 }

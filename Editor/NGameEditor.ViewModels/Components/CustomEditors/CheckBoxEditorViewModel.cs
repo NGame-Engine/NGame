@@ -2,7 +2,7 @@ namespace NGameEditor.ViewModels.Components.CustomEditors;
 
 
 
-public class CheckBoxEditorViewModel(bool isChecked) : ComponentEditorViewModel
+public class CheckBoxEditorViewModel(bool isChecked) : CustomEditorViewModel
 {
 	public bool IsChecked
 	{

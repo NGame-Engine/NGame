@@ -23,5 +23,5 @@ public class InspectorEntityViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _entityName, value);
 	}
 
-	public ObservableCollectionExtended<ComponentEditorViewModel> ComponentEditors { get; } = new();
+	public ObservableCollectionExtended<CustomEditorViewModel> ComponentEditors { get; } = new();
 }

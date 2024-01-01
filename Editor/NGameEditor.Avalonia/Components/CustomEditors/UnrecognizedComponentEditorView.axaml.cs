@@ -5,7 +5,7 @@ namespace NGameEditor.Avalonia.Components.CustomEditors;
 
 
 
-public partial class UnrecognizedComponentEditorView : UserControl, IView<UnrecognizedComponentEditorViewModel>
+public partial class UnrecognizedComponentEditorView : UserControl, IView<UnrecognizedCustomEditorViewModel>
 {
 	public UnrecognizedComponentEditorView()
 	{
