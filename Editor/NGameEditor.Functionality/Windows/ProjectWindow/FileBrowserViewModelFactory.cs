@@ -2,6 +2,7 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using Microsoft.Extensions.Logging;
+using NGame.Assets;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;
@@ -87,6 +88,10 @@ public class FileBrowserViewModelFactory(
 	private DirectoryContentItemViewModel Map(FileViewModel fileViewModel) =>
 		new(fileViewModel.Name)
 		{
+			Icon =
+				fileViewModel.Name.EndsWith(AssetConventions.SceneFileEnding)
+					? "🏞️"
+					: "❔",
 			Open = ReactiveCommand.Create(() =>
 				clientRunner
 					.GetClientService()
