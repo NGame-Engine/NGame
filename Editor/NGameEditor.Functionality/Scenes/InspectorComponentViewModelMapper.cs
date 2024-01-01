@@ -22,7 +22,8 @@ public interface IInspectorComponentViewModelMapper
 public class InspectorComponentViewModelMapper(
 	IClientRunner<IBackendApi> clientRunner,
 	ILogger<InspectorComponentViewModelMapper> logger
-) : IInspectorComponentViewModelMapper
+)
+	: IInspectorComponentViewModelMapper
 {
 	public IEnumerable<ComponentEditorViewModel> Map(EntityState entityState)
 	{
