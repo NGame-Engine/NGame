@@ -1,12 +1,10 @@
-using System.Reactive.Linq;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
-using NGameEditor.Bridge.UserInterface;
+using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.CustomEditors;
-using ReactiveUI;
 
 namespace NGameEditor.Functionality.Scenes;
 
@@ -14,17 +12,19 @@ namespace NGameEditor.Functionality.Scenes;
 
 public interface IInspectorComponentViewModelMapper
 {
-	IEnumerable<ComponentEditorViewModel> Map(EntityState entityState);
+	IEnumerable<CustomEditorViewModel> Map(EntityState entityState);
 }
 
 
 
 public class InspectorComponentViewModelMapper(
 	IClientRunner<IBackendApi> clientRunner,
-	ILogger<InspectorComponentViewModelMapper> logger
-) : IInspectorComponentViewModelMapper
+	ILogger<InspectorComponentViewModelMapper> logger,
+	IUiElementDtoMapper uiElementDtoMapper
+)
+	: IInspectorComponentViewModelMapper
 {
-	public IEnumerable<ComponentEditorViewModel> Map(EntityState entityState)
+	public IEnumerable<CustomEditorViewModel> Map(EntityState entityState)
 	{
 		var viewModelsResult =
 			clientRunner
@@ -33,86 +33,13 @@ public class InspectorComponentViewModelMapper(
 				.Then(x =>
 					x
 						.Children
-						.Select(Map)
+						.Select(uiElementDtoMapper.Map)
 				)
 				.IfError(logger.Log);
 
 		return
 			viewModelsResult.HasError
-				? Array.Empty<ComponentEditorViewModel>()
+				? Array.Empty<CustomEditorViewModel>()
 				: viewModelsResult.SuccessValue!;
-	}
-
-
-	private ComponentEditorViewModel Map(UiElementDto uiElementDto)
-	{
-		if (uiElementDto.Type == UiElementType.StackPanel)
-		{
-			return new StackPanelEditorViewModel(
-				uiElementDto
-					.Children
-					.Select(Map)
-			);
-		}
-
-		if (uiElementDto.Type == UiElementType.CheckBox)
-		{
-			var currentSerializedValue =
-				bool.TryParse(uiElementDto.CurrentSerializedValue, out var value) &&
-				value;
-
-			var checkBoxEditorViewModel = new CheckBoxEditorViewModel(currentSerializedValue);
-
-			checkBoxEditorViewModel
-				.WhenAnyValue(x => x.IsChecked)
-				.Throttle(TimeSpan.FromMilliseconds(100))
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.Select(x =>
-					clientRunner
-						.GetClientService()
-						.Then(backendService =>
-							backendService
-								.UpdateEditorValue(
-									uiElementDto.Id,
-									x.ToString()
-								)
-						)
-						.IfError(logger.Log)
-				)
-				.Subscribe();
-
-			return checkBoxEditorViewModel;
-		}
-
-
-		if (uiElementDto.Type == UiElementType.TextEditor)
-		{
-			var currentSerializedValue = uiElementDto.CurrentSerializedValue;
-
-			var checkBoxEditorViewModel = new TextEditorViewModel(currentSerializedValue);
-
-			checkBoxEditorViewModel
-				.WhenAnyValue(x => x.Text)
-				.Throttle(TimeSpan.FromMilliseconds(100))
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.Select(x =>
-					clientRunner
-						.GetClientService()
-						.Then(backendService =>
-							backendService
-								.UpdateEditorValue(
-									uiElementDto.Id,
-									x
-								)
-						)
-						.IfError(logger.Log)
-				)
-				.Subscribe();
-
-			return checkBoxEditorViewModel;
-		}
-
-
-		return new UnrecognizedComponentEditorViewModel();
 	}
 }

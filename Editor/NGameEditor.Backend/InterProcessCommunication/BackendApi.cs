@@ -1,9 +1,5 @@
-using NGame.Ecs;
-using NGame.SceneAssets;
 using NGameEditor.Backend.Files;
-using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
-using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Scenes;
@@ -16,124 +12,48 @@ namespace NGameEditor.Backend.InterProcessCommunication;
 
 
 public class BackendApi(
-	ProjectDefinition projectDefinition,
-	ISceneState sceneState,
-	ISceneDescriptionMapper sceneDescriptionMapper,
 	ISceneSaver sceneSaver,
 	ICustomEditorListener customEditorListener,
-	IFileOpener fileOpener
+	IFileOpener fileOpener,
+	IEntityController entityController,
+	IComponentController componentController
 )
 	: IBackendApi
 {
-	public Result SaveCurrentScene() => sceneSaver.SaveCurrentScene();
+	public Result SaveCurrentScene() => Result.Try(sceneSaver.SaveCurrentScene);
 
 
-	public Result OpenFile(AbsolutePath filePath) => fileOpener.Open(filePath);
+	public Result OpenFile(AbsolutePath filePath) =>
+		Result.Try(() => fileOpener.Open(filePath));
 
 
-	public Result<EntityDescription> AddEntity(Guid? parentEntityId)
-	{
-		var backendScene = sceneState.LoadedBackendScene;
-		var sceneAsset = backendScene.SceneAsset;
-
-		var entityEntry = new EntityEntry
-		{
-			Id = Guid.NewGuid(),
-			Name = "New Entity"
-		};
-
-		var entityDescription = sceneDescriptionMapper.Map(entityEntry);
-
-		if (parentEntityId != null)
-		{
-			return
-				sceneAsset
-					.GetEntityById(parentEntityId.Value)
-					.Then(x => x.Children.Add(entityEntry))
-					.Then(() => entityDescription);
-		}
+	public Result<EntityDescription> AddEntity(Guid? parentEntityId) =>
+		Result.Try(() => entityController.AddEntity(parentEntityId));
 
 
-		sceneAsset.Entities.Add(entityEntry);
-		return Result.Success(entityDescription);
-	}
-
-
-	public Result RemoveEntity(Guid entityId)
-	{
-		var backendScene = sceneState.LoadedBackendScene;
-		var sceneAsset = backendScene.SceneAsset;
-
-		var containingCollection =
-			sceneAsset
-				.Entities
-				.FindCollectionWithEntity(entityId);
-
-		if (containingCollection == null)
-		{
-			return Result.Error($"Unable to find entity with Id '{entityId}'");
-		}
-
-		var entity = containingCollection.First(x => x.Id == entityId);
-		containingCollection.Remove(entity);
-
-		return Result.Success();
-	}
+	public Result RemoveEntity(Guid entityId) =>
+		Result.Try(() => entityController.RemoveEntity(entityId));
 
 
 	public Result SetEntityName(Guid entityId, string newName) =>
-		sceneState
-			.LoadedBackendScene
-			.SceneAsset
-			.GetEntityById(entityId)
-			.Then(x => x.Name = newName);
+		Result.Try(() => entityController.SetEntityName(entityId, newName));
 
 
 	public Result<ComponentDescription> AddComponent(
 		Guid entityId,
 		ComponentTypeDefinition componentTypeDefinition
-	)
-	{
-		var entityEntryResult =
-			sceneState
-				.LoadedBackendScene
-				.SceneAsset
-				.GetEntityById(entityId);
-
-		if (entityEntryResult.HasError)
-		{
-			return Result.Error(entityEntryResult.ErrorValue!);
-		}
-
-		var entityEntry = entityEntryResult.SuccessValue!;
+	) =>
+		Result.Try(() => componentController.AddComponent(entityId, componentTypeDefinition));
 
 
-		var componentType =
-			projectDefinition
-				.ComponentTypes
-				.FirstOrDefault(x => x.FullName == componentTypeDefinition.FullTypeName);
-
-		if (componentType == null)
-		{
-			return Result.Error($"Unable to find Component Type {componentTypeDefinition.FullTypeName}");
-		}
-
-
-		var newComponentRaw = Activator.CreateInstance(componentType);
-		var newComponent = (EntityComponent)newComponentRaw!;
-
-		entityEntry.Components.Add(newComponent);
-
-
-		var componentDescription = sceneDescriptionMapper.Map(newComponent);
-		return Result.Success(componentDescription);
-	}
+	public Result<UiElementDto> GetEditorForAsset(AbsolutePath filePath) =>
+		Result.Try(() => customEditorListener.GetEditorForFile(filePath));
 
 
 	public Result<UiElementDto> GetEditorForEntity(Guid entityId) =>
-		customEditorListener.GetEditorForEntity(entityId);
+		Result.Try(() => customEditorListener.GetEditorForEntity(entityId));
 
 
 	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
-		customEditorListener.UpdateEditorValue(uiElementId, serializedNewValue);
+		Result.Try(() => customEditorListener.UpdateEditorValue(uiElementId, serializedNewValue));
 }

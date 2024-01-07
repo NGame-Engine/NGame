@@ -52,6 +52,7 @@ public class HierarchyViewModelFactory(
 			.Transform(x =>
 				sceneState
 					.SceneEntities
+					.FindCollectionWithEntity(x.Id)!
 					.First(entity => entity.Id == x.Id)
 			)
 			.Bind(selectedEntitiesState.SelectedEntities)

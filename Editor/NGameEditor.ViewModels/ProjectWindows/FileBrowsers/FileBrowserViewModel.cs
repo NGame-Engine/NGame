@@ -2,8 +2,11 @@ namespace NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 
 
 
-public class FileBrowserViewModel : ViewModelBase
+public class FileBrowserViewModel(
+	DirectoryOverviewViewModel directoryOverviewViewModel,
+	DirectoryContentViewModel directoryContentViewModel
+) : ViewModelBase
 {
-	public DirectoryOverviewViewModel DirectoryOverviewViewModel { get; } = new();
-	public DirectoryContentViewModel DirectoryContentViewModel { get; } = new();
+	public DirectoryOverviewViewModel DirectoryOverviewViewModel { get; } = directoryOverviewViewModel;
+	public DirectoryContentViewModel DirectoryContentViewModel { get; } = directoryContentViewModel;
 }

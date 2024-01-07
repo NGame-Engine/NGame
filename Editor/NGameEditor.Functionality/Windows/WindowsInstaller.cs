@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Functionality.Windows.ProjectWindow;
 using NGameEditor.ViewModels.AboutWindows;
@@ -16,5 +17,8 @@ public static class WindowsInstaller
 
 		builder.AddLauncherWindow();
 		builder.AddProjectWindow();
+
+
+		builder.Services.AddTransient<IUiElementDtoMapper, UiElementDtoMapper>();
 	}
 }

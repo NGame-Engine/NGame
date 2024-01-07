@@ -2,7 +2,7 @@ namespace NGameEditor.ViewModels.Components.CustomEditors;
 
 
 
-public class TextEditorViewModel(string? text) : ComponentEditorViewModel
+public class TextEditorViewModel(string? text) : CustomEditorViewModel
 {
 	public string? Text
 	{

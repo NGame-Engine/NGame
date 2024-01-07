@@ -14,51 +14,51 @@ namespace NGameEditor.Functionality.Windows.ProjectWindow;
 
 
 
-public interface IFileBrowserViewModelFactory
+public interface IDirectoryContentViewModelFactory
 {
-	FileBrowserViewModel Create();
+	DirectoryContentViewModel Create();
 }
 
 
 
-public class FileBrowserViewModelFactory(
+public class DirectoryContentViewModelFactory(
 	IClientRunner<IBackendApi> clientRunner,
-	ILogger<FileBrowserViewModelFactory> logger
-) : IFileBrowserViewModelFactory
+	ILogger<DirectoryContentViewModelFactory> logger,
+	DirectoryOverviewViewModel directoryOverviewViewModel
+) : IDirectoryContentViewModelFactory
 {
-	public FileBrowserViewModel Create()
+	public DirectoryContentViewModel Create()
 	{
-		var viewModel = new FileBrowserViewModel();
+		var viewModel = new DirectoryContentViewModel();
 
-		var selectedDirectoriesChangeSet = viewModel
-			.DirectoryOverviewViewModel
-			.SelectedDirectories
-			.ToObservableChangeSet();
+		var selectedDirectoriesChangeSet =
+			directoryOverviewViewModel
+				.SelectedDirectories
+				.ToObservableChangeSet();
 
 		selectedDirectoriesChangeSet
 			.ToCollection()
 			.Select(x =>
-				x.Aggregate(
-					"",
+				Enumerable.Aggregate<DirectoryViewModel, string>(x, "",
 					(s, model) =>
 						string.IsNullOrEmpty(s)
 							? model.Name
 							: $"{s}, {model.Name}"
 				)
 			)
-			.BindTo(viewModel.DirectoryContentViewModel, x => x.DirectoryName);
+			.BindTo(viewModel, x => x.DirectoryName);
 
 
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Directories)
-			.Transform(x => Map(x, viewModel))
-			.Bind(viewModel.DirectoryContentViewModel.Items)
+			.Transform(Map)
+			.Bind(viewModel.Items)
 			.Subscribe();
 
 		selectedDirectoriesChangeSet
 			.TransformMany(x => x.Files)
 			.Transform(Map)
-			.Bind(viewModel.DirectoryContentViewModel.Items)
+			.Bind(viewModel.Items)
 			.Subscribe();
 
 
@@ -66,18 +66,15 @@ public class FileBrowserViewModelFactory(
 	}
 
 
-	private static DirectoryContentItemViewModel Map(
-		DirectoryViewModel directoryViewModel,
-		FileBrowserViewModel viewModel
-	) =>
-		new(directoryViewModel.Name)
+	private DirectoryContentItemViewModel Map(DirectoryViewModel directoryViewModel) =>
+		new()
 		{
+			Name = directoryViewModel.Name,
+			IsFolder = true,
 			Icon = "📁",
 			Open = ReactiveCommand.Create(() =>
 			{
-				var selectedDirectories = viewModel
-					.DirectoryOverviewViewModel
-					.SelectedDirectories;
+				var selectedDirectories = directoryOverviewViewModel.SelectedDirectories;
 
 				selectedDirectories.Clear();
 				selectedDirectories.Add(directoryViewModel);
@@ -86,8 +83,10 @@ public class FileBrowserViewModelFactory(
 
 
 	private DirectoryContentItemViewModel Map(FileViewModel fileViewModel) =>
-		new(fileViewModel.Name)
+		new()
 		{
+			Name = fileViewModel.Name,
+			IsFolder = false,
 			Icon =
 				fileViewModel.Name.EndsWith(AssetConventions.SceneFileEnding)
 					? "🏞️"

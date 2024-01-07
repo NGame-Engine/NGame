@@ -4,16 +4,10 @@ namespace NGame.Ecs;
 
 
 
-public sealed class Entity
+public sealed class Entity(Scene scene)
 {
 	internal readonly List<Entity> InternalChildren = new();
 	internal readonly List<EntityComponent> InternalComponents = new();
-
-
-	public Entity(Scene scene)
-	{
-		Scene = scene;
-	}
 
 
 	public readonly Guid Id = Guid.NewGuid();
@@ -21,7 +15,7 @@ public sealed class Entity
 	public string Tag { get; set; } = "";
 
 
-	public Scene Scene { get; internal set; }
+	public Scene Scene { get; internal set; } = scene;
 	public Entity? Parent { get; internal set; }
 
 

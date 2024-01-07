@@ -24,6 +24,7 @@ public interface IBackendApi
 	);
 
 
+	Result<UiElementDto> GetEditorForAsset(AbsolutePath filePath);
 	Result<UiElementDto> GetEditorForEntity(Guid entityId);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
 }

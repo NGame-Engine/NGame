@@ -13,22 +13,12 @@ public interface IAssetSerializer
 
 
 
-public class AssetSerializer : IAssetSerializer
+public class AssetSerializer(
+	IEnumerable<AssetTypeEntry> types,
+	IAssetDeserializerOptionsFactory assetDeserializerOptionsFactory
+)
+	: IAssetSerializer
 {
-	private readonly IEnumerable<AssetTypeEntry> _assetTypes;
-	private readonly IAssetDeserializerOptionsFactory _assetDeserializerOptionsFactory;
-
-
-	public AssetSerializer(
-		IEnumerable<AssetTypeEntry> assetTypes,
-		IAssetDeserializerOptionsFactory assetDeserializerOptionsFactory
-	)
-	{
-		_assetTypes = assetTypes;
-		_assetDeserializerOptionsFactory = assetDeserializerOptionsFactory;
-	}
-
-
 	private JsonSerializerOptions? JsonSerializerOptions { get; set; }
 
 
@@ -76,9 +66,9 @@ public class AssetSerializer : IAssetSerializer
 	private JsonSerializerOptions CreateSerializerOptions()
 	{
 		var assetTypes =
-			_assetTypes
+			types
 				.Select(x => x.SubType);
 
-		return _assetDeserializerOptionsFactory.Create(assetTypes);
+		return assetDeserializerOptionsFactory.Create(assetTypes);
 	}
 }

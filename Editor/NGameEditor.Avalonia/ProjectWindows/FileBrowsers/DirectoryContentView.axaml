@@ -11,7 +11,9 @@
 
 	<DockPanel>
 		<Label DockPanel.Dock="Top" Content="{Binding DirectoryName}" />
-		<ListBox ItemsSource="{Binding Items}">
+		<ListBox
+			ItemsSource="{Binding Items}"
+			SelectedItems="{Binding SelectedItems}">
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel />
