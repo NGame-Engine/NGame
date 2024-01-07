@@ -1,9 +1,7 @@
 ﻿using NGame.Ecs;
-using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
-using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Results;
 

@@ -1,6 +1,6 @@
 using System.Text.Json;
 using NGame.Assets;
-using NGame.Core.Assets;
+using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface.AssetEditors;
 using NGameEditor.Backend.UserInterface.ComponentEditors;
@@ -25,10 +25,10 @@ public class CustomEditorListener(
 	ISceneState sceneState,
 	IEnumerable<IComponentEditorElementFactory> componentEditorElementFactories,
 	IDefaultComponentEditorElementFactory defaultComponentEditorElementFactory,
-	IEnumerable<AssetTypeEntry> types,
 	IAssetDeserializerOptionsFactory assetDeserializerOptionsFactory,
 	IEnumerable<IAssetEditorElementFactory> assetEditorElementFactories,
-	IDefaultAssetEditorElementFactory defaultAssetEditorElementFactory
+	IDefaultAssetEditorElementFactory defaultAssetEditorElementFactory,
+	ProjectDefinition projectDefinition
 ) : ICustomEditorListener
 {
 	private readonly Dictionary<Guid, IValueUpdater> _editors = new();
@@ -87,9 +87,28 @@ public class CustomEditorListener(
 	{
 		var allText = File.ReadAllText(filePath.Path);
 
-		var assetTypes = types.Select(x => x.SubType);
+		var assetTypes = projectDefinition.AssetTypes;
 		var options = assetDeserializerOptionsFactory.Create(assetTypes);
-		var asset = JsonSerializer.Deserialize<Asset>(allText, options)!;
+		Asset asset;
+
+		try
+		{
+			asset = JsonSerializer.Deserialize<Asset>(allText, options)!;
+		}
+		catch (NotSupportedException e)
+		{
+			var assetTypeIsNotRecognized = e.Message.StartsWith(
+				"Deserialization of types without a parameterless constructor",
+				StringComparison.OrdinalIgnoreCase
+			);
+
+			if (assetTypeIsNotRecognized)
+			{
+				return Result.Error($"Unknown type of asset at {filePath.Path}");
+			}
+
+			throw;
+		}
 
 		var assetEditorElementFactory =
 			_assetEditorElementFactories.GetValueOrDefault(
