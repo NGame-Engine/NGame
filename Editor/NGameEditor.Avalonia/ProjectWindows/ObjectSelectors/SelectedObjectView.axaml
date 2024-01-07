@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:objectSelectors="clr-namespace:NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;assembly=NGameEditor.ViewModels"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.ProjectWindows.ObjectSelectors"
+             x:Class="NGameEditor.Avalonia.ProjectWindows.ObjectSelectors.SelectedObjectView"
+             x:DataType="objectSelectors:SelectedObjectViewModel"
+             d:DataContext="{x:Static example:ObjectSelectorDesignData.SelectedObjectExample}"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="100">
+
+	<StackPanel>
+		<Label Content="{Binding FullName}" HorizontalAlignment="Center" />
+		<Label Content="{Binding KindName}" HorizontalAlignment="Center" />
+		<Label Content="{Binding Path}" HorizontalAlignment="Center" />
+	</StackPanel>
+
+</UserControl>

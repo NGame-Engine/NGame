@@ -1,0 +1,43 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:objectSelectors="clr-namespace:NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;assembly=NGameEditor.ViewModels"
+        xmlns:example="clr-namespace:NGameEditor.Avalonia.ProjectWindows.ObjectSelectors"
+        Title="ObjectSelectorWindow"
+        Width="300"
+        Height="400"
+        x:Class="NGameEditor.Avalonia.ProjectWindows.ObjectSelectors.ObjectSelectorWindow"
+        x:DataType="objectSelectors:ObjectSelectorViewModel"
+        d:DataContext="{x:Static example:ObjectSelectorDesignData.ObjectSelectorExample}"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400">
+
+
+	<Grid RowDefinitions="30,*,100">
+
+		<DockPanel Grid.Row="0">
+			<Label DockPanel.Dock="Left" Content="🔍" />
+			<TextBox Text="{Binding SearchFilter}" />
+		</DockPanel>
+
+		<ScrollViewer Grid.Row="1">
+			<ListBox
+				ItemsSource="{Binding AvailableObjects}"
+				SelectedItems="{Binding SelectedObjects}">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+			</ListBox>
+		</ScrollViewer>
+
+		<ContentControl
+			Grid.Row="2"
+			Background="Silver"
+			Content="{Binding SelectedObject}" />
+
+	</Grid>
+
+
+</Window>
