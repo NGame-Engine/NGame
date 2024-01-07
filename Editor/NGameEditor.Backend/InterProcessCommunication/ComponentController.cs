@@ -1,4 +1,4 @@
-﻿using NGame.Ecs;
+using NGame.Ecs;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;

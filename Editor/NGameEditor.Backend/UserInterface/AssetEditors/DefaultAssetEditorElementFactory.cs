@@ -1,4 +1,4 @@
-﻿using NGame.Assets;
+using NGame.Assets;
 using NGameEditor.Backend.UserInterface.ValueEditors;
 
 namespace NGameEditor.Backend.UserInterface.AssetEditors;

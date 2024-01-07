@@ -1,4 +1,4 @@
-﻿using System.Reactive.Linq;
+using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using Microsoft.Extensions.Logging;
@@ -31,7 +31,7 @@ public class DirectoryContentViewModelFactory(
 	{
 		var viewModel = new DirectoryContentViewModel();
 
-		var selectedDirectoriesChangeSet = 
+		var selectedDirectoriesChangeSet =
 			directoryOverviewViewModel
 				.SelectedDirectories
 				.ToObservableChangeSet();
@@ -66,10 +66,10 @@ public class DirectoryContentViewModelFactory(
 	}
 
 
-	private  DirectoryContentItemViewModel Map(DirectoryViewModel directoryViewModel) =>
+	private DirectoryContentItemViewModel Map(DirectoryViewModel directoryViewModel) =>
 		new()
 		{
-			Name=directoryViewModel.Name,
+			Name = directoryViewModel.Name,
 			IsFolder = true,
 			Icon = "📁",
 			Open = ReactiveCommand.Create(() =>
@@ -85,7 +85,7 @@ public class DirectoryContentViewModelFactory(
 	private DirectoryContentItemViewModel Map(FileViewModel fileViewModel) =>
 		new()
 		{
-			Name=fileViewModel.Name,
+			Name = fileViewModel.Name,
 			IsFolder = false,
 			Icon =
 				fileViewModel.Name.EndsWith(AssetConventions.SceneFileEnding)
