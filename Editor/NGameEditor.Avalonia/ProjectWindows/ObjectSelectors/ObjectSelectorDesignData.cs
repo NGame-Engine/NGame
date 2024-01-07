@@ -1,3 +1,4 @@
+using System;
 using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
 
 namespace NGameEditor.Avalonia.ProjectWindows.ObjectSelectors;
@@ -7,7 +8,7 @@ namespace NGameEditor.Avalonia.ProjectWindows.ObjectSelectors;
 public static class ObjectSelectorDesignData
 {
 	public static ObjectViewModel ObjectExample { get; } =
-		new("❔", "Example Obj...");
+		new(Guid.NewGuid(), "❔", "Example Obj...");
 
 	public static SelectedObjectViewModel SelectedObjectExample { get; } =
 		new()
@@ -21,7 +22,7 @@ public static class ObjectSelectorDesignData
 	public static ObjectSelectorViewModel ObjectSelectorExample { get; } =
 		new(SelectedObjectExample)
 		{
-			AvailableObjects =
+			FilteredObjects =
 			{
 				ObjectExample,
 				ObjectExample,

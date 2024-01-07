@@ -22,7 +22,7 @@
 
 		<ScrollViewer Grid.Row="1">
 			<ListBox
-				ItemsSource="{Binding AvailableObjects}"
+				ItemsSource="{Binding FilteredObjects}"
 				SelectedItems="{Binding SelectedObjects}">
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate>

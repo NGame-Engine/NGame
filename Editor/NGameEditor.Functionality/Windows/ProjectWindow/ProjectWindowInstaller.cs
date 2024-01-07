@@ -4,6 +4,7 @@ using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.ViewModels.ProjectWindows;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
+using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow;
 
@@ -51,6 +52,19 @@ public static class ProjectWindowInstaller
 		builder.Services.AddTransient<IDirectoryContentViewModelFactory, DirectoryContentViewModelFactory>();
 		builder.Services.AddSingleton(services =>
 			services.GetRequiredService<IDirectoryContentViewModelFactory>().Create()
+		);
+
+
+		builder.Services.AddSingleton<ObjectSelectionState>();
+		builder.Services.AddTransient<IObjectViewModelMapper, ObjectViewModelMapper>();
+		builder.Services.AddTransient<IObjectSelectorViewModelFactory, ObjectSelectorViewModelFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<IObjectSelectorViewModelFactory>().Create()
+		);
+
+		builder.Services.AddTransient<ISelectedObjectViewModelFactory, SelectedObjectViewModelFactory>();
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<ISelectedObjectViewModelFactory>().Create()
 		);
 
 
