@@ -4,6 +4,7 @@ using DynamicData.Binding;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
+using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.Scenes;
 using NGameEditor.Functionality.Scenes.State;
 using NGameEditor.Results;
@@ -27,7 +28,8 @@ public class InspectorViewModelFactory(
 	IInspectorComponentViewModelMapper inspectorComponentViewModelMapper,
 	IClientRunner<IBackendApi> clientRunner,
 	ILogger<InspectorViewModelFactory> logger,
-	DirectoryContentViewModel directoryContentViewModel
+	DirectoryContentViewModel directoryContentViewModel,
+	IAssetInspectorMapper assetInspectorMapper
 ) : IInspectorViewModelFactory
 {
 	public InspectorViewModel Create()
@@ -128,5 +130,8 @@ public class InspectorViewModelFactory(
 		var file = selectedContentItems.First();
 
 		inspectorViewModel.Title = file.DisplayName;
+
+		var componentEditors = assetInspectorMapper.Map(file);
+		inspectorViewModel.CustomEditors.AddRange(componentEditors);
 	}
 }

@@ -1,5 +1,10 @@
+using System.Text.Json;
+using NGame.Assets;
+using NGame.Core.Assets;
 using NGameEditor.Backend.Scenes.SceneStates;
+using NGameEditor.Backend.UserInterface.AssetEditors;
 using NGameEditor.Backend.UserInterface.ComponentEditors;
+using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -10,6 +15,7 @@ namespace NGameEditor.Backend.UserInterface;
 public interface ICustomEditorListener
 {
 	Result<UiElementDto> GetEditorForEntity(Guid entityId);
+	Result<UiElementDto> GetEditorForFile(AbsolutePath filePath);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
 }
 
@@ -18,7 +24,11 @@ public interface ICustomEditorListener
 public class CustomEditorListener(
 	ISceneState sceneState,
 	IEnumerable<IComponentEditorElementFactory> componentEditorElementFactories,
-	IDefaultComponentEditorElementFactory defaultComponentEditorElementFactory
+	IDefaultComponentEditorElementFactory defaultComponentEditorElementFactory,
+	IEnumerable<AssetTypeEntry> types,
+	IAssetDeserializerOptionsFactory assetDeserializerOptionsFactory,
+	IEnumerable<IAssetEditorElementFactory> assetEditorElementFactories,
+	IDefaultAssetEditorElementFactory defaultAssetEditorElementFactory
 ) : ICustomEditorListener
 {
 	private readonly Dictionary<Guid, IValueUpdater> _editors = new();
@@ -26,11 +36,99 @@ public class CustomEditorListener(
 	private readonly Dictionary<Type, IComponentEditorElementFactory> _componentEditorElementFactories =
 		componentEditorElementFactories.ToDictionary(x => x.Type);
 
+	private readonly Dictionary<Type, IAssetEditorElementFactory> _assetEditorElementFactories =
+		assetEditorElementFactories.ToDictionary(x => x.Type);
+
 
 	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
 		_editors.TryGetValue(uiElementId, out var editor)
 			? editor.SetValue(serializedNewValue)
 			: Result.Error($"Unable to find value editor with ID '{uiElementId}'");
+
+
+	public Result<UiElementDto> GetEditorForFile(AbsolutePath filePath)
+	{
+		_editors.Clear();
+
+		if (filePath.Path.EndsWith(AssetConventions.SceneFileEnding))
+		{
+			return GetEditorForSceneFile();
+		}
+
+		if (filePath.Path.EndsWith(AssetConventions.AssetFileEnding))
+		{
+			return GetEditorForAssetFile(filePath);
+		}
+
+
+		return Result.Success(
+			new UiElementDto(
+				Guid.NewGuid(),
+				UiElementType.StackPanel,
+				null,
+				[]
+			)
+		);
+	}
+
+
+	private Result<UiElementDto> GetEditorForSceneFile() =>
+		Result.Success(
+			new UiElementDto(
+				Guid.NewGuid(),
+				UiElementType.StackPanel,
+				null,
+				[]
+			)
+		);
+
+
+	private Result<UiElementDto> GetEditorForAssetFile(AbsolutePath filePath)
+	{
+		var allText = File.ReadAllText(filePath.Path);
+
+		var assetTypes = types.Select(x => x.SubType);
+		var options = assetDeserializerOptionsFactory.Create(assetTypes);
+		var asset = JsonSerializer.Deserialize<Asset>(allText, options)!;
+
+		var assetEditorElementFactory =
+			_assetEditorElementFactories.GetValueOrDefault(
+				asset.GetType(),
+				defaultAssetEditorElementFactory
+			);
+
+		var editorElements =
+			assetEditorElementFactory
+				.Create(
+					asset,
+					x =>
+					{
+						var newContent = JsonSerializer.Serialize(x, options);
+						File.WriteAllText(filePath.Path, newContent);
+					})
+				.ToList();
+
+		foreach (var editorElement in editorElements)
+		{
+			DiscoverEditorsRecursive(editorElement);
+		}
+
+
+		var uiElements =
+			editorElements
+				.Select(x => x.UiElementDto)
+				.ToArray();
+
+		var uiElement =
+			new UiElementDto(
+				Guid.NewGuid(),
+				UiElementType.StackPanel,
+				null,
+				uiElements
+			);
+
+		return Result.Success(uiElement);
+	}
 
 
 	public Result<UiElementDto> GetEditorForEntity(Guid entityId)

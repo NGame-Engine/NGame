@@ -10,5 +10,6 @@ public static class FilesInstaller
 	public static void AddFiles(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddTransient<IFileBrowserUpdater, FileBrowserUpdater>();
+		builder.Services.AddTransient<IAssetInspectorMapper, AssetInspectorMapper>();
 	}
 }

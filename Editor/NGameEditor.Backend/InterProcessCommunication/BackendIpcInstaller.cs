@@ -27,5 +27,9 @@ public static class BackendIpcInstaller
 		builder.Services.AddSingleton(services =>
 			services.GetRequiredService<IFrontendApiFactory>().Create()
 		);
+
+
+		builder.Services.AddTransient<IEntityController, EntityController>();
+		builder.Services.AddTransient<IComponentController, ComponentController>();
 	}
 }

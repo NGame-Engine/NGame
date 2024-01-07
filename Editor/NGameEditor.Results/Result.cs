@@ -22,6 +22,32 @@ public class Result(Error? errorValue)
 
 	public static ErrorResult Error(string title, string description) =>
 		new(new Error(title, description));
+
+
+	public static Result Try(Func<Result> action)
+	{
+		try
+		{
+			return action();
+		}
+		catch (Exception e)
+		{
+			return Error(e.Message, $"StackTrace: {e.StackTrace}");
+		}
+	}
+
+
+	public static Result<TResult> Try<TResult>(Func<Result<TResult>> action)
+	{
+		try
+		{
+			return action();
+		}
+		catch (Exception e)
+		{
+			return Error(e.Message, $"StackTrace: {e.StackTrace}");
+		}
+	}
 }
 
 

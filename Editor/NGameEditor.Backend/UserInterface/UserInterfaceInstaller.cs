@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGameEditor.Backend.UserInterface.AssetEditors;
 using NGameEditor.Backend.UserInterface.ComponentEditors;
 using NGameEditor.Backend.UserInterface.ValueEditors;
 
@@ -13,6 +14,7 @@ public static class UserInterfaceInstaller
 	{
 		builder.Services.AddTransient<ICustomEditorListener, CustomEditorListener>();
 		builder.Services.AddTransient<IDefaultComponentEditorElementFactory, DefaultComponentEditorElementFactory>();
+		builder.Services.AddTransient<IDefaultAssetEditorElementFactory, DefaultAssetEditorElementFactory>();
 
 		builder.Services.AddTransient<IValueEditorFactory, BoolValueEditorFactory>();
 		builder.Services.AddTransient<IValueEditorFactory, StringValueEditorFactory>();
