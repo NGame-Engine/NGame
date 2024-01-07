@@ -89,6 +89,8 @@ public class CustomEditorListener(
 
 		var assetTypes = projectDefinition.AssetTypes;
 		var options = assetDeserializerOptionsFactory.Create(assetTypes);
+		options.WriteIndented = true;
+
 		Asset asset;
 
 		try
