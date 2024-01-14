@@ -4,9 +4,9 @@ namespace NGameEditor.Bridge.Scenes;
 
 public class ComponentTypeDefinition(
 	string name,
-	string fullTypeName
+	string identifier
 )
 {
 	public string Name { get; } = name;
-	public string FullTypeName { get; } = fullTypeName;
+	public string Identifier { get; } = identifier;
 }

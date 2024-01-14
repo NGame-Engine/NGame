@@ -1,4 +1,6 @@
+using NGame.Assets;
 using NGame.Ecs;
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Scenes;
@@ -28,7 +30,23 @@ public class ProjectInformationInitializer(
 				)
 				.ToList();
 
-		var projectInformation = new ProjectInformation(componentTypeDefinitions);
+		var assetTypeDefinitions =
+			projectDefinition
+				.AssetTypes
+				.Select(x =>
+					new AssetTypeDefinition(
+						AssetAttribute.GetName(x),
+						x.FullName!,
+						x != typeof(Asset)
+					)
+				)
+				.ToList();
+
+		var projectInformation = new ProjectInformation(
+			assetTypeDefinitions,
+			componentTypeDefinitions
+		);
+
 		frontendApi.SetProjectInformation(projectInformation);
 	}
 }

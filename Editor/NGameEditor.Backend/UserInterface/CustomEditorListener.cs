@@ -29,7 +29,7 @@ public class CustomEditorListener(
 	IEnumerable<IAssetEditorElementFactory> assetEditorElementFactories,
 	IDefaultAssetEditorElementFactory defaultAssetEditorElementFactory,
 	ProjectDefinition projectDefinition
-) : ICustomEditorListener
+) : ICustomEditorListener // TODO split up class because it's too big
 {
 	private readonly Dictionary<Guid, IValueUpdater> _editors = new();
 

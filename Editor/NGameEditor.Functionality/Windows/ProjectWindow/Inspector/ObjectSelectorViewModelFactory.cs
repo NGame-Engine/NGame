@@ -5,7 +5,7 @@ using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
 using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
 using ReactiveUI;
 
-namespace NGameEditor.Functionality.Windows.ProjectWindow;
+namespace NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 
 
 

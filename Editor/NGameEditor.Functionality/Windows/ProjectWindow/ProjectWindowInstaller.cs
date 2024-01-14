@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGameEditor.Functionality.Scenes.State;
+using NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 using NGameEditor.ViewModels.ProjectWindows;
 using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
@@ -66,6 +67,8 @@ public static class ProjectWindowInstaller
 		builder.Services.AddSingleton(services =>
 			services.GetRequiredService<ISelectedObjectViewModelFactory>().Create()
 		);
+
+		builder.Services.AddTransient<IObjectSelectorOpener, ObjectSelectorOpener>();
 
 
 		builder.Services.AddTransient<IAddComponentMenuEntryFactory, AddComponentMenuEntryFactory>();

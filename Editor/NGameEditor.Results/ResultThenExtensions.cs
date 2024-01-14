@@ -33,6 +33,15 @@ public static class ResultThenExtensions
 			: Result.Success(onSuccess());
 
 
+	public static Result<TReturn> Then<TReturn>(
+		this Result result,
+		Func<Result<TReturn>> onSuccess
+	) =>
+		result.ErrorValue != null
+			? Result.Error(result.ErrorValue)
+			: onSuccess();
+
+
 	public static Result Then<TInput>(
 		this Result<TInput> result,
 		Func<TInput, Result> onSuccess

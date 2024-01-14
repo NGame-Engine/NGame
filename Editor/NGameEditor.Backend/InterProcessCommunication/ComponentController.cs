@@ -47,11 +47,11 @@ public class ComponentController(
 		var componentType =
 			projectDefinition
 				.ComponentTypes
-				.FirstOrDefault(x => x.FullName == componentTypeDefinition.FullTypeName);
+				.FirstOrDefault(x => x.FullName == componentTypeDefinition.Identifier);
 
 		if (componentType == null)
 		{
-			return Result.Error($"Unable to find Component Type {componentTypeDefinition.FullTypeName}");
+			return Result.Error($"Unable to find Component Type {componentTypeDefinition.Identifier}");
 		}
 
 

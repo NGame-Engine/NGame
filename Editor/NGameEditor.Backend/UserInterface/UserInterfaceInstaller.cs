@@ -18,5 +18,6 @@ public static class UserInterfaceInstaller
 
 		builder.Services.AddTransient<IValueEditorFactory, BoolValueEditorFactory>();
 		builder.Services.AddTransient<IValueEditorFactory, StringValueEditorFactory>();
+		builder.Services.AddTransient<IValueEditorFactory, AssetValueEditorFactory>();
 	}
 }

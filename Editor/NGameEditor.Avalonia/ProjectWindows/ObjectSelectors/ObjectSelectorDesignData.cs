@@ -8,7 +8,12 @@ namespace NGameEditor.Avalonia.ProjectWindows.ObjectSelectors;
 public static class ObjectSelectorDesignData
 {
 	public static ObjectViewModel ObjectExample { get; } =
-		new(Guid.NewGuid(), "❔", "Example Obj...");
+		new(
+			Guid.NewGuid(),
+			"❔",
+			"Example Obj...",
+			ReactiveCommand.Create(() => { })
+		);
 
 	public static SelectedObjectViewModel SelectedObjectExample { get; } =
 		new()

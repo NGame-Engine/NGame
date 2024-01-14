@@ -9,7 +9,7 @@ public class ProjectInformationState
 	public event Action<ProjectInformation>? ProjectInformationUpdated;
 
 	public ProjectInformation ProjectInformation { get; private set; } =
-		new ProjectInformation([]);
+		new([], []);
 
 
 	public void SetProjectInformation(ProjectInformation projectInformation)

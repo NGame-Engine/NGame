@@ -1,9 +1,12 @@
-﻿namespace NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
+﻿using System.Windows.Input;
+
+namespace NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
 
 
 
 public class SelectableObjectState(
-	Guid id
+	Guid id,
+	ICommand chooseObject
 ) : ViewModelBase
 {
 	public Guid Id { get; } = id;
@@ -34,4 +37,7 @@ public class SelectableObjectState(
 		get => _path;
 		set => this.RaiseAndSetIfChanged(ref _path, value);
 	}
+
+
+	public ICommand ChooseObject { get; } = chooseObject;
 }

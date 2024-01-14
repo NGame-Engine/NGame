@@ -1,7 +1,7 @@
 ﻿using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
 using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
 
-namespace NGameEditor.Functionality.Windows.ProjectWindow;
+namespace NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 
 
 
@@ -18,6 +18,7 @@ public class ObjectViewModelMapper : IObjectViewModelMapper
 		new(
 			selectableObjectState.Id,
 			"❔",
-			selectableObjectState.FullName
+			selectableObjectState.FullName,
+			selectableObjectState.ChooseObject
 		);
 }

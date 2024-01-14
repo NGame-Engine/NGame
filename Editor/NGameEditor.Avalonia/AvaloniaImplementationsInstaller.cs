@@ -7,16 +7,19 @@ using NGameEditor.Avalonia.AboutWindows;
 using NGameEditor.Avalonia.LauncherWindows;
 using NGameEditor.Avalonia.ProjectWindows;
 using NGameEditor.Avalonia.ProjectWindows.Logs;
+using NGameEditor.Avalonia.ProjectWindows.ObjectSelectors;
 using NGameEditor.Avalonia.Shared;
 using NGameEditor.Functionality.Logging;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Windows;
 using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Functionality.Windows.ProjectWindow;
+using NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 using NGameEditor.ViewModels.AboutWindows;
 using NGameEditor.ViewModels.LauncherWindows;
 using NGameEditor.ViewModels.ProjectWindows;
 using NGameEditor.ViewModels.ProjectWindows.Logs;
+using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
 using LogWindow = NGameEditor.Avalonia.ProjectWindows.Logs.LogWindow;
 
 namespace NGameEditor.Avalonia;
@@ -41,6 +44,9 @@ public static class AvaloniaImplementationsInstaller
 
 		builder.Services.AddWindow<LogWindow, LogWindowModel>();
 		builder.Services.AddSingleton<ILogWindow, LogWindowContainer>();
+
+		builder.Services.AddWindow<ObjectSelectorWindow, ObjectSelectorViewModel>();
+		builder.Services.AddSingleton<IObjectSelectorWindow, ObjectSelectorWindowContainer>();
 
 
 		builder.Services.AddTransient<IDispatcher>(_ => Dispatcher.UIThread);

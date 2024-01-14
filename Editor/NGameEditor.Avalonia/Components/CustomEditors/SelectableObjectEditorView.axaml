@@ -1,0 +1,17 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customEditors="clr-namespace:NGameEditor.ViewModels.Components.CustomEditors;assembly=NGameEditor.ViewModels"
+             xmlns:example="clr-namespace:NGameEditor.Avalonia.Components.CustomEditors"
+             x:Class="NGameEditor.Avalonia.Components.CustomEditors.SelectableObjectEditorView"
+             x:DataType="customEditors:SelectableObjectEditorViewModel"
+             d:DataContext="{x:Static example:CustomEditorsDesignData.SelectableObjectExample}"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="30">
+
+	<DockPanel>
+		<Button DockPanel.Dock="Right" Content="⭕" Command="{Binding OpenSelector}" />
+		<TextBox Text="{Binding ObjectName}" />
+	</DockPanel>
+
+</UserControl>

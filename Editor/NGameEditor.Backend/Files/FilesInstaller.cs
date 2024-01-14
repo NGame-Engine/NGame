@@ -11,8 +11,8 @@ public static class FilesInstaller
 	{
 		builder.Services.AddSingleton<ProjectFileStatus>();
 
-		builder.Services.AddTransient<IBackendStartListener, ProjectFileInitializer>();
+		builder.Services.AddTransient<IAssetController, AssetController>();
 
-		builder.Services.AddTransient<IFileOpener, FileOpener>();
+		builder.Services.AddTransient<IBackendStartListener, ProjectFileInitializer>();
 	}
 }
