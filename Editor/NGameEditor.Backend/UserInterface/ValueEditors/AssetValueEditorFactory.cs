@@ -1,4 +1,5 @@
-﻿using NGame.Assets;
+﻿using System.Text.Json;
+using NGame.Assets;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -8,18 +9,26 @@ namespace NGameEditor.Backend.UserInterface.ValueEditors;
 
 public class AssetValueEditorFactory : IValueEditorFactory
 {
-	public Type ValueType { get; } = typeof(Asset);
+	public bool CanHandleType(Type type) => type.IsAssignableTo(typeof(Asset));
 
 
 	public EditorElement Create(object? value, Action<object?> setValue)
 	{
 		var id = Guid.NewGuid();
 
+		var jsonAssetInfo = 
+			new JsonAssetInfo
+		{
+			TypeName = "MyTypeName",
+			TypeIdentifier = "MyTypeIdentifier",
+			SelectedFilePath = null
+		};
+
 		return new EditorElement(
 			new UiElementDto(
 				id,
 				UiElementType.Asset,
-				$"{((Asset?)value)?.Id}",
+				JsonSerializer.Serialize(jsonAssetInfo),
 				[]
 			),
 			new ValueUpdater(

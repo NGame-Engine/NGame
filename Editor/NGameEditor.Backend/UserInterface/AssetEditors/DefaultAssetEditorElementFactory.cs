@@ -13,9 +13,6 @@ class DefaultAssetEditorElementFactory(
 	IEnumerable<IValueEditorFactory> valueEditorFactories
 ) : IDefaultAssetEditorElementFactory
 {
-	private readonly Dictionary<Type, IValueEditorFactory> _valueEditorFactories =
-		valueEditorFactories.ToDictionary(x => x.ValueType);
-
 	public Type Type => typeof(Asset);
 
 
@@ -33,7 +30,10 @@ class DefaultAssetEditorElementFactory(
 		{
 			var propertyType = propertyInfo.PropertyType;
 
-			if (_valueEditorFactories.TryGetValue(propertyType, out var factory) == false)
+			var factory = valueEditorFactories
+				.FirstOrDefault(x => x.CanHandleType(propertyType));
+
+			if (factory == null)
 			{
 				continue;
 			}

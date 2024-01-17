@@ -7,7 +7,7 @@ namespace NGameEditor.Backend.UserInterface.ValueEditors;
 
 public class StringValueEditorFactory : IValueEditorFactory
 {
-	public Type ValueType { get; } = typeof(string);
+	public bool CanHandleType(Type type) => type == typeof(string);
 
 
 	public EditorElement Create(object? value, Action<object?> setValue)

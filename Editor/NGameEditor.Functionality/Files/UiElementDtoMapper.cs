@@ -72,7 +72,14 @@ public class UiElementDtoMapper(
 		if (uiElementDto.Type == UiElementType.Asset)
 		{
 			var currentSerializedValue = uiElementDto.CurrentSerializedValue!;
+			
+			
+			
+			
 			var jsonAssetInfo = JsonSerializer.Deserialize<JsonAssetInfo>(currentSerializedValue)!;
+			
+			
+			
 
 			var selectedAssetName =
 				jsonAssetInfo.SelectedFilePath == null
