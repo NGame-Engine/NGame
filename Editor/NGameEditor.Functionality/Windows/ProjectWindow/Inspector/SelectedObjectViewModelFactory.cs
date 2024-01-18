@@ -45,8 +45,8 @@ public class SelectedObjectViewModelFactory(
 
 					var objectViewModel = objects.First();
 					selectedObjectViewModel.FullName = objectViewModel.FullName;
-					selectedObjectViewModel.KindName = "?";
-					selectedObjectViewModel.Path = "Path";
+					selectedObjectViewModel.KindName = objectViewModel.KindName;
+					selectedObjectViewModel.Path = objectViewModel.Path;
 				}
 			)
 			.Subscribe();

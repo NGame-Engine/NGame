@@ -34,7 +34,7 @@ public class ObjectSelectorOpener(
 			.Then(clientRunner.GetClientService)
 			.Then(x => x.GetAssetsOfType(assetTypeDefinition))
 			.Then(x => x.Select(Map))
-			.Then(states => SetNewObjects(states))
+			.Then(SetNewObjects)
 			.IfError(logger.Log);
 	}
 
@@ -56,7 +56,12 @@ public class ObjectSelectorOpener(
 					.GetClientService()
 					.Then(x=>x.UpdateEditorValue())*/
 			})
-		);
+		)
+		{
+			FullName = assetDescription.Name,
+			KindName = assetDescription.AssetTypeDefinition.Name,
+			Path = assetDescription.Path
+		};
 
 
 	private void SetNewObjects(

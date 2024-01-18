@@ -12,17 +12,17 @@ public class AssetValueEditorFactory : IValueEditorFactory
 	public bool CanHandleType(Type type) => type.IsAssignableTo(typeof(Asset));
 
 
-	public EditorElement Create(object? value, Action<object?> setValue)
+	public EditorElement Create(Type type, object? value, Action<object?> setValue)
 	{
 		var id = Guid.NewGuid();
 
-		var jsonAssetInfo = 
+		var jsonAssetInfo =
 			new JsonAssetInfo
-		{
-			TypeName = "MyTypeName",
-			TypeIdentifier = "MyTypeIdentifier",
-			SelectedFilePath = null
-		};
+			{
+				TypeName = AssetAttribute.GetName(type),
+				TypeIdentifier = AssetAttribute.GetDiscriminator(type),
+				SelectedFilePath = null
+			};
 
 		return new EditorElement(
 			new UiElementDto(

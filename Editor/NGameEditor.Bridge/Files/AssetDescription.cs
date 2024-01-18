@@ -8,6 +8,7 @@ public class AssetDescription(
 	Guid id,
 	string name,
 	AssetTypeDefinition assetTypeDefinition,
+	string path,
 	List<PropertyDescription> properties
 )
 {
@@ -15,4 +16,5 @@ public class AssetDescription(
 	public string Name { get; } = name;
 	public AssetTypeDefinition AssetTypeDefinition { get; } = assetTypeDefinition;
 	public List<PropertyDescription> Properties { get; } = properties;
+	public string Path { get; set; } = path;
 }

@@ -40,6 +40,7 @@ public class DefaultComponentEditorElementFactory(
 
 
 			var editorElement = factory.Create(
+				propertyType,
 				propertyInfo.GetValue(entityComponent),
 				x => propertyInfo.SetValue(entityComponent, x)
 			);

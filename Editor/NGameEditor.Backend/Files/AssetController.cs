@@ -56,12 +56,14 @@ public class AssetController(
 				Guid.NewGuid(),
 				"First Asset Option",
 				assetTypeDefinition,
+				AppContext.BaseDirectory,
 				[]
 			),
 			new AssetDescription(
 				Guid.NewGuid(),
 				"Second Asset Option",
 				assetTypeDefinition,
+				AppContext.BaseDirectory,
 				[]
 			)
 		};

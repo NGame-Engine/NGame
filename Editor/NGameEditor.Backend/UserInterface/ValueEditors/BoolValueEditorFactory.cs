@@ -10,7 +10,7 @@ public class BoolValueEditorFactory : IValueEditorFactory
 	public bool CanHandleType(Type type) => type == typeof(bool);
 
 
-	public EditorElement Create(object? value, Action<object?> setValue)
+	public EditorElement Create(Type type, object? value, Action<object?> setValue)
 	{
 		var id = Guid.NewGuid();
 
