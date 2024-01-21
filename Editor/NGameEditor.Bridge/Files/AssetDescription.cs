@@ -1,4 +1,5 @@
 ﻿using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Bridge.Files;
 
@@ -8,7 +9,7 @@ public class AssetDescription(
 	Guid id,
 	string name,
 	AssetTypeDefinition assetTypeDefinition,
-	string path,
+	AbsolutePath path,
 	List<PropertyDescription> properties
 )
 {
@@ -16,5 +17,5 @@ public class AssetDescription(
 	public string Name { get; } = name;
 	public AssetTypeDefinition AssetTypeDefinition { get; } = assetTypeDefinition;
 	public List<PropertyDescription> Properties { get; } = properties;
-	public string Path { get; set; } = path;
+	public AbsolutePath Path { get; set; } = path;
 }

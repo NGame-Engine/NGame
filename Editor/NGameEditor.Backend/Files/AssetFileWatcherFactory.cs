@@ -1,16 +1,23 @@
-using NGame.Assets;
-using NGameEditor.Backend.Files;
+﻿using NGame.Assets;
+using NGameEditor.Backend.Scenes;
 
-namespace NGameEditor.Backend.Scenes;
+namespace NGameEditor.Backend.Files;
 
 
 
-internal class SceneFileAccessorFactory(
+internal interface IAssetFileWatcherFactory
+{
+	IAssetFileWatcher Create();
+}
+
+
+
+internal class AssetFileWatcherFactory(
 	ISceneFileIdReader sceneFileIdReader,
 	IProjectFileWatcher projectFileWatcher
-)
+) : IAssetFileWatcherFactory
 {
-	public ISceneFileWatcher Create()
+	public IAssetFileWatcher Create()
 	{
 		var currentFiles =
 			projectFileWatcher
@@ -18,7 +25,7 @@ internal class SceneFileAccessorFactory(
 				.Where(x => x.Path.EndsWith(AssetConventions.SceneFileEnding))
 				.ToHashSet();
 
-		var sceneFileWatcher = new SceneFileWatcher(
+		var sceneFileWatcher = new AssetFileWatcher(
 			sceneFileIdReader,
 			currentFiles
 		);

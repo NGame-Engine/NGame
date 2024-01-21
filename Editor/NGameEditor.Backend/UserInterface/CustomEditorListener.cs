@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NGame.Assets;
+using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface.AssetEditors;
@@ -28,7 +29,8 @@ public class CustomEditorListener(
 	IAssetDeserializerOptionsFactory assetDeserializerOptionsFactory,
 	IEnumerable<IAssetEditorElementFactory> assetEditorElementFactories,
 	IDefaultAssetEditorElementFactory defaultAssetEditorElementFactory,
-	ProjectDefinition projectDefinition
+	ProjectDefinition projectDefinition,
+	IBackendAssetDeserializer backendAssetDeserializer
 ) : ICustomEditorListener // TODO split up class because it's too big
 {
 	private readonly Dictionary<Guid, IValueUpdater> _editors = new();
@@ -85,38 +87,21 @@ public class CustomEditorListener(
 
 	private Result<UiElementDto> GetEditorForAssetFile(AbsolutePath filePath)
 	{
-		var allText = File.ReadAllText(filePath.Path);
+		var readAssetResult = backendAssetDeserializer.ReadAsset(filePath);
+		if (readAssetResult.HasError) return Result.Error(readAssetResult.ErrorValue!);
 
-		var assetTypes = projectDefinition.AssetTypes;
-		var options = assetDeserializerOptionsFactory.Create(assetTypes);
-		options.WriteIndented = true;
+		Asset asset = readAssetResult.SuccessValue!;
 
-		Asset asset;
-
-		try
-		{
-			asset = JsonSerializer.Deserialize<Asset>(allText, options)!;
-		}
-		catch (NotSupportedException e)
-		{
-			var assetTypeIsNotRecognized = e.Message.StartsWith(
-				"Deserialization of types without a parameterless constructor",
-				StringComparison.OrdinalIgnoreCase
-			);
-
-			if (assetTypeIsNotRecognized)
-			{
-				return Result.Error($"Unknown type of asset at {filePath.Path}");
-			}
-
-			throw;
-		}
 
 		var assetEditorElementFactory =
 			_assetEditorElementFactories.GetValueOrDefault(
 				asset.GetType(),
 				defaultAssetEditorElementFactory
 			);
+
+		var assetTypes = projectDefinition.AssetTypes;
+		var options = assetDeserializerOptionsFactory.Create(assetTypes);
+		options.WriteIndented = true;
 
 		var editorElements =
 			assetEditorElementFactory
