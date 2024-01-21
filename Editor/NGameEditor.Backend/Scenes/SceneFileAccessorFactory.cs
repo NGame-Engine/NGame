@@ -1,59 +1,32 @@
 using NGame.Assets;
-using NGameEditor.Backend.Projects;
+using NGameEditor.Backend.Files;
 
 namespace NGameEditor.Backend.Scenes;
 
 
 
 internal class SceneFileAccessorFactory(
-	ProjectDefinition projectDefinition,
-	ISceneFileIdReader sceneFileIdReader
+	ISceneFileIdReader sceneFileIdReader,
+	IProjectFileWatcher projectFileWatcher
 )
 {
 	public ISceneFileWatcher Create()
 	{
-		var gameProjectFile = projectDefinition.GameProjectFile;
-		var gameFolder = gameProjectFile.GetParentDirectory()!;
-
-		var fileSystemWatcher = new FileSystemWatcher(gameFolder.Path);
-
-		fileSystemWatcher.NotifyFilter =
-			NotifyFilters.Attributes
-			| NotifyFilters.CreationTime
-			| NotifyFilters.DirectoryName
-			| NotifyFilters.FileName
-			| NotifyFilters.LastAccess
-			| NotifyFilters.LastWrite
-			| NotifyFilters.Security
-			| NotifyFilters.Size;
-
-
-		var filePattern = $"*{AssetConventions.SceneFileEnding}";
-		fileSystemWatcher.Filter = filePattern;
-		fileSystemWatcher.IncludeSubdirectories = true;
-		fileSystemWatcher.EnableRaisingEvents = true;
-
-
 		var currentFiles =
-			Directory.GetFiles(
-					gameFolder.Path,
-					filePattern,
-					SearchOption.AllDirectories
-				)
+			projectFileWatcher
+				.GetAllFiles()
+				.Where(x => x.Path.EndsWith(AssetConventions.SceneFileEnding))
 				.ToHashSet();
 
 		var sceneFileWatcher = new SceneFileWatcher(
-			fileSystemWatcher,
 			sceneFileIdReader,
 			currentFiles
 		);
 
-
-		fileSystemWatcher.Changed += sceneFileWatcher.OnChanged;
-		fileSystemWatcher.Created += sceneFileWatcher.OnCreated;
-		fileSystemWatcher.Deleted += sceneFileWatcher.OnDeleted;
-		fileSystemWatcher.Renamed += sceneFileWatcher.OnRenamed;
-		fileSystemWatcher.Error += sceneFileWatcher.OnError;
+		projectFileWatcher.FileChanged += sceneFileWatcher.OnChanged;
+		projectFileWatcher.FileCreated += sceneFileWatcher.OnCreated;
+		projectFileWatcher.FileDeleted += sceneFileWatcher.OnDeleted;
+		projectFileWatcher.FileRenamed += sceneFileWatcher.OnRenamed;
 
 		return sceneFileWatcher;
 	}

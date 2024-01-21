@@ -1,4 +1,3 @@
-using System.Windows.Input;
 using DynamicData.Binding;
 
 namespace NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;

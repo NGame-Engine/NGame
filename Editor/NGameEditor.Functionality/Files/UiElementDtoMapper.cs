@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 using NGameEditor.Results;
