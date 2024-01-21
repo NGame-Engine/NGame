@@ -4,7 +4,7 @@ namespace NGameEditor.Functionality.Shared.Files;
 
 public interface IAppFilePathProvider
 {
-	string GetConfigFilePath();
+	string GetConfigFilePath(); 
 }
 
 
