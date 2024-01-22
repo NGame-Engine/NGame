@@ -30,6 +30,12 @@ public class ObjectSelectorWindowContainer(
 	}
 
 
+	public void Hide()
+	{
+		ObjectSelectorWindow?.Hide();
+	}
+
+
 	private void Close()
 	{
 		if (ObjectSelectorWindow == null) return;

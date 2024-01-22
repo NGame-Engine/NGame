@@ -9,6 +9,7 @@ public partial class ObjectView : UserControl, IView<ObjectViewModel>
 {
 	public ObjectView()
 	{
+		this.DoubleTapped += (_, _) => DoubleClick.Command?.Execute(null);
 		InitializeComponent();
 	}
 }

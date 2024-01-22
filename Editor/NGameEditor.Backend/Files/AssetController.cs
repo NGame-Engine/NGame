@@ -51,6 +51,6 @@ internal class AssetController(
 
 	public Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition) =>
 		assetFileWatcher
-			.GetAssetsOfType(assetTypeDefinition)
+			.GetAssetsOfType(assetTypeDefinition.Identifier)
 			.Then(x => x.ToList());
 }

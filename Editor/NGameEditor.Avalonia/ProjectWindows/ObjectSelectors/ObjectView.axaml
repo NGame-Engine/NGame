@@ -12,6 +12,7 @@
 	<StackPanel>
 		<Label Content="{Binding Icon}" FontSize="50" HorizontalAlignment="Center" />
 		<Label Content="{Binding DisplayName}" />
+		<Button x:Name="DoubleClick" IsVisible="False" Command="{Binding ChooseObject}" />
 	</StackPanel>
 
 </UserControl>

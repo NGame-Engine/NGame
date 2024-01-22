@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using NGame.Assets;
+using NGameEditor.Backend.Files;
+using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 
@@ -7,26 +9,31 @@ namespace NGameEditor.Backend.UserInterface.ValueEditors;
 
 
 
-public class AssetValueEditorFactory : IValueEditorFactory
+internal class AssetValueEditorFactory(
+	IAssetFileWatcher assetFileWatcher
+) : IValueEditorFactory
 {
 	public bool CanHandleType(Type type) => type.IsAssignableTo(typeof(Asset));
 
 
 	public EditorElement Create(Type type, object? value, Action<object?> setValue)
 	{
-		var id = Guid.NewGuid();
+		var uiElementId = Guid.NewGuid();
+
+		var asset = (Asset?)value;
+		var filePath = GetFilePath(type, asset);
 
 		var jsonAssetInfo =
 			new JsonAssetInfo
 			{
 				TypeName = AssetAttribute.GetName(type),
 				TypeIdentifier = AssetAttribute.GetDiscriminator(type),
-				SelectedFilePath = null
+				SelectedFilePath = filePath?.Path
 			};
 
 		return new EditorElement(
 			new UiElementDto(
-				id,
+				uiElementId,
 				UiElementType.Asset,
 				JsonSerializer.Serialize(jsonAssetInfo),
 				[]
@@ -60,5 +67,20 @@ public class AssetValueEditorFactory : IValueEditorFactory
 	private Result<Asset> GetAsset(Guid id)
 	{
 		throw new NotImplementedException();
+	}
+
+
+	private AbsolutePath? GetFilePath(Type assetType, Asset? asset)
+	{
+		if (asset == null) return null;
+
+		var assetId = asset.Id.Id;
+
+		return
+			assetFileWatcher
+				.GetAssetsOfType(AssetAttribute.GetDiscriminator(assetType))
+				.Then(x => x.First(y => y.Id == assetId))
+				.SuccessValue!
+				.FilePath;
 	}
 }

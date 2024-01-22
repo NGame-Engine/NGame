@@ -2,7 +2,6 @@ using System.Reactive.Linq;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
-using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
@@ -71,36 +70,23 @@ public class UiElementDtoMapper(
 		if (uiElementDto.Type == UiElementType.Asset)
 		{
 			var currentSerializedValue = uiElementDto.CurrentSerializedValue!;
-			
-			
-			
-			
+
 			var jsonAssetInfo = JsonSerializer.Deserialize<JsonAssetInfo>(currentSerializedValue)!;
-			
-			
-			
 
 			var selectedAssetName =
 				jsonAssetInfo.SelectedFilePath == null
 					? "(Nothing)"
 					: Path.GetFileName(jsonAssetInfo.SelectedFilePath);
 
-			var assetTypeDefinition = new AssetTypeDefinition(
-				jsonAssetInfo.TypeName,
-				jsonAssetInfo.TypeIdentifier,
-				false // TODO get actual recognized value
-			);
-
-			var checkBoxEditorViewModel = new SelectableObjectEditorViewModel(
+			var selectableObjectEditorViewModel = new SelectableObjectEditorViewModel(
 				selectedAssetName,
 				ReactiveCommand.Create(() =>
 				{
-					objectSelectorOpener.Open(assetTypeDefinition);
+					objectSelectorOpener.Open(jsonAssetInfo, uiElementDto);
 				})
 			);
 
-
-			return checkBoxEditorViewModel;
+			return selectableObjectEditorViewModel;
 		}
 
 		if (uiElementDto.Type == UiElementType.TextEditor)

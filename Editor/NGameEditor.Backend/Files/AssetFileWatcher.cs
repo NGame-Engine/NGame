@@ -10,6 +10,7 @@ namespace NGameEditor.Backend.Files;
 internal interface IAssetFileWatcher
 {
 	Result<IEnumerable<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
+	Result<IEnumerable<AssetDescription>> GetAssetsOfType(string typeIdentifier);
 }
 
 
@@ -31,6 +32,16 @@ internal class AssetFileWatcher(
 		var assetDescriptions =
 			AssetDescriptions
 				.Where(x => x.AssetTypeDefinition.Identifier == assetTypeDefinition.Identifier);
+
+		return Result.Success(assetDescriptions);
+	}
+
+
+	public Result<IEnumerable<AssetDescription>> GetAssetsOfType(string typeIdentifier)
+	{
+		var assetDescriptions =
+			AssetDescriptions
+				.Where(x => x.AssetTypeDefinition.Identifier == typeIdentifier);
 
 		return Result.Success(assetDescriptions);
 	}
@@ -84,7 +95,4 @@ internal class AssetFileWatcher(
 			AssetDescriptions.Add(assetDescription);
 		}
 	}
-
-
-
 }
