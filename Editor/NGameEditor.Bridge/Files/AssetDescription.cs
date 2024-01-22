@@ -9,13 +9,13 @@ public class AssetDescription(
 	Guid id,
 	string name,
 	AssetTypeDefinition assetTypeDefinition,
-	AbsolutePath path,
+	AbsolutePath filePath,
 	List<PropertyDescription> properties
 )
 {
 	public Guid Id { get; } = id;
-	public string Name { get; } = name;
+	public string Name { get; } = name; // TODO remove if name == Path
 	public AssetTypeDefinition AssetTypeDefinition { get; } = assetTypeDefinition;
 	public List<PropertyDescription> Properties { get; } = properties;
-	public AbsolutePath Path { get; set; } = path;
+	public AbsolutePath FilePath { get; } = filePath;
 }

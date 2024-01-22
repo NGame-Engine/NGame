@@ -1,6 +1,5 @@
-using NGame.Assets;
 using NGame.Ecs;
-using NGameEditor.Bridge.Files;
+using NGameEditor.Backend.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Scenes;
@@ -11,7 +10,8 @@ namespace NGameEditor.Backend.Projects;
 
 public class ProjectInformationInitializer(
 	ProjectDefinition projectDefinition,
-	IFrontendApi frontendApi
+	IFrontendApi frontendApi,
+	IAssetTypeDefinitionMapper assetTypeDefinitionMapper
 ) : IBackendStartListener
 {
 	public int Priority => 100;
@@ -33,13 +33,7 @@ public class ProjectInformationInitializer(
 		var assetTypeDefinitions =
 			projectDefinition
 				.AssetTypes
-				.Select(x =>
-					new AssetTypeDefinition(
-						AssetAttribute.GetName(x),
-						x.FullName!,
-						x != typeof(Asset)
-					)
-				)
+				.Select(assetTypeDefinitionMapper.Map)
 				.ToList();
 
 		var projectInformation = new ProjectInformation(

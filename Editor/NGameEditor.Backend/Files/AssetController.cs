@@ -18,10 +18,11 @@ public interface IAssetController
 
 
 
-public class AssetController(
+internal class AssetController(
 	ILogger<AssetController> logger,
 	ISceneFileReader sceneFileReader,
-	ISceneState sceneState
+	ISceneState sceneState,
+	IAssetFileWatcher assetFileWatcher
 ) : IAssetController
 {
 	public Result Open(AbsolutePath fileName)
@@ -48,26 +49,8 @@ public class AssetController(
 	}
 
 
-	public Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition)
-	{
-		var assetDescriptions = new List<AssetDescription>
-		{
-			new AssetDescription(
-				Guid.NewGuid(),
-				"First Asset Option",
-				assetTypeDefinition,
-				new AbsolutePath(AppContext.BaseDirectory),
-				[]
-			),
-			new AssetDescription(
-				Guid.NewGuid(),
-				"Second Asset Option",
-				assetTypeDefinition,
-				new AbsolutePath(AppContext.BaseDirectory),
-				[]
-			)
-		};
-
-		return Result.Success(assetDescriptions);
-	}
+	public Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition) =>
+		assetFileWatcher
+			.GetAssetsOfType(assetTypeDefinition)
+			.Then(x => x.ToList());
 }

@@ -60,7 +60,7 @@ public class ObjectSelectorOpener(
 		{
 			FullName = assetDescription.Name,
 			KindName = assetDescription.AssetTypeDefinition.Name,
-			Path = assetDescription.Path
+			Path = assetDescription.FilePath.Path
 		};
 
 

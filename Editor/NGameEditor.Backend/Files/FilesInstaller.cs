@@ -13,6 +13,8 @@ public static class FilesInstaller
 
 		builder.Services.AddTransient<IAssetController, AssetController>();
 		builder.Services.AddTransient<IBackendAssetDeserializer, BackendAssetDeserializer>();
+		builder.Services.AddTransient<IAssetTypeDefinitionMapper, AssetTypeDefinitionMapper>();
+		builder.Services.AddTransient<IAssetDescriptionReader, AssetDescriptionReader>();
 
 		builder.Services.AddTransient<IBackendStartListener, ProjectFileInitializer>();
 

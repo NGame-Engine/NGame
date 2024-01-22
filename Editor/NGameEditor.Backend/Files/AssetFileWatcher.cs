@@ -1,5 +1,4 @@
 ﻿using NGame.Assets;
-using NGameEditor.Backend.Scenes;
 using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
@@ -16,13 +15,11 @@ internal interface IAssetFileWatcher
 
 
 internal class AssetFileWatcher(
-	ISceneFileIdReader sceneFileIdReader,
-	List<AssetDescription> initialFiles,
-	IAssetDeserializerOptionsFactory assetDeserializerOptionsFactory,
-	IBackendAssetDeserializer backendAssetDeserializer
+	IEnumerable<AssetDescription> initialFiles,
+	IAssetDescriptionReader assetDescriptionReader
 ) : IAssetFileWatcher
 {
-	private List<AssetDescription> AssetDescriptions { get; } = initialFiles;
+	private List<AssetDescription> AssetDescriptions { get; } = new(initialFiles);
 
 
 	private static bool IsAssertFilePath(AbsolutePath absolutePath) =>
@@ -44,9 +41,9 @@ internal class AssetFileWatcher(
 		if (IsAssertFilePath(args.Path) == false) return;
 
 		AssetDescriptions
-			.RemoveAll(x => x.Path == args.Path);
+			.RemoveAll(x => x.FilePath == args.Path);
 
-		var assetDescription = ReadAsset(args.Path);
+		var assetDescription = assetDescriptionReader.ReadAsset(args.Path);
 		AssetDescriptions.Add(assetDescription);
 	}
 
@@ -55,7 +52,7 @@ internal class AssetFileWatcher(
 	{
 		if (IsAssertFilePath(args.Path) == false) return;
 
-		var assetDescription = ReadAsset(args.Path);
+		var assetDescription = assetDescriptionReader.ReadAsset(args.Path);
 		AssetDescriptions.Add(assetDescription);
 	}
 
@@ -65,7 +62,7 @@ internal class AssetFileWatcher(
 		if (IsAssertFilePath(args.Path) == false) return;
 
 		AssetDescriptions
-			.RemoveAll(x => x.Path == args.Path);
+			.RemoveAll(x => x.FilePath == args.Path);
 	}
 
 
@@ -78,19 +75,16 @@ internal class AssetFileWatcher(
 		if (oldPathIsAssetFilePath)
 		{
 			AssetDescriptions
-				.RemoveAll(x => x.Path == args.Path);
+				.RemoveAll(x => x.FilePath == args.Path);
 		}
 
 		if (newPathIsAssetFilePath)
 		{
-			var assetDescription = ReadAsset(args.Path);
+			var assetDescription = assetDescriptionReader.ReadAsset(args.Path);
 			AssetDescriptions.Add(assetDescription);
 		}
 	}
 
 
-	private AssetDescription ReadAsset(AbsolutePath absolutePath)
-	{
-		var readAssetResult = backendAssetDeserializer.ReadAsset(absolutePath);
-	}
+
 }

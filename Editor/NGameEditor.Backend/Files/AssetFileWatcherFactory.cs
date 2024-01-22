@@ -1,5 +1,4 @@
 ﻿using NGame.Assets;
-using NGameEditor.Backend.Scenes;
 
 namespace NGameEditor.Backend.Files;
 
@@ -13,8 +12,8 @@ internal interface IAssetFileWatcherFactory
 
 
 internal class AssetFileWatcherFactory(
-	ISceneFileIdReader sceneFileIdReader,
-	IProjectFileWatcher projectFileWatcher
+	IProjectFileWatcher projectFileWatcher,
+	IAssetDescriptionReader assetDescriptionReader
 ) : IAssetFileWatcherFactory
 {
 	public IAssetFileWatcher Create()
@@ -22,12 +21,12 @@ internal class AssetFileWatcherFactory(
 		var currentFiles =
 			projectFileWatcher
 				.GetAllFiles()
-				.Where(x => x.Path.EndsWith(AssetConventions.SceneFileEnding))
-				.ToHashSet();
+				.Where(x => x.Path.EndsWith(AssetConventions.AssetFileEnding))
+				.Select(assetDescriptionReader.ReadAsset);
 
 		var sceneFileWatcher = new AssetFileWatcher(
-			sceneFileIdReader,
-			currentFiles
+			currentFiles,
+			assetDescriptionReader
 		);
 
 		projectFileWatcher.FileChanged += sceneFileWatcher.OnChanged;
