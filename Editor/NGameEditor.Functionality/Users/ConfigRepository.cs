@@ -62,6 +62,10 @@ public class ConfigRepository : IConfigRepository
 	public void SaveAppConfiguration(NGameStudioConfiguration nGameStudioConfiguration)
 	{
 		var configFilePath = _appFilePathProvider.GetConfigFilePath();
+
+		var configFolder = Path.GetDirectoryName(configFilePath)!;
+		Directory.CreateDirectory(configFolder);
+
 		var json = JsonSerializer.Serialize(nGameStudioConfiguration, GetJsonSerializerOptions());
 		FileHelper.SaveFileContentViaIntermediate(json, configFilePath);
 	}

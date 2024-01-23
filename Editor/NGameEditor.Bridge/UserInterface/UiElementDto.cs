@@ -6,7 +6,8 @@ public enum UiElementType
 {
 	StackPanel,
 	CheckBox,
-	TextEditor
+	TextEditor,
+	Asset
 }
 
 
@@ -22,4 +23,13 @@ public class UiElementDto(
 	public UiElementType Type { get; } = type;
 	public string? CurrentSerializedValue { get; } = currentSerializedValue;
 	public UiElementDto[] Children { get; } = children;
+}
+
+
+
+public class JsonAssetInfo
+{
+	public string TypeName { get; set; } = null!;
+	public string TypeIdentifier { get; set; } = null!;
+	public string? SelectedFilePath { get; set; }
 }

@@ -1,8 +1,10 @@
 using System.Reactive.Linq;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.UserInterface;
+using NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 using NGameEditor.Results;
 using NGameEditor.ViewModels.Components.CustomEditors;
 using ReactiveUI;
@@ -20,7 +22,8 @@ public interface IUiElementDtoMapper
 
 public class UiElementDtoMapper(
 	IClientRunner<IBackendApi> clientRunner,
-	ILogger<AssetInspectorMapper> logger
+	ILogger<AssetInspectorMapper> logger,
+	IObjectSelectorOpener objectSelectorOpener
 ) : IUiElementDtoMapper
 {
 	public CustomEditorViewModel Map(UiElementDto uiElementDto)
@@ -34,7 +37,7 @@ public class UiElementDtoMapper(
 			);
 		}
 
-		if (uiElementDto.Type == UiElementType.CheckBox)
+		if (uiElementDto.Type == UiElementType.CheckBox) // TODO handle UiElementTypes differently 
 		{
 			var currentSerializedValue =
 				bool.TryParse(uiElementDto.CurrentSerializedValue, out var value) &&
@@ -63,6 +66,28 @@ public class UiElementDtoMapper(
 			return checkBoxEditorViewModel;
 		}
 
+
+		if (uiElementDto.Type == UiElementType.Asset)
+		{
+			var currentSerializedValue = uiElementDto.CurrentSerializedValue!;
+
+			var jsonAssetInfo = JsonSerializer.Deserialize<JsonAssetInfo>(currentSerializedValue)!;
+
+			var selectedAssetName =
+				jsonAssetInfo.SelectedFilePath == null
+					? "(Nothing)"
+					: Path.GetFileName(jsonAssetInfo.SelectedFilePath);
+
+			var selectableObjectEditorViewModel = new SelectableObjectEditorViewModel(
+				selectedAssetName,
+				ReactiveCommand.Create(() =>
+				{
+					objectSelectorOpener.Open(jsonAssetInfo, uiElementDto);
+				})
+			);
+
+			return selectableObjectEditorViewModel;
+		}
 
 		if (uiElementDto.Type == UiElementType.TextEditor)
 		{

@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using NGame.Assets;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
 
@@ -9,18 +10,20 @@ namespace NGameEditor.Backend.Files;
 
 
 
-public interface IFileOpener
+public interface IAssetController
 {
 	Result Open(AbsolutePath fileName);
+	Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
 }
 
 
 
-public class FileOpener(
-	ILogger<FileOpener> logger,
+internal class AssetController(
+	ILogger<AssetController> logger,
 	ISceneFileReader sceneFileReader,
-	ISceneState sceneState
-) : IFileOpener
+	ISceneState sceneState,
+	IAssetFileWatcher assetFileWatcher
+) : IAssetController
 {
 	public Result Open(AbsolutePath fileName)
 	{
@@ -44,4 +47,10 @@ public class FileOpener(
 
 		return Result.Success();
 	}
+
+
+	public Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition) =>
+		assetFileWatcher
+			.GetAssetsOfType(assetTypeDefinition.Identifier)
+			.Then(x => x.ToList());
 }

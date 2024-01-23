@@ -1,5 +1,6 @@
 using NGame.SceneAssets;
 using NGameEditor.Backend.Configurations;
+using NGameEditor.Backend.Files;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;

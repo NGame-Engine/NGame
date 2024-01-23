@@ -14,12 +14,6 @@ public static class ScenesInstaller
 		builder.Services.AddSingleton<ISceneState, SceneState>();
 
 
-		builder.Services.AddTransient<SceneFileAccessorFactory>();
-		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<SceneFileAccessorFactory>().Create()
-		);
-
-
 		builder.Services.AddTransient<ILastOpenedSceneLoader, LastOpenedSceneLoader>();
 		builder.Services.AddTransient<IStartSceneLoader, StartSceneLoader>();
 		builder.Services.AddTransient<ISceneFileIdReader, SceneFileIdReader>();

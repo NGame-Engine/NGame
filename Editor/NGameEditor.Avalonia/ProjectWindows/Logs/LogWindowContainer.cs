@@ -6,7 +6,10 @@ namespace NGameEditor.Avalonia.ProjectWindows.Logs;
 
 
 
-public class LogWindowContainer(Func<LogWindow> factoryMethod, IProjectWindow projectWindow) : ILogWindow
+public class LogWindowContainer(
+	Func<LogWindow> factoryMethod,
+	IProjectWindow projectWindow
+) : ILogWindow
 {
 	private LogWindow? LogWindow { get; set; }
 

@@ -1,3 +1,4 @@
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
@@ -27,4 +28,7 @@ public interface IBackendApi
 	Result<UiElementDto> GetEditorForAsset(AbsolutePath filePath);
 	Result<UiElementDto> GetEditorForEntity(Guid entityId);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
+
+
+	Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
 }

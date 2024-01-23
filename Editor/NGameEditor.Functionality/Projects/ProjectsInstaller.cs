@@ -10,8 +10,6 @@ public static class ProjectsInstaller
 {
 	public static void AddProjects(this IHostApplicationBuilder builder)
 	{
-		builder.Services.AddSingleton<IProjectState, ProjectState>();
-
 		builder.Services.AddTransient<IProjectCreator, ProjectCreator>();
 		builder.Services.AddTransient<IExistingProjectOpener, ExistingExistingProjectOpener>();
 

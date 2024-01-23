@@ -13,10 +13,6 @@ public class DefaultComponentEditorElementFactory(
 	IEnumerable<IValueEditorFactory> valueEditorFactories
 ) : IDefaultComponentEditorElementFactory
 {
-	private readonly Dictionary<Type, IValueEditorFactory> _valueEditorFactories =
-		valueEditorFactories.ToDictionary(x => x.ValueType);
-
-
 	public Type Type { get; } = typeof(EntityComponent);
 
 
@@ -34,14 +30,18 @@ public class DefaultComponentEditorElementFactory(
 		{
 			var propertyType = propertyInfo.PropertyType;
 
-			if (_valueEditorFactories.TryGetValue(propertyType, out var factory) == false)
+			var factory = valueEditorFactories
+				.FirstOrDefault(x => x.CanHandleType(propertyType));
+
+			if (factory == null)
 			{
 				continue;
 			}
 
 
 			var editorElement = factory.Create(
-				propertyInfo.GetValue(entityComponent),
+				propertyType,
+				() => propertyInfo.GetValue(entityComponent),
 				x => propertyInfo.SetValue(entityComponent, x)
 			);
 

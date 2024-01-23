@@ -2,6 +2,7 @@ using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.UserInterface;
 using NGameEditor.Bridge;
+using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
@@ -14,7 +15,7 @@ namespace NGameEditor.Backend.InterProcessCommunication;
 public class BackendApi(
 	ISceneSaver sceneSaver,
 	ICustomEditorListener customEditorListener,
-	IFileOpener fileOpener,
+	IAssetController assetController,
 	IEntityController entityController,
 	IComponentController componentController
 )
@@ -24,7 +25,7 @@ public class BackendApi(
 
 
 	public Result OpenFile(AbsolutePath filePath) =>
-		Result.Try(() => fileOpener.Open(filePath));
+		Result.Try(() => assetController.Open(filePath));
 
 
 	public Result<EntityDescription> AddEntity(Guid? parentEntityId) =>
@@ -56,4 +57,8 @@ public class BackendApi(
 
 	public Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue) =>
 		Result.Try(() => customEditorListener.UpdateEditorValue(uiElementId, serializedNewValue));
+
+
+	public Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition) =>
+		Result.Try(() => assetController.GetAssetsOfType(assetTypeDefinition));
 }

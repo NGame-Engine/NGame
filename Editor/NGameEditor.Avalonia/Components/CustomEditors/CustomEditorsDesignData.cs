@@ -19,4 +19,10 @@ public static class CustomEditorsDesignData
 		TextEditorExample,
 		UnrecognizedExample
 	]);
+
+	public static SelectableObjectEditorViewModel SelectableObjectExample { get; } =
+		new(
+			"📦 Example Object",
+			ReactiveCommand.Create(() => { })
+		);
 }

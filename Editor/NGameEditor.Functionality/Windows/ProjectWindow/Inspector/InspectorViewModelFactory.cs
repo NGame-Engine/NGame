@@ -12,7 +12,7 @@ using NGameEditor.ViewModels.ProjectWindows.FileBrowsers;
 using NGameEditor.ViewModels.ProjectWindows.InspectorViews;
 using ReactiveUI;
 
-namespace NGameEditor.Functionality.Windows.ProjectWindow;
+namespace NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 
 
 
