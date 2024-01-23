@@ -1,5 +1,4 @@
-﻿using NGame.Assets;
-using NGameEditor.Bridge.Files;
+﻿using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Backend.Files;

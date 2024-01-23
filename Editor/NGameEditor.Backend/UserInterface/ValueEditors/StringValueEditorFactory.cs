@@ -10,7 +10,7 @@ public class StringValueEditorFactory : IValueEditorFactory
 	public bool CanHandleType(Type type) => type == typeof(string);
 
 
-	public EditorElement Create(Type type, object? value, Action<object?> setValue)
+	public EditorElement Create(Type type, Func<object?> getValue, Action<object?> setValue)
 	{
 		var id = Guid.NewGuid();
 
@@ -18,7 +18,7 @@ public class StringValueEditorFactory : IValueEditorFactory
 			new UiElementDto(
 				id,
 				UiElementType.TextEditor,
-				((string?)value),
+				((string?)getValue()),
 				[]
 			),
 			new ValueUpdater(

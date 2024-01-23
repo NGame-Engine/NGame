@@ -10,7 +10,7 @@ public class BoolValueEditorFactory : IValueEditorFactory
 	public bool CanHandleType(Type type) => type == typeof(bool);
 
 
-	public EditorElement Create(Type type, object? value, Action<object?> setValue)
+	public EditorElement Create(Type type, Func<object?> getValue, Action<object?> setValue)
 	{
 		var id = Guid.NewGuid();
 
@@ -18,7 +18,7 @@ public class BoolValueEditorFactory : IValueEditorFactory
 			new UiElementDto(
 				id,
 				UiElementType.CheckBox,
-				((bool?)value)?.ToString(),
+				((bool?)getValue())?.ToString(),
 				[]
 			),
 			new ValueUpdater(

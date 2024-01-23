@@ -10,17 +10,20 @@ namespace NGameEditor.Backend.UserInterface.ValueEditors;
 
 
 internal class AssetValueEditorFactory(
-	IAssetFileWatcher assetFileWatcher
+	IAssetFileWatcher assetFileWatcher,
+	IBackendAssetDeserializer backendAssetDeserializer
 ) : IValueEditorFactory
 {
 	public bool CanHandleType(Type type) => type.IsAssignableTo(typeof(Asset));
 
 
-	public EditorElement Create(Type type, object? value, Action<object?> setValue)
+	public EditorElement Create(
+		Type type,
+		Func<object?> getValue,
+		Action<object?> setValue
+	)
 	{
-		var uiElementId = Guid.NewGuid();
-
-		var asset = (Asset?)value;
+		var asset = (Asset?)getValue();
 		var filePath = GetFilePath(type, asset);
 
 		var jsonAssetInfo =
@@ -31,9 +34,10 @@ internal class AssetValueEditorFactory(
 				SelectedFilePath = filePath?.Path
 			};
 
+
 		return new EditorElement(
 			new UiElementDto(
-				uiElementId,
+				Guid.NewGuid(),
 				UiElementType.Asset,
 				JsonSerializer.Serialize(jsonAssetInfo),
 				[]
@@ -47,26 +51,24 @@ internal class AssetValueEditorFactory(
 						return Result.Success();
 					}
 
-					return
-						ParseGuid(x)
-							.Then(GetAsset)
-							.Then(setValue);
+					var newValue = JsonSerializer.Deserialize<JsonAssetInfo>(x)!;
+					var selectedFilePath = // TODO check if possible to serialize as AbsolutePath 
+						new AbsolutePath(newValue.SelectedFilePath!);
+
+					var readAssetResult = backendAssetDeserializer.ReadAsset(selectedFilePath);
+					if (readAssetResult.HasError)
+					{
+						return Result.Error(readAssetResult.ErrorValue!);
+					}
+
+					var newAsset = readAssetResult.SuccessValue!;
+					setValue(newAsset);
+
+					return Result.Success();
 				}
 			),
 			[]
 		);
-	}
-
-
-	private Result<Guid> ParseGuid(string input) =>
-		Guid.TryParse(input, out var id) == false
-			? Result.Error($"Unable to parse GUID '{input}'")
-			: Result.Success(id);
-
-
-	private Result<Asset> GetAsset(Guid id)
-	{
-		throw new NotImplementedException();
 	}
 
 

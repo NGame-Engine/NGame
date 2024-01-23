@@ -7,5 +7,9 @@ public interface IValueEditorFactory
 	public bool CanHandleType(Type type);
 
 
-	public EditorElement Create(Type type, object? value, Action<object?> setValue);
+	public EditorElement Create(
+		Type type,
+		Func<object?> getValue,
+		Action<object?> setValue
+	);
 }

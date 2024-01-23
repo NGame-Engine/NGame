@@ -41,7 +41,7 @@ class DefaultAssetEditorElementFactory(
 
 			var editorElement = factory.Create(
 				propertyType,
-				propertyInfo.GetValue(asset),
+				() => propertyInfo.GetValue(asset),
 				x =>
 				{
 					propertyInfo.SetValue(asset, x);
