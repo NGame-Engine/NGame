@@ -103,7 +103,7 @@ internal class SceneFileWatcher(
 		}
 
 		if (oldPathIsSceneFilePath == false &&
-		    newPathIsSceneFilePath == false) return;
+			newPathIsSceneFilePath == false) return;
 
 		HasChanges = true;
 	}

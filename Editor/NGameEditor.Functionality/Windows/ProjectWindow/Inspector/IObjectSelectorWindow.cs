@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
+namespace NGameEditor.Functionality.Windows.ProjectWindow.Inspector;
 
 
 

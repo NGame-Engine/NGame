@@ -1,4 +1,4 @@
-﻿namespace NGameEditor.Bridge.Files;
+namespace NGameEditor.Bridge.Files;
 
 
 

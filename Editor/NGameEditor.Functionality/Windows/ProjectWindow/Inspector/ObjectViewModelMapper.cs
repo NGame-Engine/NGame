@@ -1,4 +1,4 @@
-﻿using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
+using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
 using NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
 
 namespace NGameEditor.Functionality.Windows.ProjectWindow.Inspector;

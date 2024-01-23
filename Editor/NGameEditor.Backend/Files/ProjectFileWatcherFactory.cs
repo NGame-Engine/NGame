@@ -1,4 +1,4 @@
-﻿using NGameEditor.Backend.Projects;
+using NGameEditor.Backend.Projects;
 using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Backend.Files;
@@ -20,7 +20,7 @@ public class ProjectFileWatcherFactory(
 	{
 		var solutionFilePath = projectDefinition.SolutionFilePath;
 		var solutionFolder = solutionFilePath.GetParentDirectory()!;
-		
+
 		var currentFiles =
 			Directory
 				.EnumerateFiles(
@@ -28,14 +28,14 @@ public class ProjectFileWatcherFactory(
 					"*.*",
 					SearchOption.AllDirectories
 					)
-				.Where(x=> 
+				.Where(x =>
 					x.Contains("/bin/") == false &&
-					x.Contains("/obj/") == false 
+					x.Contains("/obj/") == false
 				)
 				.Select(x => new AbsolutePath(x))
 				.ToHashSet();
-		
-		
+
+
 		var fileSystemWatcher = new FileSystemWatcher(solutionFolder.Path)
 		{
 			IncludeSubdirectories = true,

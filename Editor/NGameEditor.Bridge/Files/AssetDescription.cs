@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Scenes;
+using NGameEditor.Bridge.Scenes;
 using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Bridge.Files;
