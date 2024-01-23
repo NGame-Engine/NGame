@@ -79,7 +79,7 @@ public class ObjectSelectorOpener(
 			})
 		)
 		{
-			FullName = assetDescription.Name,
+			Name = assetDescription.Name,
 			KindName = assetDescription.AssetTypeDefinition.Name,
 			Path = assetDescription.FilePath.Path
 		};

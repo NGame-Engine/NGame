@@ -61,5 +61,5 @@ public class ObjectSelectorViewModelFactory(
 
 	private static bool IsMatchingFilter(SelectableObjectState selectableObjectState, string searchFilter) =>
 		string.IsNullOrWhiteSpace(searchFilter) ||
-		selectableObjectState.FullName.Contains(searchFilter, StringComparison.OrdinalIgnoreCase);
+		selectableObjectState.Name.Contains(searchFilter, StringComparison.OrdinalIgnoreCase);
 }

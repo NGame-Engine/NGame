@@ -18,7 +18,7 @@ public class ObjectViewModelMapper : IObjectViewModelMapper
 		new(
 			selectableObjectState.Id,
 			"❔",
-			selectableObjectState.FullName,
+			selectableObjectState.Name,
 			selectableObjectState.ChooseObject
 		);
 }

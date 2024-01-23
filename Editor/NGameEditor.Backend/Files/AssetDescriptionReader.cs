@@ -26,12 +26,16 @@ public class AssetDescriptionReader(
 			throw new InvalidOperationException(readAssetResult.ErrorValue!.Title);
 		}
 
+		
 		var asset = readAssetResult.SuccessValue!;
+
+		var assetName = Path.GetFileNameWithoutExtension(absolutePath.Path);
+		
 		var assetType = asset.GetType();
 
 		return new AssetDescription(
 			asset.Id.Id,
-			AssetAttribute.GetName(assetType),
+			assetName,
 			assetTypeDefinitionMapper.Map(assetType),
 			absolutePath,
 			[]

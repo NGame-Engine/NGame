@@ -4,12 +4,12 @@ namespace NGameEditor.ViewModels.ProjectWindows.ObjectSelectors;
 
 public class SelectedObjectViewModel : ViewModelBase
 {
-	private string _fullName = "";
+	private string _name = "";
 
-	public string FullName
+	public string Name
 	{
-		get => _fullName;
-		set => this.RaiseAndSetIfChanged(ref _fullName, value);
+		get => _name;
+		set => this.RaiseAndSetIfChanged(ref _name, value);
 	}
 
 	private string _kindName = "";

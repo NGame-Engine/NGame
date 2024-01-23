@@ -18,7 +18,7 @@ public static class ObjectSelectorDesignData
 	public static SelectedObjectViewModel SelectedObjectExample { get; } =
 		new()
 		{
-			FullName = "Full Name",
+			Name = "Full Name",
 			KindName = "Example Asset",
 			Path = "Examples/Assets/FullName.ngasset"
 		};

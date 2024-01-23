@@ -32,7 +32,7 @@ public class SelectedObjectViewModelFactory(
 				{
 					if (objects.Count == 0)
 					{
-						selectedObjectViewModel.FullName = "Nothing selected";
+						selectedObjectViewModel.Name = "Nothing selected";
 						selectedObjectViewModel.KindName = "";
 						selectedObjectViewModel.Path = "";
 						return;
@@ -44,7 +44,7 @@ public class SelectedObjectViewModelFactory(
 					}
 
 					var objectViewModel = objects.First();
-					selectedObjectViewModel.FullName = objectViewModel.FullName;
+					selectedObjectViewModel.Name = objectViewModel.Name;
 					selectedObjectViewModel.KindName = objectViewModel.KindName;
 					selectedObjectViewModel.Path = objectViewModel.Path;
 				}
