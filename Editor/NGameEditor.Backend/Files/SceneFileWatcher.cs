@@ -14,6 +14,10 @@ public interface ISceneFileWatcher
 
 
 
+internal record SceneFileEntry(Guid Id, AbsolutePath FilePath);
+
+
+
 internal class SceneFileWatcher(
 	ISceneFileIdReader sceneFileIdReader,
 	HashSet<AbsolutePath> allFiles
@@ -22,7 +26,7 @@ internal class SceneFileWatcher(
 {
 	private HashSet<AbsolutePath> AllFiles { get; } = allFiles;
 	private bool HasChanges { get; set; } = true;
-	private Dictionary<Guid, AbsolutePath> SceneFilesById { get; } = new();
+	private List<SceneFileEntry> SceneFilesById { get; } = new();
 
 
 	private static bool IsSceneFilePath(AbsolutePath absolutePath) =>
@@ -37,10 +41,11 @@ internal class SceneFileWatcher(
 			if (updateResult.HasError) return Result.Error(updateResult.ErrorValue!);
 		}
 
-		return
-			SceneFilesById.TryGetValue(id, out var sceneFilePath)
-				? Result.Success(sceneFilePath)
-				: Result.Error($"Scene with id '{id}' not found");
+		var sceneFileEntry = SceneFilesById.FirstOrDefault(x => x.Id == id);
+
+		return sceneFileEntry == null
+			? Result.Error($"Scene with id '{id}' not found")
+			: Result.Success(sceneFileEntry.FilePath);
 	}
 
 
@@ -54,7 +59,8 @@ internal class SceneFileWatcher(
 			if (result.HasError) return result;
 
 			var id = result.SuccessValue;
-			SceneFilesById.Add(id, filePath);
+			var sceneFileEntry = new SceneFileEntry(id, filePath);
+			SceneFilesById.Add(sceneFileEntry);
 		}
 
 		return Result.Success();
@@ -103,7 +109,7 @@ internal class SceneFileWatcher(
 		}
 
 		if (oldPathIsSceneFilePath == false &&
-			newPathIsSceneFilePath == false) return;
+		    newPathIsSceneFilePath == false) return;
 
 		HasChanges = true;
 	}

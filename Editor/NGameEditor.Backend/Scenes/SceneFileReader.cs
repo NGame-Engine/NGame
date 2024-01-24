@@ -30,15 +30,31 @@ class SceneFileReader(
 		var options = sceneSerializerOptionsFactory.Create(componentTypes);
 
 		var sceneAsset = JsonSerializer.Deserialize<SceneAsset>(allText, options);
+		if (sceneAsset == null)
+		{
+			return Result.Error($"Unable to read scene {sceneFilePath.Path}");
+		}
+
+		var duplicateIds =
+			sceneAsset
+				.Entities
+				.GroupBy(x => x.Id)
+				.Where(x => x.Count() > 1)
+				.Select(x => x.Key)
+				.ToList();
+
+		if (duplicateIds.Any())
+		{
+			var duplicateIdString = string.Join(", ", duplicateIds);
+			return Result.Error($"Duplicate entity IDs {duplicateIdString}");
+		}
 
 
-		return sceneAsset == null
-			? Result.Error($"Unable to read scene {sceneFilePath.Path}")
-			: Result.Success(
-				new BackendScene(
-					sceneFilePath,
-					sceneAsset
-				)
-			);
+		return Result.Success(
+			new BackendScene(
+				sceneFilePath,
+				sceneAsset
+			)
+		);
 	}
 }
