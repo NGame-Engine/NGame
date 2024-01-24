@@ -1,3 +1,5 @@
+using NGameEditor.Bridge.Shared;
+
 namespace NGameEditor.Bridge.UserInterface;
 
 
@@ -31,5 +33,5 @@ public class JsonAssetInfo
 {
 	public string TypeName { get; set; } = null!;
 	public string TypeIdentifier { get; set; } = null!;
-	public string? SelectedFilePath { get; set; }
+	public AbsolutePath? SelectedFilePath { get; set; }
 }

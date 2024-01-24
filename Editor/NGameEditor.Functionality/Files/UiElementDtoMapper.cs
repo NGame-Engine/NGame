@@ -28,95 +28,92 @@ public class UiElementDtoMapper(
 {
 	public CustomEditorViewModel Map(UiElementDto uiElementDto)
 	{
-		if (uiElementDto.Type == UiElementType.StackPanel)
+		return uiElementDto.Type switch
 		{
-			return new StackPanelEditorViewModel(
-				uiElementDto
-					.Children
-					.Select(Map)
-			);
-		}
-
-		if (uiElementDto.Type == UiElementType.CheckBox) // TODO handle UiElementTypes differently 
-		{
-			var currentSerializedValue =
-				bool.TryParse(uiElementDto.CurrentSerializedValue, out var value) &&
-				value;
-
-			var checkBoxEditorViewModel = new CheckBoxEditorViewModel(currentSerializedValue);
-
-			checkBoxEditorViewModel
-				.WhenAnyValue(x => x.IsChecked)
-				.Throttle(TimeSpan.FromMilliseconds(100))
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.Select(x =>
-					clientRunner
-						.GetClientService()
-						.Then(backendService =>
-							backendService
-								.UpdateEditorValue(
-									uiElementDto.Id,
-									x.ToString()
-								)
-						)
-						.IfError(logger.Log)
-				)
-				.Subscribe();
-
-			return checkBoxEditorViewModel;
-		}
+			UiElementType.StackPanel => new StackPanelEditorViewModel(uiElementDto.Children.Select(Map)),
+			UiElementType.CheckBox => CreateCheckBoxEditorViewModel(uiElementDto),
+			UiElementType.Asset => CreateSelectableObjectEditorViewModel(uiElementDto),
+			UiElementType.TextEditor => CreateTextEditorViewModel(uiElementDto),
+			_ => new UnrecognizedCustomEditorViewModel()
+		};
+	}
 
 
-		if (uiElementDto.Type == UiElementType.Asset)
-		{
-			var currentSerializedValue = uiElementDto.CurrentSerializedValue!;
+	private CheckBoxEditorViewModel CreateCheckBoxEditorViewModel(UiElementDto uiElementDto)
+	{
+		var currentSerializedValue =
+			bool.TryParse(uiElementDto.CurrentSerializedValue, out var value) &&
+			value;
 
-			var jsonAssetInfo = JsonSerializer.Deserialize<JsonAssetInfo>(currentSerializedValue)!;
+		var checkBoxEditorViewModel = new CheckBoxEditorViewModel(currentSerializedValue);
 
-			var selectedAssetName =
-				jsonAssetInfo.SelectedFilePath == null
-					? "(Nothing)"
-					: Path.GetFileName(jsonAssetInfo.SelectedFilePath);
-
-			var selectableObjectEditorViewModel = new SelectableObjectEditorViewModel(
-				selectedAssetName,
-				ReactiveCommand.Create(() =>
-				{
-					objectSelectorOpener.Open(jsonAssetInfo, uiElementDto);
-				})
-			);
-
-			return selectableObjectEditorViewModel;
-		}
-
-		if (uiElementDto.Type == UiElementType.TextEditor)
-		{
-			var currentSerializedValue = uiElementDto.CurrentSerializedValue;
-
-			var checkBoxEditorViewModel = new TextEditorViewModel(currentSerializedValue);
-
-			checkBoxEditorViewModel
-				.WhenAnyValue(x => x.Text)
-				.Throttle(TimeSpan.FromMilliseconds(100))
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.Select(x =>
-					clientRunner
-						.GetClientService()
-						.Then(backendService =>
-							backendService
-								.UpdateEditorValue(
-									uiElementDto.Id,
-									x
-								)
-						)
-						.IfError(logger.Log)
-				)
-				.Subscribe();
-
-			return checkBoxEditorViewModel;
-		}
+		checkBoxEditorViewModel
+			.WhenAnyValue(x => x.IsChecked)
+			.Throttle(TimeSpan.FromMilliseconds(100))
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Select(x =>
+				clientRunner
+					.GetClientService()
+					.Then(backendService =>
+						backendService
+							.UpdateEditorValue(
+								uiElementDto.Id,
+								x.ToString()
+							)
+					)
+					.IfError(logger.Log)
+			)
+			.Subscribe();
+		return checkBoxEditorViewModel;
+	}
 
 
-		return new UnrecognizedCustomEditorViewModel();
+	private SelectableObjectEditorViewModel CreateSelectableObjectEditorViewModel(UiElementDto uiElementDto)
+	{
+		var currentSerializedValue = uiElementDto.CurrentSerializedValue!;
+
+		var jsonAssetInfo = JsonSerializer.Deserialize<JsonAssetInfo>(currentSerializedValue)!;
+
+		var selectedAssetName =
+			jsonAssetInfo.SelectedFilePath == null
+				? "(Nothing)"
+				: Path.GetFileName(jsonAssetInfo.SelectedFilePath.Path);
+
+		var selectableObjectEditorViewModel = new SelectableObjectEditorViewModel(
+			selectedAssetName,
+			ReactiveCommand.Create(() =>
+			{
+				objectSelectorOpener.Open(jsonAssetInfo, uiElementDto);
+			})
+		);
+		return selectableObjectEditorViewModel;
+	}
+
+
+	private TextEditorViewModel CreateTextEditorViewModel(UiElementDto uiElementDto)
+	{
+		var currentSerializedValue = uiElementDto.CurrentSerializedValue;
+
+		var textEditorViewModel = new TextEditorViewModel(currentSerializedValue);
+
+		textEditorViewModel
+			.WhenAnyValue(x => x.Text)
+			.Throttle(TimeSpan.FromMilliseconds(100))
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Select(x =>
+				clientRunner
+					.GetClientService()
+					.Then(backendService =>
+						backendService
+							.UpdateEditorValue(
+								uiElementDto.Id,
+								x
+							)
+					)
+					.IfError(logger.Log)
+			)
+			.Subscribe();
+
+		return textEditorViewModel;
 	}
 }

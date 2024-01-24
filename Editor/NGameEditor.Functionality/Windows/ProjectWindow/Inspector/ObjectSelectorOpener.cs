@@ -30,8 +30,7 @@ public class ObjectSelectorOpener(
 	{
 		var assetTypeDefinition = new AssetTypeDefinition(
 			jsonAssetInfo.TypeName,
-			jsonAssetInfo.TypeIdentifier,
-			false // TODO get actual recognized value
+			jsonAssetInfo.TypeIdentifier
 		);
 
 		ClearOldObjects()
@@ -64,9 +63,9 @@ public class ObjectSelectorOpener(
 			assetDescription.Id,
 			ReactiveCommand.Create(() =>
 			{
-				logger.LogInformation("Asset desc open: {FilePath}", assetDescription.FilePath);
+				logger.LogInformation("Asset desc open: {FilePath}", assetDescription.FilePath.Path);
 
-				jsonAssetInfo.SelectedFilePath = assetDescription.FilePath.Path;
+				jsonAssetInfo.SelectedFilePath = assetDescription.FilePath;
 				var serializedValue = JsonSerializer.Serialize(jsonAssetInfo);
 
 				clientRunner

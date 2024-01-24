@@ -40,7 +40,7 @@ public class SelectedObjectViewModelFactory(
 
 					if (objects.Count > 1)
 					{
-						throw new NotImplementedException();
+						throw new NotSupportedException("Multi-object editing not supported");
 					}
 
 					var objectViewModel = objects.First();

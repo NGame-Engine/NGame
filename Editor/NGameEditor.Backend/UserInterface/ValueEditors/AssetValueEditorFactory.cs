@@ -31,7 +31,7 @@ internal class AssetValueEditorFactory(
 			{
 				TypeName = AssetAttribute.GetName(type),
 				TypeIdentifier = AssetAttribute.GetDiscriminator(type),
-				SelectedFilePath = filePath?.Path
+				SelectedFilePath = filePath
 			};
 
 
@@ -52,8 +52,7 @@ internal class AssetValueEditorFactory(
 					}
 
 					var newValue = JsonSerializer.Deserialize<JsonAssetInfo>(x)!;
-					var selectedFilePath = // TODO check if possible to serialize as AbsolutePath 
-						new AbsolutePath(newValue.SelectedFilePath!);
+					var selectedFilePath = newValue.SelectedFilePath!;
 
 					var readAssetResult = backendAssetDeserializer.ReadAsset(selectedFilePath);
 					if (readAssetResult.HasError)
