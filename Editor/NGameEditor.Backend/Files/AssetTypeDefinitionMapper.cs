@@ -17,7 +17,6 @@ public class AssetTypeDefinitionMapper : IAssetTypeDefinitionMapper
 	public AssetTypeDefinition Map(Type assetType) =>
 		new(
 			AssetAttribute.GetName(assetType),
-			AssetAttribute.GetDiscriminator(assetType),
-			assetType != typeof(Asset)
+			AssetAttribute.GetDiscriminator(assetType)
 		);
 }
