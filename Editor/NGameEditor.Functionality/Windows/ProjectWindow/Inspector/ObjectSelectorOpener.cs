@@ -66,7 +66,7 @@ public class ObjectSelectorOpener(
 			{
 				logger.LogInformation("Asset desc open: {FilePath}", assetDescription.FilePath);
 
-				jsonAssetInfo.SelectedFilePath = assetDescription.FilePath.Path;
+				jsonAssetInfo.SelectedFilePath = assetDescription.FilePath;
 				var serializedValue = JsonSerializer.Serialize(jsonAssetInfo);
 
 				clientRunner

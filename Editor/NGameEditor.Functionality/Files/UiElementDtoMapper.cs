@@ -76,7 +76,7 @@ public class UiElementDtoMapper(
 			var selectedAssetName =
 				jsonAssetInfo.SelectedFilePath == null
 					? "(Nothing)"
-					: Path.GetFileName(jsonAssetInfo.SelectedFilePath);
+					: Path.GetFileName(jsonAssetInfo.SelectedFilePath.Path);
 
 			var selectableObjectEditorViewModel = new SelectableObjectEditorViewModel(
 				selectedAssetName,
