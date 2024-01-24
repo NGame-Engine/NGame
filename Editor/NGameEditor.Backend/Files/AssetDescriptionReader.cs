@@ -36,8 +36,7 @@ public class AssetDescriptionReader(
 			asset.Id.Id,
 			assetName,
 			assetTypeDefinitionMapper.Map(assetType),
-			absolutePath,
-			[]
+			absolutePath
 		);
 	}
 }
