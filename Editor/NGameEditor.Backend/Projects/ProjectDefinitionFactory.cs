@@ -30,7 +30,7 @@ public class ProjectDefinitionFactory(
 		var configurationResult = solutionConfigurationReader.Read(solutionFilePath);
 		if (configurationResult.HasError)
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException(configurationResult.ErrorValue!.Title);
 		}
 
 		var solutionConfigurationJsonModel = configurationResult.SuccessValue!;
