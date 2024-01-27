@@ -50,7 +50,12 @@ public class FileBrowserUpdater(FileBrowserViewModel fileBrowserViewModel) : IFi
 		{
 			directoryViewModel
 				.Files
-				.Add(new FileViewModel(fileDescription.Name));
+				.Add(
+					new FileViewModel(
+						fileDescription.Name,
+						fileDescription.AssetTypeDefinition?.Identifier
+					)
+				);
 		}
 
 		return directoryViewModel;

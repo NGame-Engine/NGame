@@ -22,8 +22,8 @@ public static class FileBrowserDesignData
 			},
 			Files =
 			{
-				new FileViewModel("Example File 1.txt"),
-				new FileViewModel("Example File 2.png")
+				new FileViewModel("Example File 1.txt", null),
+				new FileViewModel("Example File 2.png", null)
 			}
 		};
 

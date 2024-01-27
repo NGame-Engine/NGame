@@ -14,11 +14,11 @@ public interface ILastOpenedSceneLoader
 
 
 
-public class LastOpenedSceneLoader(
+internal class LastOpenedSceneLoader(
 	ProjectDefinition projectDefinition,
 	IUserDataSerializer userDataSerializer,
-	ISceneFileWatcher sceneFileWatcher,
-	ISceneFileReader sceneFileReader
+	ISceneFileReader sceneFileReader,
+	IAssetFileWatcher assetFileWatcher
 )
 	: ILastOpenedSceneLoader
 {
@@ -40,11 +40,9 @@ public class LastOpenedSceneLoader(
 			return Result.Error("Never opened a scene before");
 		}
 
-		return sceneFileWatcher
-			.GetPathToSceneFile(lastOpenedProject)
+		return assetFileWatcher
+			.GetById(lastOpenedProject)
+			.Then(x => x.FilePath)
 			.Then(sceneFileReader.ReadSceneFile);
 	}
-
-
-
 }

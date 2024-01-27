@@ -52,16 +52,10 @@ public class CustomEditorListener(
 	{
 		_editors.Clear();
 
-		if (filePath.Path.EndsWith(AssetConventions.SceneFileEnding))
-		{
-			return GetEditorForSceneFile();
-		}
-
 		if (filePath.Path.EndsWith(AssetConventions.AssetFileEnding))
 		{
 			return GetEditorForAssetFile(filePath);
 		}
-
 
 		return Result.Success(
 			new UiElementDto(
@@ -74,23 +68,12 @@ public class CustomEditorListener(
 	}
 
 
-	private Result<UiElementDto> GetEditorForSceneFile() =>
-		Result.Success(
-			new UiElementDto(
-				Guid.NewGuid(),
-				UiElementType.StackPanel,
-				null,
-				[]
-			)
-		);
-
-
 	private Result<UiElementDto> GetEditorForAssetFile(AbsolutePath filePath)
 	{
 		var readAssetResult = backendAssetDeserializer.ReadAsset(filePath);
 		if (readAssetResult.HasError) return Result.Error(readAssetResult.ErrorValue!);
 
-		Asset asset = readAssetResult.SuccessValue!;
+		var asset = readAssetResult.SuccessValue!;
 
 
 		var assetEditorElementFactory =

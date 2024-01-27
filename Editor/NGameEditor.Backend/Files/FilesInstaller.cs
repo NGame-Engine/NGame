@@ -24,10 +24,6 @@ public static class FilesInstaller
 			services.GetRequiredService<IProjectFileWatcherFactory>().Create()
 		);
 
-		builder.Services.AddTransient<ISceneFileWatcherFactory, SceneFileWatcherFactory>();
-		builder.Services.AddSingleton(services =>
-			services.GetRequiredService<ISceneFileWatcherFactory>().Create()
-		);
 
 		builder.Services.AddTransient<IAssetFileWatcherFactory, AssetFileWatcherFactory>();
 		builder.Services.AddSingleton(services =>
