@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <NGAssetListFile>ngame/NGAssets.g.txt</NGAssetListFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <NgAsset Include="**/*.ngasset" Exclude="bin/**/*;obj/**/*"/>
+  </ItemGroup>
+
+
+  <Target Name="AddCompanionFilesToNGAsset" BeforeTargets="BeforeBuild">
+    <Message Text="Discovering NGame assets in $(ProjectDir)"/>
+    <ItemGroup>
+      <NgAsset
+        Include="@(NgAsset -> '%(RelativeDir)%(FileName)')"
+        Condition="Exists('%(RelativeDir)%(FileName)')"
+      />
+      <NgAssetChangeTrigger Include="@(NgAsset);appsettings*.json"/>
+    </ItemGroup>
+    <Message Text="Found NGame assets: @(NgAsset)"/>
+  </Target>
+
+
+  <Target Name="WriteNGAssetListFile"
+          AfterTargets="AddCompanionFilesToNGAsset"
+          Inputs="@(NgAssetChangeTrigger)"
+          Outputs="$(IntermediateOutputPath)$(NGAssetListFile)">
+    <Message Text="Updating NGame asset list..."/>
+    <WriteLinesToFile
+      Lines="@(NgAsset -> '$(NGAssetPackName)//$(ProjectDir)%(Identity)')"
+      File="$(IntermediateOutputPath)$(NGAssetListFile)"
+      Overwrite="true"
+      Encoding="Unicode"/>
+    <Message Text="NGame asset list updated."/>
+  </Target>
+
+
+  <Target Name="DeleteNGAssetListFile" BeforeTargets="BeforeRebuild">
+    <Delete Files="$(IntermediateOutputPath)$(NGAssetListFile)"/>
+  </Target>
+
+  <Target Name="DeleteNGAssetListFile" BeforeTargets="BeforeClean">
+    <Delete Files="$(IntermediateOutputPath)$(NGAssetListFile)"/>
+  </Target>
+
+
+</Project>
