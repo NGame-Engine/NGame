@@ -61,15 +61,15 @@ internal class ProjectFileInitializer(
 	}
 
 
-	private  FileDescription CreateFileDescription(string filePath)
+	private FileDescription CreateFileDescription(string filePath)
 	{
 		var assetTypeDefinition =
 			assetFileWatcher
 				.GetAssetDescriptions()
 				.Where(x => x.FilePath.Path == filePath)
-				.Select(x=>x.AssetTypeDefinition)
+				.Select(x => x.AssetTypeDefinition)
 				.FirstOrDefault();
-		
+
 		return new FileDescription(filePath, assetTypeDefinition);
 	}
 }
