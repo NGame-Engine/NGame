@@ -29,5 +29,5 @@ public class EntityNodeViewModel(
 
 
 	public ContextMenuViewModel ContextMenu { get; } = new([]);
-	public ObservableCollectionExtended<EntityNodeViewModel> Children { get; set; } = new();
+	public ObservableCollectionExtended<EntityNodeViewModel> Children { get; set; } = [];
 }

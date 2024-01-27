@@ -6,6 +6,7 @@ namespace NGameEditor.Functionality.Projects;
 
 public class ProjectInformationState
 {
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	public event Action<ProjectInformation>? ProjectInformationUpdated;
 
 	public ProjectInformation ProjectInformation { get; private set; } =

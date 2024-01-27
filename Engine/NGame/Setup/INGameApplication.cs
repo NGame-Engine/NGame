@@ -31,6 +31,7 @@ public interface INGameApplication
 	/// <see cref="WindowStatus"/> will be set to
 	/// <see cref="WindowStatus.Running"/> when finished.
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action Started;
 
 
@@ -40,6 +41,7 @@ public interface INGameApplication
 	/// <see cref="WindowStatus"/> will be set to
 	/// <see cref="WindowStatus.Deactivated"/> when finished.
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action Deactivated;
 
 	/// <summary>
@@ -52,6 +54,7 @@ public interface INGameApplication
 	/// <see cref="WindowStatus"/> will be set to
 	/// <see cref="WindowStatus.Stopped"/> when finished.
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action Stopped;
 
 	/// <summary>
@@ -60,6 +63,7 @@ public interface INGameApplication
 	/// <see cref="WindowStatus"/> will be set to
 	/// <see cref="WindowStatus.Running"/> when finished.
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action Resumed;
 
 	/// <summary>
@@ -68,6 +72,7 @@ public interface INGameApplication
 	/// to false in this event's argument, the application can be prevented
 	/// from closing if the platform supports that.
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action<DestroyRequestedEventArgs> DestroyRequested;
 
 	/// <summary>
@@ -81,6 +86,7 @@ public interface INGameApplication
 	/// the <see cref="Deactivated"/> and the <see cref="Stopped"/> events
 	/// are raised before this.
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action Destroying;
 
 

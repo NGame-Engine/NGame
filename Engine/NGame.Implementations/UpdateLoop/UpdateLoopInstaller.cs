@@ -8,6 +8,7 @@ namespace NGame.Core.UpdateLoop;
 
 public static class UpdateLoopInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddUpdateLoop(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<ITickScheduler, TickScheduler>();

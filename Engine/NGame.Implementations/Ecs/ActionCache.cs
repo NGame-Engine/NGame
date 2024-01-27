@@ -6,7 +6,7 @@ namespace NGame.Core.Ecs;
 
 public class ActionCache : IUpdatable, IActionCache
 {
-	private readonly List<Action> _frameStartActions = new();
+	private readonly List<Action> _frameStartActions = [];
 
 
 	public int Order { get; set; } = -100000;

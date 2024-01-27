@@ -46,11 +46,13 @@ internal class TimerTick
 	/// <summary>
 	/// Gets the total time elasped since the last reset or when this timer was created.
 	/// </summary>
+	// ReSharper disable once UnusedAutoPropertyAccessor.Global
 	public TimeSpan TotalTime { get; private set; }
 
 	/// <summary>
 	/// Gets the total time elasped since the last reset or when this timer was created, including <see cref="Pause"/>
 	/// </summary>
+	// ReSharper disable once UnusedAutoPropertyAccessor.Global
 	public TimeSpan TotalTimeWithPause { get; private set; }
 
 	/// <summary>
@@ -67,6 +69,7 @@ internal class TimerTick
 	/// Gets or sets the speed factor. Default is 1.0
 	/// </summary>
 	/// <value>The speed factor.</value>
+	// ReSharper disable once UnusedMember.Global
 	public double SpeedFactor
 	{
 		get
@@ -127,11 +130,10 @@ internal class TimerTick
 	public void Resume()
 	{
 		_pauseCount--;
-		if (_pauseCount <= 0)
-		{
-			_timePaused += Stopwatch.GetTimestamp() - _pauseStartTime;
-			_pauseStartTime = 0L;
-		}
+		if (_pauseCount > 0) return;
+
+		_timePaused += Stopwatch.GetTimestamp() - _pauseStartTime;
+		_pauseStartTime = 0L;
 	}
 
 
@@ -152,11 +154,11 @@ internal class TimerTick
 
 		var rawTime = Stopwatch.GetTimestamp();
 		TotalTime = StartTime +
-					new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _timePaused - _startRawTime).Ticks *
-												  _speedFactor));
+		            new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _timePaused - _startRawTime).Ticks *
+		                                          _speedFactor));
 		TotalTimeWithPause = StartTime +
-							 new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _startRawTime).Ticks *
-														   _speedFactor));
+		                     new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _startRawTime).Ticks *
+		                                                   _speedFactor));
 
 		ElapsedTime = ConvertRawToTimestamp(rawTime - _timePaused - _lastRawTime);
 		ElapsedTimeWithPause = ConvertRawToTimestamp(rawTime - _lastRawTime);

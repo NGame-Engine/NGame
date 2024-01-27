@@ -34,8 +34,8 @@ public class CanReadUserPreferencesTests
 			solutionFolder.CombineWith("does_not_exist.sln"),
 			solutionFolder.CombineWith("does_not_exist.csproj"),
 			solutionFolder.CombineWith("does_not_exist.csproj"),
-			new List<Type>(),
-			new List<Type> { typeof(DummyComponent) }
+			[],
+			[typeof(DummyComponent)]
 		);
 
 		builder.Services.AddSingleton(projectDefinition);

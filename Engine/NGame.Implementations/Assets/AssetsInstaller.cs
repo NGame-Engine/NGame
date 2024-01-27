@@ -10,6 +10,7 @@ namespace NGame.Core.Assets;
 
 public static class AssetsInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddAssets(
 		this IHostApplicationBuilder builder
 	)

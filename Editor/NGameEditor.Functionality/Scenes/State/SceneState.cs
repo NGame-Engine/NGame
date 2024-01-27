@@ -7,7 +7,7 @@ namespace NGameEditor.Functionality.Scenes.State;
 
 public class SceneState : ViewModelBase
 {
-	public ObservableCollection<EntityState> SceneEntities { get; } = new();
+	public ObservableCollection<EntityState> SceneEntities { get; } = [];
 
 
 	public void RemoveAllEntities() => SceneEntities.Clear();

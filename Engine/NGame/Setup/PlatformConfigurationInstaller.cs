@@ -6,6 +6,7 @@ namespace NGame.Setup;
 
 public static class PlatformConfigurationInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IConfigurationBuilder ConfigurePlatform(
 		this IConfigurationBuilder configurationBuilder,
 		PlatformConfiguration platformConfiguration

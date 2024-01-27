@@ -7,6 +7,7 @@ namespace NGame.Core.Parallelism;
 
 public static class ParallelismInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddSequentialParallelism(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<OperationRequestScheduler>();
@@ -21,6 +22,7 @@ public static class ParallelismInstaller
 	}
 
 
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddParallelism(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddSingleton<OperationRequestScheduler>();

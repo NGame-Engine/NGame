@@ -12,6 +12,7 @@ namespace NGame.Cli.PackAssets;
 
 public static class PackAssetsCommandInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder InstallPackAssetsCommand(this IHostApplicationBuilder builder)
 	{
 		builder.Services.Configure<CommandArguments>(builder.Configuration);

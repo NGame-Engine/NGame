@@ -7,5 +7,5 @@ namespace NGameEditor.Functionality.Scenes.State;
 
 public class SelectedEntitiesState : ViewModelBase
 {
-	public ObservableCollectionExtended<EntityState> SelectedEntities { get; } = new();
+	public ObservableCollectionExtended<EntityState> SelectedEntities { get; } = [];
 }

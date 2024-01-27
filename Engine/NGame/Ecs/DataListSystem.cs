@@ -48,9 +48,11 @@ public abstract class DataListSystem<TData> : ISystem
 	}
 
 
-	public virtual void OnRemove(Entity entity, TData data)
+	// ReSharper disable UnusedParameter.Global
+	protected virtual void OnRemove(Entity entity, TData data)
 	{
 	}
+	// ReSharper restore UnusedParameter.Global
 
 
 	public virtual bool Contains(Entity entity) => _datas.ContainsKey(entity);

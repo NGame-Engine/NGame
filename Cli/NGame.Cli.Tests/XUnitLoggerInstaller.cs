@@ -9,6 +9,7 @@ namespace NGame.Cli.Tests;
 
 public static class XUnitLoggerInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static ILoggingBuilder AddXUnitLogging(
 		this ILoggingBuilder loggingBuilder,
 		ITestOutputHelper testOutputHelper
@@ -114,21 +115,16 @@ internal sealed class XUnitLogger<T> : XUnitLogger, ILogger<T>
 
 
 
-internal sealed class XUnitLoggerProvider : ILoggerProvider
+internal sealed class XUnitLoggerProvider(
+	ITestOutputHelper testOutputHelper
+) : ILoggerProvider
 {
-	private readonly ITestOutputHelper _testOutputHelper;
-	private readonly LoggerExternalScopeProvider _scopeProvider = new LoggerExternalScopeProvider();
-
-
-	public XUnitLoggerProvider(ITestOutputHelper testOutputHelper)
-	{
-		_testOutputHelper = testOutputHelper;
-	}
+	private readonly LoggerExternalScopeProvider _scopeProvider = new();
 
 
 	public ILogger CreateLogger(string categoryName)
 	{
-		return new XUnitLogger(_testOutputHelper, _scopeProvider, categoryName);
+		return new XUnitLogger(testOutputHelper, _scopeProvider, categoryName);
 	}
 
 

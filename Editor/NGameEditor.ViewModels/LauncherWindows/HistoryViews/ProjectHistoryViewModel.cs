@@ -7,7 +7,7 @@ namespace NGameEditor.ViewModels.LauncherWindows.HistoryViews;
 
 public class ProjectHistoryViewModel : ViewModelBase
 {
-	public ObservableCollection<HistoryEntryViewModel> ProjectUsages { get; } = new();
+	public ObservableCollection<HistoryEntryViewModel> ProjectUsages { get; } = [];
 
 
 	private HistoryEntryViewModel? _selectedEntry;

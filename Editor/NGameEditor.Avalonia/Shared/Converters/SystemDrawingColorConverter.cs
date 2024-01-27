@@ -28,7 +28,7 @@ public class SystemDrawingColorConverter : IValueConverter
 
 	public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
 	{
-		var className = nameof(SystemDrawingColorConverter);
+		const string className = nameof(SystemDrawingColorConverter);
 		throw new NotSupportedException($"{className} is not meant for backwards conversion");
 	}
 }

@@ -14,38 +14,26 @@ public interface IAssetProcessorCollection
 
 
 
-public class AssetProcessorCollection : IAssetProcessorCollection
+public class AssetProcessorCollection(
+	IEnumerable<IAssetProcessor> assetProcessors,
+	ITableOfContentsProvider tableOfContentsProvider,
+	IAssetStreamProvider assetStreamProvider
+)
+	: IAssetProcessorCollection
 {
-	private readonly IEnumerable<IAssetProcessor> _assetProcessors;
-	private readonly ITableOfContentsProvider _tableOfContentsProvider;
-	private readonly IAssetStreamProvider _assetStreamProvider;
-
-
-	public AssetProcessorCollection(
-		IEnumerable<IAssetProcessor> assetProcessors,
-		ITableOfContentsProvider tableOfContentsProvider,
-		IAssetStreamProvider assetStreamProvider
-	)
-	{
-		_assetProcessors = assetProcessors;
-		_tableOfContentsProvider = tableOfContentsProvider;
-		_assetStreamProvider = assetStreamProvider;
-	}
-
-
 	public void Load(Asset asset)
 	{
-		var tableOfContents = _tableOfContentsProvider.Get();
+		var tableOfContents = tableOfContentsProvider.Get();
 		var resourceIdentifiers = tableOfContents.ResourceIdentifiers;
 
 		var mainAssetId = asset.Id;
 		var contentEntry = resourceIdentifiers[mainAssetId];
 
 		var type = asset.GetType();
-		var processors = _assetProcessors.Where(x => x.Type == type);
+		var processors = assetProcessors.Where(x => x.Type == type);
 
 
-		using var assetPackStream = _assetStreamProvider.Open(contentEntry.PackFileName);
+		using var assetPackStream = assetStreamProvider.Open(contentEntry.PackFileName);
 		using var zipArchive = new ZipArchive(assetPackStream, ZipArchiveMode.Read);
 
 		var filePath = contentEntry.FilePath;
@@ -54,9 +42,8 @@ public class AssetProcessorCollection : IAssetProcessorCollection
 
 		foreach (var assetProcessor in processors)
 		{
-			var openStream = () => zipArchiveEntry.Open();
 			using var assetStream = zipArchiveEntry.Open();
-			var assetStreamReader = new AssetStreamReader(asset.Id, companionFilePath, openStream);
+			var assetStreamReader = new AssetStreamReader(asset.Id, companionFilePath, zipArchiveEntry.Open);
 			assetProcessor.Load(asset, assetStreamReader);
 		}
 	}
@@ -64,7 +51,7 @@ public class AssetProcessorCollection : IAssetProcessorCollection
 
 	public void Unload(Asset asset)
 	{
-		var processors = _assetProcessors.Where(x => x.Type == asset.GetType());
+		var processors = assetProcessors.Where(x => x.Type == asset.GetType());
 
 		foreach (var assetProcessor in processors)
 		{

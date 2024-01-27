@@ -13,5 +13,7 @@ public interface IUpdatable
 	/// </summary>
 	int Order { get; set; }
 
+
+	// ReSharper disable once UnusedParameter.Global
 	void Update(GameTime gameTime);
 }

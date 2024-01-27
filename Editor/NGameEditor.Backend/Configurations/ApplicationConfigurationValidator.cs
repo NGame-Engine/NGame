@@ -21,7 +21,7 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 
 		if (argumentsConfiguration == null)
 		{
-			var message = "Unable to read application configuration";
+			const string message = "Unable to read application configuration";
 			throw new InvalidOperationException(message);
 		}
 
@@ -33,7 +33,7 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 		var solutionPath = argumentsConfiguration.Solution;
 		if (string.IsNullOrEmpty(solutionPath))
 		{
-			var message = "No solution path provided";
+			const string message = "No solution path provided";
 			throw new InvalidOperationException(message);
 		}
 

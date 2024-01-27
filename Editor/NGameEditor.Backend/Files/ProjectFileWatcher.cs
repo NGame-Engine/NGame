@@ -4,13 +4,13 @@ namespace NGameEditor.Backend.Files;
 
 
 
-public record FileChangedArgs(AbsolutePath Path, string? Name);
+public record FileChangedArgs(AbsolutePath Path);
 
-public record FileCreatedArgs(AbsolutePath Path, string? Name);
+public record FileCreatedArgs(AbsolutePath Path);
 
-public record FileDeletedArgs(AbsolutePath Path, string? Name);
+public record FileDeletedArgs(AbsolutePath Path);
 
-public record FileRenamedArgs(AbsolutePath Path, string? Name, AbsolutePath OldPath, string? OldName);
+public record FileRenamedArgs(AbsolutePath Path, AbsolutePath OldPath);
 
 
 
@@ -45,7 +45,7 @@ public class ProjectFileWatcher(
 	public void OnChanged(object sender, FileSystemEventArgs e)
 	{
 		var absolutePath = new AbsolutePath(e.FullPath);
-		var fileChangedArgs = new FileChangedArgs(absolutePath, e.Name);
+		var fileChangedArgs = new FileChangedArgs(absolutePath);
 		FileChanged?.Invoke(fileChangedArgs);
 	}
 
@@ -53,7 +53,7 @@ public class ProjectFileWatcher(
 	public void OnCreated(object sender, FileSystemEventArgs e)
 	{
 		var absolutePath = new AbsolutePath(e.FullPath);
-		var fileChangedArgs = new FileCreatedArgs(absolutePath, e.Name);
+		var fileChangedArgs = new FileCreatedArgs(absolutePath);
 		FileCreated?.Invoke(fileChangedArgs);
 	}
 
@@ -61,7 +61,7 @@ public class ProjectFileWatcher(
 	public void OnDeleted(object sender, FileSystemEventArgs e)
 	{
 		var absolutePath = new AbsolutePath(e.FullPath);
-		var fileChangedArgs = new FileDeletedArgs(absolutePath, e.Name);
+		var fileChangedArgs = new FileDeletedArgs(absolutePath);
 		FileDeleted?.Invoke(fileChangedArgs);
 	}
 
@@ -70,21 +70,8 @@ public class ProjectFileWatcher(
 	{
 		var absolutePath = new AbsolutePath(e.FullPath);
 		var oldAbsolutePath = new AbsolutePath(e.OldFullPath);
-
-		var fileChangedArgs = new FileRenamedArgs(
-			absolutePath,
-			e.Name,
-			oldAbsolutePath,
-			e.OldName
-		);
-
+		var fileChangedArgs = new FileRenamedArgs(absolutePath, oldAbsolutePath);
 		FileRenamed?.Invoke(fileChangedArgs);
-	}
-
-
-	public void OnError(object sender, ErrorEventArgs e)
-	{
-		throw e.GetException();
 	}
 
 
@@ -95,7 +82,7 @@ public class ProjectFileWatcher(
 	}
 
 
-	protected virtual void Dispose(bool disposing)
+	protected void Dispose(bool disposing)
 	{
 		if (!disposing) return;
 		fileSystemWatcher.Dispose();

@@ -7,7 +7,9 @@ namespace NGame.Core.SceneAssets;
 
 public interface ISceneUnloadOperationExecutor
 {
+	// ReSharper disable UnusedParameter.Global
 	Scene Execute(Action<float> updateProgress, AssetId assetId);
+	// ReSharper restore UnusedParameter.Global
 }
 
 

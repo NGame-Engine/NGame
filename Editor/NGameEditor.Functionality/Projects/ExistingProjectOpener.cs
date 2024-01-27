@@ -35,7 +35,8 @@ public class ExistingExistingProjectOpener(
 						Name = "NGame Project",
 						Patterns = FilePatterns
 					}
-				}
+				},
+				SuggestedStartLocation = null
 			}
 		);
 

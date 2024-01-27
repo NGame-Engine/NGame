@@ -12,6 +12,7 @@ namespace NGame.Core.Setup;
 
 public static class NGameCoreInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddNGameCore(this IHostApplicationBuilder builder)
 	{
 		builder.AddNGameCommon();

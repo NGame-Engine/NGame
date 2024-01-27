@@ -4,6 +4,6 @@ namespace NGameEditor.Bridge;
 
 public static class BridgeConventions
 {
-	public static readonly string SolutionConfigurationSuffix = ".ngeditor.json";
-	public static readonly string ProcessStartedMessage = "NGameEditor Backend Running on port ";
+	public const string SolutionConfigurationSuffix = ".ngeditor.json";
+	public const string ProcessStartedMessage = "NGameEditor Backend Running on port ";
 }

@@ -34,6 +34,7 @@ public sealed class UiLoggerProvider(
 
 public static class UiLoggerExtensions
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static ILoggingBuilder AddUiLogger(this ILoggingBuilder builder)
 	{
 		builder.Services.TryAddEnumerable(

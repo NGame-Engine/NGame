@@ -65,7 +65,7 @@ public class BackendStarter(
 	}
 
 
-	protected virtual void Dispose(bool disposing)
+	protected void Dispose(bool disposing)
 	{
 		if (!disposing) return;
 		CloseBackend();

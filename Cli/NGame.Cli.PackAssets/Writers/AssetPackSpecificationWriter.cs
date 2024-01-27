@@ -17,17 +17,8 @@ public interface IAssetPackSpecificationWriter
 
 
 
-public class AssetPackSpecificationWriter : IAssetPackSpecificationWriter
+public class AssetPackSpecificationWriter(ILogger<AssetPackSpecificationWriter> logger) : IAssetPackSpecificationWriter
 {
-	private readonly ILogger<AssetPackSpecificationWriter> _logger;
-
-
-	public AssetPackSpecificationWriter(ILogger<AssetPackSpecificationWriter> logger)
-	{
-		_logger = logger;
-	}
-
-
 	public void Write(
 		AssetPackSpecification assetPackSpecification,
 		AbsoluteNormalizedPath targetFolder
@@ -46,11 +37,11 @@ public class AssetPackSpecificationWriter : IAssetPackSpecificationWriter
 		}
 
 
-		_logger.LogInformation("Wrote asset pack {Path}", absoluteFilePath);
+		logger.LogInformation("Wrote asset pack {Path}", absoluteFilePath);
 	}
 
 
-	private void WriteEntry(ZipArchive zipArchive, AssetFileSpecification fileSpecification)
+	private static void WriteEntry(ZipArchive zipArchive, AssetFileSpecification fileSpecification)
 	{
 		var absolutePath = fileSpecification.AbsolutePath.Value;
 		var relativePath = fileSpecification.RelativePath.Value;

@@ -41,5 +41,5 @@ public class InspectorViewModel : ViewModelBase
 	}
 
 
-	public ObservableCollectionExtended<CustomEditorViewModel> CustomEditors { get; } = new();
+	public ObservableCollectionExtended<CustomEditorViewModel> CustomEditors { get; } = [];
 }

@@ -52,7 +52,7 @@ public class ClientRunner<TService> :
 	}
 
 
-	protected virtual void Dispose(bool disposing)
+	protected void Dispose(bool disposing)
 	{
 		if (!disposing) return;
 		CloseCurrentClient();

@@ -6,5 +6,5 @@ public class StackPanelEditorViewModel(
 	IEnumerable<CustomEditorViewModel> items
 ) : CustomEditorViewModel
 {
-	public List<CustomEditorViewModel> Items { get; } = new(items);
+	public List<CustomEditorViewModel> Items { get; } = [..items];
 }

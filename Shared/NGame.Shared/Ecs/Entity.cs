@@ -6,8 +6,8 @@ namespace NGame.Ecs;
 
 public sealed class Entity(Scene scene)
 {
-	internal readonly List<Entity> InternalChildren = new();
-	internal readonly List<EntityComponent> InternalComponents = new();
+	internal readonly List<Entity> InternalChildren = [];
+	internal readonly List<EntityComponent> InternalComponents = [];
 
 
 	public readonly Guid Id = Guid.NewGuid();
@@ -72,7 +72,7 @@ public sealed class Entity(Scene scene)
 	}
 
 
-	private Matrix4x4 GenerateMatrix(Vector3 position, Quaternion rotation, Vector3 scale)
+	private static Matrix4x4 GenerateMatrix(Vector3 position, Quaternion rotation, Vector3 scale)
 	{
 		var scaled = Matrix4x4.CreateScale(scale);
 		var rotated = Matrix4x4.Transform(scaled, rotation);

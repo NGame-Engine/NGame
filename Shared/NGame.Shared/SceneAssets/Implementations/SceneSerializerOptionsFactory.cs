@@ -7,17 +7,10 @@ namespace NGame.SceneAssets.Implementations;
 
 
 
-public class SceneSerializerOptionsFactory : ISceneSerializerOptionsFactory
+public class SceneSerializerOptionsFactory(
+	IEnumerable<JsonConverter> jsonConverters
+) : ISceneSerializerOptionsFactory
 {
-	private readonly IEnumerable<JsonConverter> _jsonConverters;
-
-
-	public SceneSerializerOptionsFactory(IEnumerable<JsonConverter> jsonConverters)
-	{
-		_jsonConverters = jsonConverters;
-	}
-
-
 	public JsonSerializerOptions Create(IEnumerable<Type> componentTypes)
 	{
 		var options = new JsonSerializerOptions
@@ -25,7 +18,7 @@ public class SceneSerializerOptionsFactory : ISceneSerializerOptionsFactory
 			TypeInfoResolver = CreateTypeInfoResolver(componentTypes)
 		};
 
-		foreach (var jsonConverter in _jsonConverters)
+		foreach (var jsonConverter in jsonConverters)
 		{
 			options.Converters.Add(jsonConverter);
 		}

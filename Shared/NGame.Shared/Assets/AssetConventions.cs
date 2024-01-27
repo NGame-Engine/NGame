@@ -4,8 +4,8 @@ namespace NGame.Assets;
 
 public static class AssetConventions
 {
-	public static readonly string AssetIdPropertyName = "Id";
-	public static readonly string AssetFileEnding = ".ngasset";
-	public static readonly string AssetPackSubFolder = ".assets";
-	public static readonly string TableOfContentsFileName = "toc.json";
+	public const string AssetIdPropertyName = "Id";
+	public const string AssetFileEnding = ".ngasset";
+	public const string AssetPackSubFolder = ".assets";
+	public const string TableOfContentsFileName = "toc.json";
 }

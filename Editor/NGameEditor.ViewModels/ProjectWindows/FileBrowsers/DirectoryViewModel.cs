@@ -13,8 +13,8 @@ public class DirectoryViewModel(
 	public string Name { get; } = name;
 	public string DisplayName => $"📁 {Name}";
 
-	public ObservableCollectionExtended<DirectoryViewModel> Directories { get; } = new();
-	public ObservableCollectionExtended<FileViewModel> Files { get; } = new();
+	public ObservableCollectionExtended<DirectoryViewModel> Directories { get; } = [];
+	public ObservableCollectionExtended<FileViewModel> Files { get; } = [];
 
 	public ContextMenuViewModel ContextMenu { get; } = contextMenu;
 }
