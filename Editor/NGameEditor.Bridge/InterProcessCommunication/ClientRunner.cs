@@ -45,8 +45,16 @@ public class ClientRunner<TService> :
 			: Result.Success(TcpClient.Proxy);
 
 
-	void IDisposable.Dispose()
+	public void Dispose()
 	{
+		Dispose(true);
+		GC.SuppressFinalize(this);
+	}
+
+
+	protected void Dispose(bool disposing)
+	{
+		if (!disposing) return;
 		CloseCurrentClient();
 	}
 }

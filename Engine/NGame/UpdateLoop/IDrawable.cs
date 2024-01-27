@@ -13,5 +13,6 @@ public interface IDrawable
 	/// </summary>
 	int Order { get; set; }
 
+	// ReSharper disable once UnusedParameter.Global
 	void Draw(GameTime gameTime);
 }

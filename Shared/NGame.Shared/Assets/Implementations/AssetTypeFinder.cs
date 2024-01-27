@@ -35,9 +35,9 @@ public class AssetTypeFinder : IAssetTypeFinder
 	}
 
 
-	private IEnumerable<Type> GetTypesRecursive(
+	private static IEnumerable<Type> GetTypesRecursive(
 		Assembly assembly,
-		HashSet<Assembly> searchedAssemblies,
+		ISet<Assembly> searchedAssemblies,
 		Func<Type, bool> predicate
 	)
 	{

@@ -12,7 +12,7 @@ namespace NGameEditor.Avalonia.Components.Menus;
 
 public class ContextMenuConverter : IValueConverter
 {
-	public object? Convert(
+	public object Convert(
 		object? value,
 		Type targetType,
 		object? parameter,

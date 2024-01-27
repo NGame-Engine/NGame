@@ -73,11 +73,7 @@ public sealed class ThreadThrottler
 	/// </remarks>
 	public void SetMaxFrequency(int frequencyMax)
 	{
-		if (frequencyMax <= 0)
-		{
-			throw new ArgumentOutOfRangeException($"{nameof(frequencyMax)} must be greater than zero");
-		}
-
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(frequencyMax);
 		_periodDuration = (long)(Stopwatch.Frequency / (double)frequencyMax);
 	}
 
@@ -225,14 +221,12 @@ public sealed class ThreadThrottler
 			}
 
 			var goalStamp = _stamp + _periodDuration + _error;
-			if (Stopwatch.GetTimestamp() < goalStamp)
-			{
-				throttled = true;
-				// 'spinwait' for the rest of the duration
-				while (Stopwatch.GetTimestamp() < goalStamp) { }
-			}
+			if (Stopwatch.GetTimestamp() >= goalStamp) return throttled;
 
-			return throttled;
+
+			while (Stopwatch.GetTimestamp() < goalStamp) { }
+
+			return true;
 		}
 		finally
 		{

@@ -10,9 +10,9 @@ namespace NGame.Core.Ecs;
 
 public static class EcsInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddEcs(this IHostApplicationBuilder builder)
 	{
-
 		builder.Services.AddSingleton<ActionCache>();
 		builder.Services.AddSingleton<IActionCache>(services => services.GetRequiredService<ActionCache>());
 		builder.RegisterUpdatable<ActionCache>();

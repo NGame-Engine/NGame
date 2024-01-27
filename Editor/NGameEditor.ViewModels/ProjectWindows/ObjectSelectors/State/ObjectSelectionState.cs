@@ -6,6 +6,6 @@ namespace NGameEditor.ViewModels.ProjectWindows.ObjectSelectors.State;
 
 public class ObjectSelectionState : ViewModelBase
 {
-	public ObservableCollectionExtended<SelectableObjectState> AvailableObjects { get; } = new();
-	public ObservableCollectionExtended<SelectableObjectState> SelectedObjects { get; } = new();
+	public ObservableCollectionExtended<SelectableObjectState> AvailableObjects { get; } = [];
+	public ObservableCollectionExtended<SelectableObjectState> SelectedObjects { get; } = [];
 }

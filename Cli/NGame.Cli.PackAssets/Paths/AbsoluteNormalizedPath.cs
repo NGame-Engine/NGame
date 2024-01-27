@@ -27,4 +27,7 @@ public class AbsoluteNormalizedPath
 				.Combine(Value, path)
 				.Replace('\\', '/')
 		);
+
+
+	public override string ToString() => $"Absolute Path: {Value}";
 }

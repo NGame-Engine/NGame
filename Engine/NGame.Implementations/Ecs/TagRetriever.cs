@@ -32,7 +32,7 @@ public class TagRetriever : ITagRetriever
 	}
 
 
-	private IEnumerable<Scene> GetAllScenesRecursive(Scene scene)
+	private static IEnumerable<Scene> GetAllScenesRecursive(Scene scene)
 	{
 		yield return scene;
 
@@ -43,7 +43,7 @@ public class TagRetriever : ITagRetriever
 	}
 
 
-	private IEnumerable<Entity> FindTagInTransformsRecursive(Entity transform, string tag)
+	private static IEnumerable<Entity> FindTagInTransformsRecursive(Entity transform, string tag)
 	{
 		if (transform.Tag == tag) yield return transform;
 

@@ -7,6 +7,7 @@ namespace NGame.Core.SceneAssets;
 
 public static class SceneAssetsInstaller
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder AddSceneAssets(this IHostApplicationBuilder builder)
 	{
 		builder.Services.Configure<SceneAssetsConfiguration>(

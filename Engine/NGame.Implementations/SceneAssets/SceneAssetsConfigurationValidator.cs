@@ -13,19 +13,18 @@ public interface ISceneAssetsConfigurationValidator
 
 
 
+// TODO Clean up when list of included scene is used properly
+// ReSharper disable once NotAccessedPositionalProperty.Global
 public record ValidSceneAssetsConfiguration(ISet<AssetId> SceneIds, AssetId StartSceneId);
 
 
 
-public class SceneAssetsConfigurationValidator : ISceneAssetsConfigurationValidator
+public class SceneAssetsConfigurationValidator(
+	IOptions<SceneAssetsConfiguration> nGameConfiguration
+)
+	: ISceneAssetsConfigurationValidator
 {
-	private readonly SceneAssetsConfiguration _sceneAssetsConfiguration;
-
-
-	public SceneAssetsConfigurationValidator(IOptions<SceneAssetsConfiguration> nGameConfiguration)
-	{
-		_sceneAssetsConfiguration = nGameConfiguration.Value;
-	}
+	private readonly SceneAssetsConfiguration _sceneAssetsConfiguration = nGameConfiguration.Value;
 
 
 	public ValidSceneAssetsConfiguration Validate()

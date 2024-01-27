@@ -8,7 +8,7 @@ public class RootSceneAccessor : IRootSceneAccessor
 {
 	public event Action<RootSceneChangedArgs>? RootSceneChanged;
 
-	public Scene RootScene { get; private set; } = new Scene();
+	public Scene RootScene { get; private set; } = new();
 
 
 	public void SetRootScene(Scene scene)

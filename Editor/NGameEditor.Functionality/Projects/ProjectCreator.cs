@@ -29,7 +29,8 @@ public class ProjectCreator(
 			new OpenFolderOptions
 			{
 				Title = "Select folder",
-				AllowMultiple = false
+				AllowMultiple = false,
+				SuggestedStartLocation = null
 			}
 		);
 
@@ -37,7 +38,7 @@ public class ProjectCreator(
 		if (projectParentPath == null) return;
 
 		var projectParentFolder = new AbsolutePath(projectParentPath);
-		var projectName = "UI-Created";
+		const string projectName = "UI-Created";
 
 		await
 			CreateProject(projectParentFolder, projectName)
@@ -65,7 +66,7 @@ public class ProjectCreator(
 			directory.Path
 		);
 
-		var successString = "The template \"NGame Project\" was created successfully.";
+		const string successString = "The template \"NGame Project\" was created successfully.";
 		if (createOutput.Contains(successString) == false)
 		{
 			return Result.Error($"Unable to create project: {createOutput}");

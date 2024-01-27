@@ -6,5 +6,5 @@ namespace NGameEditor.ViewModels.LauncherWindows.Logs;
 
 public class LauncherLogViewModel : ViewModelBase
 {
-	public ObservableCollection<LauncherLogEntryViewModel> LogEntries { get; } = new();
+	public ObservableCollection<LauncherLogEntryViewModel> LogEntries { get; } = [];
 }

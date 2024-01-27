@@ -2,8 +2,9 @@ namespace NGame.Parallelism;
 
 
 
-public interface IRunningOperation<TProgress, TResult>
+public interface IRunningOperation<out TProgress, out TResult>
 {
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	event Action<TProgress> ProgressUpdated;
 	event Action<TResult> Completed;
 

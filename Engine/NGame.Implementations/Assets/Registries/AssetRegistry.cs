@@ -42,9 +42,7 @@ public class AssetRegistry : IAssetRegistry
 
 
 	public Asset? Get(AssetId assetId) =>
-		_assets.TryGetValue(assetId, out var asset)
-			? asset
-			: null;
+		_assets.GetValueOrDefault(assetId);
 
 
 	public TAsset? Get<TAsset>(AssetId assetId) where TAsset : Asset =>

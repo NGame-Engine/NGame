@@ -6,17 +6,11 @@ namespace NGame.Assets.Implementations;
 
 
 
-public class AssetDeserializerOptionsFactory : IAssetDeserializerOptionsFactory
+public class AssetDeserializerOptionsFactory(
+	IEnumerable<JsonConverter> jsonConverters
+)
+	: IAssetDeserializerOptionsFactory
 {
-	private readonly IEnumerable<JsonConverter> _jsonConverters;
-
-
-	public AssetDeserializerOptionsFactory(IEnumerable<JsonConverter> jsonConverters)
-	{
-		_jsonConverters = jsonConverters;
-	}
-
-
 	public JsonSerializerOptions Create(IEnumerable<Type> assetTypes)
 	{
 		var options = new JsonSerializerOptions
@@ -24,7 +18,7 @@ public class AssetDeserializerOptionsFactory : IAssetDeserializerOptionsFactory
 			TypeInfoResolver = CreateTypeInfoResolver(assetTypes)
 		};
 
-		foreach (var jsonConverter in _jsonConverters)
+		foreach (var jsonConverter in jsonConverters)
 		{
 			options.Converters.Add(jsonConverter);
 		}
@@ -57,7 +51,7 @@ public class AssetDeserializerOptionsFactory : IAssetDeserializerOptionsFactory
 		var jsonPolymorphismOptions = new JsonPolymorphismOptions
 		{
 			IgnoreUnrecognizedTypeDiscriminators = true,
-			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
+			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization
 		};
 
 		foreach (var assetType in assetTypes)

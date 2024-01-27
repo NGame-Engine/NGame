@@ -2,6 +2,4 @@ namespace NGameEditor.ViewModels.Components.CustomEditors;
 
 
 
-public class UnrecognizedCustomEditorViewModel : CustomEditorViewModel
-{
-}
+public class UnrecognizedCustomEditorViewModel : CustomEditorViewModel;

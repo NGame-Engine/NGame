@@ -17,8 +17,8 @@ public class HierarchyViewModel : ViewModelBase
 		set => this.RaiseAndSetIfChanged(ref _searchFilter, value);
 	}
 
-	public ObservableCollectionExtended<EntityNodeViewModel> SearchResults { get; } = new();
-	public ObservableCollection<EntityNodeViewModel> SelectedEntities { get; } = new();
+	public ObservableCollectionExtended<EntityNodeViewModel> SearchResults { get; } = [];
+	public ObservableCollection<EntityNodeViewModel> SelectedEntities { get; } = [];
 
 
 	public ICommand? AddEntity { get; set; }

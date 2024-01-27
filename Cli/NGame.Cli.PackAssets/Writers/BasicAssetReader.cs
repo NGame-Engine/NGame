@@ -6,9 +6,7 @@ namespace NGame.Cli.PackAssets.Writers;
 
 
 
-public class BasicAsset : Asset
-{
-}
+public class BasicAsset : Asset;
 
 
 
@@ -19,21 +17,12 @@ public interface IBasicAssetReader
 
 
 
-public class BasicAssetReader : IBasicAssetReader
+public class BasicAssetReader(IEnumerable<JsonConverter> jsonConverters) : IBasicAssetReader
 {
-	private readonly IEnumerable<JsonConverter> _jsonConverters;
-
-
-	public BasicAssetReader(IEnumerable<JsonConverter> jsonConverters)
-	{
-		_jsonConverters = jsonConverters;
-	}
-
-
 	public BasicAsset ReadFile(string filePath)
 	{
 		var jsonSerializerOptions = new JsonSerializerOptions();
-		foreach (var jsonConverter in _jsonConverters)
+		foreach (var jsonConverter in jsonConverters)
 		{
 			jsonSerializerOptions.Converters.Add(jsonConverter);
 		}

@@ -7,8 +7,8 @@ namespace NGame.Core.Parallelism;
 
 public class OperationRequestScheduler : IOperationRequestScheduler, IUpdatable
 {
-	private readonly List<IUpdatingOperation> _operationsToStart = new();
-	private readonly List<IUpdatingOperation> _operationsToWatch = new();
+	private readonly List<IUpdatingOperation> _operationsToStart = [];
+	private readonly List<IUpdatingOperation> _operationsToWatch = [];
 
 
 	public int Order { get; set; }

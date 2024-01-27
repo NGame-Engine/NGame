@@ -12,9 +12,10 @@ namespace NGame.Shared.Tests.SceneAssets.Implementations;
 
 public class SceneSerializerOptionsFactoryTests
 {
-	[Component(Discriminator = "TestComponent")]
+	[Component(Discriminator = "TestComponent", Name = "int component")]
 	public class TestComponent : EntityComponent
 	{
+		// ReSharper disable once UnusedAutoPropertyAccessor.Global
 		public int TestValue { get; init; }
 	}
 
@@ -34,14 +35,13 @@ public class SceneSerializerOptionsFactoryTests
 	public void CreateTypeInfoModifier_SimpleType_CreatesCorrectType()
 	{
 		// Arrange
-		var json =
-			"""
-			{
-			  "$type": "TestComponent",
-			  "Id": "39E36192-5447-4C11-BF48-24319A0882D0",
-			  "TestValue": 4
-			}
-			""";
+		const string json = """
+		                    {
+		                      "$type": "TestComponent",
+		                      "Id": "39E36192-5447-4C11-BF48-24319A0882D0",
+		                      "TestValue": 4
+		                    }
+		                    """;
 
 
 		var optionsFactory = CreateOptionsFactory();
@@ -64,27 +64,26 @@ public class SceneSerializerOptionsFactoryTests
 	public void CreateTypeInfoModifier_NestedType_CreatesCorrectType()
 	{
 		// Arrange
-		var json =
-			"""
-			{
-			  "$type": "NGame.SceneAsset",
-			  "Id": "0F85A235-5A85-4BFB-8BCB-2B7CAF7BF8CC",
-			  "SerializerVersion": "0.0.1",
-			  "Entities": [
-			    {
-			      "Id": "251D97B8-433B-4618-BD06-72898C91D86F",
-			      "Name": "First Entity",
-			      "Components": [
-			        {
-			          "$type": "TestComponent",
-			          "Id": "39E36192-5447-4C11-BF48-24319A0882D0",
-			          "TestValue": 4
-			        }
-			      ]
-			    }
-			  ]
-			}
-			""";
+		const string json = """
+		                    {
+		                      "$type": "NGame.SceneAsset",
+		                      "Id": "0F85A235-5A85-4BFB-8BCB-2B7CAF7BF8CC",
+		                      "SerializerVersion": "0.0.1",
+		                      "Entities": [
+		                        {
+		                          "Id": "251D97B8-433B-4618-BD06-72898C91D86F",
+		                          "Name": "First Entity",
+		                          "Components": [
+		                            {
+		                              "$type": "TestComponent",
+		                              "Id": "39E36192-5447-4C11-BF48-24319A0882D0",
+		                              "TestValue": 4
+		                            }
+		                          ]
+		                        }
+		                      ]
+		                    }
+		                    """;
 
 
 		var optionsFactory = CreateOptionsFactory();

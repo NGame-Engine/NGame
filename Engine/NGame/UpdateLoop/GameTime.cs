@@ -55,18 +55,21 @@ public sealed class GameTime
 	/// Gets the number of frame per second (FPS) for the current running game.
 	/// </summary>
 	/// <value>The frame per second.</value>
+	// ReSharper disable once UnusedAutoPropertyAccessor.Global
 	public float FramePerSecond { get; private set; }
 
 	/// <summary>
 	/// Gets the time per frame.
 	/// </summary>
 	/// <value>The time per frame.</value>
+	// ReSharper disable once UnusedAutoPropertyAccessor.Global
 	public TimeSpan TimePerFrame { get; private set; }
 
 	/// <summary>
 	/// Gets a value indicating whether the <see cref="FramePerSecond"/> and <see cref="TimePerFrame"/> were updated for this frame.
 	/// </summary>
 	/// <value><c>true</c> if the <see cref="FramePerSecond"/> and <see cref="TimePerFrame"/> were updated for this frame; otherwise, <c>false</c>.</value>
+	// ReSharper disable once UnusedAutoPropertyAccessor.Global
 	public bool FramePerSecondUpdated { get; private set; }
 
 
@@ -74,6 +77,7 @@ public sealed class GameTime
 	/// Gets the amount of time elapsed multiplied by the time factor.
 	/// </summary>
 	/// <value>The warped elapsed time</value>
+	// ReSharper disable once UnusedAutoPropertyAccessor.Global
 	public TimeSpan WarpElapsed { get; private set; }
 
 

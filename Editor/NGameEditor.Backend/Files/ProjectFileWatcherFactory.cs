@@ -27,7 +27,7 @@ public class ProjectFileWatcherFactory(
 					solutionFolder.Path,
 					"*.*",
 					SearchOption.AllDirectories
-					)
+				)
 				.Where(x =>
 					x.Contains("/bin/") == false &&
 					x.Contains("/obj/") == false
@@ -55,13 +55,13 @@ public class ProjectFileWatcherFactory(
 		var projectFileWatcher = new ProjectFileWatcher(
 			currentFiles,
 			fileSystemWatcher
-			);
+		);
 
 		fileSystemWatcher.Changed += projectFileWatcher.OnChanged;
 		fileSystemWatcher.Created += projectFileWatcher.OnCreated;
 		fileSystemWatcher.Deleted += projectFileWatcher.OnDeleted;
 		fileSystemWatcher.Renamed += projectFileWatcher.OnRenamed;
-		fileSystemWatcher.Error += projectFileWatcher.OnError;
+		fileSystemWatcher.Error += (_, e) => throw e.GetException();
 
 		return projectFileWatcher;
 	}

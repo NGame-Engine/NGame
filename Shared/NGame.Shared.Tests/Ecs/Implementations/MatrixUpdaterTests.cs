@@ -16,7 +16,7 @@ public class MatrixUpdaterTests
 	{
 		// Arrange
 		var matrixUpdater = Create();
-		var entityComponentChanger = new EntityEditor();
+		IEntityEditor entityComponentChanger = new EntityEditor();
 
 		var scene = new Scene();
 		var rootEntity = entityComponentChanger.CreateEntity(scene);

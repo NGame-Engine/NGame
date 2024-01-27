@@ -18,6 +18,9 @@ public class ExistingExistingProjectOpener(
 	ILauncherWindow launcherWindow
 ) : IExistingProjectOpener
 {
+	private static readonly string[] FilePatterns = ["*.sln"];
+
+
 	public async Task OnOpenExistingProject()
 	{
 		var filePaths = await launcherWindow.AskUserToPickFile(
@@ -30,9 +33,10 @@ public class ExistingExistingProjectOpener(
 					new FileType
 					{
 						Name = "NGame Project",
-						Patterns = new[] { "*.sln" }
+						Patterns = FilePatterns
 					}
-				}
+				},
+				SuggestedStartLocation = null
 			}
 		);
 

@@ -9,7 +9,7 @@ public class ObjectSelectorViewModel(
 ) : ViewModelBase
 {
 	public string SearchFilter { get; set; } = "";
-	public ObservableCollectionExtended<ObjectViewModel> FilteredObjects { get; } = new();
-	public ObservableCollectionExtended<ObjectViewModel> SelectedObjects { get; } = new();
+	public ObservableCollectionExtended<ObjectViewModel> FilteredObjects { get; } = [];
+	public ObservableCollectionExtended<ObjectViewModel> SelectedObjects { get; } = [];
 	public SelectedObjectViewModel SelectedObject { get; set; } = selectedObject;
 }

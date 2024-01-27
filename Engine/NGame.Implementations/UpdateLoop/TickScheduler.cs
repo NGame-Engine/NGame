@@ -196,18 +196,10 @@ public class TickScheduler : ITickScheduler
 
 
 
-	private struct TickTiming
+	private struct TickTiming(TimeSpan elapsedTimePerUpdate, int updateCount, float drawInterpolationFactor)
 	{
-		public readonly TimeSpan ElapsedTimePerUpdate;
-		public readonly int UpdateCount;
-		public readonly float DrawInterpolationFactor;
-
-
-		public TickTiming(TimeSpan elapsedTimePerUpdate, int updateCount, float drawInterpolationFactor)
-		{
-			ElapsedTimePerUpdate = elapsedTimePerUpdate;
-			UpdateCount = updateCount;
-			DrawInterpolationFactor = drawInterpolationFactor;
-		}
+		public readonly TimeSpan ElapsedTimePerUpdate = elapsedTimePerUpdate;
+		public readonly int UpdateCount = updateCount;
+		public readonly float DrawInterpolationFactor = drawInterpolationFactor;
 	}
 }

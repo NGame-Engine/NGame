@@ -51,7 +51,7 @@ public class EntityEditor : IEntityEditor
 	}
 
 
-	private void ChangeParent(Entity child, Scene newScene, Entity? newParent)
+	private static void ChangeParent(Entity child, Scene newScene, Entity? newParent)
 	{
 		child.Parent?.InternalChildren.Remove(child);
 		child.Parent = newParent;

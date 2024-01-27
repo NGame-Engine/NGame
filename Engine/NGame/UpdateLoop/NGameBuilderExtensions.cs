@@ -7,6 +7,7 @@ namespace NGame.UpdateLoop;
 
 public static class NGameBuilderExtensions
 {
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder RegisterUpdatable<T>(this IHostApplicationBuilder builder, int? orderBy = null)
 		where T : IUpdatable
 	{
@@ -21,6 +22,7 @@ public static class NGameBuilderExtensions
 	}
 
 
+	// ReSharper disable once UnusedMethodReturnValue.Global
 	public static IHostApplicationBuilder RegisterDrawable<T>(this IHostApplicationBuilder builder, int? orderBy = null)
 		where T : IDrawable
 	{

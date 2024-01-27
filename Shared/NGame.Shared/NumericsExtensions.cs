@@ -31,9 +31,9 @@ public static class NumericsExtensions
 	/// </summary>
 	private static float GetRoll(Quaternion quaternion)
 	{
-		double sinr_cosp = 2 * (quaternion.W * quaternion.X + quaternion.Y * quaternion.Z);
-		double cosr_cosp = 1 - 2 * (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y);
-		return (float)Math.Atan2(sinr_cosp, cosr_cosp);
+		double sinrCosp = 2 * (quaternion.W * quaternion.X + quaternion.Y * quaternion.Z);
+		double cosrCosp = 1 - 2 * (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y);
+		return (float)Math.Atan2(sinrCosp, cosrCosp);
 	}
 
 
@@ -57,8 +57,8 @@ public static class NumericsExtensions
 	/// </summary>
 	private static float GetYaw(this Quaternion quaternion)
 	{
-		double siny_cosp = 2 * (quaternion.W * quaternion.Z + quaternion.X * quaternion.Y);
-		double cosy_cosp = 1 - 2 * (quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z);
-		return (float)Math.Atan2(siny_cosp, cosy_cosp);
+		double sinyCosp = 2 * (quaternion.W * quaternion.Z + quaternion.X * quaternion.Y);
+		double cosyCosp = 1 - 2 * (quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z);
+		return (float)Math.Atan2(sinyCosp, cosyCosp);
 	}
 }

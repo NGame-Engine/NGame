@@ -10,5 +10,5 @@ public record ProjectUsage(ProjectId ProjectId, DateTime LastUsed);
 
 public class NGameStudioConfiguration
 {
-	public List<ProjectUsage> ProjectHistory { get; init; } = new();
+	public List<ProjectUsage> ProjectHistory { get; init; } = [];
 }

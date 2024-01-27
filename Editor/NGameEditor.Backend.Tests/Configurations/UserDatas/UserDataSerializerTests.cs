@@ -17,7 +17,7 @@ public class UserDataSerializerTests
 		builder.InstallBackend(null!);
 		var host = builder.Build();
 		var userDataSerializer = host.Services.GetRequiredService<IUserDataSerializer>();
-		var json = """{"LastOpenedScene":"0f85a235-5a85-4bfb-8bcb-2b7caf7bf8cc"}""";
+		const string json = """{"LastOpenedScene":"0f85a235-5a85-4bfb-8bcb-2b7caf7bf8cc"}""";
 
 
 		// Act

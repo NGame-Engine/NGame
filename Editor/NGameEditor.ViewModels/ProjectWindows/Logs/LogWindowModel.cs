@@ -6,7 +6,7 @@ namespace NGameEditor.ViewModels.ProjectWindows.Logs;
 
 public class LogWindowModel : ViewModelBase
 {
-	public ObservableCollection<LogEntryViewModel> LogEntries { get; } = new();
+	public ObservableCollection<LogEntryViewModel> LogEntries { get; } = [];
 
 
 	public void Show(LogEntryViewModel logEntryViewModel)

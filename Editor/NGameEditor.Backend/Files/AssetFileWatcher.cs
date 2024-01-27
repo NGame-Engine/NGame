@@ -20,7 +20,7 @@ internal class AssetFileWatcher(
 	IAssetDescriptionReader assetDescriptionReader
 ) : IAssetFileWatcher
 {
-	private List<AssetDescription> AssetDescriptions { get; } = new(initialFiles);
+	private List<AssetDescription> AssetDescriptions { get; } = [.. initialFiles];
 
 
 	private static bool IsAssetFilePath(AbsolutePath absolutePath) =>

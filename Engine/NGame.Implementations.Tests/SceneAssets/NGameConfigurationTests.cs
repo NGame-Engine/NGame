@@ -12,15 +12,15 @@ public class NGameConfigurationTests
 	public void NGameConfiguration_ExampleJson_CanBeDeserialized()
 	{
 		// Arrange
-		var json = """
-		           {
-		             "Scenes": [
-		               "BEF0E660-8BEB-4124-AC58-477307B54CCE",
-		               "C505053A-2998-4D73-B7D2-8633F0F90754"
-		             ],
-		             "StartScene": "BEF0E660-8BEB-4124-AC58-477307B54CCE"
-		           }
-		           """;
+		const string json = """
+		                    {
+		                      "Scenes": [
+		                        "BEF0E660-8BEB-4124-AC58-477307B54CCE",
+		                        "C505053A-2998-4D73-B7D2-8633F0F90754"
+		                      ],
+		                      "StartScene": "BEF0E660-8BEB-4124-AC58-477307B54CCE"
+		                    }
+		                    """;
 
 		var jsonSerializerOptions = new JsonSerializerOptions
 		{

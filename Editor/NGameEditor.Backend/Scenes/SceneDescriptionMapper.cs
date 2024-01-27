@@ -1,6 +1,5 @@
 using NGame.Ecs;
 using NGame.SceneAssets;
-using NGameEditor.Backend.Scenes.Properties;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Bridge.Scenes;
 
@@ -19,16 +18,6 @@ public interface ISceneDescriptionMapper
 
 public class SceneDescriptionMapper : ISceneDescriptionMapper
 {
-	private readonly Dictionary<string, IComponentMapper> _componentMappers;
-
-
-	public SceneDescriptionMapper(IEnumerable<IComponentMapper> componentMappers)
-	{
-		_componentMappers = componentMappers
-			.ToDictionary(x => x.TypeIdentifier);
-	}
-
-
 	public SceneDescription Map(BackendScene backendScene) =>
 		new(
 			backendScene.FilePath == null
@@ -57,36 +46,18 @@ public class SceneDescriptionMapper : ISceneDescriptionMapper
 		var componentType = entityComponent.GetType();
 		if (componentType == typeof(EntityComponent))
 		{
-			return new(
+			return new ComponentDescription(
 				entityComponent.Id,
 				"Unrecognized component",
-				false,
-				new List<PropertyDescription>()
+				false
 			);
 		}
 
 		var componentDescription = new ComponentDescription(
 			entityComponent.Id,
 			ComponentAttribute.GetName(componentType),
-			true,
-			new List<PropertyDescription>()
+			true
 		);
-
-		var readableProperties =
-			componentType
-				.GetProperties()
-				.Where(x => x.CanRead);
-
-		foreach (var readableProperty in readableProperties)
-		{
-			var type = readableProperty.PropertyType;
-			var typeName = type.FullName!;
-			if (!_componentMappers.TryGetValue(typeName, out var mapper)) continue;
-
-			var propertyDescription = mapper.Map(readableProperty, entityComponent);
-			componentDescription.Properties.Add(propertyDescription);
-		}
-
 
 		return componentDescription;
 	}

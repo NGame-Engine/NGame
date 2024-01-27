@@ -7,44 +7,31 @@ namespace NGame.Core.SceneAssets;
 
 public interface ISceneLoadOperationExecutor
 {
+	// ReSharper disable once UnusedParameter.Global
 	Scene Execute(Action<float> updateProgress, AssetId sceneId);
 }
 
 
 
-public class SceneLoadOperationExecutor : ISceneLoadOperationExecutor
+public class SceneLoadOperationExecutor(
+	IAssetReferenceReplacer assetReferenceReplacer,
+	IScenePopulator scenePopulator,
+	IPackedAssetStreamReader packedAssetStreamReader,
+	ISceneSerializerOptionsFactory optionsFactory,
+	IEnumerable<ComponentTypeEntry> types
+)
+	: ISceneLoadOperationExecutor
 {
-	private readonly IAssetReferenceReplacer _assetReferenceReplacer;
-	private readonly IScenePopulator _scenePopulator;
-	private readonly IPackedAssetStreamReader _packedAssetStreamReader;
-	private readonly ISceneSerializerOptionsFactory _optionsFactory;
-	private readonly IEnumerable<ComponentTypeEntry> _componentTypes;
-
-
-	public SceneLoadOperationExecutor(
-		IAssetReferenceReplacer assetReferenceReplacer,
-		IScenePopulator scenePopulator,
-		IPackedAssetStreamReader packedAssetStreamReader, ISceneSerializerOptionsFactory optionsFactory,
-		IEnumerable<ComponentTypeEntry> componentTypes)
-	{
-		_assetReferenceReplacer = assetReferenceReplacer;
-		_scenePopulator = scenePopulator;
-		_packedAssetStreamReader = packedAssetStreamReader;
-		_optionsFactory = optionsFactory;
-		_componentTypes = componentTypes;
-	}
-
-
 	public Scene Execute(Action<float> updateProgress, AssetId sceneId)
 	{
-		var componentTypes = _componentTypes.Select(x => x.SubType);
-		var options = _optionsFactory.Create(componentTypes);
-		var sceneAsset = _packedAssetStreamReader.ReadFromStream(
+		var componentTypes = types.Select(x => x.SubType);
+		var options = optionsFactory.Create(componentTypes);
+		var sceneAsset = packedAssetStreamReader.ReadFromStream(
 			sceneId,
 			stream => JsonSerializer.Deserialize<SceneAsset>(stream, options)!);
 
-		_assetReferenceReplacer.ReplaceAssetReferences(sceneAsset);
+		assetReferenceReplacer.ReplaceAssetReferences(sceneAsset);
 
-		return _scenePopulator.Populate(sceneAsset);
+		return scenePopulator.Populate(sceneAsset);
 	}
 }

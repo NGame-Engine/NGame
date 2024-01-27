@@ -32,7 +32,7 @@ public class CommandValidator : ICommandValidator
 		var assetListPath = AbsoluteNormalizedPath.Create(assetListParameter);
 		if (!File.Exists(assetListPath.Value))
 		{
-			throw new InvalidOperationException($"Invalid asset list path '{assetListPath.Value}'");
+			throw new InvalidOperationException($"Invalid asset list path '{assetListPath}'");
 		}
 
 
@@ -43,7 +43,7 @@ public class CommandValidator : ICommandValidator
 		var projectFolder = AbsoluteNormalizedPath.Create(projectParameter);
 		if (!Directory.Exists(projectFolder.Value))
 		{
-			throw new InvalidOperationException($"Invalid project folder '{projectFolder.Value}'");
+			throw new InvalidOperationException($"Invalid project folder '{projectFolder}'");
 		}
 
 
