@@ -29,5 +29,5 @@ public class MenuEntryViewModel(
 
 	public string Header { get; } = header;
 	public ICommand? Command { get; } = command;
-	public List<MenuEntryViewModel> Children { get; } = [..children];
+	public List<MenuEntryViewModel> Children { get; } = [.. children];
 }

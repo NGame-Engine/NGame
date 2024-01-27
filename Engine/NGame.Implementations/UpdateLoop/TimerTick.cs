@@ -154,11 +154,11 @@ internal class TimerTick
 
 		var rawTime = Stopwatch.GetTimestamp();
 		TotalTime = StartTime +
-		            new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _timePaused - _startRawTime).Ticks *
-		                                          _speedFactor));
+					new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _timePaused - _startRawTime).Ticks *
+												  _speedFactor));
 		TotalTimeWithPause = StartTime +
-		                     new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _startRawTime).Ticks *
-		                                                   _speedFactor));
+							 new TimeSpan((long)Math.Round(ConvertRawToTimestamp(rawTime - _startRawTime).Ticks *
+														   _speedFactor));
 
 		ElapsedTime = ConvertRawToTimestamp(rawTime - _timePaused - _lastRawTime);
 		ElapsedTimeWithPause = ConvertRawToTimestamp(rawTime - _lastRawTime);

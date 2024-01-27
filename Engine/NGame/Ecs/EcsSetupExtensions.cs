@@ -17,7 +17,7 @@ public static class EcsSetupExtensions
 
 		if (typeof(T).IsAssignableTo(typeof(IUpdatable)))
 		{
-			builder.Services.AddSingleton<IUpdatable>(services => 
+			builder.Services.AddSingleton<IUpdatable>(services =>
 				// ReSharper disable once SuspiciousTypeConversion.Global
 				(IUpdatable)services.GetRequiredService<T>()
 				);
@@ -25,7 +25,7 @@ public static class EcsSetupExtensions
 
 		if (typeof(T).IsAssignableTo(typeof(IDrawable)))
 		{
-			builder.Services.AddSingleton<IDrawable>(services => 
+			builder.Services.AddSingleton<IDrawable>(services =>
 				// ReSharper disable once SuspiciousTypeConversion.Global
 				(IDrawable)services.GetRequiredService<T>()
 				);
