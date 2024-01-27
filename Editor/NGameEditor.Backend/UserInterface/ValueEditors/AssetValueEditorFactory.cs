@@ -24,7 +24,7 @@ internal class AssetValueEditorFactory(
 	)
 	{
 		var asset = (Asset?)getValue();
-		var filePath = GetFilePath(type, asset);
+		var filePath = GetFilePath(asset);
 
 		var jsonAssetInfo =
 			new JsonAssetInfo
@@ -71,7 +71,7 @@ internal class AssetValueEditorFactory(
 	}
 
 
-	private AbsolutePath? GetFilePath(Type assetType, Asset? asset)
+	private AbsolutePath? GetFilePath(Asset? asset)
 	{
 		if (asset == null) return null;
 

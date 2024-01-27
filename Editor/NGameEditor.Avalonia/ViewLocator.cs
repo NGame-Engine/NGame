@@ -10,6 +10,7 @@ namespace NGameEditor.Avalonia;
 
 
 
+// ReSharper disable once UnusedTypeParameter
 public interface IView<T> where T : class;
 
 

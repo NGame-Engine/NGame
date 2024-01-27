@@ -6,9 +6,7 @@ namespace NGame.Cli.PackAssets.Writers;
 
 
 
-public class BasicAsset : Asset
-{
-}
+public class BasicAsset : Asset;
 
 
 

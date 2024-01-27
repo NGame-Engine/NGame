@@ -18,16 +18,10 @@ public class ProjectOperationsViewModelFactory(
 	IProjectCreator projectCreator
 ) : IProjectOperationsViewModelFactory
 {
-	public ProjectOperationsViewModel Create()
-	{
-		var projectOperationsViewModel = new ProjectOperationsViewModel();
-
-		projectOperationsViewModel.CreateNewProject =
-			ReactiveCommand.CreateFromTask(projectCreator.CreateProject);
-
-		projectOperationsViewModel.OpenExistingProject =
-			ReactiveCommand.CreateFromTask(existingProjectOpener.OnOpenExistingProject);
-
-		return projectOperationsViewModel;
-	}
+	public ProjectOperationsViewModel Create() =>
+		new()
+		{
+			CreateNewProject = ReactiveCommand.CreateFromTask(projectCreator.CreateProject),
+			OpenExistingProject = ReactiveCommand.CreateFromTask(existingProjectOpener.OnOpenExistingProject)
+		};
 }

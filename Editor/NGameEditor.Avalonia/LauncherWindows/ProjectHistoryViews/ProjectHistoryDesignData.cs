@@ -28,7 +28,7 @@ public static class ProjectHistoryDesignData
 					"/a third parth/ThirdProject.sln",
 					DateTime.UnixEpoch,
 					ReactiveCommand.Create(() => { })
-				),
+				)
 			}
 		};
 }

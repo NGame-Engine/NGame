@@ -13,9 +13,7 @@ namespace NGameEditor.Backend.Tests.Integration.CanReadUserPreferences;
 
 public class CanReadUserPreferencesTests
 {
-	public class DummyComponent : EntityComponent
-	{
-	}
+	public class DummyComponent : EntityComponent;
 
 
 

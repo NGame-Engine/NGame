@@ -19,16 +19,12 @@ public class MenuViewModelFactory(
 	ISceneSaver sceneSaver
 ) : IMenuViewModelFactory
 {
-	public MenuViewModel Create()
-	{
-		var menuViewModel = new MenuViewModel();
-
-		menuViewModel.SaveScene = ReactiveCommand.Create(sceneSaver.SaveCurrentScene);
-
-		menuViewModel.OpenAboutWindow = ReactiveCommand.Create(aboutWindow.Open);
-
-		menuViewModel.OpenDocumentation =
-			ReactiveCommand.Create(() =>
+	public MenuViewModel Create() =>
+		new()
+		{
+			SaveScene = ReactiveCommand.Create(sceneSaver.SaveCurrentScene),
+			OpenAboutWindow = ReactiveCommand.Create(aboutWindow.Open),
+			OpenDocumentation = ReactiveCommand.Create(() =>
 				Process.Start(
 					new ProcessStartInfo
 					{
@@ -36,9 +32,6 @@ public class MenuViewModelFactory(
 						UseShellExecute = true
 					}
 				)
-			);
-
-
-		return menuViewModel;
-	}
+			)
+		};
 }

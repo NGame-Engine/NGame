@@ -18,7 +18,7 @@ public sealed class ComponentAttribute : Attribute
 
 
 	public static string GetName(Type type) =>
-		GetAttribute(type)?.Name ?? type.Name!;
+		GetAttribute(type)?.Name ?? type.Name;
 
 
 	public static string GetDiscriminator(Type type) =>

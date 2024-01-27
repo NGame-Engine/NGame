@@ -58,7 +58,7 @@ public class SceneSerializerOptionsFactory : ISceneSerializerOptionsFactory
 		var jsonPolymorphismOptions = new JsonPolymorphismOptions
 		{
 			IgnoreUnrecognizedTypeDiscriminators = true,
-			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
+			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization
 		};
 
 		foreach (var type in componentTypes)

@@ -17,12 +17,18 @@ public static class EcsSetupExtensions
 
 		if (typeof(T).IsAssignableTo(typeof(IUpdatable)))
 		{
-			builder.Services.AddSingleton<IUpdatable>(services => (IUpdatable)services.GetRequiredService<T>());
+			builder.Services.AddSingleton<IUpdatable>(services => 
+				// ReSharper disable once SuspiciousTypeConversion.Global
+				(IUpdatable)services.GetRequiredService<T>()
+				);
 		}
 
 		if (typeof(T).IsAssignableTo(typeof(IDrawable)))
 		{
-			builder.Services.AddSingleton<IDrawable>(services => (IDrawable)services.GetRequiredService<T>());
+			builder.Services.AddSingleton<IDrawable>(services => 
+				// ReSharper disable once SuspiciousTypeConversion.Global
+				(IDrawable)services.GetRequiredService<T>()
+				);
 		}
 
 		return builder;

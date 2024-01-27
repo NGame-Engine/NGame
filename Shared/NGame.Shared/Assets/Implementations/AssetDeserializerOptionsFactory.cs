@@ -57,7 +57,7 @@ public class AssetDeserializerOptionsFactory : IAssetDeserializerOptionsFactory
 		var jsonPolymorphismOptions = new JsonPolymorphismOptions
 		{
 			IgnoreUnrecognizedTypeDiscriminators = true,
-			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
+			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization
 		};
 
 		foreach (var assetType in assetTypes)

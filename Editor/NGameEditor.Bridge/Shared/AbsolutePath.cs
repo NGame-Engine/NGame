@@ -34,7 +34,7 @@ public class AbsolutePath : IEquatable<AbsolutePath>
 		return
 			parentDirectory == null
 				? null
-				: new AbsolutePath(parentDirectory!);
+				: new AbsolutePath(parentDirectory);
 	}
 
 

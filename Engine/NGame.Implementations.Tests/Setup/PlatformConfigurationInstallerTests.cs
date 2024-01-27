@@ -79,7 +79,7 @@ public class PlatformConfigurationInstallerTests
 
 		// Assert
 		platformConfiguration.Should().NotBe(null);
-		platformConfiguration!.NgOperatingSystem.Should().Be(NgOperatingSystem.Linux);
+		platformConfiguration.NgOperatingSystem.Should().Be(NgOperatingSystem.Linux);
 		platformConfiguration.Version.Major.Should().Be(3);
 		platformConfiguration.Version.Minor.Should().Be(7);
 	}

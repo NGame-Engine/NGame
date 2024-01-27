@@ -40,7 +40,7 @@ public class DirectoryContentViewModelFactory(
 		selectedDirectoriesChangeSet
 			.ToCollection()
 			.Select(x =>
-				Enumerable.Aggregate<DirectoryViewModel, string>(x, "",
+				x.Aggregate<DirectoryViewModel, string>("",
 					(s, model) =>
 						string.IsNullOrEmpty(s)
 							? model.Name
