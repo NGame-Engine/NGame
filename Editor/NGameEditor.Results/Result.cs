@@ -48,6 +48,20 @@ public class Result(Error? errorValue)
 			return Error(e.Message, $"StackTrace: {e.StackTrace}");
 		}
 	}
+
+
+	public static Result<TResult> Try<TResult>(Func<TResult> action)
+	{
+		try
+		{
+			var result = action();
+			return Success(result);
+		}
+		catch (Exception e)
+		{
+			return Error(e.Message, $"StackTrace: {e.StackTrace}");
+		}
+	}
 }
 
 

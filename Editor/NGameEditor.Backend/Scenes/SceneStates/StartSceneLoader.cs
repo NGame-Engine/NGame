@@ -14,9 +14,9 @@ public interface IStartSceneLoader
 
 
 
-public class StartSceneLoader(
+internal class StartSceneLoader(
 	IGameConfigurationService gameConfigurationService,
-	ISceneFileWatcher sceneFileWatcher,
+	IAssetFileWatcher assetFileWatcher,
 	ISceneFileReader sceneFileReader
 )
 	: IStartSceneLoader
@@ -24,6 +24,7 @@ public class StartSceneLoader(
 	public Result<BackendScene> GetStartScene() =>
 		gameConfigurationService
 			.GetSection<SceneAssetsConfiguration>(SceneAssetsConfiguration.JsonElementName)
-			.Then(x => sceneFileWatcher.GetPathToSceneFile(x.StartScene))
+			.Then(x => assetFileWatcher.GetById(x.StartScene))
+			.Then(x => x.FilePath)
 			.Then(sceneFileReader.ReadSceneFile);
 }

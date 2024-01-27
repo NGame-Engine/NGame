@@ -9,8 +9,8 @@ namespace NGameEditor.Backend.Files;
 
 internal interface IAssetFileWatcher
 {
-	Result<IEnumerable<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
-	Result<IEnumerable<AssetDescription>> GetAssetsOfType(string typeIdentifier);
+	IEnumerable<AssetDescription> GetAssetDescriptions();
+	Result<AssetDescription> GetById(Guid id);
 }
 
 
@@ -23,33 +23,24 @@ internal class AssetFileWatcher(
 	private List<AssetDescription> AssetDescriptions { get; } = new(initialFiles);
 
 
-	private static bool IsAssertFilePath(AbsolutePath absolutePath) =>
+	private static bool IsAssetFilePath(AbsolutePath absolutePath) =>
 		absolutePath.Path.EndsWith(AssetConventions.AssetFileEnding);
 
 
-	public Result<IEnumerable<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition)
-	{
-		var assetDescriptions =
-			AssetDescriptions
-				.Where(x => x.AssetTypeDefinition.Identifier == assetTypeDefinition.Identifier);
-
-		return Result.Success(assetDescriptions);
-	}
+	public IEnumerable<AssetDescription> GetAssetDescriptions() => AssetDescriptions;
 
 
-	public Result<IEnumerable<AssetDescription>> GetAssetsOfType(string typeIdentifier)
-	{
-		var assetDescriptions =
-			AssetDescriptions
-				.Where(x => x.AssetTypeDefinition.Identifier == typeIdentifier);
-
-		return Result.Success(assetDescriptions);
-	}
+	public Result<AssetDescription> GetById(Guid id) =>
+		AssetDescriptions
+			.Where(x => x.Id == id)
+			.Select(Result.Success)
+			.FirstOrDefault()
+		?? Result.Error($"Unable to find asset with ID {id}");
 
 
 	public void OnChanged(FileChangedArgs args)
 	{
-		if (IsAssertFilePath(args.Path) == false) return;
+		if (IsAssetFilePath(args.Path) == false) return;
 
 		AssetDescriptions
 			.RemoveAll(x => x.FilePath == args.Path);
@@ -61,7 +52,7 @@ internal class AssetFileWatcher(
 
 	public void OnCreated(FileCreatedArgs args)
 	{
-		if (IsAssertFilePath(args.Path) == false) return;
+		if (IsAssetFilePath(args.Path) == false) return;
 
 		var assetDescription = assetDescriptionReader.ReadAsset(args.Path);
 		AssetDescriptions.Add(assetDescription);
@@ -70,7 +61,7 @@ internal class AssetFileWatcher(
 
 	public void OnDeleted(FileDeletedArgs args)
 	{
-		if (IsAssertFilePath(args.Path) == false) return;
+		if (IsAssetFilePath(args.Path) == false) return;
 
 		AssetDescriptions
 			.RemoveAll(x => x.FilePath == args.Path);
@@ -79,8 +70,8 @@ internal class AssetFileWatcher(
 
 	public void OnRenamed(FileRenamedArgs args)
 	{
-		var oldPathIsAssetFilePath = IsAssertFilePath(args.OldPath);
-		var newPathIsAssetFilePath = IsAssertFilePath(args.Path);
+		var oldPathIsAssetFilePath = IsAssetFilePath(args.OldPath);
+		var newPathIsAssetFilePath = IsAssetFilePath(args.Path);
 
 
 		if (oldPathIsAssetFilePath)

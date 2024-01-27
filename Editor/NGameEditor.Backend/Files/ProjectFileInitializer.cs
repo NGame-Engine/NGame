@@ -6,10 +6,11 @@ namespace NGameEditor.Backend.Files;
 
 
 
-public class ProjectFileInitializer(
+internal class ProjectFileInitializer(
 	ProjectDefinition projectDefinition,
 	IFrontendApi frontendApi,
-	ProjectFileStatus projectFileStatus
+	ProjectFileStatus projectFileStatus,
+	IAssetFileWatcher assetFileWatcher
 ) : IBackendStartListener
 {
 	public int Priority => 100;
@@ -48,7 +49,7 @@ public class ProjectFileInitializer(
 		var files =
 			Directory
 				.GetFiles(directoryPath)
-				.Select(x => new FileDescription(x))
+				.Select(CreateFileDescription)
 				.ToList();
 
 		return
@@ -57,5 +58,18 @@ public class ProjectFileInitializer(
 				subDirectories,
 				files
 			);
+	}
+
+
+	private FileDescription CreateFileDescription(string filePath)
+	{
+		var assetTypeDefinition =
+			assetFileWatcher
+				.GetAssetDescriptions()
+				.Where(x => x.FilePath.Path == filePath)
+				.Select(x => x.AssetTypeDefinition)
+				.FirstOrDefault();
+
+		return new FileDescription(filePath, assetTypeDefinition);
 	}
 }

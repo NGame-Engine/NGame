@@ -3,6 +3,7 @@ using DynamicData;
 using DynamicData.Binding;
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
+using NGame.SceneAssets;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;
@@ -88,7 +89,7 @@ public class DirectoryContentViewModelFactory(
 			Name = fileViewModel.Name,
 			IsFolder = false,
 			Icon =
-				fileViewModel.Name.EndsWith(AssetConventions.SceneFileEnding)
+				fileViewModel.AssetTypeIdentifier == AssetAttribute.GetDiscriminator(typeof(SceneAsset))
 					? "🏞️"
 					: "❔",
 			Open = ReactiveCommand.Create(() =>

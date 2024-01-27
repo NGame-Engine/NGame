@@ -79,9 +79,8 @@ internal class AssetValueEditorFactory(
 
 		return
 			assetFileWatcher
-				.GetAssetsOfType(AssetAttribute.GetDiscriminator(assetType))
-				.Then(x => x.First(y => y.Id == assetId))
-				.SuccessValue!
+				.GetAssetDescriptions()
+				.First(x => x.Id == assetId)
 				.FilePath;
 	}
 }

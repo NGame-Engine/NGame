@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
+using NGame.SceneAssets;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Bridge.Files;
@@ -13,7 +14,7 @@ namespace NGameEditor.Backend.Files;
 public interface IAssetController
 {
 	Result Open(AbsolutePath fileName);
-	Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
+	List<AssetDescription> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
 }
 
 
@@ -33,9 +34,15 @@ internal class AssetController(
 			return Result.Error($"File '{path}' not found");
 		}
 
+		var assetDescription = assetFileWatcher
+			.GetAssetDescriptions()
+			.FirstOrDefault(x => x.FilePath == fileName);
 
-		var extension = Path.GetExtension(path);
-		if (extension == AssetConventions.SceneFileEnding)
+		if (assetDescription == null) return Result.Success();
+
+
+		var typeId = assetDescription.AssetTypeDefinition.Identifier;
+		if (typeId == AssetAttribute.GetDiscriminator(typeof(SceneAsset)))
 		{
 			return sceneFileReader
 				.ReadSceneFile(fileName)
@@ -43,14 +50,16 @@ internal class AssetController(
 				.Then(sceneState.SetLoadedScene);
 		}
 
+
 		logger.LogInformation("Open file {FileName}", fileName.Path);
 
 		return Result.Success();
 	}
 
 
-	public Result<List<AssetDescription>> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition) =>
+	public List<AssetDescription> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition) =>
 		assetFileWatcher
-			.GetAssetsOfType(assetTypeDefinition.Identifier)
-			.Then(x => x.ToList());
+			.GetAssetDescriptions()
+			.Where(x => x.AssetTypeDefinition.Identifier == assetTypeDefinition.Identifier)
+			.ToList();
 }
