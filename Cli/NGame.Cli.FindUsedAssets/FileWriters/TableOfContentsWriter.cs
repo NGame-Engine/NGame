@@ -27,8 +27,8 @@ public class TableOfContentsWriter(
 		}
 
 		var jsonString = JsonSerializer.Serialize(tableOfContents, jsonSerializerOptions);
-		
-		
+
+
 		var path = targetFolder.CombineFile(AssetConventions.TableOfContentsFileName);
 		File.WriteAllText(path.PathExport, jsonString);
 	}

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Nodes;
+using System.Text.Json.Nodes;
 using FluentAssertions;
 using NGame.Cli.FindUsedAssets.AssetUsages;
 
@@ -9,7 +9,7 @@ namespace NGame.Cli.Tests.FindUsedAssetsCommand.AssetUsages;
 public class JsonNodeAssetIdFinderTests
 {
 	private static IJsonNodeAssetIdFinder Create() => new JsonNodeAssetIdFinder();
-	
+
 	[Fact]
 	public void FindReferencedIdsRecursively_SceneAsset_FindsAllIds()
 	{
@@ -90,7 +90,7 @@ public class JsonNodeAssetIdFinderTests
 
 		var jsonNodeAssetIdFinder = Create();
 		var jsonNode = JsonNode.Parse(input);
-		
+
 
 		// Act
 		var result = jsonNodeAssetIdFinder.FindReferencedIdsRecursively(jsonNode);

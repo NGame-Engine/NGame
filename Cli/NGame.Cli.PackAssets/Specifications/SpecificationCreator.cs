@@ -32,7 +32,7 @@ public class SpecificationCreator : ISpecificationCreator
 				.ToList();
 	}
 
-
+	[Obsolete]
 	private static AssetPackSpecification CreatePackSpecification(
 		PackageName packageName,
 		IEnumerable<AssetFileEntry> assetFileEntries,
@@ -45,7 +45,7 @@ public class SpecificationCreator : ISpecificationCreator
 				.ToList()
 		);
 
-
+	[Obsolete]
 	private static AssetFileSpecification CreateFileSpecification(
 		AssetFileEntry assetFileEntry,
 		AbsoluteNormalizedPath projectFolder

@@ -21,6 +21,6 @@ public class AssetPackSpecification
 	public ICollection<AssetFileSpecification> FileSpecifications { get; }
 }
 
-
+[Obsolete]
 public record AssetFileSpecification(AbsoluteNormalizedPath AbsolutePath, NormalizedPath RelativePath);
 

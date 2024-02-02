@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Nodes;
+using System.Text.Json.Nodes;
 using NGame.Assets;
 
 namespace NGame.Cli.FindUsedAssets.AssetUsages;

@@ -9,6 +9,7 @@ namespace NGame.Cli.PackAssets.Writers;
 
 public interface IAssetPackSpecificationWriter
 {
+	[Obsolete]
 	void Write(
 		AssetPackSpecification assetPackSpecification,
 		AbsoluteNormalizedPath targetFolder
@@ -19,6 +20,7 @@ public interface IAssetPackSpecificationWriter
 
 public class AssetPackSpecificationWriter(ILogger<AssetPackSpecificationWriter> logger) : IAssetPackSpecificationWriter
 {
+	[Obsolete]
 	public void Write(
 		AssetPackSpecification assetPackSpecification,
 		AbsoluteNormalizedPath targetFolder

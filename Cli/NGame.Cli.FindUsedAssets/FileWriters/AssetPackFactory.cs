@@ -1,4 +1,4 @@
-﻿using System.IO.Compression;
+using System.IO.Compression;
 using NGame.Assets;
 using NGame.Cli.FindUsedAssets.Specifications;
 using Singulink.IO;
@@ -10,7 +10,7 @@ namespace NGame.Cli.FindUsedAssets.FileWriters;
 public interface IAssetPackFactory
 {
 	string Create(
-		string packName, 
+		string packName,
 		IEnumerable<AssetFileSpecification> assetFileSpecifications,
 		IAbsoluteDirectoryPath outputPath
 	);
@@ -21,7 +21,7 @@ public interface IAssetPackFactory
 public class AssetPackFactory : IAssetPackFactory
 {
 	public string Create(
-		string packName, 
+		string packName,
 		IEnumerable<AssetFileSpecification> assetFileSpecifications,
 		IAbsoluteDirectoryPath outputPath
 	)
@@ -35,11 +35,11 @@ public class AssetPackFactory : IAssetPackFactory
 		foreach (var fileSpecification in assetFileSpecifications)
 		{
 			WriteEntry(zipArchive, fileSpecification.AssetFile);
-			if(fileSpecification.CompanionFile == null) continue;
-			
+			if (fileSpecification.CompanionFile == null) continue;
+
 			WriteEntry(zipArchive, fileSpecification.CompanionFile);
 		}
-		
+
 		return packFileName;
 	}
 

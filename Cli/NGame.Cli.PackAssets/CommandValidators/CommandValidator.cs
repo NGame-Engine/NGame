@@ -18,7 +18,7 @@ public class CommandValidator(
 {
 	private readonly CommandArguments _commandArguments = commandArguments.Value;
 
-
+	[Obsolete]
 	public ValidatedCommand ValidateCommand()
 	{
 		var assetListParameter =

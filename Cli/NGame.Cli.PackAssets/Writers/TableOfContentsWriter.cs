@@ -9,6 +9,7 @@ namespace NGame.Cli.PackAssets.Writers;
 
 public interface ITableOfContentsWriter
 {
+	[Obsolete]
 	void Write(TableOfContents tableOfContents, AbsoluteNormalizedPath targetFolder);
 }
 
@@ -24,7 +25,7 @@ public class TableOfContentsWriter : ITableOfContentsWriter
 		_jsonConverters = jsonConverters;
 	}
 
-
+	[Obsolete]
 	public void Write(TableOfContents tableOfContents, AbsoluteNormalizedPath targetFolder)
 	{
 		var path = targetFolder.Combine(AssetConventions.TableOfContentsFileName);

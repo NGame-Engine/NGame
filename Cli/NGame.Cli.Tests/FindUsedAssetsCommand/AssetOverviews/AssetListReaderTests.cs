@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NGame.Cli.FindUsedAssets.AssetOverviews;
 using Singulink.IO;
 

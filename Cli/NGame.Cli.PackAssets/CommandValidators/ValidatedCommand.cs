@@ -6,6 +6,7 @@ namespace NGame.Cli.PackAssets.CommandValidators;
 
 public class ValidatedCommand
 {
+	[Obsolete]
 	public ValidatedCommand(
 		AbsoluteNormalizedPath assetList,
 		AbsoluteNormalizedPath projectFolder,
@@ -17,8 +18,10 @@ public class ValidatedCommand
 		ProjectFolder = projectFolder;
 	}
 
-
+	[Obsolete]
 	public AbsoluteNormalizedPath AssetList { get; }
+	[Obsolete]
 	public AbsoluteNormalizedPath ProjectFolder { get; }
+	[Obsolete]
 	public AbsoluteNormalizedPath TargetFolder { get; }
 }
