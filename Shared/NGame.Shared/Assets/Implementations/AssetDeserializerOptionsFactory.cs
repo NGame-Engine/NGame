@@ -50,6 +50,7 @@ public class AssetDeserializerOptionsFactory(
 	{
 		var jsonPolymorphismOptions = new JsonPolymorphismOptions
 		{
+			TypeDiscriminatorPropertyName = AssetConventions.TypeDiscriminatorPropertyName,
 			IgnoreUnrecognizedTypeDiscriminators = true,
 			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization
 		};

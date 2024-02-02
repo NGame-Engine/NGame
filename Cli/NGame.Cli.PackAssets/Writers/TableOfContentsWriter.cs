@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NGame.Assets;
-using NGame.Cli.PackAssets.Paths;
+using NGame.Cli.Abstractions.Paths;
 
 namespace NGame.Cli.PackAssets.Writers;
 

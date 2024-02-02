@@ -25,7 +25,7 @@ public class PackedAssetStreamReader : IPackedAssetStreamReader
 	public T ReadFromStream<T>(AssetId assetId, Func<Stream, T> useStream)
 	{
 		var tableOfContents = _tableOfContentsProvider.Get();
-		var contentEntry = tableOfContents.ResourceIdentifiers[assetId];
+		var contentEntry = tableOfContents.ResourceIdentifiers[assetId.Id];
 		var assetPackPath = contentEntry.PackFileName;
 		var pathInFile = contentEntry.FilePath;
 

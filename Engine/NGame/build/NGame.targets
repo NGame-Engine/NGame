@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <NGAssetListFile>ngame/NGAssets.g.txt</NGAssetListFile>
+    <NgUsedAssetListFile>ngame/NGAssets.used.g.txt</NgUsedAssetListFile>
+    <NgAppsettingsPath>$(ProjectDir)appsettings.json</NgAppsettingsPath>
   </PropertyGroup>
 
   <ItemGroup>
     <NgAsset Include="**/*.ngasset" Exclude="bin/**/*;obj/**/*"/>
+    <NgAssetLists Include="$(SolutionDir)**/$(NGAssetListFile)"/>
   </ItemGroup>
 
 
@@ -33,6 +36,17 @@
       Overwrite="true"
       Encoding="Unicode"/>
     <Message Text="NGame asset list updated."/>
+  </Target>
+
+
+  <Target Name="WriteNgUsedAssetListFile"
+          AfterTargets="AddCompanionFilesToNGAsset"
+          Condition="Exists('$(NgAppsettingsPath)')"
+          Inputs="@(NgAssetLists)"
+          Outputs="$(IntermediateOutputPath)$(NgUsedAssetListFile)">
+    <Message Text="Update list of used NGame assets..."/>
+    <Exec Command="dotnet tool run ngame findusedassets --solutiondir=&quot;$(SolutionDir)&quot; --appsettings=&quot;$(NgAppsettingsPath)&quot; --output=&quot;$(IntermediateOutputPath)$(NgUsedAssetListFile)&quot;"/>
+    <Message Text="List of used NGame assets updated."/>
   </Target>
 
 

@@ -53,7 +53,7 @@ public class AssetsWriter : IAssetsWriter
 
 
 		var tableOfContents = _tableOfContentsGenerator.CreateTableOfContents(assetPackSpecifications);
-		_tableOfContentsWriter.Write(tableOfContents, validatedCommand.TargetFolder);
+		_tableOfContentsWriter.Write(tableOfContents, targetFolder);
 		_logger.LogInformation("Asset table of contents written");
 	}
 }

@@ -1,7 +1,8 @@
-namespace NGame.Cli.PackAssets.Paths;
+namespace NGame.Cli.Abstractions.Paths;
 
 
 
+[Obsolete("Use Singulink.IO library instead")]
 public class AbsoluteNormalizedPath
 {
 	private AbsoluteNormalizedPath(string value)

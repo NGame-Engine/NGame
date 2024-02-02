@@ -1,6 +1,6 @@
 using System.IO.Compression;
 using Microsoft.Extensions.Logging;
-using NGame.Cli.PackAssets.Paths;
+using NGame.Cli.Abstractions.Paths;
 using NGame.Cli.PackAssets.Specifications;
 
 namespace NGame.Cli.PackAssets.Writers;

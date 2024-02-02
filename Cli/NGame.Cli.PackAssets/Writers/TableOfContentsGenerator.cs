@@ -1,6 +1,6 @@
 using NGame.Assets;
+using NGame.Cli.Abstractions.Paths;
 using NGame.Cli.PackAssets.AssetFileReaders;
-using NGame.Cli.PackAssets.Paths;
 using NGame.Cli.PackAssets.Specifications;
 
 namespace NGame.Cli.PackAssets.Writers;
@@ -14,17 +14,10 @@ public interface ITableOfContentsGenerator
 
 
 
-public class TableOfContentsGenerator : ITableOfContentsGenerator
+public class TableOfContentsGenerator(
+	IBasicAssetReader basicAssetReader
+) : ITableOfContentsGenerator
 {
-	private readonly IBasicAssetReader _basicAssetReader;
-
-
-	public TableOfContentsGenerator(IBasicAssetReader basicAssetReader)
-	{
-		_basicAssetReader = basicAssetReader;
-	}
-
-
 	public TableOfContents CreateTableOfContents(IEnumerable<AssetPackSpecification> assetPackSpecifications) =>
 		new()
 		{
@@ -32,7 +25,7 @@ public class TableOfContentsGenerator : ITableOfContentsGenerator
 				assetPackSpecifications
 					.SelectMany(CreateEntries)
 					.ToDictionary(
-						x => x.AssetId,
+						x => x.AssetId.Id,
 						x => new ContentEntry
 						{
 							PackFileName = Conventions.CreateAssetPackName(x.PackageName),
@@ -49,7 +42,7 @@ public class TableOfContentsGenerator : ITableOfContentsGenerator
 			.Select(
 				x => new Entry(
 					assetPackSpecification.PackageName,
-					_basicAssetReader.ReadFile(x.AbsolutePath.Value).Id,
+					basicAssetReader.ReadFile(x.AbsolutePath.Value).Id,
 					x.RelativePath
 				)
 			);

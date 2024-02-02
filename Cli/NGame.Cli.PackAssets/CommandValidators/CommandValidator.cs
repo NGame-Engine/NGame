@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Options;
-using NGame.Cli.PackAssets.Paths;
+using NGame.Cli.Abstractions.Paths;
 
 namespace NGame.Cli.PackAssets.CommandValidators;
 
@@ -12,15 +12,11 @@ public interface ICommandValidator
 
 
 
-public class CommandValidator : ICommandValidator
+public class CommandValidator(
+	IOptions<CommandArguments> commandArguments
+) : ICommandValidator
 {
-	private readonly CommandArguments _commandArguments;
-
-
-	public CommandValidator(IOptions<CommandArguments> commandArguments)
-	{
-		_commandArguments = commandArguments.Value;
-	}
+	private readonly CommandArguments _commandArguments = commandArguments.Value;
 
 
 	public ValidatedCommand ValidateCommand()

@@ -1,4 +1,4 @@
-namespace NGame.Cli.PackAssets.Paths;
+namespace NGame.Cli.Abstractions.Paths;
 
 
 

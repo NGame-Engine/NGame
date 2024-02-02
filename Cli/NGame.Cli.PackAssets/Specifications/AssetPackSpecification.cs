@@ -1,5 +1,5 @@
+using NGame.Cli.Abstractions.Paths;
 using NGame.Cli.PackAssets.AssetFileReaders;
-using NGame.Cli.PackAssets.Paths;
 
 namespace NGame.Cli.PackAssets.Specifications;
 

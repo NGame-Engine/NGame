@@ -4,7 +4,7 @@ namespace NGame.Assets;
 
 public class TableOfContents
 {
-	public Dictionary<AssetId, ContentEntry> ResourceIdentifiers { get; init; } = new();
+	public Dictionary<Guid, ContentEntry> ResourceIdentifiers { get; init; } = new();
 }
 
 
