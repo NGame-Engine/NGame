@@ -1,6 +1,5 @@
 using System.IO.Compression;
 using NGame.Assets;
-using NGame.Cli.FindUsedAssets.Specifications;
 using Singulink.IO;
 
 namespace NGame.Cli.FindUsedAssets.FileWriters;

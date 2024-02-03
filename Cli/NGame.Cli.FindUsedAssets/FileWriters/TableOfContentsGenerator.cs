@@ -1,5 +1,4 @@
 using NGame.Assets;
-using NGame.Cli.FindUsedAssets.Specifications;
 
 namespace NGame.Cli.FindUsedAssets.FileWriters;
 

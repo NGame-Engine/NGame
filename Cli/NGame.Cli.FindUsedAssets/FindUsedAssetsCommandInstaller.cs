@@ -5,7 +5,6 @@ using NGame.Cli.FindUsedAssets.AssetOverviews;
 using NGame.Cli.FindUsedAssets.AssetUsages;
 using NGame.Cli.FindUsedAssets.Commands;
 using NGame.Cli.FindUsedAssets.FileWriters;
-using NGame.Cli.FindUsedAssets.Specifications;
 
 namespace NGame.Cli.FindUsedAssets;
 

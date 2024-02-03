@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using NGame.Cli.FindUsedAssets.AssetUsages;
-using NGame.Cli.FindUsedAssets.Specifications;
 using Singulink.IO;
 
 namespace NGame.Cli.FindUsedAssets.FileWriters;

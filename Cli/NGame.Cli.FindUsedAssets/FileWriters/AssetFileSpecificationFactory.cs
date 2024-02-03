@@ -1,7 +1,7 @@
 using NGame.Cli.FindUsedAssets.AssetOverviews;
 using Singulink.IO;
 
-namespace NGame.Cli.FindUsedAssets.Specifications;
+namespace NGame.Cli.FindUsedAssets.FileWriters;
 
 
 
