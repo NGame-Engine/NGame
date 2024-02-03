@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NGame.Assets;
+using NGame.Assets.Implementations;
 
 namespace NGame.Implementations.Assets.Json;
 

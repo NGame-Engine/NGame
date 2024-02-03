@@ -6,6 +6,13 @@ namespace NGame.Assets.Implementations;
 
 
 
+public interface IAssetDeserializerOptionsFactory
+{
+	JsonSerializerOptions Create(IEnumerable<Type> assetTypes);
+}
+
+
+
 public class AssetDeserializerOptionsFactory(
 	IEnumerable<JsonConverter> jsonConverters
 )
