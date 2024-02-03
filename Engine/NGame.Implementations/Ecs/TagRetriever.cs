@@ -5,22 +5,22 @@ namespace NGame.Implementations.Ecs;
 
 
 
-public class TagRetriever : ITagRetriever
+public interface ITagRetriever
 {
-	private readonly ITaskScheduler _taskScheduler;
-	private readonly IRootSceneAccessor _rootSceneAccessor;
+	IEnumerable<Entity> GetEntitiesWithTag(string tag);
+}
 
 
-	public TagRetriever(ITaskScheduler taskScheduler, IRootSceneAccessor rootSceneAccessor)
-	{
-		_taskScheduler = taskScheduler;
-		_rootSceneAccessor = rootSceneAccessor;
-	}
 
-
+public class TagRetriever(
+	ITaskScheduler taskScheduler,
+	IRootSceneAccessor rootSceneAccessor
+)
+	: ITagRetriever
+{
 	public IEnumerable<Entity> GetEntitiesWithTag(string tag)
 	{
-		var rootScene = _rootSceneAccessor.RootScene;
+		var rootScene = rootSceneAccessor.RootScene;
 		var allScenes = GetAllScenesRecursive(rootScene);
 
 
@@ -28,7 +28,7 @@ public class TagRetriever : ITagRetriever
 			allScenes
 				.SelectMany(x => x.RootTransforms)
 				.SelectMany(x => FindTagInTransformsRecursive(x, tag))
-				.AsParallel(_taskScheduler);
+				.AsParallel(taskScheduler);
 	}
 
 

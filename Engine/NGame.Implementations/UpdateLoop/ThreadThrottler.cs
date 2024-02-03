@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace NGame.UpdateLoop;
+namespace NGame.Implementations.UpdateLoop;
 
 
 

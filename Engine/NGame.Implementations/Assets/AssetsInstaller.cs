@@ -22,7 +22,7 @@ public static class AssetsInstaller
 		builder.Services.AddTransient<IAssetSerializer, AssetSerializer>();
 		builder.Services.AddTransient<IPackedAssetDeserializer, PackedAssetDeserializer>();
 		builder.Services.AddSingleton<IAssetRegistry, AssetRegistry>();
-		builder.Services.AddTransient<IAssetFromPackReader, AssetFromPackReader>();
+		builder.Services.AddTransient<IAssetAccessor, AssetAccessor>();
 
 		builder.Services.AddSingleton<IAssetStreamProvider>(FileAssetStreamProvider.CreateDefault());
 

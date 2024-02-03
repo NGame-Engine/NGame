@@ -1,4 +1,4 @@
-namespace NGame.UpdateLoop;
+namespace NGame.Implementations.UpdateLoop;
 
 
 

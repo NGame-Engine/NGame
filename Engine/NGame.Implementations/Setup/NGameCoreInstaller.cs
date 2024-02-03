@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Hosting;
 using NGame.Implementations.Assets;
 using NGame.Implementations.Ecs;
+using NGame.Implementations.Ecs.SceneAssets;
 using NGame.Implementations.Parallelism;
-using NGame.Implementations.SceneAssets;
 using NGame.Implementations.UpdateLoop;
 using NGame.Setup;
 

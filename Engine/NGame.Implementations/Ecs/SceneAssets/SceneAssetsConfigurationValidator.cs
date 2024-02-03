@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 using NGame.Assets;
 using NGame.SceneAssets;
 
-namespace NGame.Implementations.SceneAssets;
+namespace NGame.Implementations.Ecs.SceneAssets;
 
 
 

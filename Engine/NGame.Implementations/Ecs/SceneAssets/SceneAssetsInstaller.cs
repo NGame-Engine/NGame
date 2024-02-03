@@ -1,9 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGame.Ecs;
 using NGame.SceneAssets;
 using NGame.Setup;
 
-namespace NGame.Implementations.SceneAssets;
+namespace NGame.Implementations.Ecs.SceneAssets;
 
 public static class SceneAssetsInstaller
 {

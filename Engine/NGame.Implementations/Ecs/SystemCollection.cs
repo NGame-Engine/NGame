@@ -4,6 +4,17 @@ namespace NGame.Implementations.Ecs;
 
 
 
+public interface ISystemCollection
+{
+	void AddEntity(Entity entity);
+	void RemoveEntity(Entity entity);
+
+	void AddComponent(EntityComponent sender);
+	void RemoveComponent(EntityComponent sender);
+}
+
+
+
 public class SystemCollection : ISystemCollection
 {
 	private readonly IEnumerable<ISystem> _systems;

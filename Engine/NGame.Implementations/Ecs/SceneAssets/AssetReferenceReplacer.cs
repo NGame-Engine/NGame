@@ -3,7 +3,7 @@ using System.Reflection;
 using NGame.Assets;
 using NGame.SceneAssets;
 
-namespace NGame.Implementations.SceneAssets;
+namespace NGame.Implementations.Ecs.SceneAssets;
 
 
 
@@ -16,12 +16,12 @@ public interface IAssetReferenceReplacer
 
 public class AssetReferenceReplacer : IAssetReferenceReplacer
 {
-	private readonly IAssetFromPackReader _assetFromPackReader;
+	private readonly IAssetAccessor _assetAccessor;
 
 
-	public AssetReferenceReplacer(IAssetFromPackReader assetFromPackReader)
+	public AssetReferenceReplacer(IAssetAccessor assetAccessor)
 	{
-		_assetFromPackReader = assetFromPackReader;
+		_assetAccessor = assetAccessor;
 	}
 
 
@@ -98,6 +98,6 @@ public class AssetReferenceReplacer : IAssetReferenceReplacer
 		}
 
 		var assetId = (AssetId)id;
-		return _assetFromPackReader.ReadFromAssetPack(assetId);
+		return _assetAccessor.ReadFromAssetPack(assetId);
 	}
 }

@@ -1,6 +1,6 @@
 using FluentAssertions;
 using NGame.Assets;
-using NGame.Implementations.SceneAssets;
+using NGame.Implementations.Ecs.SceneAssets;
 using NSubstitute;
 
 namespace NGame.Implementations.Tests.SceneAssets;
@@ -38,7 +38,7 @@ public class AssetReferenceReplacerTests
 	{
 		var assetId = AssetId.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB");
 
-		var fromPackReader = Substitute.For<IAssetFromPackReader>();
+		var fromPackReader = Substitute.For<IAssetAccessor>();
 		fromPackReader
 			.ReadFromAssetPack(assetId)
 			.Returns(new ChildTestAsset { MyValue = 7 });
@@ -63,7 +63,7 @@ public class AssetReferenceReplacerTests
 	[Fact]
 	public void ReplaceAssetReferences_ObjectWithAssets_AssignsRealValues()
 	{
-		var fromPackReader = Substitute.For<IAssetFromPackReader>();
+		var fromPackReader = Substitute.For<IAssetAccessor>();
 		fromPackReader
 			.ReadFromAssetPack(AssetId.Parse("C49E53CE-4197-4A5B-86A7-FFE6F993855F"))
 			.Returns(

@@ -4,6 +4,22 @@ namespace NGame.Implementations.Ecs;
 
 
 
+// ReSharper disable NotAccessedPositionalProperty.Global
+public record RootSceneChangedArgs(Scene OldScene, Scene NewScene);
+// ReSharper restore NotAccessedPositionalProperty.Global
+
+
+
+public interface IRootSceneAccessor
+{
+	// ReSharper disable once EventNeverSubscribedTo.Global
+	event Action<RootSceneChangedArgs> RootSceneChanged;
+
+	Scene RootScene { get; }
+
+	void SetRootScene(Scene scene);
+}
+
 public class RootSceneAccessor : IRootSceneAccessor
 {
 	public event Action<RootSceneChangedArgs>? RootSceneChanged;

@@ -92,7 +92,7 @@ public class CanPackAndLoadTest
 		var game = builder.Build();
 
 
-		var assetFromPackReader = game.Services.GetRequiredService<IAssetFromPackReader>();
+		var assetFromPackReader = game.Services.GetRequiredService<IAssetAccessor>();
 		var sceneAsset = assetFromPackReader.ReadFromAssetPack(AssetId.Parse("0F85A235-5A85-4BFB-8BCB-2B7CAF7BF8CC"));
 
 

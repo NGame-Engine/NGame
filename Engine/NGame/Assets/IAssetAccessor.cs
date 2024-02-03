@@ -2,7 +2,7 @@ namespace NGame.Assets;
 
 
 
-public interface IAssetFromPackReader
+public interface IAssetAccessor
 {
 	Asset ReadFromAssetPack(AssetId assetId);
 }

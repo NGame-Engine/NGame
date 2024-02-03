@@ -1,9 +1,10 @@
 using System.Text.Json;
 using NGame.Assets;
 using NGame.Ecs;
+using NGame.Implementations.Assets.Registries;
 using NGame.SceneAssets;
 
-namespace NGame.Implementations.SceneAssets;
+namespace NGame.Implementations.Ecs.SceneAssets;
 
 public interface ISceneLoadOperationExecutor
 {
