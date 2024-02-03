@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NGame.Setup;
 
-namespace NGame.Core.Tests.Setup;
+namespace NGame.Implementations.Tests.Setup;
 
 
 

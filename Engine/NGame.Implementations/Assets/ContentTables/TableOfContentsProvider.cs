@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NGame.Assets;
+using NGame.Implementations.Assets.Readers;
 
 namespace NGame.Implementations.Assets.ContentTables;
 
@@ -13,22 +14,12 @@ public interface ITableOfContentsProvider
 
 
 
-public class TableOfContentsProvider : ITableOfContentsProvider
+public class TableOfContentsProvider(
+	IAssetStreamProvider assetStreamProvider,
+	IEnumerable<JsonConverter> jsonConverters
+)
+	: ITableOfContentsProvider
 {
-	private readonly IAssetStreamProvider _assetStreamProvider;
-	private readonly IEnumerable<JsonConverter> _jsonConverters;
-
-
-	public TableOfContentsProvider(
-		IAssetStreamProvider assetStreamProvider,
-		IEnumerable<JsonConverter> jsonConverters
-	)
-	{
-		_assetStreamProvider = assetStreamProvider;
-		_jsonConverters = jsonConverters;
-	}
-
-
 	private TableOfContents? TableOfContents { get; set; }
 
 
@@ -41,12 +32,12 @@ public class TableOfContentsProvider : ITableOfContentsProvider
 	private TableOfContents ReadTableOfContents()
 	{
 		var jsonSerializerOptions = new JsonSerializerOptions();
-		foreach (var jsonConverter in _jsonConverters)
+		foreach (var jsonConverter in jsonConverters)
 		{
 			jsonSerializerOptions.Converters.Add(jsonConverter);
 		}
 
-		using var tocFileStream = _assetStreamProvider.Open(AssetConventions.TableOfContentsFileName);
+		using var tocFileStream = assetStreamProvider.Open(AssetConventions.TableOfContentsFileName);
 		return JsonSerializer.Deserialize<TableOfContents>(tocFileStream, jsonSerializerOptions)!;
 	}
 }

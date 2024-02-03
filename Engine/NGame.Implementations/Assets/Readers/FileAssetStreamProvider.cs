@@ -2,19 +2,14 @@ using NGame.Assets;
 
 namespace NGame.Implementations.Assets.Readers;
 
-
-
-public class FileAssetStreamProvider : IAssetStreamProvider
+public interface IAssetStreamProvider
 {
-	private readonly string _assetFolder;
+	Stream Open(string fileName);
+}
 
 
-	public FileAssetStreamProvider(string assetFolder)
-	{
-		_assetFolder = assetFolder;
-	}
-
-
+public class FileAssetStreamProvider(string assetFolder) : IAssetStreamProvider
+{
 	public static FileAssetStreamProvider CreateDefault()
 	{
 		var assetFolder = Path.Combine(AppContext.BaseDirectory, AssetConventions.AssetPackSubFolder);
@@ -24,7 +19,7 @@ public class FileAssetStreamProvider : IAssetStreamProvider
 
 	public Stream Open(string fileName)
 	{
-		var fullAssetPackPath = Path.Combine(_assetFolder, fileName);
+		var fullAssetPackPath = Path.Combine(assetFolder, fileName);
 		return File.Open(fullAssetPackPath, FileMode.Open);
 	}
 }

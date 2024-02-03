@@ -2,7 +2,7 @@ using System.Text.Json;
 using NGame.Assets.Implementations;
 using NGame.SceneAssets;
 
-namespace NGame.Core.Tests.SceneAssets;
+namespace NGame.Implementations.Tests.SceneAssets;
 
 
 

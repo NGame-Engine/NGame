@@ -1,35 +1,26 @@
 using System.IO.Compression;
 using NGame.Assets;
 using NGame.Implementations.Assets.ContentTables;
+using NGame.Implementations.Assets.Readers;
 
 namespace NGame.Implementations.Assets.Json;
 
 
 
-public class PackedAssetStreamReader : IPackedAssetStreamReader
+public class PackedAssetStreamReader(
+	ITableOfContentsProvider tableOfContentsProvider,
+	IAssetStreamProvider assetStreamProvider
+)
+	: IPackedAssetStreamReader
 {
-	private readonly ITableOfContentsProvider _tableOfContentsProvider;
-	private readonly IAssetStreamProvider _assetStreamProvider;
-
-
-	public PackedAssetStreamReader(
-		ITableOfContentsProvider tableOfContentsProvider,
-		IAssetStreamProvider assetStreamProvider
-	)
-	{
-		_tableOfContentsProvider = tableOfContentsProvider;
-		_assetStreamProvider = assetStreamProvider;
-	}
-
-
 	public T ReadFromStream<T>(AssetId assetId, Func<Stream, T> useStream)
 	{
-		var tableOfContents = _tableOfContentsProvider.Get();
+		var tableOfContents = tableOfContentsProvider.Get();
 		var contentEntry = tableOfContents.ResourceIdentifiers[assetId.Id];
 		var assetPackPath = contentEntry.PackFileName;
 		var pathInFile = contentEntry.FilePath;
 
-		using var fileStream = _assetStreamProvider.Open(assetPackPath);
+		using var fileStream = assetStreamProvider.Open(assetPackPath);
 		using var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Read);
 
 
