@@ -25,7 +25,6 @@
   <ItemGroup>
     <None Include="$(SolutionDir)/nuget-logo.png" Pack="true" PackagePath=""/>
     <None Include="$(SolutionDir)/README.md" Pack="true" PackagePath=""/>
-    <None Include="build/NGame.targets" Pack="true" PackagePath="build"/>
   </ItemGroup>
 
   <ItemGroup>

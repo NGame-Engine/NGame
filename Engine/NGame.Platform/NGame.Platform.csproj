@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\NGame.Tooling\NGame.Tooling.csproj" />
+    <ProjectReference Include="..\..\Assets\NGame.Assets.Common\NGame.Assets.Common.csproj" />
     <ProjectReference Include="..\NGame\NGame.csproj" />
   </ItemGroup>
 

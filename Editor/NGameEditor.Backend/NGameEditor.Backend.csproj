@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared\NGame.Tooling\NGame.Tooling.csproj" />
+      <ProjectReference Include="..\..\Assets\NGame.Assets.Common\NGame.Assets.Common.csproj" />
       <ProjectReference Include="..\NGameEditor.Bridge\NGameEditor.Bridge.csproj" />
     </ItemGroup>
 
