@@ -1,7 +1,7 @@
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Configuration;
 using NGame.Cli.FindUsedAssets.AssetOverviews;
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 using Singulink.IO;
 
 namespace NGame.Cli.FindUsedAssets.AssetUsages;

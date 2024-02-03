@@ -1,4 +1,6 @@
-namespace NGame.Ecs.Implementations;
+using NGame.Ecs;
+
+namespace NGame.Platform.Ecs.Implementations;
 
 
 

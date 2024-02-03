@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using NGame.Ecs;
 
-namespace NGame.SceneAssets.Implementations;
+namespace NGame.Tooling.Ecs;
 
 
 

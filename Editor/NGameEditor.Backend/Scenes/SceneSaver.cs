@@ -1,6 +1,6 @@
 using System.Text.Json;
 using NGame.Ecs;
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Bridge.Shared;

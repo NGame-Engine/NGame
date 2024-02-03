@@ -2,6 +2,7 @@ using NGame.Assets;
 using NGame.Cli.Abstractions.Paths;
 using NGame.Cli.PackAssets.AssetFileReaders;
 using NGame.Cli.PackAssets.Specifications;
+using NGame.Tooling.Assets;
 
 namespace NGame.Cli.PackAssets.Writers;
 

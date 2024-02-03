@@ -1,6 +1,7 @@
 using FluentAssertions;
 using NGame.Assets;
-using NGame.Implementations.Ecs.SceneAssets;
+using NGame.Platform.Assets;
+using NGame.Platform.Ecs.SceneAssets;
 using NSubstitute;
 
 namespace NGame.Implementations.Tests.SceneAssets;

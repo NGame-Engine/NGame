@@ -1,4 +1,5 @@
 using NGame.Assets;
+using NGame.Tooling.Assets;
 
 namespace NGameEditor.Backend.Files;
 

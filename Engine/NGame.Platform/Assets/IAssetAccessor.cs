@@ -1,4 +1,6 @@
-namespace NGame.Assets;
+using NGame.Assets;
+
+namespace NGame.Platform.Assets;
 
 
 

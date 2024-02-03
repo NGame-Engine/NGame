@@ -1,9 +1,9 @@
 using System.Text;
 using NGame.Assets;
-using NGame.Implementations.Assets.Json;
-using NGame.Implementations.Assets.Registries;
+using NGame.Platform.Assets.Json;
+using NGame.Platform.Assets.Registries;
 
-namespace NGame.Implementations.Assets.Readers;
+namespace NGame.Platform.Assets.Readers;
 
 
 

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NGame.Assets;
+using NGame.Tooling.Assets;
 using Singulink.IO;
 
 namespace NGame.Cli.FindUsedAssets.AssetOverviews;

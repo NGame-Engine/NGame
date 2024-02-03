@@ -1,6 +1,7 @@
 using System.Numerics;
+using NGame.Ecs;
 
-namespace NGame.Ecs.Implementations;
+namespace NGame.Platform.Ecs.Implementations;
 
 
 

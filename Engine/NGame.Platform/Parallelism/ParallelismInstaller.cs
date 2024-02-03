@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using NGame.Parallelism;
 using NGame.UpdateLoop;
 
-namespace NGame.Implementations.Parallelism;
+namespace NGame.Platform.Parallelism;
 
 public static class ParallelismInstaller
 {

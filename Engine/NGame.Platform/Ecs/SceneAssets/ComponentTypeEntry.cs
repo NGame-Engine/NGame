@@ -1,6 +1,6 @@
 using NGame.Ecs;
 
-namespace NGame.Implementations.Ecs.SceneAssets;
+namespace NGame.Platform.Ecs.SceneAssets;
 
 public class ComponentTypeEntry
 {

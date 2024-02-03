@@ -1,4 +1,4 @@
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 using NGameEditor.Backend.Configurations;
 using NGameEditor.Backend.Files;
 using NGameEditor.Results;

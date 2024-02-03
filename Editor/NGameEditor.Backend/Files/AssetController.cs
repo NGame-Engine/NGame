@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 using NGameEditor.Backend.Scenes;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Bridge.Files;

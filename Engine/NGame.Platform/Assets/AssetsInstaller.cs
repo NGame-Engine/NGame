@@ -1,12 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NGame.Assets;
-using NGame.Implementations.Assets.ContentTables;
-using NGame.Implementations.Assets.Json;
-using NGame.Implementations.Assets.Readers;
-using NGame.Implementations.Assets.Registries;
+using NGame.Platform.Assets.ContentTables;
+using NGame.Platform.Assets.Json;
+using NGame.Platform.Assets.Readers;
+using NGame.Platform.Assets.Registries;
 
-namespace NGame.Implementations.Assets;
+namespace NGame.Platform.Assets;
 
 public static class AssetsInstaller
 {

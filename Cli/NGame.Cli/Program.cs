@@ -4,7 +4,7 @@ using NGame.Cli;
 using NGame.Cli.Abstractions;
 using NGame.Cli.FindUsedAssets;
 using NGame.Cli.PackAssets;
-using NGame.Setup;
+using NGame.Tooling.Setup;
 
 var commands = new Dictionary<string, Action>(StringComparer.OrdinalIgnoreCase)
 {

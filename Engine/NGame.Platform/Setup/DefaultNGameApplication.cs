@@ -1,6 +1,6 @@
 using NGame.Setup;
 
-namespace NGame.Implementations.Setup;
+namespace NGame.Platform.Setup;
 
 
 

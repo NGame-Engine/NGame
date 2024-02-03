@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NGame.Ecs.Implementations;
+namespace NGame.Platform.Ecs.Implementations;
 
 
 

@@ -1,4 +1,4 @@
-namespace NGame.SceneAssets;
+namespace NGame.Tooling.Ecs;
 
 
 

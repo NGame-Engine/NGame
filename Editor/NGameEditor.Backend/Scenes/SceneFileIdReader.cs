@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
 

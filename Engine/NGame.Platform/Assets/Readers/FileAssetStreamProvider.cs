@@ -1,6 +1,6 @@
-using NGame.Assets;
+using NGame.Tooling.Assets;
 
-namespace NGame.Implementations.Assets.Readers;
+namespace NGame.Platform.Assets.Readers;
 
 public interface IAssetStreamProvider
 {

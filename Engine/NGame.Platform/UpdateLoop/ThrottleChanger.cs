@@ -1,6 +1,4 @@
-using NGame.UpdateLoop;
-
-namespace NGame.Implementations.UpdateLoop;
+namespace NGame.Platform.UpdateLoop;
 
 
 

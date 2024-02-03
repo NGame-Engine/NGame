@@ -19,7 +19,6 @@
     <PackageTags>Game Engine</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <RootNamespace>NGame.Implementations</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

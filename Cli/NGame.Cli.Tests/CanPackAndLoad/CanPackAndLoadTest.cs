@@ -1,10 +1,10 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets;
-using NGame.Implementations.Assets;
-using NGame.Implementations.Assets.Readers;
-using NGame.Implementations.Setup;
-using NGame.SceneAssets;
+using NGame.Platform.Assets;
+using NGame.Platform.Assets.Readers;
+using NGame.Platform.Setup;
+using NGame.Tooling.Ecs;
 using Xunit.Abstractions;
 
 namespace NGame.Cli.Tests.CanPackAndLoad;

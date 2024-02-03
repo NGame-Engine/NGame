@@ -1,9 +1,10 @@
 using System.Numerics;
 using NGame.Ecs;
 using NGame.Parallelism;
+using NGame.Platform.Ecs.Implementations;
 using NGame.UpdateLoop;
 
-namespace NGame.Implementations.Ecs;
+namespace NGame.Platform.Ecs;
 
 
 

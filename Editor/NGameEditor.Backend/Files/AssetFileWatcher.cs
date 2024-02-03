@@ -1,4 +1,5 @@
 using NGame.Assets;
+using NGame.Tooling.Assets;
 using NGameEditor.Bridge.Files;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;

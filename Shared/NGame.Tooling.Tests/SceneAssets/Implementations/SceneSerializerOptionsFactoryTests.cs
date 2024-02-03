@@ -1,12 +1,11 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
-using NGame.Assets.Implementations;
 using NGame.Ecs;
-using NGame.SceneAssets;
-using NGame.SceneAssets.Implementations;
+using NGame.Tooling.Assets;
+using NGame.Tooling.Ecs;
 
-namespace NGame.Shared.Tests.SceneAssets.Implementations;
+namespace NGame.Tooling.Tests.SceneAssets.Implementations;
 
 
 

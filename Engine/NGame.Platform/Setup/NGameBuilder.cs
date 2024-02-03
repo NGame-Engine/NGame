@@ -2,7 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace NGame.Implementations.Setup;
+namespace NGame.Platform.Setup;
 
 public static class NGameBuilder
 {

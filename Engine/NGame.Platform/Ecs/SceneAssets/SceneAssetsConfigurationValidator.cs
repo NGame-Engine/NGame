@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using NGame.Assets;
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 
-namespace NGame.Implementations.Ecs.SceneAssets;
+namespace NGame.Platform.Ecs.SceneAssets;
 
 
 

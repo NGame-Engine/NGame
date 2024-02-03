@@ -3,7 +3,7 @@ using DynamicData;
 using DynamicData.Binding;
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
-using NGame.SceneAssets;
+using NGame.Tooling.Ecs;
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Shared;

@@ -1,4 +1,4 @@
-﻿namespace NGame.Implementations.Assets.Registries;
+﻿namespace NGame.Platform.Assets.Registries;
 
 
 

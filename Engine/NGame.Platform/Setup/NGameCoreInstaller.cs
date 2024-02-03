@@ -1,13 +1,13 @@
 using Microsoft.Extensions.Hosting;
-using NGame.Ecs.Implementations;
-using NGame.Implementations.Assets;
-using NGame.Implementations.Ecs;
-using NGame.Implementations.Ecs.SceneAssets;
-using NGame.Implementations.Parallelism;
-using NGame.Implementations.UpdateLoop;
-using NGame.Setup;
+using NGame.Platform.Assets;
+using NGame.Platform.Ecs;
+using NGame.Platform.Ecs.Implementations;
+using NGame.Platform.Ecs.SceneAssets;
+using NGame.Platform.Parallelism;
+using NGame.Platform.UpdateLoop;
+using NGame.Tooling.Setup;
 
-namespace NGame.Implementations.Setup;
+namespace NGame.Platform.Setup;
 
 
 

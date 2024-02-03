@@ -1,10 +1,10 @@
 using System.IO.Compression;
 using NGame.Assets;
-using NGame.Implementations.Assets.ContentTables;
-using NGame.Implementations.Assets.Readers;
-using NGame.Implementations.Assets.Registries;
+using NGame.Platform.Assets.ContentTables;
+using NGame.Platform.Assets.Readers;
+using NGame.Platform.Assets.Registries;
 
-namespace NGame.Implementations.Assets.Json;
+namespace NGame.Platform.Assets.Json;
 
 
 

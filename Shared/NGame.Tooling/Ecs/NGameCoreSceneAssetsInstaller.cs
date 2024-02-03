@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NGame.SceneAssets.Implementations;
+namespace NGame.Tooling.Ecs;
 
 
 

@@ -1,6 +1,6 @@
 using System.Text.Json;
 using NGame.Assets;
-using NGame.Assets.Implementations;
+using NGame.Tooling.Assets;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;

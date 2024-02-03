@@ -1,7 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using NGame.Assets;
 
-namespace NGame.Assets.Implementations;
+namespace NGame.Tooling.Assets;
 
 
 

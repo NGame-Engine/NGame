@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using NGame.Assets;
 using NGame.Cli.Abstractions.Paths;
+using NGame.Tooling.Assets;
 
 namespace NGame.Cli.PackAssets.Writers;
 

@@ -1,4 +1,4 @@
-namespace NGame.Implementations.Parallelism;
+namespace NGame.Platform.Parallelism;
 
 
 

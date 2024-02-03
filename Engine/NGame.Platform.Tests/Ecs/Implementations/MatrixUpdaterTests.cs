@@ -1,8 +1,8 @@
 using System.Numerics;
 using NGame.Ecs;
-using NGame.Ecs.Implementations;
+using NGame.Platform.Ecs.Implementations;
 
-namespace NGame.Shared.Tests.Ecs.Implementations;
+namespace NGame.Implementations.Tests.Ecs.Implementations;
 
 
 

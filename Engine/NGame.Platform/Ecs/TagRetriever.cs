@@ -1,7 +1,7 @@
 using NGame.Ecs;
 using NGame.Parallelism;
 
-namespace NGame.Implementations.Ecs;
+namespace NGame.Platform.Ecs;
 
 
 
