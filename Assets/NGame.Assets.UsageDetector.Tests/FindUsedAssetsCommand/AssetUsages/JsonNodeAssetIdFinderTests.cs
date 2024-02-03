@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 using FluentAssertions;
-using NGame.Cli.FindUsedAssetsCommand.AssetUsages;
+using NGame.Assets.UsageDetector.AssetUsages;
 
 namespace NGame.Cli.Tests.FindUsedAssetsCommand.AssetUsages;
 

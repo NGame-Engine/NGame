@@ -1,8 +1,5 @@
-namespace NGame.Cli.Abstractions;
+namespace NGame.Assets.UsageDetector;
 
 
 
-public interface ICommandRunner
-{
-	void Run();
-}
+

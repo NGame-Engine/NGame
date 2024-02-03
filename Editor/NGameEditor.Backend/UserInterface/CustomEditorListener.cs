@@ -1,5 +1,4 @@
 using System.Text.Json;
-using NGame.Assets;
 using NGame.Tooling.Assets;
 using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Projects;

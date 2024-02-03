@@ -1,51 +1,38 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NGame.Cli;
-using NGame.Cli.Abstractions;
-using NGame.Cli.FindUsedAssetsCommand;
-using NGame.Cli.PackAssetsCommand;
+using NGame.Assets.UsageDetector;
+using NGame.Assets.UsageDetector.AssetOverviews;
+using NGame.Assets.UsageDetector.AssetUsages;
+using NGame.Assets.UsageDetector.Commands;
+using NGame.Assets.UsageDetector.FileWriters;
 using NGame.Tooling.Setup;
 
-var commands = new Dictionary<string, Action>(StringComparer.OrdinalIgnoreCase)
-{
-	["pack"] = () => RunPackAssetsCommand(args),
-	["findusedassets"] = () => RunFindUsedAssetsCommand(args)
-};
+
+var builder = Host.CreateApplicationBuilder(args);
 
 
-ProgramRunner.Run(commands, args);
-return;
+builder.AddNGameCommon();
+
+builder.Services.Configure<CommandArguments>(builder.Configuration);
+builder.Services.AddTransient<ICommandValidator, CommandValidator>();
+
+builder.Services.AddTransient<ICommandRunner, CommandRunner>();
+
+builder.Services.AddTransient<IAssetOverviewCreator, AssetOverviewCreator>();
+builder.Services.AddTransient<IAssetListReader, AssetListReader>();
+
+builder.Services.AddTransient<IAssetUsageFinder, AssetUsageFinder>();
+builder.Services.AddTransient<IJsonNodeAssetIdFinder, JsonNodeAssetIdFinder>();
+
+builder.Services.AddTransient<IUsedAssetsFileWriter, UsedAssetsFileWriter>();
+builder.Services.AddTransient<IAssetFileSpecificationFactory, AssetFileSpecificationFactory>();
+builder.Services.AddTransient<IAssetPackFactory, AssetPackFactory>();
+builder.Services.AddTransient<ITableOfContentsGenerator, TableOfContentsGenerator>();
+builder.Services.AddTransient<ITableOfContentsWriter, TableOfContentsWriter>();
 
 
-static void RunPackAssetsCommand(string[] args)
-{
-	var builder = Host.CreateApplicationBuilder(args);
+var host = builder.Build();
 
 
-	builder.AddNGameCommon();
-	builder.InstallPackAssetsCommand();
-
-
-	var host = builder.Build();
-
-
-	var commandRunner = host.Services.GetRequiredService<ICommandRunner>();
-	commandRunner.Run();
-}
-
-
-static void RunFindUsedAssetsCommand(string[] args)
-{
-	var builder = Host.CreateApplicationBuilder(args);
-
-
-	builder.AddNGameCommon();
-	builder.InstallFindUsedAssetsCommand();
-
-
-	var host = builder.Build();
-
-
-	var commandRunner = host.Services.GetRequiredService<ICommandRunner>();
-	commandRunner.Run();
-}
+var commandRunner = host.Services.GetRequiredService<ICommandRunner>();
+commandRunner.Run();
