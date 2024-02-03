@@ -29,12 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-    <PackageReference Include="Semver" Version="2.3.0"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\NGame.Tooling\NGame.Tooling.csproj" />
+    <ProjectReference Include="..\NGame.Engine\NGame.Engine.csproj" />
   </ItemGroup>
 
 </Project>
