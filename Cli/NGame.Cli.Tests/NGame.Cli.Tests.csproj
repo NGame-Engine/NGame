@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Engine\NGame.Implementations\NGame.Implementations.csproj" />
+    <ProjectReference Include="..\..\Engine\NGame.Platform\NGame.Platform.csproj" />
     <ProjectReference Include="..\NGame.Cli\NGame.Cli.csproj"/>
   </ItemGroup>
 

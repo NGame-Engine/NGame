@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\NGame.Shared\NGame.Shared.csproj" />
+      <ProjectReference Include="..\NGame.Tooling\NGame.Tooling.csproj" />
     </ItemGroup>
 
 </Project>

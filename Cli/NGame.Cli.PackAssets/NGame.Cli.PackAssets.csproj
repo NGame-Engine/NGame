@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\NGame.Shared\NGame.Shared.csproj" />
+    <ProjectReference Include="..\..\Shared\NGame.Tooling\NGame.Tooling.csproj" />
     <ProjectReference Include="..\NGame.Cli.Abstractions\NGame.Cli.Abstractions.csproj"/>
   </ItemGroup>
 
