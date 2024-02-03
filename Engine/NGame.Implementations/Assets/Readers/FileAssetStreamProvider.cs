@@ -1,6 +1,6 @@
 using NGame.Assets;
 
-namespace NGame.Core.Assets.Readers;
+namespace NGame.Implementations.Assets.Readers;
 
 
 

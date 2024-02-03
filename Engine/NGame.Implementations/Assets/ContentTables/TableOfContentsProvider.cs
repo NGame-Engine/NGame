@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using NGame.Assets;
 
-namespace NGame.Core.Assets.ContentTables;
+namespace NGame.Implementations.Assets.ContentTables;
 
 
 

@@ -1,6 +1,6 @@
 using NGame.Ecs;
 
-namespace NGame.Core.Ecs;
+namespace NGame.Implementations.Ecs;
 
 
 

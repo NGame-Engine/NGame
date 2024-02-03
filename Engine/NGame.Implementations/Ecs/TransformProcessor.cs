@@ -3,7 +3,7 @@ using NGame.Ecs;
 using NGame.Parallelism;
 using NGame.UpdateLoop;
 
-namespace NGame.Core.Ecs;
+namespace NGame.Implementations.Ecs;
 
 
 

@@ -1,6 +1,6 @@
 using NGame.Parallelism;
 
-namespace NGame.Core.Parallelism;
+namespace NGame.Implementations.Parallelism;
 
 
 

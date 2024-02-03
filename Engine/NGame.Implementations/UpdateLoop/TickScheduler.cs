@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using NGame.UpdateLoop;
 
-namespace NGame.Core.UpdateLoop;
+namespace NGame.Implementations.UpdateLoop;
 
 
 

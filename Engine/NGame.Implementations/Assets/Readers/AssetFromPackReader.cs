@@ -1,7 +1,7 @@
 using NGame.Assets;
-using NGame.Core.Assets.Registries;
+using NGame.Implementations.Assets.Registries;
 
-namespace NGame.Core.Assets.Readers;
+namespace NGame.Implementations.Assets.Readers;
 
 
 

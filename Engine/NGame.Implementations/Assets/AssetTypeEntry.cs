@@ -1,6 +1,6 @@
 using NGame.Assets;
 
-namespace NGame.Core.Assets;
+namespace NGame.Implementations.Assets;
 
 public class AssetTypeEntry
 {

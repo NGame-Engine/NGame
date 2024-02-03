@@ -1,8 +1,8 @@
 using System.Text;
 using NGame.Assets;
-using NGame.Core.Assets.Json;
+using NGame.Implementations.Assets.Json;
 
-namespace NGame.Core.Assets.Readers;
+namespace NGame.Implementations.Assets.Readers;
 
 
 

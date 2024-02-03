@@ -1,7 +1,7 @@
 using NGame.Ecs;
 using NGame.Setup;
 
-namespace NGame.Core.Ecs;
+namespace NGame.Implementations.Ecs;
 
 
 

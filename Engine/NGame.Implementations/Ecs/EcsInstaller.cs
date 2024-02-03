@@ -4,7 +4,7 @@ using NGame.Ecs;
 using NGame.Setup;
 using NGame.UpdateLoop;
 
-namespace NGame.Core.Ecs;
+namespace NGame.Implementations.Ecs;
 
 
 

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using NGame.SceneAssets;
 using NGame.Setup;
 
-namespace NGame.Core.SceneAssets;
+namespace NGame.Implementations.SceneAssets;
 
 public static class SceneAssetsInstaller
 {

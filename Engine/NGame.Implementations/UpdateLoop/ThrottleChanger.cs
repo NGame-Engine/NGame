@@ -1,6 +1,6 @@
 using NGame.UpdateLoop;
 
-namespace NGame.Core.UpdateLoop;
+namespace NGame.Implementations.UpdateLoop;
 
 
 

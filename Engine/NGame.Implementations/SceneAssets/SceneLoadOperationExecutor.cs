@@ -3,7 +3,7 @@ using NGame.Assets;
 using NGame.Ecs;
 using NGame.SceneAssets;
 
-namespace NGame.Core.SceneAssets;
+namespace NGame.Implementations.SceneAssets;
 
 public interface ISceneLoadOperationExecutor
 {

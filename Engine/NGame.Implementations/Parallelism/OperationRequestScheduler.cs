@@ -1,7 +1,7 @@
 using NGame.Parallelism;
 using NGame.UpdateLoop;
 
-namespace NGame.Core.Parallelism;
+namespace NGame.Implementations.Parallelism;
 
 
 

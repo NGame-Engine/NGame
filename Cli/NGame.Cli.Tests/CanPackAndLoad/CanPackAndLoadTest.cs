@@ -1,9 +1,9 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets;
-using NGame.Core.Assets;
-using NGame.Core.Assets.Readers;
-using NGame.Core.Setup;
+using NGame.Implementations.Assets;
+using NGame.Implementations.Assets.Readers;
+using NGame.Implementations.Setup;
 using NGame.SceneAssets;
 using Xunit.Abstractions;
 
