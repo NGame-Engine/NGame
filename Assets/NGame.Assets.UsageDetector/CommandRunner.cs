@@ -29,11 +29,6 @@ internal class CommandRunner(
 		logger.LogInformation("Packing assets...");
 
 		var validatedCommand = commandValidator.ValidateCommand();
-		logger.LogInformation(
-			"Input validated, project file {AssetFile}, target folder {Target}",
-			validatedCommand.SolutionDirectory.PathDisplay,
-			validatedCommand.OutputDirectory.PathDisplay
-		);
 
 		var solutionDirectory = validatedCommand.SolutionDirectory;
 		var assetOverview = assetOverviewCreator.Create(solutionDirectory);

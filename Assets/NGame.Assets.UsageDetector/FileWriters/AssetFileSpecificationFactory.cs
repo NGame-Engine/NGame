@@ -44,8 +44,8 @@ public class AssetFileSpecificationFactory : IAssetFileSpecificationFactory
 	)
 	{
 		var relativePathString = Path.GetRelativePath(
-			relativeTo.PathExport,
-			absoluteFilePath.PathExport
+			relativeTo.PathDisplay,
+			absoluteFilePath.PathDisplay
 		);
 		var relativeFilePath = FilePath.ParseRelative(relativePathString);
 		return new FileReference(absoluteFilePath, relativeFilePath);

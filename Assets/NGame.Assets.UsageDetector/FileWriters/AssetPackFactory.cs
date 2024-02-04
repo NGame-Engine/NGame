@@ -28,7 +28,7 @@ public class AssetPackFactory : IAssetPackFactory
 		var packFileName = $"{packName}{AssetConventions.PackFileEnding}";
 		var absoluteFilePath = outputPath.CombineFile(packFileName);
 
-		using var fileStream = File.Open(absoluteFilePath.PathExport, FileMode.Create);
+		using var fileStream = File.Open(absoluteFilePath.PathDisplay, FileMode.Create);
 		using var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Create);
 
 		foreach (var fileSpecification in assetFileSpecifications)
@@ -48,7 +48,7 @@ public class AssetPackFactory : IAssetPackFactory
 		FileReference fileReference
 	)
 	{
-		var absolutePath = fileReference.AbsolutePath.PathExport;
+		var absolutePath = fileReference.AbsolutePath.PathDisplay;
 		var relativePath = fileReference.RelativePath.PathDisplay;
 
 		using var assetFileStream = File.OpenRead(absolutePath);

@@ -42,7 +42,7 @@ internal class AssetUsageFinder(
 	private static HashSet<Guid> GetSceneIds(IAbsoluteFilePath appSettingsPath)
 	{
 		var configurationManager = new ConfigurationManager();
-		configurationManager.AddJsonFile(appSettingsPath.PathExport);
+		configurationManager.AddJsonFile(appSettingsPath.PathDisplay);
 
 		var sceneAssetsConfiguration =
 			configurationManager
@@ -64,7 +64,7 @@ internal class AssetUsageFinder(
 
 		var assetEntry = assetEntries[assetId];
 		var filePath = assetEntry.FilePath;
-		var fileContent = File.ReadAllText(filePath.PathExport);
+		var fileContent = File.ReadAllText(filePath.PathDisplay);
 		var jsonNode = JsonNode.Parse(fileContent)!;
 		var referencedAssetIds = jsonNodeAssetIdFinder.FindReferencedIdsRecursively(jsonNode);
 

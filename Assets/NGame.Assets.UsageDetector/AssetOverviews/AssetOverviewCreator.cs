@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using NGame.Tooling.Assets;
 using Singulink.IO;
 
@@ -14,28 +15,41 @@ internal interface IAssetOverviewCreator
 
 
 internal class AssetOverviewCreator(
-	IAssetListReader assetListReader
+	IAssetListReader assetListReader,
+	IEnumerable<JsonConverter> jsonConverters
 ) : IAssetOverviewCreator
 {
-	public AssetOverview Create(IAbsoluteDirectoryPath solutionDirectory) =>
-		new(
+	public AssetOverview Create(IAbsoluteDirectoryPath solutionDirectory)
+	{
+		var options = new JsonSerializerOptions();
+
+		foreach (var jsonConverter in jsonConverters)
+		{
+			options.Converters.Add(jsonConverter);
+		}
+
+		return new AssetOverview(
 			Directory
 				.EnumerateFiles(
-					solutionDirectory.PathExport,
-					$"*ngame/{AssetConventions.ListFileName}",
+					solutionDirectory.PathDisplay,
+					$"*{AssetConventions.ListFileName}",
 					SearchOption.AllDirectories
 				)
 				.Select(File.ReadAllLines)
 				.SelectMany(assetListReader.ReadEntries)
-				.Select(CreateAssetEntry)
+				.Select(info => CreateAssetEntry(info, options))
 		);
+	}
 
 
-	private AssetEntry CreateAssetEntry(AssetFileInfo assetFileInfo)
+	private AssetEntry CreateAssetEntry(
+		AssetFileInfo assetFileInfo,
+		JsonSerializerOptions options
+	)
 	{
 		var filePath = assetFileInfo.FilePath;
-		var allText = File.ReadAllText(filePath.PathExport);
-		var jsonAsset = JsonSerializer.Deserialize<JsonAsset>(allText)!;
+		var allText = File.ReadAllText(filePath.PathDisplay);
+		var jsonAsset = JsonSerializer.Deserialize<JsonAsset>(allText, options)!;
 
 		return new AssetEntry(
 			jsonAsset.Id.Id,

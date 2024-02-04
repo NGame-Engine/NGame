@@ -45,8 +45,23 @@
           Inputs="@(NgAssetLists)"
           Outputs="$(IntermediateOutputPath)$(NgUsedAssetListFile)">
     <Message Text="Update list of used NGame assets..."/>
-    <Exec Command="dotnet tool install NGame.Assets.UsageDetector --version 0.0.2-alpha --create-manifest-if-needed"/>
-    <Exec Command="dotnet tool run NGame.Assets.UsageDetector --solutiondir=&quot;$(SolutionDir)&quot; --appsettings=&quot;$(NgAppsettingsPath)&quot; --output=&quot;$(IntermediateOutputPath)$(NgUsedAssetListFile)&quot;"/>
+
+    <Exec Command="dotnet tool list NGame.Assets.UsageDetector" IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="PackageMissing"/>
+    </Exec>
+
+    <Exec Condition="$(PackageMissing)==1"
+          Command="dotnet tool install NGame.Assets.UsageDetector ^
+    --version 0.0.2-dev ^
+    --create-manifest-if-needed"/>
+
+    <Exec Command="dotnet tool update NGame.Assets.UsageDetector --version 0.0.6"/>
+
+    <Exec Command="dotnet tool run ngame-asset-usages ^
+    solutiondir=&quot;$(SolutionDir)\&quot; ^
+    appsettings=&quot;$(ProjectDir)$(NgAppsettingsPath)&quot; ^
+    output=&quot;$(ProjectDir)$(IntermediateOutputPath)$(NgUsedAssetListFile)&quot;"/>
+
     <Message Text="List of used NGame assets updated."/>
   </Target>
 

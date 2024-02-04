@@ -30,6 +30,6 @@ public class TableOfContentsWriter(
 
 
 		var path = targetFolder.CombineFile(AssetConventions.TableOfContentsFileName);
-		File.WriteAllText(path.PathExport, jsonString);
+		File.WriteAllText(path.PathDisplay, jsonString);
 	}
 }

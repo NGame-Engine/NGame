@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Singulink.IO;
 
@@ -13,6 +14,7 @@ public interface ICommandValidator
 
 
 public class CommandValidator(
+	ILogger<CommandValidator> logger,
 	IOptions<CommandArguments> commandArguments
 ) : ICommandValidator
 {
@@ -47,9 +49,17 @@ public class CommandValidator(
 			_commandArguments.Output ??
 			throw new InvalidOperationException("No output folder provided");
 
-		var targetFolder = DirectoryPath.ParseAbsolute(outputParameter);
+		var outputFilePath = DirectoryPath.ParseAbsolute(outputParameter);
 
+		logger.LogInformation(
+			"Input validated, solution directory: {Solution}" +
+			", appSettings file::: {AppSettings}" +
+			", output file: {Output}",
+			solutionDirectory.PathDisplay,
+			appSettings.PathDisplay,
+			outputFilePath.PathDisplay
+		);
 
-		return new ValidatedCommand(solutionDirectory, appSettings, targetFolder);
+		return new ValidatedCommand(solutionDirectory, appSettings, outputFilePath);
 	}
 }
