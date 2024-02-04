@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Logging;
 using NGameEditor.Bridge.Projects;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Results;
+using Singulink.IO;
 
 namespace NGameEditor.Functionality.Projects;
 
@@ -37,7 +37,7 @@ public class ProjectCreator(
 		var projectParentPath = filePaths.FirstOrDefault();
 		if (projectParentPath == null) return;
 
-		var projectParentFolder = new AbsolutePath(projectParentPath);
+		var projectParentFolder = DirectoryPath.ParseAbsolute(projectParentPath);
 		const string projectName = "UI-Created";
 
 		await
@@ -47,7 +47,7 @@ public class ProjectCreator(
 	}
 
 
-	private Result<ProjectId> CreateProject(AbsolutePath directory, string name)
+	private Result<ProjectId> CreateProject(IAbsoluteDirectoryPath directory, string name)
 	{
 		var listTemplatesOutput = commandRunner.Run(
 			"dotnet",
@@ -63,7 +63,7 @@ public class ProjectCreator(
 		var createOutput = commandRunner.Run(
 			"dotnet",
 			$"new ngame -n {name}",
-			directory.Path
+			directory.PathExport
 		);
 
 		const string successString = "The template \"NGame Project\" was created successfully.";
@@ -72,8 +72,8 @@ public class ProjectCreator(
 			return Result.Error($"Unable to create project: {createOutput}");
 		}
 
-		var solutionFolder = directory.CombineWith(name);
-		var solutionFile = solutionFolder.CombineWith($"{name}.sln");
+		var solutionFolder = directory.CombineDirectory(name);
+		var solutionFile = solutionFolder.CombineFile($"{name}.sln");
 		var projectId = new ProjectId(solutionFile);
 
 

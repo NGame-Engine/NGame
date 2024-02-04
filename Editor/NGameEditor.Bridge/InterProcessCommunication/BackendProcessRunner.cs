@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Bridge.InterProcessCommunication;
 
@@ -10,8 +10,8 @@ namespace NGameEditor.Bridge.InterProcessCommunication;
 public interface IBackendProcessRunner
 {
 	Task<int> StartNewProcess(
-		AbsolutePath editorProjectFile,
-		AbsolutePath solutionFilePath
+		IAbsoluteFilePath editorProjectFile,
+		IAbsoluteFilePath solutionFilePath
 	);
 
 
@@ -29,8 +29,8 @@ public class BackendProcessRunner(
 
 
 	public async Task<int> StartNewProcess(
-		AbsolutePath editorProjectFile,
-		AbsolutePath solutionFilePath
+		IAbsoluteFilePath editorProjectFile,
+		IAbsoluteFilePath solutionFilePath
 	)
 	{
 		StopCurrentProcess();
@@ -110,7 +110,7 @@ public class BackendProcessRunner(
 
 
 	private static Process CreateProcess(
-		AbsolutePath editorProjectFile,
+		IAbsoluteFilePath editorProjectFile,
 		BackendApplicationArguments backendApplicationArguments
 	) =>
 		new()
@@ -121,10 +121,10 @@ public class BackendProcessRunner(
 				ArgumentList =
 				{
 					"run",
-					$"--project={editorProjectFile.Path}",
+					$"--project={editorProjectFile.PathDisplay}",
 					"--",
 					$"--frontendport={backendApplicationArguments.FrontendPort}",
-					$"--solution={backendApplicationArguments.SolutionFilePath.Path}"
+					$"--solution={backendApplicationArguments.SolutionFilePath.PathDisplay}"
 				},
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,

@@ -1,8 +1,8 @@
 using System.Text.Json;
 using NGameEditor.Bridge.Projects;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Shared.Json;
 using NGameEditor.Functionality.Users;
+using Singulink.IO;
 
 namespace NGameEditor.Functionality.Tests.Configurations;
 
@@ -11,7 +11,7 @@ namespace NGameEditor.Functionality.Tests.Configurations;
 public class NGameStudioConfigurationTests
 {
 	[Fact]
-	public void CanDoARoundTrip()
+	public void CanDoARoundTrip()	
 	{
 		// Arrange
 		var nGameStudioConfiguration =
@@ -20,15 +20,15 @@ public class NGameStudioConfigurationTests
 				ProjectHistory =
 				{
 					new ProjectUsage(
-						new ProjectId(new AbsolutePath(Path.Combine(AppContext.BaseDirectory, "name1"))),
+						new ProjectId(FilePath.ParseAbsolute(Path.Combine(AppContext.BaseDirectory, "name1"))),
 						DateTime.UnixEpoch
 					),
 					new ProjectUsage(
-						new ProjectId(new AbsolutePath(Path.Combine(AppContext.BaseDirectory, "name2"))),
+						new ProjectId(FilePath.ParseAbsolute(Path.Combine(AppContext.BaseDirectory, "name2"))),
 						DateTime.UnixEpoch
 					),
 					new ProjectUsage(
-						new ProjectId(new AbsolutePath(Path.Combine(AppContext.BaseDirectory, "name3"))),
+						new ProjectId(FilePath.ParseAbsolute(Path.Combine(AppContext.BaseDirectory, "name3"))),
 						DateTime.UnixEpoch
 					)
 				}

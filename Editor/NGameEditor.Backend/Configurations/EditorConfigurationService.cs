@@ -42,8 +42,8 @@ class EditorConfigurationService : IEditorConfigurationService
 		var filePath =
 			_projectDefinition
 				.EditorProjectFile
-				.GetParentDirectory()!
-				.CombineWith(fileName);
+				.ParentDirectory!
+				.CombineFile(fileName);
 
 		_jsonSectionUpdater.UpdateSection(filePath, sectionName, newContent);
 	}

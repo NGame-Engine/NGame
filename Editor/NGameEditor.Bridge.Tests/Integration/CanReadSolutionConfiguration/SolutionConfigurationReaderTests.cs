@@ -1,6 +1,6 @@
 using FluentAssertions;
 using NGameEditor.Bridge.Setup;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Bridge.Tests.Integration.CanReadSolutionConfiguration;
 
@@ -14,12 +14,11 @@ public class SolutionConfigurationReaderTests
 		// Arrange
 		var solutionConfigurationReader = new SolutionConfigurationReader();
 		var baseDirectory = AppContext.BaseDirectory;
-		var absoluteBaseDirectory = new AbsolutePath(baseDirectory);
-		var solutionFilePath = absoluteBaseDirectory.CombineWith(
-			nameof(Integration),
-			nameof(CanReadSolutionConfiguration),
-			"Example.sln"
-		);
+		var absoluteBaseDirectory = DirectoryPath.ParseAbsolute(baseDirectory);
+		var solutionFilePath = absoluteBaseDirectory
+			.CombineDirectory(nameof(Integration))
+			.CombineDirectory(nameof(CanReadSolutionConfiguration))
+			.CombineFile("Example.sln");
 
 
 		// Act

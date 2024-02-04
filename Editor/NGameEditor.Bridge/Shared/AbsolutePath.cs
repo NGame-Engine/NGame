@@ -1,7 +1,7 @@
 namespace NGameEditor.Bridge.Shared;
 
 
-
+[Obsolete]
 public class AbsolutePath : IEquatable<AbsolutePath>
 {
 	public AbsolutePath(string path)
@@ -16,26 +16,6 @@ public class AbsolutePath : IEquatable<AbsolutePath>
 
 
 	public string Path { get; }
-
-
-	public AbsolutePath CombineWith(params string[] paths) =>
-		new(
-			System.IO.Path.Combine(
-				paths
-					.Prepend(Path)
-					.ToArray()
-			)
-		);
-
-
-	public AbsolutePath? GetParentDirectory()
-	{
-		var parentDirectory = System.IO.Path.GetDirectoryName(Path);
-		return
-			parentDirectory == null
-				? null
-				: new AbsolutePath(parentDirectory);
-	}
 
 
 	public bool Equals(AbsolutePath? other)

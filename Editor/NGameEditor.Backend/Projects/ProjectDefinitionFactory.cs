@@ -35,11 +35,11 @@ public class ProjectDefinitionFactory(
 
 		var solutionConfigurationJsonModel = configurationResult.SuccessValue!;
 
-		var solutionDirectory = solutionFilePath.GetParentDirectory()!;
+		var solutionDirectory = solutionFilePath.ParentDirectory!;
 		var relativeGameProjectFile = solutionConfigurationJsonModel.GameProjectFile;
-		var gameProjectFile = solutionDirectory.CombineWith(relativeGameProjectFile);
+		var gameProjectFile = solutionDirectory.CombineFile(relativeGameProjectFile);
 		var relativeEditorProjectFile = solutionConfigurationJsonModel.EditorProjectFile;
-		var editorProjectFile = solutionDirectory.CombineWith(relativeEditorProjectFile);
+		var editorProjectFile = solutionDirectory.CombineFile(relativeEditorProjectFile);
 
 
 		var assembly = Assembly.GetEntryAssembly()!;

@@ -1,4 +1,4 @@
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Bridge.InterProcessCommunication;
 
@@ -6,5 +6,5 @@ namespace NGameEditor.Bridge.InterProcessCommunication;
 
 public record BackendApplicationArguments(
 	int FrontendPort,
-	AbsolutePath SolutionFilePath
+	IAbsoluteFilePath SolutionFilePath
 );

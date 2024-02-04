@@ -1,6 +1,6 @@
 using FluentAssertions;
 using NGameEditor.Bridge.Projects;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Functionality.Tests.Projects;
 
@@ -22,7 +22,7 @@ public class ProjectIdTests
 				"solution.sln"
 			);
 
-		var absolutePath = new AbsolutePath(configFilePath);
+		var absolutePath = FilePath.ParseAbsolute(configFilePath);
 		var projectId = new ProjectId(absolutePath);
 
 
@@ -32,7 +32,7 @@ public class ProjectIdTests
 
 		// Assert
 		result.Should().Be(
-			new AbsolutePath(
+			FilePath.ParseAbsolute(
 				Path.Combine(
 					localRoot,
 					"some_folder",

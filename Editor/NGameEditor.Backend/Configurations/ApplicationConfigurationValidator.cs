@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using NGameEditor.Bridge.InterProcessCommunication;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Configurations;
 
@@ -44,7 +44,7 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 			throw new InvalidOperationException(message);
 		}
 
-		var solutionFilePath = new AbsolutePath(solutionPath);
+		var solutionFilePath = FilePath.ParseAbsolute(solutionPath);
 
 
 		return new BackendApplicationArguments(frontendPort, solutionFilePath);

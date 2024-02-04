@@ -1,13 +1,13 @@
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Projects;
 
 
 
 public record ProjectDefinition(
-	AbsolutePath SolutionFilePath,
-	AbsolutePath GameProjectFile,
-	AbsolutePath EditorProjectFile,
+	IAbsoluteFilePath SolutionFilePath,
+	IAbsoluteFilePath GameProjectFile,
+	IAbsoluteFilePath EditorProjectFile,
 	List<Type> AssetTypes,
 	List<Type> ComponentTypes
 );
@@ -16,16 +16,16 @@ public record ProjectDefinition(
 
 public static class ProjectDefinitionExtensions
 {
-	public static AbsolutePath GetEditorProjectFolder(
+	public static IAbsoluteDirectoryPath GetEditorProjectFolder(
 		this ProjectDefinition projectDefinition
-	) => projectDefinition.EditorProjectFile.GetParentDirectory()!;
+	) => projectDefinition.EditorProjectFile.ParentDirectory!;
 
 
-	public static AbsolutePath GetUserDataFilePath(
+	public static IAbsoluteFilePath GetUserDataFilePath(
 		this ProjectDefinition projectDefinition
 	) =>
 		projectDefinition
 			.EditorProjectFile
-			.GetParentDirectory()!
-			.CombineWith(BackendConventions.UserPreferencesFileName);
+			.ParentDirectory!
+			.CombineFile(BackendConventions.UserPreferencesFileName);
 }

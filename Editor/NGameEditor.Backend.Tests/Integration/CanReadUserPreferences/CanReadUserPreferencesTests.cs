@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using NGame.Ecs;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Tests.Integration.CanReadUserPreferences;
 
@@ -23,16 +23,16 @@ public class CanReadUserPreferencesTests
 		var builder = Host.CreateApplicationBuilder();
 		builder.InstallBackend(null!);
 
-		var basePath = new AbsolutePath(AppContext.BaseDirectory);
-		var solutionFolder = basePath.CombineWith(
-			nameof(Integration),
-			nameof(CanReadUserPreferences)
+		var basePath = DirectoryPath.ParseAbsolute(AppContext.BaseDirectory);
+		var solutionFolder = basePath
+			.CombineDirectory(nameof(Integration))
+			.CombineDirectory(nameof(CanReadUserPreferences)
 		);
 
 		var projectDefinition = new ProjectDefinition(
-			solutionFolder.CombineWith("does_not_exist.sln"),
-			solutionFolder.CombineWith("does_not_exist.csproj"),
-			solutionFolder.CombineWith("does_not_exist.csproj"),
+			solutionFolder.CombineFile("does_not_exist.sln"),
+			solutionFolder.CombineFile("does_not_exist.csproj"),
+			solutionFolder.CombineFile("does_not_exist.csproj"),
 			[],
 			[typeof(DummyComponent)]
 		);

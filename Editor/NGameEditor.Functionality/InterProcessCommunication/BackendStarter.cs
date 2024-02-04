@@ -35,10 +35,10 @@ public class BackendStarter(
 			return Result.Error(solutionConfigurationResult.ErrorValue!);
 		}
 
-		var solutionFolder = solutionFilePath.GetParentDirectory()!;
+		var solutionFolder = solutionFilePath.ParentDirectory!;
 		var solutionConfigurationJsonModel = solutionConfigurationResult.SuccessValue!;
 		var relativeEditorProjectPath = solutionConfigurationJsonModel.EditorProjectFile;
-		var editorProjectFile = solutionFolder.CombineWith(relativeEditorProjectPath);
+		var editorProjectFile = solutionFolder.CombineFile(relativeEditorProjectPath);
 
 
 		var backendPort = await backendProcessRunner.StartNewProcess(
