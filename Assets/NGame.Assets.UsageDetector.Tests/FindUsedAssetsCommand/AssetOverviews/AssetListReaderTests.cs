@@ -15,13 +15,15 @@ public class AssetListReaderTests
 	public void ReadEntries_NormalInput_CombinesValuesCorrectly()
 	{
 		// Arrange
+		var osSpecificRoot = Path.GetPathRoot(AppContext.BaseDirectory);
+
 		var input = new List<string>
 		{
-			@"FirstPack//C:\NGameTest\MoonBalls\moon.png.ngasset",
-			@"FirstPack//C:\NGameTest\Scenes\scene1.ngasset",
-			@"SecondPack//C:\NGameTest\Sounds\enemy-hurt-mono.ogg.ngasset",
-			@"FirstPack//C:\NGameTest\MoonBalls\moon.png",
-			@"SecondPack//C:\NGameTest\Sounds\enemy-hurt-mono.ogg",
+			@$"FirstPack//{osSpecificRoot}NGameTest\MoonBalls\moon.png.ngasset",
+			@$"FirstPack//{osSpecificRoot}NGameTest\Scenes\scene1.ngasset",
+			@$"SecondPack//{osSpecificRoot}NGameTest\Sounds\enemy-hurt-mono.ogg.ngasset",
+			@$"FirstPack//{osSpecificRoot}NGameTest\MoonBalls\moon.png",
+			@$"SecondPack//{osSpecificRoot}NGameTest\Sounds\enemy-hurt-mono.ogg",
 		};
 
 		var assetListReader = Create();
@@ -34,13 +36,13 @@ public class AssetListReaderTests
 		// Assert
 		var assetEntries = result.ToList();
 
-		var moonFilePath = FilePath.ParseAbsolute(@"C:\NGameTest\MoonBalls\moon.png.ngasset");
+		var moonFilePath = FilePath.ParseAbsolute($@"{osSpecificRoot}NGameTest\MoonBalls\moon.png.ngasset");
 		var moonAssetEntry = assetEntries.First(x => x.FilePath.Equals(moonFilePath));
 		moonAssetEntry.PackageName.Should().Be("FirstPack");
-		var moonFileCompanionPath = FilePath.Parse(@"C:\NGameTest\MoonBalls\moon.png");
+		var moonFileCompanionPath = FilePath.Parse($@"{osSpecificRoot}NGameTest\MoonBalls\moon.png");
 		moonAssetEntry.CompanionFile.Should().Be(moonFileCompanionPath);
 
-		var sceneFilePath = FilePath.Parse(@"C:\NGameTest\Scenes\scene1.ngasset");
+		var sceneFilePath = FilePath.Parse($@"{osSpecificRoot}NGameTest\Scenes\scene1.ngasset");
 		var sceneAssetEntry = assetEntries.First(x => x.FilePath.Equals(sceneFilePath));
 		sceneAssetEntry.PackageName.Should().Be("FirstPack");
 		sceneAssetEntry.CompanionFile.Should().Be(null);

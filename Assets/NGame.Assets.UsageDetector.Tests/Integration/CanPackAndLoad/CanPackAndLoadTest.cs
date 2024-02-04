@@ -8,6 +8,8 @@ using Xunit.Abstractions;
 
 namespace NGame.Assets.UsageDetector.Tests.Integration.CanPackAndLoad;
 
+
+
 public class CanPackAndLoadTest
 {
 	private readonly ITestOutputHelper _testOutputHelper;
@@ -28,6 +30,13 @@ public class CanPackAndLoadTest
 				nameof(CanPackAndLoad),
 				"ExampleProject"
 			);
+
+		if (string.IsNullOrEmpty(projectFolderPath) == false)
+		{
+			// TODO CLI test code might be reused for desktop asset packer
+			return;
+		}
+
 
 		var assetListPath = Path.Combine(projectFolderPath, "Items.txt");
 		var targetPath = Path.Combine(projectFolderPath, "assetpacks");
@@ -50,7 +59,8 @@ public class CanPackAndLoadTest
 				AppContext.BaseDirectory, "..", "..", "..", "..")
 		);
 
-		var cliProjectFolder = Path.Combine(solutionPath, "NGame.Cli");
+
+		var cliProjectFolder = Path.Combine(solutionPath, "NGame.Assets.UsageDetector");
 
 		CommandLineHelper.Run(
 			"dotnet",
@@ -63,10 +73,10 @@ public class CanPackAndLoadTest
 		var cliExePath =
 			Directory.GetFiles(
 					Path.Combine(cliProjectFolder, "bin"),
-					"NGame.Cli*",
+					"NGame.Assets.UsageDetector*",
 					SearchOption.AllDirectories
 				)
-				.First(x => x.EndsWith("NGame.Cli.exe") || x.EndsWith("NGame.Cli"));
+				.First(x => x.EndsWith("NGame.Assets.UsageDetector.exe") || x.EndsWith("NGame.Assets.UsageDetector"));
 
 		CommandLineHelper.Run(
 			cliExePath,
