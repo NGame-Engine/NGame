@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Logging;
+using NGame.Assets.UsageDetector.AssetOverviews;
 using NGame.Assets.UsageDetector.AssetUsages;
 using Singulink.IO;
 
@@ -10,46 +10,35 @@ internal interface IUsedAssetsFileWriter
 {
 	void WriteToFile(
 		AssetUsageOverview assetUsageOverview,
-		IAbsoluteFilePath appSettingsPath,
-		IAbsoluteDirectoryPath outputPath
+		IAbsoluteFilePath outputPath
 	);
 }
 
 
 
-internal class UsedAssetsFileWriter(
-	ILogger<UsedAssetsFileWriter> logger,
-	IAssetFileSpecificationFactory assetFileSpecificationFactory,
-	IAssetPackFactory assetPackFactory,
-	ITableOfContentsGenerator tableOfContentsGenerator,
-	ITableOfContentsWriter tableOfContentsWriter
-) : IUsedAssetsFileWriter
+internal class UsedAssetsFileWriter : IUsedAssetsFileWriter
 {
 	public void WriteToFile(
 		AssetUsageOverview assetUsageOverview,
-		IAbsoluteFilePath appSettingsPath,
-		IAbsoluteDirectoryPath outputPath
-	)
+		IAbsoluteFilePath outputPath
+	) =>
+		File.WriteAllLines(
+			outputPath.PathDisplay,
+			assetUsageOverview
+				.UsedAssetEntries
+				.Select(CreateTextLine)
+		);
+
+
+	private static string CreateTextLine(AssetEntry x)
 	{
-		var projectFolder = appSettingsPath.ParentDirectory;
+		var packageName = string.IsNullOrWhiteSpace(x.PackageName)
+			? "Default"
+			: x.PackageName;
 
-		var assetFileSpecifications = assetUsageOverview
-			.UsedAssetEntries
-			.Select(x => assetFileSpecificationFactory.Create(x, projectFolder))
-			.ToList();
+		var filePath = x.FilePath.PathDisplay;
+		var companionFile = x.CompanionFile?.PathDisplay;
 
-
-		var createdPackNames = assetFileSpecifications
-			.GroupBy(x => x.PackageName)
-			.Select(x =>
-				assetPackFactory.Create(x.Key, x, outputPath)
-			);
-
-		var packNamesString = string.Join(", ", createdPackNames);
-		logger.LogInformation("Created asset packs {AssetPacks}", packNamesString);
-
-
-		var tableOfContents = tableOfContentsGenerator.CreateTableOfContents(assetFileSpecifications);
-		tableOfContentsWriter.Write(tableOfContents, outputPath);
+		return $"{x.Id}//{packageName}//{filePath}//{companionFile}";
 	}
 }

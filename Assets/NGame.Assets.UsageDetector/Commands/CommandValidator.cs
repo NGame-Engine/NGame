@@ -49,11 +49,11 @@ public class CommandValidator(
 			_commandArguments.Output ??
 			throw new InvalidOperationException("No output folder provided");
 
-		var outputFilePath = DirectoryPath.ParseAbsolute(outputParameter);
+		var outputFilePath = FilePath.ParseAbsolute(outputParameter);
 
 		logger.LogInformation(
 			"Input validated, solution directory: {Solution}" +
-			", appSettings file::: {AppSettings}" +
+			", appSettings file: {AppSettings}" +
 			", output file: {Output}",
 			solutionDirectory.PathDisplay,
 			appSettings.PathDisplay,

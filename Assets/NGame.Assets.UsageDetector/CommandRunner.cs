@@ -44,8 +44,8 @@ internal class CommandRunner(
 			usedAssetOverview.UsedAssetEntries.Count
 		);
 
-		var outputPath = validatedCommand.OutputDirectory;
-		usedAssetsFileWriter.WriteToFile(usedAssetOverview, appSettingsPath, outputPath);
+		var outputPath = validatedCommand.Output;
+		usedAssetsFileWriter.WriteToFile(usedAssetOverview, outputPath);
 		logger.LogInformation("Assets packs created");
 	}
 }

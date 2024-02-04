@@ -7,10 +7,10 @@ namespace NGame.Assets.UsageDetector.Commands;
 public class ValidatedCommand(
 	IAbsoluteDirectoryPath solutionDirectory,
 	IAbsoluteFilePath appSettings,
-	IAbsoluteDirectoryPath outputDirectory
+	IAbsoluteFilePath output
 )
 {
 	public IAbsoluteDirectoryPath SolutionDirectory { get; } = solutionDirectory;
 	public IAbsoluteFilePath AppSettings { get; } = appSettings;
-	public IAbsoluteDirectoryPath OutputDirectory { get; } = outputDirectory;
+	public IAbsoluteFilePath Output { get; } = output;
 }

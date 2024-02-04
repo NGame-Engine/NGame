@@ -1,50 +1,80 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <NGAssetListFile>ngame/NGAssets.g.txt</NGAssetListFile>
-    <NgUsedAssetListFile>ngame/NGAssets.used.g.txt</NgUsedAssetListFile>
-    <NgAppsettingsPath>$(ProjectDir)appsettings.json</NgAppsettingsPath>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <NgAsset Include="**/*.ngasset" Exclude="bin/**/*;obj/**/*"/>
-    <NgAssetLists Include="$(SolutionDir)**/$(NGAssetListFile)"/>
-  </ItemGroup>
+  <Target Name="NGame_AssignPropertiesForAssets">
+    <PropertyGroup>
+      <NgAppsettingsPath>$(ProjectDir)appsettings.json</NgAppsettingsPath>
+      <NGAssetListFile>$(ProjectDir)$(IntermediateOutputPath)ngame/NGAssets.g.txt</NGAssetListFile>
+      <NgUsedAssetListFile>$(ProjectDir)$(IntermediateOutputPath)ngame/NGAssets.used.g.txt</NgUsedAssetListFile>
+    </PropertyGroup>
+  </Target>
 
 
-  <Target Name="AddCompanionFilesToNGAsset" BeforeTargets="BeforeBuild">
-    <Message Text="Discovering NGame assets in $(ProjectDir)"/>
+  <Target Name="DeleteNGAssetListFile"
+          BeforeTargets="BeforeRebuild"
+          DependsOnTargets="NGame_AssignPropertiesForAssets">
+    <Delete Files="$(NGAssetListFile)"/>
+  </Target>
+
+
+  <Target Name="DeleteNGAssetListFile"
+          BeforeTargets="BeforeClean"
+          DependsOnTargets="NGame_AssignPropertiesForAssets">
+    <Delete Files="$(NGAssetListFile)"/>
+  </Target>
+
+
+  <Target
+    Name="NGame_UpdateAssets"
+    BeforeTargets="BeforeBuild"
+    DependsOnTargets="NGame_AssignPropertiesForAssets"
+  >
+    <CallTarget Targets="NGame_UpdateAssets_UpdateItemGroupNgAsset"/>
+    <CallTarget Targets="NGame_UpdateAssets_UpdateAssetList"/>
+    
+    <CallTarget Targets="NGame_UpdateAssets_UpdateItemGroupNgAssetLists"/>
+    <CallTarget
+      Targets="NGame_UpdateAssets_UpdateUsedAssetList"
+      Condition="Exists('$(NgAppsettingsPath)')"
+    />
+  </Target>
+
+
+  <Target Name="NGame_UpdateAssets_UpdateItemGroupNgAsset">
     <ItemGroup>
+      <NgAsset Include="**/*.ngasset" Exclude="bin/**/*;obj/**/*"/>
       <NgAsset
         Include="@(NgAsset -> '%(RelativeDir)%(FileName)')"
         Condition="Exists('%(RelativeDir)%(FileName)')"
       />
-      <NgAssetChangeTrigger Include="@(NgAsset);appsettings*.json"/>
     </ItemGroup>
-    <Message Text="Found NGame assets: @(NgAsset)"/>
   </Target>
 
-
-  <Target Name="WriteNGAssetListFile"
-          AfterTargets="AddCompanionFilesToNGAsset"
-          Inputs="@(NgAssetChangeTrigger)"
-          Outputs="$(IntermediateOutputPath)$(NGAssetListFile)">
-    <Message Text="Updating NGame asset list..."/>
+  
+  <Target Name="NGame_UpdateAssets_UpdateAssetList"
+          Inputs="@(NgAsset)"
+          Outputs="$(NGAssetListFile)">
+    <Message Text="NGame: Updating asset list for this project..."/>
     <WriteLinesToFile
       Lines="@(NgAsset -> '$(NGAssetPackName)//$(ProjectDir)%(Identity)')"
-      File="$(IntermediateOutputPath)$(NGAssetListFile)"
+      File="$(NGAssetListFile)"
       Overwrite="true"
       Encoding="Unicode"/>
-    <Message Text="NGame asset list updated."/>
+    <Message Text="NGame: Asset list updated for this project."/>
   </Target>
 
 
-  <Target Name="WriteNgUsedAssetListFile"
-          AfterTargets="AddCompanionFilesToNGAsset"
-          Condition="Exists('$(NgAppsettingsPath)')"
+  <Target Name="NGame_UpdateAssets_UpdateItemGroupNgAssetLists">
+    <ItemGroup>
+      <NgAssetLists Include="$(SolutionDir)**/$(NGAssetListFile)"/>
+    </ItemGroup>
+  </Target>
+
+
+  <Target Name="NGame_UpdateAssets_UpdateUsedAssetList"
           Inputs="@(NgAssetLists)"
-          Outputs="$(IntermediateOutputPath)$(NgUsedAssetListFile)">
-    <Message Text="Update list of used NGame assets..."/>
+          Outputs="$(NgUsedAssetListFile)">
+    <Message Text="NGame: Update list of used assets..."/>
 
     <Exec Command="dotnet tool list NGame.Assets.UsageDetector" IgnoreExitCode="true">
       <Output TaskParameter="ExitCode" PropertyName="PackageMissing"/>
@@ -59,19 +89,10 @@
 
     <Exec Command="dotnet tool run ngame-asset-usages ^
     solutiondir=&quot;$(SolutionDir)\&quot; ^
-    appsettings=&quot;$(ProjectDir)$(NgAppsettingsPath)&quot; ^
-    output=&quot;$(ProjectDir)$(IntermediateOutputPath)$(NgUsedAssetListFile)&quot;"/>
+    appsettings=&quot;$(NgAppsettingsPath)&quot; ^
+    output=&quot;$(NgUsedAssetListFile)&quot;"/>
 
-    <Message Text="List of used NGame assets updated."/>
-  </Target>
-
-
-  <Target Name="DeleteNGAssetListFile" BeforeTargets="BeforeRebuild">
-    <Delete Files="$(IntermediateOutputPath)$(NGAssetListFile)"/>
-  </Target>
-
-  <Target Name="DeleteNGAssetListFile" BeforeTargets="BeforeClean">
-    <Delete Files="$(IntermediateOutputPath)$(NGAssetListFile)"/>
+    <Message Text="NGame:  List of used assets updated."/>
   </Target>
 
 

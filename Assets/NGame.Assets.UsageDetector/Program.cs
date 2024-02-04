@@ -25,10 +25,8 @@ builder.Services.AddTransient<IAssetUsageFinder, AssetUsageFinder>();
 builder.Services.AddTransient<IJsonNodeAssetIdFinder, JsonNodeAssetIdFinder>();
 
 builder.Services.AddTransient<IUsedAssetsFileWriter, UsedAssetsFileWriter>();
-builder.Services.AddTransient<IAssetFileSpecificationFactory, AssetFileSpecificationFactory>();
-builder.Services.AddTransient<IAssetPackFactory, AssetPackFactory>();
-builder.Services.AddTransient<ITableOfContentsGenerator, TableOfContentsGenerator>();
-builder.Services.AddTransient<ITableOfContentsWriter, TableOfContentsWriter>();
+
+
 
 
 var host = builder.Build();
