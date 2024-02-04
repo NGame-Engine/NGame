@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared\NGame.Shared\NGame.Shared.csproj" />
+      <ProjectReference Include="..\..\Assets\NGame.Assets.Common\NGame.Assets.Common.csproj" />
       <ProjectReference Include="..\NGameEditor.Bridge\NGameEditor.Bridge.csproj" />
       <ProjectReference Include="..\NGameEditor.ViewModels\NGameEditor.ViewModels.csproj" />
     </ItemGroup>

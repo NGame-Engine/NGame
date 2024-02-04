@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Hosting;
-using NGame.Setup;
+using NGame.Assets.Common.Setup;
 using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.InterProcessCommunication;
 using NGameEditor.Functionality.Logging;

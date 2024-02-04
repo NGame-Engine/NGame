@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NGame.Setup;
+using NGame.Assets.Common.Setup;
 using NGameEditor.Backend.Configurations;
 using NGameEditor.Backend.Files;
 using NGameEditor.Backend.InterProcessCommunication;

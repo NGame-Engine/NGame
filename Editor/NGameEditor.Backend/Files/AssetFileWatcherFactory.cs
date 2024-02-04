@@ -1,4 +1,4 @@
-using NGame.Assets;
+using NGame.Assets.Common.Assets;
 
 namespace NGameEditor.Backend.Files;
 
