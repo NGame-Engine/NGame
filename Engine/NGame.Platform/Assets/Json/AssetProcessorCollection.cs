@@ -30,7 +30,7 @@ public class AssetProcessorCollection(
 		var resourceIdentifiers = tableOfContents.ResourceIdentifiers;
 
 		var mainAssetId = asset.Id;
-		var contentEntry = resourceIdentifiers[mainAssetId.Id];
+		var contentEntry = resourceIdentifiers[mainAssetId];
 
 		var type = asset.GetType();
 		var processors = assetProcessors.Where(x => x.Type == type);

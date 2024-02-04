@@ -75,7 +75,7 @@ internal class AssetValueEditorFactory(
 	{
 		if (asset == null) return null;
 
-		var assetId = asset.Id.Id;
+		var assetId = asset.Id;
 
 		return
 			assetFileWatcher

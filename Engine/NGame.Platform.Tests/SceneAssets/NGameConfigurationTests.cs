@@ -26,7 +26,6 @@ public class NGameConfigurationTests
 		{
 			Converters =
 			{
-				new AssetIdConverter(),
 				new SemVersionConverter()
 			}
 		};

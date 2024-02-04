@@ -37,7 +37,7 @@ public class AssetReferenceReplacerTests
 	[Fact]
 	public void ReplaceAssetReferences_UnassignableReference_IsSkipped()
 	{
-		var assetId = AssetId.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB");
+		var assetId = Guid.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB");
 
 		var fromPackReader = Substitute.For<IAssetAccessor>();
 		fromPackReader
@@ -66,20 +66,20 @@ public class AssetReferenceReplacerTests
 	{
 		var fromPackReader = Substitute.For<IAssetAccessor>();
 		fromPackReader
-			.ReadFromAssetPack(AssetId.Parse("C49E53CE-4197-4A5B-86A7-FFE6F993855F"))
+			.ReadFromAssetPack(Guid.Parse("C49E53CE-4197-4A5B-86A7-FFE6F993855F"))
 			.Returns(
 				new ParentTestAsset
 				{
 					ParentValue = 6,
 					Child = new ChildTestAsset
 					{
-						Id = AssetId.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB")
+						Id = Guid.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB")
 					}
 				}
 			);
 
 		fromPackReader
-			.ReadFromAssetPack(AssetId.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB"))
+			.ReadFromAssetPack(Guid.Parse("2FFB5856-A531-4F32-BD86-64267686DDFB"))
 			.Returns(new ChildTestAsset { MyValue = 7 });
 
 
@@ -89,7 +89,7 @@ public class AssetReferenceReplacerTests
 		{
 			Parent = new ParentTestAsset
 			{
-				Id = AssetId.Parse("C49E53CE-4197-4A5B-86A7-FFE6F993855F")
+				Id = Guid.Parse("C49E53CE-4197-4A5B-86A7-FFE6F993855F")
 			}
 		};
 

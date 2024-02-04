@@ -43,8 +43,8 @@ class SceneFileIdReader : ISceneFileIdReader
 			return Result.Error($"Unable to read scene {sceneFilePath.Path}");
 		}
 
-		var assetId = sceneAsset.Id;
-		var id = assetId.Id;
+
+		var id = sceneAsset.Id;
 		return Result.Success(id);
 	}
 }

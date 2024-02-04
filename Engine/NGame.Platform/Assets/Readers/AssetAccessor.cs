@@ -11,7 +11,7 @@ public class AssetAccessor(
 )
 	: IAssetAccessor
 {
-	public Asset ReadFromAssetPack(AssetId assetId)
+	public Asset ReadFromAssetPack(Guid assetId)
 	{
 		var asset = assetRegistry.Get(assetId);
 		if (asset != null) return asset;

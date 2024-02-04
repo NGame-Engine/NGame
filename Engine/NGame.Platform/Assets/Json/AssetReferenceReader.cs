@@ -1,4 +1,3 @@
-using NGame.Assets;
 using NGame.Platform.Assets.Registries;
 
 namespace NGame.Platform.Assets.Json;
@@ -6,7 +5,7 @@ namespace NGame.Platform.Assets.Json;
 
 
 public class AssetStreamReader(
-	AssetId assetId,
+	Guid assetId,
 	string? companionFilePath,
 	Func<Stream> openStream
 )

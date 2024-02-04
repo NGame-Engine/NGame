@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NGame.Assets;
 using NGame.Ecs;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
@@ -58,7 +57,7 @@ public class CanReadUserPreferencesTests
 
 
 		sceneAssetResult.ErrorValue?.Title.Should().BeNull();
-		var sceneId = AssetId.Parse("0f85a235-5a85-4bfb-8bcb-2b7caf7bf8cc");
+		var sceneId = Guid.Parse("0f85a235-5a85-4bfb-8bcb-2b7caf7bf8cc");
 		sceneAssetResult.SuccessValue!.SceneAsset.Id.Should().Be(sceneId);
 	}
 }

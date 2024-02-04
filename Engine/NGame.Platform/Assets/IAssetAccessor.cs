@@ -6,5 +6,5 @@ namespace NGame.Platform.Assets;
 
 public interface IAssetAccessor
 {
-	Asset ReadFromAssetPack(AssetId assetId);
+	Asset ReadFromAssetPack(Guid assetId);
 }

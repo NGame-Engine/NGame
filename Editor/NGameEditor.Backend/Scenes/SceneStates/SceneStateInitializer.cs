@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using NGame.Assets;
 using NGame.Assets.Common.Ecs;
 using NGameEditor.Bridge.InterProcessCommunication;
 
@@ -55,7 +54,7 @@ public class SceneStateInitializer(
 				null,
 				new SceneAsset
 				{
-					Id = AssetId.Create(Guid.NewGuid())
+					Id = Guid.NewGuid()
 				}
 			);
 

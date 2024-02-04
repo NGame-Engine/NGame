@@ -24,7 +24,6 @@ public class SceneSerializerOptionsFactoryTests
 		new(
 			new JsonConverter[]
 			{
-				new AssetIdConverter(),
 				new SemVersionConverter()
 			}
 		);
