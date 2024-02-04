@@ -33,7 +33,7 @@ public class AssetDescriptionReader(
 		var assetType = asset.GetType();
 
 		return new AssetDescription(
-			asset.Id.Id,
+			asset.Id,
 			assetName,
 			assetTypeDefinitionMapper.Map(assetType),
 			absolutePath

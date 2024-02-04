@@ -1,5 +1,4 @@
 using System.IO.Compression;
-using NGame.Assets;
 using NGame.Platform.Assets.ContentTables;
 using NGame.Platform.Assets.Readers;
 using NGame.Platform.Assets.Registries;
@@ -14,10 +13,10 @@ public class PackedAssetStreamReader(
 )
 	: IPackedAssetStreamReader
 {
-	public T ReadFromStream<T>(AssetId assetId, Func<Stream, T> useStream)
+	public T ReadFromStream<T>(Guid assetId, Func<Stream, T> useStream)
 	{
 		var tableOfContents = tableOfContentsProvider.Get();
-		var contentEntry = tableOfContents.ResourceIdentifiers[assetId.Id];
+		var contentEntry = tableOfContents.ResourceIdentifiers[assetId];
 		var assetPackPath = contentEntry.PackFileName;
 		var pathInFile = contentEntry.FilePath;
 

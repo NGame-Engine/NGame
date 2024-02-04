@@ -16,17 +16,10 @@ public interface IAssetReferenceReplacer
 
 
 
-public class AssetReferenceReplacer : IAssetReferenceReplacer
+public class AssetReferenceReplacer(
+	IAssetAccessor assetAccessor
+) : IAssetReferenceReplacer
 {
-	private readonly IAssetAccessor _assetAccessor;
-
-
-	public AssetReferenceReplacer(IAssetAccessor assetAccessor)
-	{
-		_assetAccessor = assetAccessor;
-	}
-
-
 	private static IEnumerable<PropertyInfo> GetNonIndexPropertyInfos(Type type) =>
 		type
 			.GetProperties()
@@ -99,7 +92,7 @@ public class AssetReferenceReplacer : IAssetReferenceReplacer
 			throw new InvalidOperationException($"ID of {type} not set");
 		}
 
-		var assetId = (AssetId)id;
-		return _assetAccessor.ReadFromAssetPack(assetId);
+		var assetId = (Guid)id;
+		return assetAccessor.ReadFromAssetPack(assetId);
 	}
 }

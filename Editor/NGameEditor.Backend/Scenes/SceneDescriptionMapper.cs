@@ -23,7 +23,7 @@ public class SceneDescriptionMapper : ISceneDescriptionMapper
 			backendScene.FilePath == null
 				? null
 				: Path.GetFileName(backendScene.FilePath.Path),
-			backendScene.SceneAsset.Id.Id,
+			backendScene.SceneAsset.Id,
 			backendScene
 				.SceneAsset
 				.Entities

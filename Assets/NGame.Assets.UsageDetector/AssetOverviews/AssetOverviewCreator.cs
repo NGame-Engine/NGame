@@ -52,7 +52,7 @@ internal class AssetOverviewCreator(
 		var jsonAsset = JsonSerializer.Deserialize<JsonAsset>(allText, options)!;
 
 		return new AssetEntry(
-			jsonAsset.Id.Id,
+			jsonAsset.Id,
 			filePath,
 			assetFileInfo.PackageName,
 			assetFileInfo.CompanionFile

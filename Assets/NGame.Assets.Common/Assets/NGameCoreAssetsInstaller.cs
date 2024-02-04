@@ -15,6 +15,5 @@ public static class NGameCoreAssetsInstaller
 		services.AddTransient<ISceneSerializerOptionsFactory, SceneSerializerOptionsFactory>();
 
 		services.AddTransient<JsonConverter, SemVersionConverter>();
-		services.AddTransient<JsonConverter, AssetIdConverter>();
 	}
 }

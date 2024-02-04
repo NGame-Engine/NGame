@@ -1,4 +1,3 @@
-using NGame.Assets;
 using NGame.Parallelism;
 
 namespace NGame.Ecs;
@@ -7,6 +6,6 @@ namespace NGame.Ecs;
 
 public interface ISceneLoader
 {
-	IRunningOperation<float, Scene> Load(AssetId assetId);
-	IRunningOperation<float, Scene> Unload(AssetId assetId);
+	IRunningOperation<float, Scene> Load(Guid assetId);
+	IRunningOperation<float, Scene> Unload(Guid assetId);
 }
