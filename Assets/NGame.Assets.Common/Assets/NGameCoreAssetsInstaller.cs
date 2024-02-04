@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Tooling.Ecs;
+using NGame.Assets.Common.Ecs;
 
-namespace NGame.Tooling.Assets;
+namespace NGame.Assets.Common.Assets;
 
 
 

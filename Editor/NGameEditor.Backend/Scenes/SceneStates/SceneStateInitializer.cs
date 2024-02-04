@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using NGame.Assets;
-using NGame.Tooling.Ecs;
+using NGame.Assets.Common.Ecs;
 using NGameEditor.Bridge.InterProcessCommunication;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;

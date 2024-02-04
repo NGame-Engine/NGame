@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Xunit.Abstractions;
 
-namespace NGame.Cli.Tests;
+namespace NGame.Assets.UsageDetector.Tests;
 
 
 

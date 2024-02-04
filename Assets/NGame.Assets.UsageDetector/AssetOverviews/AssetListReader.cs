@@ -1,4 +1,4 @@
-using NGame.Tooling.Assets;
+using NGame.Assets.Common.Assets;
 using Singulink.IO;
 
 namespace NGame.Assets.UsageDetector.AssetOverviews;

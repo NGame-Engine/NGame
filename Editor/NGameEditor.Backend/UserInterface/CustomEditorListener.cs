@@ -1,5 +1,5 @@
 using System.Text.Json;
-using NGame.Tooling.Assets;
+using NGame.Assets.Common.Assets;
 using NGameEditor.Backend.Files;
 using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;

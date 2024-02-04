@@ -1,9 +1,9 @@
 using System.IO.Compression;
 using NGame.Assets;
+using NGame.Assets.Common.Assets;
 using NGame.Platform.Assets.ContentTables;
 using NGame.Platform.Assets.Readers;
 using NGame.Platform.Assets.Registries;
-using NGame.Tooling.Assets;
 
 namespace NGame.Platform.Assets.Json;
 

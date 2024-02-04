@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Hosting;
-using NGame.Tooling.Assets;
-using NGame.Tooling.Ecs;
+using NGame.Assets.Common.Assets;
+using NGame.Assets.Common.Ecs;
 
-namespace NGame.Tooling.Setup;
+namespace NGame.Assets.Common.Setup;
 
 
 

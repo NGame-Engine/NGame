@@ -1,8 +1,8 @@
 using System.Text.Json;
 using NGame.Assets;
+using NGame.Assets.Common.Ecs;
 using NGame.Ecs;
 using NGame.Platform.Assets.Registries;
-using NGame.Tooling.Ecs;
 
 namespace NGame.Platform.Ecs.SceneAssets;
 

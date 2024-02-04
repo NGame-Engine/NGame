@@ -1,4 +1,4 @@
-using NGame.Tooling.Ecs;
+using NGame.Assets.Common.Ecs;
 using NGameEditor.Results;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;

@@ -1,13 +1,12 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using NGame.Assets;
+using NGame.Assets.Common.Ecs;
 using NGame.Platform.Assets;
 using NGame.Platform.Assets.Readers;
 using NGame.Platform.Setup;
-using NGame.Tooling.Ecs;
 using Xunit.Abstractions;
 
-namespace NGame.Cli.Tests.Integration.CanPackAndLoad;
+namespace NGame.Assets.UsageDetector.Tests.Integration.CanPackAndLoad;
 
 public class CanPackAndLoadTest
 {

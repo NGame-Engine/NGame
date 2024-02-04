@@ -1,7 +1,6 @@
-using NGame.Assets;
 using NGame.Ecs;
 
-namespace NGame.Tooling.Ecs;
+namespace NGame.Assets.Common.Ecs;
 
 [Asset(Discriminator = "NGame.SceneAsset", Name = "NGame Scene")]
 public class SceneAsset : Asset

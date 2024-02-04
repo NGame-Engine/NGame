@@ -1,5 +1,5 @@
 using System.Text.Json.Nodes;
-using NGame.Tooling.Assets;
+using NGame.Assets.Common.Assets;
 
 namespace NGame.Assets.UsageDetector.AssetUsages;
 

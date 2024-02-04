@@ -1,7 +1,7 @@
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Configuration;
+using NGame.Assets.Common.Ecs;
 using NGame.Assets.UsageDetector.AssetOverviews;
-using NGame.Tooling.Ecs;
 using Singulink.IO;
 
 namespace NGame.Assets.UsageDetector.AssetUsages;

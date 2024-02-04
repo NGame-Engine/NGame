@@ -1,8 +1,7 @@
 using System.Reflection;
-using NGame.Assets;
 using NGame.Ecs;
 
-namespace NGame.Tooling.Assets;
+namespace NGame.Assets.Common.Assets;
 
 public class AssetTypeFinder : IAssetTypeFinder
 {

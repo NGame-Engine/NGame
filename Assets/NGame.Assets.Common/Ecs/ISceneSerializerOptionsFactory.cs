@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace NGame.Tooling.Ecs;
+namespace NGame.Assets.Common.Ecs;
 
 
 

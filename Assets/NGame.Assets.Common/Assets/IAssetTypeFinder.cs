@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace NGame.Tooling.Assets;
+namespace NGame.Assets.Common.Assets;
 
 
 

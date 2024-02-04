@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGame.Assets.Common.Ecs;
 using NGame.Ecs;
 using NGame.Setup;
-using NGame.Tooling.Ecs;
 
 namespace NGame.Platform.Ecs.SceneAssets;
 

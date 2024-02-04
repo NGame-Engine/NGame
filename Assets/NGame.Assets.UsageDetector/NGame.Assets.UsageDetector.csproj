@@ -9,7 +9,7 @@
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>NGame.Assets.UsageDetector</PackageId>
-    <VersionPrefix>0.0.63</VersionPrefix>
+    <VersionPrefix>0.0.6</VersionPrefix>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>ngame-asset-usages</ToolCommandName>
     <Authors>NGame Contributors</Authors>

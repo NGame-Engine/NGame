@@ -2,7 +2,7 @@ using FluentAssertions;
 using NGame.Assets.UsageDetector.AssetOverviews;
 using Singulink.IO;
 
-namespace NGame.Cli.Tests.FindUsedAssetsCommand.AssetOverviews;
+namespace NGame.Assets.UsageDetector.Tests.FindUsedAssetsCommand.AssetOverviews;
 
 
 

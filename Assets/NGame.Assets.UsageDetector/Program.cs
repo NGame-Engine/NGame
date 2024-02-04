@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGame.Assets.Common.Setup;
 using NGame.Assets.UsageDetector;
 using NGame.Assets.UsageDetector.AssetOverviews;
 using NGame.Assets.UsageDetector.AssetUsages;
 using NGame.Assets.UsageDetector.Commands;
 using NGame.Assets.UsageDetector.FileWriters;
-using NGame.Tooling.Setup;
 
 
 var builder = Host.CreateApplicationBuilder(args);

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Reflection;
 using NGame.Assets;
+using NGame.Assets.Common.Assets;
+using NGame.Assets.Common.Ecs;
 using NGame.Platform.Assets;
-using NGame.Tooling.Assets;
-using NGame.Tooling.Ecs;
 
 namespace NGame.Platform.Ecs.SceneAssets;
 

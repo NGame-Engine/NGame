@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
-namespace NGame.Cli.Tests;
+namespace NGame.Assets.UsageDetector.Tests;
 
 
 

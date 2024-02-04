@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using NGame.Assets.Common.Assets;
 using NGame.Platform.Assets.Readers;
-using NGame.Tooling.Assets;
 
 namespace NGame.Platform.Assets.ContentTables;
 

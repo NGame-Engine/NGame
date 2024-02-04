@@ -1,6 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.Logging;
-using NGame.Tooling.Assets;
+using NGame.Assets.Common.Assets;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Setup;
 

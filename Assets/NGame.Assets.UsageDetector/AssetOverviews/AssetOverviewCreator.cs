@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using NGame.Tooling.Assets;
+using NGame.Assets.Common.Assets;
 using Singulink.IO;
 
 namespace NGame.Assets.UsageDetector.AssetOverviews;

@@ -1,4 +1,4 @@
-namespace NGame.Tooling.Ecs;
+namespace NGame.Assets.Common.Ecs;
 
 
 
