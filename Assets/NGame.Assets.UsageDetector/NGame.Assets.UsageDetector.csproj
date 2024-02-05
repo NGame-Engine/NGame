@@ -6,8 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  
     <PackageId>NGame.Assets.UsageDetector</PackageId>
     <VersionPrefix>0.0.6</VersionPrefix>
     <PackAsTool>true</PackAsTool>

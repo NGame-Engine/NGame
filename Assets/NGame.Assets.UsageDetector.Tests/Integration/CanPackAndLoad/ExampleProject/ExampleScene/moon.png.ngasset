@@ -1,5 +1,5 @@
 {
-  "$type": "TestAsset",
+  "$asset": "TestAsset",
   "Id": "82D5C696-A2DC-4E4E-ADBE-03D024332150",
   "SerializerVersion": "0.0.1",
   "HasSourceFile": true
