@@ -25,6 +25,6 @@ internal class StartSceneLoader(
 		gameConfigurationService
 			.GetSection<SceneAssetsConfiguration>(SceneAssetsConfiguration.JsonElementName)
 			.Then(x => assetFileWatcher.GetById(x.StartScene))
-			.Then(x => x.FilePath)
+			.Then(x => x.FilePath.ToAbsoluteFilePath())
 			.Then(sceneFileReader.ReadSceneFile);
 }

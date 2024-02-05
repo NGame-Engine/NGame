@@ -1,6 +1,6 @@
 using System.Text.Json;
+using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
-using Singulink.IO;
 
 namespace NGameEditor.Bridge.Setup;
 
@@ -8,16 +8,16 @@ namespace NGameEditor.Bridge.Setup;
 
 public interface ISolutionConfigurationReader
 {
-	Result<SolutionConfigurationJsonModel> Read(IAbsoluteFilePath solutionFilePath);
+	Result<SolutionConfigurationJsonModel> Read(AbsolutePath solutionFilePath);
 }
 
 
 
 public class SolutionConfigurationReader : ISolutionConfigurationReader
 {
-	public Result<SolutionConfigurationJsonModel> Read(IAbsoluteFilePath solutionFilePath)
+	public Result<SolutionConfigurationJsonModel> Read(AbsolutePath solutionFilePath)
 	{
-		var solutionConfigurationPath = $"{solutionFilePath.PathDisplay}{BridgeConventions.SolutionConfigurationSuffix}";
+		var solutionConfigurationPath = $"{solutionFilePath.Path}{BridgeConventions.SolutionConfigurationSuffix}";
 		if (File.Exists(solutionConfigurationPath) == false)
 		{
 			return Result.Error(

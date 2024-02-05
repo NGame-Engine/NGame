@@ -1,16 +1,16 @@
-using Singulink.IO;
+using NGameEditor.Bridge.Shared;
 
 namespace NGameEditor.Bridge.Projects;
 
 
 
-public class ProjectId(IAbsoluteFilePath solutionFilePath) : IEquatable<ProjectId>
+public class ProjectId(AbsolutePath solutionFilePath) : IEquatable<ProjectId>
 {
-	public IAbsoluteFilePath SolutionFilePath { get; } = solutionFilePath;
+	public AbsolutePath SolutionFilePath { get; } = solutionFilePath;
 
 
-	public IAbsoluteDirectoryPath GetAbsoluteSolutionFolder() =>
-		SolutionFilePath.ParentDirectory!;
+	public AbsolutePath GetAbsoluteSolutionFolder() =>
+		SolutionFilePath.GetParentDirectory()!;
 
 
 	public bool Equals(ProjectId? other)

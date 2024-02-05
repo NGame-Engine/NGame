@@ -1,4 +1,3 @@
-using NGameEditor.Bridge.Shared;
 using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
@@ -22,13 +21,13 @@ public interface IProjectFileWatcher
 	event Action<FileDeletedArgs> FileDeleted;
 	event Action<FileRenamedArgs> FileRenamed;
 
-	IEnumerable<AbsolutePath> GetAllFiles();
+	IEnumerable<IAbsoluteFilePath> GetAllFiles();
 }
 
 
 
 public class ProjectFileWatcher(
-	HashSet<AbsolutePath> currentFiles,
+	HashSet<IAbsoluteFilePath> currentFiles,
 	FileSystemWatcher fileSystemWatcher
 ) : IProjectFileWatcher, IDisposable
 {
@@ -38,9 +37,9 @@ public class ProjectFileWatcher(
 	public event Action<FileRenamedArgs>? FileRenamed;
 
 
-	private HashSet<AbsolutePath> AllFiles { get; } = currentFiles;
+	private HashSet<IAbsoluteFilePath> AllFiles { get; } = currentFiles;
 
-	public IEnumerable<AbsolutePath> GetAllFiles() => AllFiles;
+	public IEnumerable<IAbsoluteFilePath> GetAllFiles() => AllFiles;
 
 
 	public void OnChanged(object sender, FileSystemEventArgs e)

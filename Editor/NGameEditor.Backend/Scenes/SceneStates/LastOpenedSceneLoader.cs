@@ -43,6 +43,7 @@ internal class LastOpenedSceneLoader(
 		return assetFileWatcher
 			.GetById(lastOpenedProject)
 			.Then(x => x.FilePath)
+			.Then(x=> x.ToAbsoluteFilePath())
 			.Then(sceneFileReader.ReadSceneFile);
 	}
 }

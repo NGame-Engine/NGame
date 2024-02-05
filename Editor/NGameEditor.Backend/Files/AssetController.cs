@@ -45,7 +45,7 @@ internal class AssetController(
 		if (typeId == AssetAttribute.GetDiscriminator(typeof(SceneAsset)))
 		{
 			return sceneFileReader
-				.ReadSceneFile(fileName)
+				.ReadSceneFile(fileName.ToAbsoluteFilePath())
 				.IfError(logger.Log)
 				.Then(sceneState.SetLoadedScene);
 		}

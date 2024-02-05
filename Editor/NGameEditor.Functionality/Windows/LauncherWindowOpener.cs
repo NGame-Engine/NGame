@@ -29,7 +29,7 @@ public class LauncherWindowOpener(
 				.GetRecentlyOpenedProjects()
 				.Select(x =>
 					new HistoryEntryViewModel(
-						x.ProjectId.SolutionFilePath.PathExport,
+						x.ProjectId.SolutionFilePath.Path,
 						x.LastUsed,
 						ReactiveCommand.CreateFromTask(
 							() => projectOpener.OpenProject(x.ProjectId)

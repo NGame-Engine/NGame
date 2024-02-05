@@ -1,5 +1,6 @@
 using FluentAssertions;
 using NGameEditor.Bridge.Projects;
+using NGameEditor.Bridge.Shared;
 using Singulink.IO;
 
 namespace NGameEditor.Functionality.Tests.Projects;
@@ -22,7 +23,7 @@ public class ProjectIdTests
 				"solution.sln"
 			);
 
-		var absolutePath = FilePath.ParseAbsolute(configFilePath);
+		var absolutePath = new AbsolutePath(configFilePath);
 		var projectId = new ProjectId(absolutePath);
 
 

@@ -1,5 +1,5 @@
 using NGameEditor.Backend.Projects;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
 
@@ -32,7 +32,7 @@ public class ProjectFileWatcherFactory(
 					x.Contains("/bin/") == false &&
 					x.Contains("/obj/") == false
 				)
-				.Select(x => new AbsolutePath(x))
+				.Select(x => FilePath.ParseAbsolute(x))
 				.ToHashSet();
 
 

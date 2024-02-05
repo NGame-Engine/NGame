@@ -54,7 +54,7 @@ internal class AssetValueEditorFactory(
 					var newValue = JsonSerializer.Deserialize<JsonAssetInfo>(x)!;
 					var selectedFilePath = newValue.SelectedFilePath!;
 
-					var readAssetResult = backendAssetDeserializer.ReadAsset(selectedFilePath);
+					var readAssetResult = backendAssetDeserializer.ReadAsset(selectedFilePath.ToAbsoluteFilePath());
 					if (readAssetResult.HasError)
 					{
 						return Result.Error(readAssetResult.ErrorValue!);

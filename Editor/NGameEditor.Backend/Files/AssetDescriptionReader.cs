@@ -1,5 +1,5 @@
 using NGameEditor.Bridge.Files;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
 
@@ -7,7 +7,7 @@ namespace NGameEditor.Backend.Files;
 
 public interface IAssetDescriptionReader
 {
-	AssetDescription ReadAsset(AbsolutePath absolutePath);
+	AssetDescription ReadAsset(IAbsoluteFilePath absolutePath);
 }
 
 
@@ -17,7 +17,7 @@ public class AssetDescriptionReader(
 	IAssetTypeDefinitionMapper assetTypeDefinitionMapper
 ) : IAssetDescriptionReader
 {
-	public AssetDescription ReadAsset(AbsolutePath absolutePath)
+	public AssetDescription ReadAsset(IAbsoluteFilePath absolutePath)
 	{
 		var readAssetResult = backendAssetDeserializer.ReadAsset(absolutePath);
 		if (readAssetResult.HasError)
@@ -28,7 +28,7 @@ public class AssetDescriptionReader(
 
 		var asset = readAssetResult.SuccessValue!;
 
-		var assetName = Path.GetFileNameWithoutExtension(absolutePath.Path);
+		var assetName = absolutePath.NameWithoutExtension;
 
 		var assetType = asset.GetType();
 
@@ -36,7 +36,7 @@ public class AssetDescriptionReader(
 			asset.Id,
 			assetName,
 			assetTypeDefinitionMapper.Map(assetType),
-			absolutePath
+			absolutePath.FromAbsoluteFilePath()
 		);
 	}
 }

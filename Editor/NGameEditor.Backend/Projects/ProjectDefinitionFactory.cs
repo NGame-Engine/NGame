@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Logging;
 using NGame.Assets.Common.Assets;
+using NGameEditor.Backend.Files;
 using NGameEditor.Bridge.InterProcessCommunication;
 using NGameEditor.Bridge.Setup;
 
@@ -25,9 +26,10 @@ public class ProjectDefinitionFactory(
 {
 	public ProjectDefinition Create()
 	{
-		var solutionFilePath = backendApplicationArguments.SolutionFilePath;
+		var solutionFile = backendApplicationArguments.SolutionFilePath;
+		var solutionFilePath = solutionFile.ToAbsoluteFilePath();
 
-		var configurationResult = solutionConfigurationReader.Read(solutionFilePath);
+		var configurationResult = solutionConfigurationReader.Read(solutionFile);
 		if (configurationResult.HasError)
 		{
 			throw new InvalidOperationException(configurationResult.ErrorValue!.Title);
@@ -35,7 +37,7 @@ public class ProjectDefinitionFactory(
 
 		var solutionConfigurationJsonModel = configurationResult.SuccessValue!;
 
-		var solutionDirectory = solutionFilePath.ParentDirectory!;
+		var solutionDirectory = solutionFilePath.ParentDirectory;
 		var relativeGameProjectFile = solutionConfigurationJsonModel.GameProjectFile;
 		var gameProjectFile = solutionDirectory.CombineFile(relativeGameProjectFile);
 		var relativeEditorProjectFile = solutionConfigurationJsonModel.EditorProjectFile;

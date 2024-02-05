@@ -60,7 +60,7 @@ public class SceneSaver(
 		var json = JsonSerializer.Serialize(sceneAsset, options);
 
 
-		FileHelper.SaveFileContentViaIntermediate(json, filePath.Path);
+		FileHelper.SaveFileContentViaIntermediate(json, filePath.PathExport);
 
 		return Result.Success();
 	}

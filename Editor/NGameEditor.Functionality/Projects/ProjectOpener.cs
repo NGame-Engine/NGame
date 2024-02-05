@@ -36,7 +36,7 @@ public class ProjectOpener(
 
 	private void OpenProjectInternal(ProjectId projectId)
 	{
-		var solutionName = projectId.SolutionFilePath.NameWithoutExtension;
+		var solutionName = Path.GetFileNameWithoutExtension(projectId.SolutionFilePath.Path);
 		projectWindow.SetProjectName(solutionName);
 
 		projectUsageRepository.MarkProjectAsOpened(projectId);

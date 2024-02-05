@@ -2,8 +2,8 @@ using System.Text.Json;
 using NGame.Assets;
 using NGame.Assets.Common.Assets;
 using NGameEditor.Backend.Projects;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
 
@@ -11,7 +11,7 @@ namespace NGameEditor.Backend.Files;
 
 public interface IBackendAssetDeserializer
 {
-	Result<Asset> ReadAsset(AbsolutePath absolutePath);
+	Result<Asset> ReadAsset(IAbsoluteFilePath absolutePath);
 }
 
 
@@ -24,12 +24,12 @@ public class BackendAssetDeserializer(
 	private JsonSerializerOptions? Options { get; set; }
 
 
-	public Result<Asset> ReadAsset(AbsolutePath absolutePath)
+	public Result<Asset> ReadAsset(IAbsoluteFilePath absolutePath)
 	{
 		Options ??= CreateJsonSerializerOptions();
 
 
-		var allText = File.ReadAllText(absolutePath.Path);
+		var allText = File.ReadAllText(absolutePath.PathExport);
 
 		try
 		{
@@ -45,7 +45,7 @@ public class BackendAssetDeserializer(
 
 			if (assetTypeIsNotRecognized)
 			{
-				return Result.Error($"Unknown type of asset at {absolutePath.Path}");
+				return Result.Error($"Unknown type of asset at {absolutePath.PathExport}");
 			}
 
 			throw;

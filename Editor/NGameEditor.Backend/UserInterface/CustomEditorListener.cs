@@ -8,6 +8,7 @@ using NGameEditor.Backend.UserInterface.ComponentEditors;
 using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.UserInterface;
 
@@ -54,7 +55,7 @@ public class CustomEditorListener(
 
 		if (filePath.Path.EndsWith(AssetConventions.AssetFileEnding))
 		{
-			return GetEditorForAssetFile(filePath);
+			return GetEditorForAssetFile(filePath.ToAbsoluteFilePath());
 		}
 
 		return Result.Success(
@@ -68,7 +69,7 @@ public class CustomEditorListener(
 	}
 
 
-	private Result<UiElementDto> GetEditorForAssetFile(AbsolutePath filePath)
+	private Result<UiElementDto> GetEditorForAssetFile(IAbsoluteFilePath filePath)
 	{
 		var readAssetResult = backendAssetDeserializer.ReadAsset(filePath);
 		if (readAssetResult.HasError) return Result.Error(readAssetResult.ErrorValue!);
@@ -93,7 +94,7 @@ public class CustomEditorListener(
 					x =>
 					{
 						var newContent = JsonSerializer.Serialize(x, options);
-						File.WriteAllText(filePath.Path, newContent);
+						File.WriteAllText(filePath.PathExport, newContent);
 					})
 				.ToList();
 
