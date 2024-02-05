@@ -1,4 +1,4 @@
-﻿using NGameEditor.Bridge.Shared;
+using NGameEditor.Bridge.Shared;
 using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
