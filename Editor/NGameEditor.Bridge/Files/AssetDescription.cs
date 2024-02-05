@@ -8,11 +8,11 @@ public class AssetDescription(
 	Guid id,
 	string name,
 	AssetTypeDefinition assetTypeDefinition,
-	AbsolutePath filePath
+	CompatibleAbsolutePath filePath
 )
 {
 	public Guid Id { get; } = id;
 	public string Name { get; } = name;
 	public AssetTypeDefinition AssetTypeDefinition { get; } = assetTypeDefinition;
-	public AbsolutePath FilePath { get; } = filePath;
+	public CompatibleAbsolutePath FilePath { get; } = filePath;
 }

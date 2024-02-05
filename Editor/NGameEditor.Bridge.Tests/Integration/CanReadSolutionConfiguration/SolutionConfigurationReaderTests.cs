@@ -14,12 +14,13 @@ public class SolutionConfigurationReaderTests
 		// Arrange
 		var solutionConfigurationReader = new SolutionConfigurationReader();
 		var baseDirectory = AppContext.BaseDirectory;
-		var absoluteBaseDirectory = new AbsolutePath(baseDirectory);
-		var solutionFilePath = absoluteBaseDirectory.CombineWith(
-			nameof(Integration),
-			nameof(CanReadSolutionConfiguration),
-			"Example.sln"
-		);
+		var absoluteBaseDirectory = new CompatibleAbsolutePath(baseDirectory);
+		var solutionFilePath = absoluteBaseDirectory
+			.CombineWith(
+				nameof(Integration),
+				nameof(CanReadSolutionConfiguration),
+				"Example.sln"
+			);
 
 
 		// Act

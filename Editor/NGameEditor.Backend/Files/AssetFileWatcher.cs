@@ -1,7 +1,7 @@
 using NGame.Assets.Common.Assets;
 using NGameEditor.Bridge.Files;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Results;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
 
@@ -23,8 +23,8 @@ internal class AssetFileWatcher(
 	private List<AssetDescription> AssetDescriptions { get; } = [.. initialFiles];
 
 
-	private static bool IsAssetFilePath(AbsolutePath absolutePath) =>
-		absolutePath.Path.EndsWith(AssetConventions.AssetFileEnding);
+	private static bool IsAssetFilePath(IAbsoluteFilePath absolutePath) =>
+		absolutePath.PathExport.EndsWith(AssetConventions.AssetFileEnding);
 
 
 	public IEnumerable<AssetDescription> GetAssetDescriptions() => AssetDescriptions;
@@ -43,7 +43,7 @@ internal class AssetFileWatcher(
 		if (IsAssetFilePath(args.Path) == false) return;
 
 		AssetDescriptions
-			.RemoveAll(x => x.FilePath == args.Path);
+			.RemoveAll(x => x.FilePath.ToAbsoluteFilePath() == args.Path);
 
 		var assetDescription = assetDescriptionReader.ReadAsset(args.Path);
 		AssetDescriptions.Add(assetDescription);
@@ -64,7 +64,7 @@ internal class AssetFileWatcher(
 		if (IsAssetFilePath(args.Path) == false) return;
 
 		AssetDescriptions
-			.RemoveAll(x => x.FilePath == args.Path);
+			.RemoveAll(x => x.FilePath.ToAbsoluteFilePath() == args.Path);
 	}
 
 
@@ -77,7 +77,7 @@ internal class AssetFileWatcher(
 		if (oldPathIsAssetFilePath)
 		{
 			AssetDescriptions
-				.RemoveAll(x => x.FilePath == args.Path);
+				.RemoveAll(x => x.FilePath.ToAbsoluteFilePath() == args.Path);
 		}
 
 		if (newPathIsAssetFilePath)

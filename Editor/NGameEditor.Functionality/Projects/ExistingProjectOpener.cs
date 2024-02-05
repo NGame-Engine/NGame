@@ -1,6 +1,5 @@
-using NGameEditor.Bridge.Projects;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Windows.LauncherWindow;
+using Singulink.IO;
 
 namespace NGameEditor.Functionality.Projects;
 
@@ -44,7 +43,7 @@ public class ExistingExistingProjectOpener(
 		if (firstFilePath == null) return;
 
 
-		var solutionFilePath = new AbsolutePath(firstFilePath);
+		var solutionFilePath = FilePath.ParseAbsolute(firstFilePath);
 		var projectId = new ProjectId(solutionFilePath);
 
 		await projectOpener.OpenProject(projectId);

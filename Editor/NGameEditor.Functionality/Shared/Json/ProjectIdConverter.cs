@@ -1,7 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Shared;
+using NGameEditor.Functionality.Projects;
+using Singulink.IO;
 
 namespace NGameEditor.Functionality.Shared.Json;
 
@@ -14,7 +15,7 @@ public class ProjectIdConverter : JsonConverter<ProjectId>
 		Type typeToConvert,
 		JsonSerializerOptions options
 	) =>
-		new(new AbsolutePath(reader.GetString()!));
+		new(FilePath.ParseAbsolute(reader.GetString()!));
 
 
 	public override void Write(
@@ -22,5 +23,5 @@ public class ProjectIdConverter : JsonConverter<ProjectId>
 		ProjectId value,
 		JsonSerializerOptions options
 	) =>
-		writer.WriteStringValue(value.SolutionFilePath.Path);
+		writer.WriteStringValue(value.SolutionFilePath.PathExport);
 }

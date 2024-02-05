@@ -22,11 +22,11 @@ internal class ProjectFileInitializer(
 
 
 		var solutionFilePath = projectDefinition.SolutionFilePath;
-		var solutionDirectory = solutionFilePath.GetParentDirectory()!;
+		var solutionDirectory = solutionFilePath.ParentDirectory!;
 
 		var directoryDescriptions =
 			Directory
-				.GetDirectories(solutionDirectory.Path)
+				.GetDirectories(solutionDirectory.PathExport)
 				.Select(GetDirectoryDescriptionsRecursive)
 				.ToList();
 

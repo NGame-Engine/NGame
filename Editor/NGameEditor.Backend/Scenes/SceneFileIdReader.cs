@@ -10,7 +10,7 @@ namespace NGameEditor.Backend.Scenes;
 
 internal interface ISceneFileIdReader
 {
-	Result<Guid> GetId(AbsolutePath sceneFilePath);
+	Result<Guid> GetId(CompatibleAbsolutePath sceneFilePath);
 }
 
 
@@ -26,7 +26,7 @@ class SceneFileIdReader : ISceneFileIdReader
 	}
 
 
-	public Result<Guid> GetId(AbsolutePath sceneFilePath)
+	public Result<Guid> GetId(CompatibleAbsolutePath sceneFilePath)
 	{
 		var allText = File.ReadAllText(sceneFilePath.Path);
 

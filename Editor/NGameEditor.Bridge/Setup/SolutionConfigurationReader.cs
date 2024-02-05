@@ -8,14 +8,14 @@ namespace NGameEditor.Bridge.Setup;
 
 public interface ISolutionConfigurationReader
 {
-	Result<SolutionConfigurationJsonModel> Read(AbsolutePath solutionFilePath);
+	Result<SolutionConfigurationJsonModel> Read(CompatibleAbsolutePath solutionFilePath);
 }
 
 
 
 public class SolutionConfigurationReader : ISolutionConfigurationReader
 {
-	public Result<SolutionConfigurationJsonModel> Read(AbsolutePath solutionFilePath)
+	public Result<SolutionConfigurationJsonModel> Read(CompatibleAbsolutePath solutionFilePath)
 	{
 		var solutionConfigurationPath = $"{solutionFilePath.Path}{BridgeConventions.SolutionConfigurationSuffix}";
 		if (File.Exists(solutionConfigurationPath) == false)

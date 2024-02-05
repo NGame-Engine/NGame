@@ -13,7 +13,7 @@ namespace NGameEditor.Backend.Files;
 
 public interface IAssetController
 {
-	Result Open(AbsolutePath fileName);
+	Result Open(CompatibleAbsolutePath fileName);
 	List<AssetDescription> GetAssetsOfType(AssetTypeDefinition assetTypeDefinition);
 }
 
@@ -26,7 +26,7 @@ internal class AssetController(
 	IAssetFileWatcher assetFileWatcher
 ) : IAssetController
 {
-	public Result Open(AbsolutePath fileName)
+	public Result Open(CompatibleAbsolutePath fileName)
 	{
 		var path = fileName.Path;
 		if (File.Exists(path) == false)
@@ -45,7 +45,7 @@ internal class AssetController(
 		if (typeId == AssetAttribute.GetDiscriminator(typeof(SceneAsset)))
 		{
 			return sceneFileReader
-				.ReadSceneFile(fileName)
+				.ReadSceneFile(fileName.ToAbsoluteFilePath())
 				.IfError(logger.Log)
 				.Then(sceneState.SetLoadedScene);
 		}

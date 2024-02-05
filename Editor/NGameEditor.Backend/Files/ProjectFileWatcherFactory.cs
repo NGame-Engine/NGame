@@ -1,5 +1,5 @@
 using NGameEditor.Backend.Projects;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Files;
 
@@ -19,12 +19,12 @@ public class ProjectFileWatcherFactory(
 	public IProjectFileWatcher Create()
 	{
 		var solutionFilePath = projectDefinition.SolutionFilePath;
-		var solutionFolder = solutionFilePath.GetParentDirectory()!;
+		var solutionFolder = solutionFilePath.ParentDirectory!;
 
 		var currentFiles =
 			Directory
 				.EnumerateFiles(
-					solutionFolder.Path,
+					solutionFolder.PathExport,
 					"*.*",
 					SearchOption.AllDirectories
 				)
@@ -32,11 +32,11 @@ public class ProjectFileWatcherFactory(
 					x.Contains("/bin/") == false &&
 					x.Contains("/obj/") == false
 				)
-				.Select(x => new AbsolutePath(x))
+				.Select(x => FilePath.ParseAbsolute(x))
 				.ToHashSet();
 
 
-		var fileSystemWatcher = new FileSystemWatcher(solutionFolder.Path)
+		var fileSystemWatcher = new FileSystemWatcher(solutionFolder.PathExport)
 		{
 			IncludeSubdirectories = true,
 			EnableRaisingEvents = true,

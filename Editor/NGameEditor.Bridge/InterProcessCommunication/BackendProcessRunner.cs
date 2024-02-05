@@ -10,8 +10,8 @@ namespace NGameEditor.Bridge.InterProcessCommunication;
 public interface IBackendProcessRunner
 {
 	Task<int> StartNewProcess(
-		AbsolutePath editorProjectFile,
-		AbsolutePath solutionFilePath
+		CompatibleAbsolutePath editorProjectFile,
+		CompatibleAbsolutePath solutionFilePath
 	);
 
 
@@ -29,8 +29,8 @@ public class BackendProcessRunner(
 
 
 	public async Task<int> StartNewProcess(
-		AbsolutePath editorProjectFile,
-		AbsolutePath solutionFilePath
+		CompatibleAbsolutePath editorProjectFile,
+		CompatibleAbsolutePath solutionFilePath
 	)
 	{
 		StopCurrentProcess();
@@ -110,7 +110,7 @@ public class BackendProcessRunner(
 
 
 	private static Process CreateProcess(
-		AbsolutePath editorProjectFile,
+		CompatibleAbsolutePath editorProjectFile,
 		BackendApplicationArguments backendApplicationArguments
 	) =>
 		new()

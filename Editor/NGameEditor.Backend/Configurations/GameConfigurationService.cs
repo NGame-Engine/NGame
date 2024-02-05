@@ -37,20 +37,20 @@ class GameConfigurationService : IGameConfigurationService
 		var defaultFile =
 			_projectDefinition
 				.GameProjectFile
-				.GetParentDirectory()!
-				.CombineWith("appsettings.json");
+				.ParentDirectory!
+				.CombineFile("appsettings.json");
 
-		configurationManager.AddJsonFile(defaultFile.Path);
+		configurationManager.AddJsonFile(defaultFile.PathExport);
 
 		if (environmentName != null)
 		{
 			var environmentFile =
 				_projectDefinition
 					.GameProjectFile
-					.GetParentDirectory()!
-					.CombineWith($"appsettings.{environmentName}.json");
+					.ParentDirectory!
+					.CombineFile($"appsettings.{environmentName}.json");
 
-			configurationManager.AddJsonFile(environmentFile.Path);
+			configurationManager.AddJsonFile(environmentFile.PathExport);
 		}
 
 		var config = configurationManager
@@ -74,8 +74,8 @@ class GameConfigurationService : IGameConfigurationService
 		var filePath =
 			_projectDefinition
 				.GameProjectFile
-				.GetParentDirectory()!
-				.CombineWith(fileName);
+				.ParentDirectory!
+				.CombineFile(fileName);
 
 		_jsonSectionUpdater.UpdateSection(filePath, sectionName, newContent);
 	}

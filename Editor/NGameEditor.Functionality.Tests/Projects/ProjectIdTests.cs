@@ -1,6 +1,6 @@
 using FluentAssertions;
-using NGameEditor.Bridge.Projects;
-using NGameEditor.Bridge.Shared;
+using NGameEditor.Functionality.Projects;
+using Singulink.IO;
 
 namespace NGameEditor.Functionality.Tests.Projects;
 
@@ -12,18 +12,15 @@ public class ProjectIdTests
 	public void GetAbsoluteSolutionFolder_ReturnsCorrectFolder()
 	{
 		// Arrange
-
 		var localRoot = Path.GetPathRoot(AppContext.BaseDirectory)!;
-		var configFilePath =
-			Path.Combine(
-				localRoot,
-				"some_folder",
-				"solution_folder",
-				"solution.sln"
-			);
 
-		var absolutePath = new AbsolutePath(configFilePath);
-		var projectId = new ProjectId(absolutePath);
+		var configFilePath = DirectoryPath
+			.ParseAbsolute(localRoot)
+			.CombineDirectory("some_folder")
+			.CombineDirectory("solution_folder")
+			.CombineFile("solution.sln");
+
+		var projectId = new ProjectId(configFilePath);
 
 
 		// Act
@@ -32,13 +29,10 @@ public class ProjectIdTests
 
 		// Assert
 		result.Should().Be(
-			new AbsolutePath(
-				Path.Combine(
-					localRoot,
-					"some_folder",
-					"solution_folder"
-				)
-			)
+			DirectoryPath
+				.ParseAbsolute(localRoot)
+				.CombineDirectory("some_folder")
+				.CombineDirectory("solution_folder")
 		);
 	}
 }

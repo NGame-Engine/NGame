@@ -1,4 +1,4 @@
-using NGameEditor.Bridge.Projects;
+using NGameEditor.Functionality.Projects;
 
 namespace NGameEditor.Functionality.Users;
 

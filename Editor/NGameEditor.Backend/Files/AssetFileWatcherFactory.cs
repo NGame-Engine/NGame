@@ -21,7 +21,7 @@ internal class AssetFileWatcherFactory(
 		var currentFiles =
 			projectFileWatcher
 				.GetAllFiles()
-				.Where(x => x.Path.EndsWith(AssetConventions.AssetFileEnding))
+				.Where(x => x.PathExport.EndsWith(AssetConventions.AssetFileEnding))
 				.Select(assetDescriptionReader.ReadAsset);
 
 		var sceneFileWatcher = new AssetFileWatcher(

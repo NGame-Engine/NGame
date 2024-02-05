@@ -26,12 +26,12 @@ internal class LastOpenedSceneLoader(
 	{
 		var userDataFilePath = projectDefinition.GetUserDataFilePath();
 
-		if (File.Exists(userDataFilePath.Path) == false)
+		if (File.Exists(userDataFilePath.PathExport) == false)
 		{
-			return Result.Error($"No user data found at '{userDataFilePath.Path}'");
+			return Result.Error($"No user data found at '{userDataFilePath.PathExport}'");
 		}
 
-		var allText = File.ReadAllText(userDataFilePath.Path);
+		var allText = File.ReadAllText(userDataFilePath.PathExport);
 		var userData = userDataSerializer.Deserialize(allText);
 
 		var lastOpenedProject = userData.LastOpenedScene;
@@ -43,6 +43,7 @@ internal class LastOpenedSceneLoader(
 		return assetFileWatcher
 			.GetById(lastOpenedProject)
 			.Then(x => x.FilePath)
+			.Then(x => x.ToAbsoluteFilePath())
 			.Then(sceneFileReader.ReadSceneFile);
 	}
 }

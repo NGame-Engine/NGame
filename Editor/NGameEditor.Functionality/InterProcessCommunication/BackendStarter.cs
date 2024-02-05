@@ -1,7 +1,8 @@
 using NGameEditor.Bridge;
 using NGameEditor.Bridge.InterProcessCommunication;
-using NGameEditor.Bridge.Projects;
 using NGameEditor.Bridge.Setup;
+using NGameEditor.Functionality.Files;
+using NGameEditor.Functionality.Projects;
 using NGameEditor.Results;
 
 namespace NGameEditor.Functionality.InterProcessCommunication;
@@ -29,21 +30,22 @@ public class BackendStarter(
 
 
 		var solutionFilePath = projectId.SolutionFilePath;
-		var solutionConfigurationResult = solutionConfigurationReader.Read(solutionFilePath);
+		var solutionCompatibleFilePath = solutionFilePath.ToCompatiblePath();
+		var solutionConfigurationResult = solutionConfigurationReader.Read(solutionCompatibleFilePath);
 		if (solutionConfigurationResult.HasError)
 		{
 			return Result.Error(solutionConfigurationResult.ErrorValue!);
 		}
 
-		var solutionFolder = solutionFilePath.GetParentDirectory()!;
+		var solutionFolder = solutionFilePath.ParentDirectory;
 		var solutionConfigurationJsonModel = solutionConfigurationResult.SuccessValue!;
 		var relativeEditorProjectPath = solutionConfigurationJsonModel.EditorProjectFile;
-		var editorProjectFile = solutionFolder.CombineWith(relativeEditorProjectPath);
+		var editorProjectFile = solutionFolder.CombineFile(relativeEditorProjectPath);
 
 
 		var backendPort = await backendProcessRunner.StartNewProcess(
-			editorProjectFile,
-			solutionFilePath
+			editorProjectFile.ToCompatiblePath(),
+			solutionCompatibleFilePath
 		);
 
 		clientRunner.StartClient(backendPort);

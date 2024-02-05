@@ -44,7 +44,7 @@ public class ApplicationConfigurationValidator : IApplicationConfigurationValida
 			throw new InvalidOperationException(message);
 		}
 
-		var solutionFilePath = new AbsolutePath(solutionPath);
+		var solutionFilePath = new CompatibleAbsolutePath(solutionPath);
 
 
 		return new BackendApplicationArguments(frontendPort, solutionFilePath);

@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using NGameEditor.Bridge.Projects;
 using NGameEditor.Functionality.InterProcessCommunication;
 using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Functionality.Windows.ProjectWindow;
@@ -36,8 +35,7 @@ public class ProjectOpener(
 
 	private void OpenProjectInternal(ProjectId projectId)
 	{
-		var solutionFilePath = projectId.SolutionFilePath.Path;
-		var solutionName = Path.GetFileNameWithoutExtension(solutionFilePath);
+		var solutionName = projectId.SolutionFilePath.NameWithoutExtension;
 		projectWindow.SetProjectName(solutionName);
 
 		projectUsageRepository.MarkProjectAsOpened(projectId);

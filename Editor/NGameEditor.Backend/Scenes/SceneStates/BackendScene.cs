@@ -1,12 +1,12 @@
 using NGame.Assets.Common.Ecs;
-using NGameEditor.Bridge.Shared;
+using Singulink.IO;
 
 namespace NGameEditor.Backend.Scenes.SceneStates;
 
 
 
-public class BackendScene(AbsolutePath? filePath, SceneAsset sceneAsset)
+public class BackendScene(IAbsoluteFilePath? filePath, SceneAsset sceneAsset)
 {
-	public AbsolutePath? FilePath { get; } = filePath;
+	public IAbsoluteFilePath? FilePath { get; } = filePath;
 	public SceneAsset SceneAsset { get; } = sceneAsset;
 }

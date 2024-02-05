@@ -12,7 +12,7 @@ public interface IBackendApi
 {
 	Result SaveCurrentScene();
 
-	Result OpenFile(AbsolutePath filePath);
+	Result OpenFile(CompatibleAbsolutePath filePath);
 
 	Result<EntityDescription> AddEntity(Guid? parentEntityId);
 	Result RemoveEntity(Guid entityId);
@@ -25,7 +25,7 @@ public interface IBackendApi
 	);
 
 
-	Result<UiElementDto> GetEditorForAsset(AbsolutePath filePath);
+	Result<UiElementDto> GetEditorForAsset(CompatibleAbsolutePath filePath);
 	Result<UiElementDto> GetEditorForEntity(Guid entityId);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
 

@@ -2,9 +2,13 @@ namespace NGameEditor.Bridge.Shared;
 
 
 
-public class AbsolutePath : IEquatable<AbsolutePath>
+/// <summary>
+/// Wrapper that enforces a path string to be absolute and can be
+/// (de)serialized sent between backend and frontend.
+/// </summary>
+public class CompatibleAbsolutePath : IEquatable<CompatibleAbsolutePath>
 {
-	public AbsolutePath(string path)
+	public CompatibleAbsolutePath(string path)
 	{
 		if (System.IO.Path.IsPathFullyQualified(path) == false)
 		{
@@ -18,7 +22,7 @@ public class AbsolutePath : IEquatable<AbsolutePath>
 	public string Path { get; }
 
 
-	public AbsolutePath CombineWith(params string[] paths) =>
+	public CompatibleAbsolutePath CombineWith(params string[] paths) =>
 		new(
 			System.IO.Path.Combine(
 				paths
@@ -28,17 +32,7 @@ public class AbsolutePath : IEquatable<AbsolutePath>
 		);
 
 
-	public AbsolutePath? GetParentDirectory()
-	{
-		var parentDirectory = System.IO.Path.GetDirectoryName(Path);
-		return
-			parentDirectory == null
-				? null
-				: new AbsolutePath(parentDirectory);
-	}
-
-
-	public bool Equals(AbsolutePath? other)
+	public bool Equals(CompatibleAbsolutePath? other)
 	{
 		if (ReferenceEquals(null, other))
 		{
@@ -71,7 +65,7 @@ public class AbsolutePath : IEquatable<AbsolutePath>
 			return false;
 		}
 
-		return Equals((AbsolutePath)obj);
+		return Equals((CompatibleAbsolutePath)obj);
 	}
 
 
@@ -81,13 +75,13 @@ public class AbsolutePath : IEquatable<AbsolutePath>
 	}
 
 
-	public static bool operator ==(AbsolutePath? left, AbsolutePath? right)
+	public static bool operator ==(CompatibleAbsolutePath? left, CompatibleAbsolutePath? right)
 	{
 		return Equals(left, right);
 	}
 
 
-	public static bool operator !=(AbsolutePath? left, AbsolutePath? right)
+	public static bool operator !=(CompatibleAbsolutePath? left, CompatibleAbsolutePath? right)
 	{
 		return !Equals(left, right);
 	}
