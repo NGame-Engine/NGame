@@ -5,7 +5,6 @@ using NGameEditor.Backend.Projects;
 using NGameEditor.Backend.Scenes.SceneStates;
 using NGameEditor.Backend.UserInterface.AssetEditors;
 using NGameEditor.Backend.UserInterface.ComponentEditors;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Bridge.UserInterface;
 using NGameEditor.Results;
 using Singulink.IO;
@@ -17,7 +16,7 @@ namespace NGameEditor.Backend.UserInterface;
 public interface ICustomEditorListener
 {
 	Result<UiElementDto> GetEditorForEntity(Guid entityId);
-	Result<UiElementDto> GetEditorForFile(AbsolutePath filePath);
+	Result<UiElementDto> GetEditorForFile(IAbsoluteFilePath filePath);
 	Result UpdateEditorValue(Guid uiElementId, string? serializedNewValue);
 }
 
@@ -49,13 +48,13 @@ public class CustomEditorListener(
 			: Result.Error($"Unable to find value editor with ID '{uiElementId}'");
 
 
-	public Result<UiElementDto> GetEditorForFile(AbsolutePath filePath)
+	public Result<UiElementDto> GetEditorForFile(IAbsoluteFilePath filePath)
 	{
 		_editors.Clear();
 
-		if (filePath.Path.EndsWith(AssetConventions.AssetFileEnding))
+		if (filePath.PathExport.EndsWith(AssetConventions.AssetFileEnding))
 		{
-			return GetEditorForAssetFile(filePath.ToAbsoluteFilePath());
+			return GetEditorForAssetFile(filePath);
 		}
 
 		return Result.Success(

@@ -24,7 +24,7 @@ public class BackendApi(
 	public Result SaveCurrentScene() => Result.Try(sceneSaver.SaveCurrentScene);
 
 
-	public Result OpenFile(AbsolutePath filePath) =>
+	public Result OpenFile(CompatibleAbsolutePath filePath) =>
 		Result.Try(() => assetController.Open(filePath));
 
 
@@ -47,8 +47,8 @@ public class BackendApi(
 		Result.Try(() => componentController.AddComponent(entityId, componentTypeDefinition));
 
 
-	public Result<UiElementDto> GetEditorForAsset(AbsolutePath filePath) =>
-		Result.Try(() => customEditorListener.GetEditorForFile(filePath));
+	public Result<UiElementDto> GetEditorForAsset(CompatibleAbsolutePath filePath) =>
+		Result.Try(() => customEditorListener.GetEditorForFile(filePath.ToAbsoluteFilePath()));
 
 
 	public Result<UiElementDto> GetEditorForEntity(Guid entityId) =>

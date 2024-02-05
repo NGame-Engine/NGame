@@ -1,6 +1,4 @@
 using Microsoft.Extensions.Logging;
-using NGameEditor.Bridge.Projects;
-using NGameEditor.Functionality.Files;
 using NGameEditor.Functionality.Shared;
 using NGameEditor.Functionality.Windows.LauncherWindow;
 using NGameEditor.Results;
@@ -75,7 +73,7 @@ public class ProjectCreator(
 
 		var solutionFolder = directory.CombineDirectory(name);
 		var solutionFile = solutionFolder.CombineFile($"{name}.sln");
-		var projectId = new ProjectId(solutionFile.ToIAbsolutePath());
+		var projectId = new ProjectId(solutionFile);
 
 
 		return Result.Success(projectId);

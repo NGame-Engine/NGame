@@ -33,5 +33,5 @@ public class JsonAssetInfo
 {
 	public string TypeName { get; set; } = null!;
 	public string TypeIdentifier { get; set; } = null!;
-	public AbsolutePath? SelectedFilePath { get; set; }
+	public CompatibleAbsolutePath? SelectedFilePath { get; set; }
 }

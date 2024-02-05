@@ -6,5 +6,5 @@ namespace NGameEditor.Bridge.InterProcessCommunication;
 
 public record BackendApplicationArguments(
 	int FrontendPort,
-	AbsolutePath SolutionFilePath
+	CompatibleAbsolutePath SolutionFilePath
 );

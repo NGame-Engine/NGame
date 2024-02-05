@@ -71,7 +71,7 @@ internal class AssetValueEditorFactory(
 	}
 
 
-	private AbsolutePath? GetFilePath(Asset? asset)
+	private CompatibleAbsolutePath? GetFilePath(Asset? asset)
 	{
 		if (asset == null) return null;
 

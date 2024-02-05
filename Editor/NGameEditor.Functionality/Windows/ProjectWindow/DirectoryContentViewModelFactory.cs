@@ -95,7 +95,7 @@ public class DirectoryContentViewModelFactory(
 			Open = ReactiveCommand.Create(() =>
 				clientRunner
 					.GetClientService()
-					.Then(x => x.OpenFile(new AbsolutePath(fileViewModel.Name)))
+					.Then(x => x.OpenFile(new CompatibleAbsolutePath(fileViewModel.Name)))
 					.IfError(logger.Log)
 			)
 		};

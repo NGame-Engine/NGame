@@ -25,7 +25,7 @@ public class AssetInspectorMapper(
 {
 	public IEnumerable<CustomEditorViewModel> Map(DirectoryContentItemViewModel directoryContentItemViewModel)
 	{
-		var path = new AbsolutePath(directoryContentItemViewModel.Name);
+		var path = new CompatibleAbsolutePath(directoryContentItemViewModel.Name);
 
 		var viewModelsResult =
 			clientRunner
