@@ -5,7 +5,7 @@ namespace NGameEditor.Backend.Scenes.SceneStates;
 
 
 
-public class BackendScene(IAbsoluteFilePath filePath, SceneAsset sceneAsset)
+public class BackendScene(IAbsoluteFilePath? filePath, SceneAsset sceneAsset)
 {
 	public IAbsoluteFilePath? FilePath { get; } = filePath;
 	public SceneAsset SceneAsset { get; } = sceneAsset;
