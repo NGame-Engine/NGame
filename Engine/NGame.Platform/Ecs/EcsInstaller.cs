@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGame.Platform.Setup;
 using NGame.Setup;
 using NGame.UpdateLoop;
 
