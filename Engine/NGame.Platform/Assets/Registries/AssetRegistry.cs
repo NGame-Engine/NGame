@@ -1,5 +1,4 @@
 using NGame.Assets;
-using NGame.Platform.Assets.Json;
 
 namespace NGame.Platform.Assets.Registries;
 
@@ -15,9 +14,7 @@ public interface IAssetRegistry
 
 
 
-public class AssetRegistry(
-	IAssetProcessorCollection assetProcessorCollection
-) : IAssetRegistry
+public class AssetRegistry : IAssetRegistry
 {
 	private readonly Dictionary<Guid, Asset> _assets = new();
 
@@ -25,14 +22,12 @@ public class AssetRegistry(
 	public void Add(Asset asset)
 	{
 		_assets.Add(asset.Id, asset);
-		assetProcessorCollection.Load(asset);
 	}
 
 
 	public void Remove(Asset asset)
 	{
 		_assets.Remove(asset.Id);
-		assetProcessorCollection.Unload(asset);
 	}
 
 

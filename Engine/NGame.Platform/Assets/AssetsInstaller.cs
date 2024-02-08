@@ -1,11 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NGame.Platform.Assets.ContentTables;
 using NGame.Platform.Assets.Json;
-using NGame.Platform.Assets.Readers;
+using NGame.Platform.Assets.Processors;
 using NGame.Platform.Assets.Registries;
+using NGame.Platform.Assets.Unpacking;
 
 namespace NGame.Platform.Assets;
+
+
 
 public static class AssetsInstaller
 {
@@ -15,11 +17,9 @@ public static class AssetsInstaller
 	)
 	{
 		builder.Services.AddTransient<IAssetProcessorCollection, AssetProcessorCollection>();
-
+		builder.Services.AddTransient<IAssetUnpacker, AssetUnpacker>();
 		builder.Services.AddSingleton<ITableOfContentsProvider, TableOfContentsProvider>();
-		builder.Services.AddTransient<IPackedAssetStreamReader, PackedAssetStreamReader>();
 		builder.Services.AddTransient<IAssetSerializer, AssetSerializer>();
-		builder.Services.AddTransient<IPackedAssetDeserializer, PackedAssetDeserializer>();
 		builder.Services.AddSingleton<IAssetRegistry, AssetRegistry>();
 		builder.Services.AddTransient<IAssetAccessor, AssetAccessor>();
 

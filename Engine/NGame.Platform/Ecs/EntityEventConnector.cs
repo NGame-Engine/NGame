@@ -1,5 +1,5 @@
 using NGame.Platform.Ecs.Implementations;
-using NGame.Setup;
+using NGame.Platform.Setup;
 
 namespace NGame.Platform.Ecs;
 

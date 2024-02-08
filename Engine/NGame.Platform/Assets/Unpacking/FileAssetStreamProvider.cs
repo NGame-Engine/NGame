@@ -1,6 +1,6 @@
 using NGame.Assets.Common.Assets;
 
-namespace NGame.Platform.Assets.Readers;
+namespace NGame.Platform.Assets.Unpacking;
 
 public interface IAssetStreamProvider
 {
