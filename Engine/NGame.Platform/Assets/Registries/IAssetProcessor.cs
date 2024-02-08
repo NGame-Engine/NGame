@@ -7,6 +7,6 @@ namespace NGame.Platform.Assets.Registries;
 public interface IAssetProcessor
 {
 	Type Type { get; }
-	void Load(Asset asset, IAssetStreamReader assetStreamReader);
+	void Load(Asset asset, byte[]? companionFileBytes);
 	void Unload(Asset asset);
 }

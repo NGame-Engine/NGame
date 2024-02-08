@@ -41,14 +41,25 @@ public class AssetProcessorCollection(
 
 		var filePath = contentEntry.FilePath;
 		var companionFilePath = filePath[..^AssetConventions.AssetFileEnding.Length];
-		var zipArchiveEntry = zipArchive.GetEntry(companionFilePath)!;
+		var zipArchiveEntry = zipArchive.GetEntry(companionFilePath);
+
+		var companionFileBytes = zipArchiveEntry == null
+			? null
+			: Load(zipArchiveEntry);
 
 		foreach (var assetProcessor in processors)
 		{
-			using var assetStream = zipArchiveEntry.Open();
-			var assetStreamReader = new AssetStreamReader(asset.Id, companionFilePath, zipArchiveEntry.Open);
-			assetProcessor.Load(asset, assetStreamReader);
+			assetProcessor.Load(asset, companionFileBytes);
 		}
+	}
+
+
+	private byte[] Load(ZipArchiveEntry zipArchiveEntry)
+	{
+		using var stream = zipArchiveEntry.Open();
+		using var memoryStream = new MemoryStream();
+		stream.CopyTo(memoryStream);
+		return memoryStream.ToArray();
 	}
 
 
