@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using NGame.Assets.Common.Ecs;
 using NGame.Ecs;
 using NGame.Platform.Setup;
-using NGame.Setup;
 
 namespace NGame.Platform.Ecs.SceneAssets;
 

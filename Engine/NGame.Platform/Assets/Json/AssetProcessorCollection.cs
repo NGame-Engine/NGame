@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using System.Text;
 using NGame.Assets;
 using NGame.Assets.Common.Assets;
 using NGame.Platform.Assets.ContentTables;
@@ -11,6 +12,7 @@ namespace NGame.Platform.Assets.Json;
 
 public interface IAssetProcessorCollection
 {
+	Asset Load(Guid assetId);
 	void Load(Asset asset);
 	void Unload(Asset asset);
 }
@@ -20,10 +22,18 @@ public interface IAssetProcessorCollection
 public class AssetProcessorCollection(
 	IEnumerable<IAssetProcessor> assetProcessors,
 	ITableOfContentsProvider tableOfContentsProvider,
-	IAssetStreamProvider assetStreamProvider
+	IAssetStreamProvider assetStreamProvider,
+	IAssetSerializer assetSerializer,
+	IPackedAssetStreamReader packedAssetStreamReader
 )
 	: IAssetProcessorCollection
 {
+	public Asset Load(Guid assetId)
+	{
+		var assetFileRaw = packedAssetStreamReader.ReadFromStream(assetId);
+		return assetSerializer.Deserialize(assetFileRaw);
+	}
+	
 	public void Load(Asset asset)
 	{
 		var tableOfContents = tableOfContentsProvider.Get();

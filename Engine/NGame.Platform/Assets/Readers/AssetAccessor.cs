@@ -1,4 +1,5 @@
 using NGame.Assets;
+using NGame.Platform.Assets.Json;
 using NGame.Platform.Assets.Registries;
 
 namespace NGame.Platform.Assets.Readers;
@@ -6,7 +7,7 @@ namespace NGame.Platform.Assets.Readers;
 
 
 public class AssetAccessor(
-	IPackedAssetDeserializer packedAssetDeserializer,
+	IAssetProcessorCollection assetProcessorCollection,
 	IAssetRegistry assetRegistry
 )
 	: IAssetAccessor
@@ -16,7 +17,8 @@ public class AssetAccessor(
 		var asset = assetRegistry.Get(assetId);
 		if (asset != null) return asset;
 
-		asset = packedAssetDeserializer.Deserialize(assetId);
+		asset = assetProcessorCollection.Load(assetId);
+		assetProcessorCollection.Load(asset);
 		assetRegistry.Add(asset);
 
 		return asset;

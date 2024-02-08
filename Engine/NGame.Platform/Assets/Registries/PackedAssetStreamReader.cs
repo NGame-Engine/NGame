@@ -1,9 +1,16 @@
 using System.IO.Compression;
+using System.Text;
 using NGame.Platform.Assets.ContentTables;
 using NGame.Platform.Assets.Readers;
-using NGame.Platform.Assets.Registries;
 
-namespace NGame.Platform.Assets.Json;
+namespace NGame.Platform.Assets.Registries;
+
+
+
+public interface IPackedAssetStreamReader
+{
+	string ReadFromStream(Guid assetId);
+}
 
 
 
@@ -13,7 +20,7 @@ public class PackedAssetStreamReader(
 )
 	: IPackedAssetStreamReader
 {
-	public T ReadFromStream<T>(Guid assetId, Func<Stream, T> useStream)
+	public string ReadFromStream(Guid assetId)
 	{
 		var tableOfContents = tableOfContentsProvider.Get();
 		var contentEntry = tableOfContents.ResourceIdentifiers[assetId];
@@ -32,6 +39,7 @@ public class PackedAssetStreamReader(
 		}
 
 		using var zipStream = zipArchiveEntry.Open();
-		return useStream(zipStream);
+		using var reader = new StreamReader(zipStream, Encoding.UTF8);
+		return reader.ReadToEnd();
 	}
 }

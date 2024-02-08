@@ -7,6 +7,8 @@ using NGame.Platform.Assets.Registries;
 
 namespace NGame.Platform.Assets;
 
+
+
 public static class AssetsInstaller
 {
 	// ReSharper disable once UnusedMethodReturnValue.Global
@@ -19,7 +21,6 @@ public static class AssetsInstaller
 		builder.Services.AddSingleton<ITableOfContentsProvider, TableOfContentsProvider>();
 		builder.Services.AddTransient<IPackedAssetStreamReader, PackedAssetStreamReader>();
 		builder.Services.AddTransient<IAssetSerializer, AssetSerializer>();
-		builder.Services.AddTransient<IPackedAssetDeserializer, PackedAssetDeserializer>();
 		builder.Services.AddSingleton<IAssetRegistry, AssetRegistry>();
 		builder.Services.AddTransient<IAssetAccessor, AssetAccessor>();
 

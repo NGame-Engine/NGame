@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using NGameEditor.Bridge.Shared;
 using NGameEditor.Functionality.Projects;
 using Singulink.IO;
 

@@ -26,9 +26,10 @@ public class SceneLoadOperationExecutor(
 	{
 		var componentTypes = types.Select(x => x.SubType);
 		var options = optionsFactory.Create(componentTypes);
-		var sceneAsset = packedAssetStreamReader.ReadFromStream(
-			sceneId,
-			stream => JsonSerializer.Deserialize<SceneAsset>(stream, options)!);
+
+		var json = packedAssetStreamReader.ReadFromStream(sceneId);
+		var sceneAsset = JsonSerializer.Deserialize<SceneAsset>(json, options)!;
+
 
 		assetReferenceReplacer.ReplaceAssetReferences(sceneAsset);
 
