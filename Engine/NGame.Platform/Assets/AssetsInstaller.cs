@@ -17,9 +17,8 @@ public static class AssetsInstaller
 	)
 	{
 		builder.Services.AddTransient<IAssetProcessorCollection, AssetProcessorCollection>();
-
+		builder.Services.AddTransient<IAssetUnpacker, AssetUnpacker>();
 		builder.Services.AddSingleton<ITableOfContentsProvider, TableOfContentsProvider>();
-		builder.Services.AddTransient<IPackedAssetStreamReader, PackedAssetStreamReader>();
 		builder.Services.AddTransient<IAssetSerializer, AssetSerializer>();
 		builder.Services.AddSingleton<IAssetRegistry, AssetRegistry>();
 		builder.Services.AddTransient<IAssetAccessor, AssetAccessor>();

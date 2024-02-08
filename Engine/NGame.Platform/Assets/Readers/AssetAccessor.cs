@@ -8,7 +8,9 @@ namespace NGame.Platform.Assets.Readers;
 
 public class AssetAccessor(
 	IAssetProcessorCollection assetProcessorCollection,
-	IAssetRegistry assetRegistry
+	IAssetRegistry assetRegistry,
+	IAssetSerializer assetSerializer,
+	IAssetUnpacker assetUnpacker
 )
 	: IAssetAccessor
 {
@@ -17,8 +19,9 @@ public class AssetAccessor(
 		var asset = assetRegistry.Get(assetId);
 		if (asset != null) return asset;
 
-		asset = assetProcessorCollection.Load(assetId);
-		assetProcessorCollection.Load(asset);
+		var rawAsset = assetUnpacker.Unpack(assetId);
+		asset = assetSerializer.Deserialize(rawAsset.Json);
+		assetProcessorCollection.Load(asset, rawAsset.fileBytes);
 		assetRegistry.Add(asset);
 
 		return asset;

@@ -1,9 +1,4 @@
-using System.IO.Compression;
-using System.Text;
 using NGame.Assets;
-using NGame.Assets.Common.Assets;
-using NGame.Platform.Assets.ContentTables;
-using NGame.Platform.Assets.Readers;
 using NGame.Platform.Assets.Registries;
 
 namespace NGame.Platform.Assets.Json;
@@ -12,50 +7,21 @@ namespace NGame.Platform.Assets.Json;
 
 public interface IAssetProcessorCollection
 {
-	Asset Load(Guid assetId);
-	void Load(Asset asset);
+	void Load(Asset asset, byte[]? companionFileBytes);
 	void Unload(Asset asset);
 }
 
 
 
 public class AssetProcessorCollection(
-	IEnumerable<IAssetProcessor> assetProcessors,
-	ITableOfContentsProvider tableOfContentsProvider,
-	IAssetStreamProvider assetStreamProvider,
-	IAssetSerializer assetSerializer,
-	IPackedAssetStreamReader packedAssetStreamReader
+	IEnumerable<IAssetProcessor> assetProcessors
 )
 	: IAssetProcessorCollection
 {
-	public Asset Load(Guid assetId)
+	public void Load(Asset asset, byte[]? companionFileBytes)
 	{
-		var assetFileRaw = packedAssetStreamReader.ReadFromStream(assetId);
-		return assetSerializer.Deserialize(assetFileRaw);
-	}
-	
-	public void Load(Asset asset)
-	{
-		var tableOfContents = tableOfContentsProvider.Get();
-		var resourceIdentifiers = tableOfContents.ResourceIdentifiers;
-
-		var mainAssetId = asset.Id;
-		var contentEntry = resourceIdentifiers[mainAssetId];
-
 		var type = asset.GetType();
 		var processors = assetProcessors.Where(x => x.Type == type);
-
-
-		using var assetPackStream = assetStreamProvider.Open(contentEntry.PackFileName);
-		using var zipArchive = new ZipArchive(assetPackStream, ZipArchiveMode.Read);
-
-		var filePath = contentEntry.FilePath;
-		var companionFilePath = filePath[..^AssetConventions.AssetFileEnding.Length];
-		var zipArchiveEntry = zipArchive.GetEntry(companionFilePath);
-
-		var companionFileBytes = zipArchiveEntry == null
-			? null
-			: Load(zipArchiveEntry);
 
 		foreach (var assetProcessor in processors)
 		{
@@ -64,18 +30,10 @@ public class AssetProcessorCollection(
 	}
 
 
-	private byte[] Load(ZipArchiveEntry zipArchiveEntry)
-	{
-		using var stream = zipArchiveEntry.Open();
-		using var memoryStream = new MemoryStream();
-		stream.CopyTo(memoryStream);
-		return memoryStream.ToArray();
-	}
-
-
 	public void Unload(Asset asset)
 	{
-		var processors = assetProcessors.Where(x => x.Type == asset.GetType());
+		var type = asset.GetType();
+		var processors = assetProcessors.Where(x => x.Type == type);
 
 		foreach (var assetProcessor in processors)
 		{
