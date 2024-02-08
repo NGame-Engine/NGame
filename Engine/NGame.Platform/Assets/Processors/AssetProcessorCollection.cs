@@ -1,7 +1,6 @@
 using NGame.Assets;
-using NGame.Platform.Assets.Registries;
 
-namespace NGame.Platform.Assets.Json;
+namespace NGame.Platform.Assets.Processors;
 
 
 

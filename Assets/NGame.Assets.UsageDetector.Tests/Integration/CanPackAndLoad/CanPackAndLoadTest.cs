@@ -2,7 +2,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets.Common.Ecs;
 using NGame.Platform.Assets;
-using NGame.Platform.Assets.Readers;
+using NGame.Platform.Assets.Unpacking;
 using NGame.Platform.Setup;
 using Xunit.Abstractions;
 

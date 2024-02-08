@@ -1,10 +1,8 @@
 ﻿using System.IO.Compression;
 using System.Text;
 using NGame.Assets.Common.Assets;
-using NGame.Platform.Assets.ContentTables;
-using NGame.Platform.Assets.Readers;
 
-namespace NGame.Platform.Assets.Json;
+namespace NGame.Platform.Assets.Unpacking;
 
 
 

@@ -1,9 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NGame.Assets.Common.Assets;
-using NGame.Platform.Assets.Readers;
 
-namespace NGame.Platform.Assets.ContentTables;
+namespace NGame.Platform.Assets.Unpacking;
 
 
 
