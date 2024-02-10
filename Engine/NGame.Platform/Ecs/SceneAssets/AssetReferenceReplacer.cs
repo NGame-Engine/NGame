@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Reflection;
 using NGame.Assets;
-using NGame.Assets.Common.Assets;
 using NGame.Assets.Common.Ecs;
 using NGame.Platform.Assets;
 
@@ -31,14 +30,20 @@ public class AssetReferenceReplacer(
 		var type = input.GetType();
 		var propertyInfos = GetNonIndexPropertyInfos(type);
 
+		var alreadyImported = new Dictionary<Guid, Asset>();
+
 		foreach (var propertyInfo in propertyInfos)
 		{
-			CheckProperty(input, propertyInfo);
+			CheckProperty(input, propertyInfo, alreadyImported);
 		}
 	}
 
 
-	private void CheckProperty(object obj, PropertyInfo propertyInfo)
+	private void CheckProperty(
+		object obj,
+		PropertyInfo propertyInfo,
+		Dictionary<Guid, Asset> alreadyImported
+	)
 	{
 		var value = propertyInfo.GetValue(obj);
 		if (value == null) return;
@@ -52,15 +57,24 @@ public class AssetReferenceReplacer(
 			!type.IsAssignableTo(typeof(SceneAsset))
 		)
 		{
-			value = GetRealAssetValue(type, value);
-			propertyInfo.SetValue(obj, value);
+			var assetReference = (Asset)value;
+			var assetId = assetReference.Id;
+			if (alreadyImported.TryGetValue(assetId, out var asset))
+			{
+				propertyInfo.SetValue(obj, asset);
+				return;
+			}
+
+			var newAsset = assetAccessor.ReadFromAssetPack(assetId);
+			alreadyImported.Add(assetId, newAsset);
+			propertyInfo.SetValue(obj, newAsset);
 		}
 
 		var propertyInfos = GetNonIndexPropertyInfos(type);
 
 		foreach (var childPropertyInfo in propertyInfos)
 		{
-			CheckProperty(value, childPropertyInfo);
+			CheckProperty(value, childPropertyInfo, alreadyImported);
 		}
 
 		if (value is not IEnumerable enumerable) return;
@@ -73,26 +87,8 @@ public class AssetReferenceReplacer(
 
 			foreach (var enumeratedPropertyInfo in enumeratedPropertyInfos)
 			{
-				CheckProperty(enumeratedObject, enumeratedPropertyInfo);
+				CheckProperty(enumeratedObject, enumeratedPropertyInfo, alreadyImported);
 			}
 		}
-	}
-
-
-	private Asset GetRealAssetValue(Type type, object value)
-	{
-		var propertyInfoSelector = GetNonIndexPropertyInfos(type);
-		var idProperty =
-			propertyInfoSelector
-				.First(x => x.Name == AssetConventions.AssetIdPropertyName);
-
-		var id = idProperty.GetValue(value);
-		if (id == null)
-		{
-			throw new InvalidOperationException($"ID of {type} not set");
-		}
-
-		var assetId = (Guid)id;
-		return assetAccessor.ReadFromAssetPack(assetId);
 	}
 }
