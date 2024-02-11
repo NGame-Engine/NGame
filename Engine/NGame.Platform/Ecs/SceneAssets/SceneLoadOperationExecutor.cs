@@ -1,6 +1,7 @@
 using System.Text.Json;
 using NGame.Assets.Common.Ecs;
 using NGame.Ecs;
+using NGame.Platform.Assets.Processors;
 using NGame.Platform.Assets.Unpacking;
 
 namespace NGame.Platform.Ecs.SceneAssets;
@@ -20,7 +21,8 @@ public class SceneLoadOperationExecutor(
 	IScenePopulator scenePopulator,
 	ISceneSerializerOptionsFactory optionsFactory,
 	IEnumerable<ComponentTypeEntry> types,
-	IAssetUnpacker assetUnpacker
+	IAssetUnpacker assetUnpacker,
+	IAssetProcessorCollection assetProcessorCollection
 )
 	: ISceneLoadOperationExecutor
 {
@@ -29,11 +31,12 @@ public class SceneLoadOperationExecutor(
 		var componentTypes = types.Select(x => x.SubType);
 		var options = optionsFactory.Create(componentTypes);
 
-		var rawAsset = assetUnpacker.Unpack(sceneId);
-		var sceneAsset = JsonSerializer.Deserialize<SceneAsset>(rawAsset.Json, options)!;
+		var assetJsonContent = assetUnpacker.GetAssetJsonContent(sceneId);
+		var sceneAsset = JsonSerializer.Deserialize<SceneAsset>(assetJsonContent, options)!;
 
 
-		assetReferenceReplacer.ReplaceAssetReferences(sceneAsset);
+		var replacedAssets = assetReferenceReplacer.ReplaceAssetReferences(sceneAsset);
+		assetProcessorCollection.LoadAssets(replacedAssets);
 
 		return scenePopulator.Populate(sceneAsset);
 	}

@@ -8,9 +8,13 @@ namespace NGame.Platform.Ecs.SceneAssets;
 
 
 
+public record AssetReference(Asset Asset, int ReferenceLevel);
+
+
+
 public interface IAssetReferenceReplacer
 {
-	void ReplaceAssetReferences(object input);
+	List<AssetReference> ReplaceAssetReferences(object input);
 }
 
 
@@ -25,59 +29,69 @@ public class AssetReferenceReplacer(
 			.Where(p => p.GetIndexParameters().Length == 0);
 
 
-	public void ReplaceAssetReferences(object input)
+	public List<AssetReference> ReplaceAssetReferences(object input)
 	{
 		var type = input.GetType();
 		var propertyInfos = GetNonIndexPropertyInfos(type);
-
-		var alreadyImported = new Dictionary<Guid, Asset>();
+		
+		var referenceLevel = 1;
+		var assetReferences = new List<AssetReference>();
 
 		foreach (var propertyInfo in propertyInfos)
 		{
-			CheckProperty(input, propertyInfo, alreadyImported);
+			CheckProperty(input, propertyInfo, referenceLevel, assetReferences);
 		}
+
+		return assetReferences;
 	}
 
 
 	private void CheckProperty(
 		object obj,
 		PropertyInfo propertyInfo,
-		Dictionary<Guid, Asset> alreadyImported
+		int referenceLevel,
+		List<AssetReference> assetReferences
 	)
 	{
 		var value = propertyInfo.GetValue(obj);
 		if (value == null) return;
 
+		referenceLevel++;
+
 		var type = propertyInfo.PropertyType;
 
 
-		if (
-			propertyInfo.CanWrite &&
-			type.IsAssignableTo(typeof(Asset)) &&
-			!type.IsAssignableTo(typeof(SceneAsset))
-		)
+		if (propertyInfo.CanWrite &&
+		    type.IsAssignableTo(typeof(Asset)) &&
+		    type.IsAssignableTo(typeof(SceneAsset)) == false)
 		{
-			var assetReference = (Asset)value;
-			var assetId = assetReference.Id;
-			if (alreadyImported.TryGetValue(assetId, out var asset))
-			{
-				propertyInfo.SetValue(obj, asset);
-				return;
-			}
+			var reference = (Asset)value;
 
-			var newAsset = assetAccessor.ReadFromAssetPack(assetId);
-			alreadyImported.Add(assetId, newAsset);
-			propertyInfo.SetValue(obj, newAsset);
+			var hasTraversedAssetAlready =
+				assetReferences.Any(x => x.Asset.Id == reference.Id);
+
+			var asset = assetAccessor.ReadFromAssetPack(reference.Id);
+
+			propertyInfo.SetValue(obj, asset);
+
+			var assetReference = new AssetReference(asset, referenceLevel);
+			assetReferences.Add(assetReference);
+
+			if (hasTraversedAssetAlready) return;
+			value = asset;
 		}
+
 
 		var propertyInfos = GetNonIndexPropertyInfos(type);
 
 		foreach (var childPropertyInfo in propertyInfos)
 		{
-			CheckProperty(value, childPropertyInfo, alreadyImported);
+			CheckProperty(value, childPropertyInfo, referenceLevel, assetReferences);
 		}
 
+
 		if (value is not IEnumerable enumerable) return;
+
 		foreach (var enumeratedObject in enumerable)
 		{
 			if (enumeratedObject == null) continue;
@@ -87,7 +101,8 @@ public class AssetReferenceReplacer(
 
 			foreach (var enumeratedPropertyInfo in enumeratedPropertyInfos)
 			{
-				CheckProperty(enumeratedObject, enumeratedPropertyInfo, alreadyImported);
+				CheckProperty(enumeratedObject, enumeratedPropertyInfo, referenceLevel,
+					assetReferences);
 			}
 		}
 	}

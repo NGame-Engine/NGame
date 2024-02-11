@@ -5,32 +5,15 @@ namespace NGame.Platform.Ecs.SceneAssets;
 
 
 
-public class GameStartLoader : IBeforeApplicationStartListener
+public class GameStartLoader(
+	ValidSceneAssetsConfiguration validSceneAssetsConfiguration,
+	ISceneLoader sceneLoader,
+	IRootSceneAccessor rootSceneAccessor
+)
+	: IBeforeApplicationStartListener
 {
-	private readonly ISceneAssetsConfigurationValidator _sceneAssetsConfigurationValidator;
-	private readonly ISceneLoader _sceneLoader;
-	private readonly IRootSceneAccessor _rootSceneAccessor;
-
-
-	public GameStartLoader(
-		ISceneAssetsConfigurationValidator sceneAssetsConfigurationValidator,
-		ISceneLoader sceneLoader,
-		IRootSceneAccessor rootSceneAccessor
-	)
-	{
-		_sceneAssetsConfigurationValidator = sceneAssetsConfigurationValidator;
-		_sceneLoader = sceneLoader;
-		_rootSceneAccessor = rootSceneAccessor;
-	}
-
-
-	public void OnBeforeApplicationStart()
-	{
-		var configuration = _sceneAssetsConfigurationValidator.Validate();
-		var startSceneId = configuration.StartSceneId;
-
-		_sceneLoader
-			.Load(startSceneId)
-			.Completed += scene => _rootSceneAccessor.SetRootScene(scene);
-	}
+	public void OnBeforeApplicationStart() =>
+		sceneLoader
+			.Load(validSceneAssetsConfiguration.StartSceneId)
+			.Completed += rootSceneAccessor.SetRootScene;
 }

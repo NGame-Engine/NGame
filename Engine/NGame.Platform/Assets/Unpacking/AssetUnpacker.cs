@@ -6,13 +6,10 @@ namespace NGame.Platform.Assets.Unpacking;
 
 
 
-public record RawAsset(string Json, byte[]? fileBytes);
-
-
-
 public interface IAssetUnpacker
 {
-	RawAsset Unpack(Guid assetId);
+	string GetAssetJsonContent(Guid assetId);
+	byte[]? GetCompanionFileBytes(Guid assetId);
 }
 
 
@@ -22,26 +19,15 @@ public class AssetUnpacker(
 	IAssetStreamProvider assetStreamProvider
 ) : IAssetUnpacker
 {
-	public RawAsset Unpack(Guid assetId)
+	public string GetAssetJsonContent(Guid assetId)
 	{
-		var tableOfContents = tableOfContentsProvider.Get();
-		var resourceIdentifiers = tableOfContents.ResourceIdentifiers;
-		var contentEntry = resourceIdentifiers[assetId];
+		var contentEntry = GetContentEntry(assetId);
 		var assetPackPath = contentEntry.PackFileName;
 		var filePath = contentEntry.FilePath;
 
 		using var assetPackStream = assetStreamProvider.Open(assetPackPath);
 		using var zipArchive = new ZipArchive(assetPackStream, ZipArchiveMode.Read);
 
-		var json = GetAssetJsonString(zipArchive, filePath, assetPackPath);
-		var companionFileBytes = GetCompanionFileBytes(filePath, zipArchive);
-
-		return new RawAsset(json, companionFileBytes);
-	}
-
-
-	private static string GetAssetJsonString(ZipArchive zipArchive, string filePath, string assetPackPath)
-	{
 		var zipArchiveEntry = zipArchive.GetEntry(filePath);
 		if (zipArchiveEntry == null)
 		{
@@ -55,8 +41,15 @@ public class AssetUnpacker(
 	}
 
 
-	private static byte[]? GetCompanionFileBytes(string filePath, ZipArchive zipArchive)
+	public byte[]? GetCompanionFileBytes(Guid assetId)
 	{
+		var contentEntry = GetContentEntry(assetId);
+		var assetPackPath = contentEntry.PackFileName;
+		var filePath = contentEntry.FilePath;
+
+		using var assetPackStream = assetStreamProvider.Open(assetPackPath);
+		using var zipArchive = new ZipArchive(assetPackStream, ZipArchiveMode.Read);
+
 		var companionFilePath = filePath[..^AssetConventions.AssetFileEnding.Length];
 		var zipArchiveEntry = zipArchive.GetEntry(companionFilePath);
 
@@ -66,5 +59,13 @@ public class AssetUnpacker(
 		using var memoryStream = new MemoryStream();
 		stream.CopyTo(memoryStream);
 		return memoryStream.ToArray();
+	}
+
+
+	private ContentEntry GetContentEntry(Guid assetId)
+	{
+		var tableOfContents = tableOfContentsProvider.Get();
+		var resourceIdentifiers = tableOfContents.ResourceIdentifiers;
+		return resourceIdentifiers[assetId];
 	}
 }

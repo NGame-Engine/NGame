@@ -5,7 +5,7 @@ namespace NGame.Platform.Ecs.SceneAssets;
 
 
 
-public class SceneLoader(
+internal class SceneLoader(
 	ISceneLoadOperationExecutor sceneLoadOperationExecutor,
 	ISceneUnloadOperationExecutor sceneUnloadOperationExecutor,
 	IOperationRequestScheduler operationRequestScheduler
