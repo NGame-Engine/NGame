@@ -6,9 +6,9 @@ namespace NGame.Assets.Common.Setup;
 
 
 
-public static class NGameCommonInstaller
+public static class NGameAssetsCommonInstaller
 {
-	public static void AddNGameCommon(this IHostApplicationBuilder builder)
+	public static void AddNGameAssetsCommon(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddNGameCoreAssets();
 		builder.Services.AddNGameCoreSceneAssets();

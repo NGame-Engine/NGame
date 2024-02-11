@@ -33,7 +33,7 @@ public class AssetReferenceReplacer(
 	{
 		var type = input.GetType();
 		var propertyInfos = GetNonIndexPropertyInfos(type);
-		
+
 		var referenceLevel = 1;
 		var assetReferences = new List<AssetReference>();
 

@@ -24,7 +24,7 @@ public static class FunctionalityInstaller
 
 		builder.AddFrontendIpc();
 
-		builder.AddNGameCommon();
+		builder.AddNGameAssetsCommon();
 		builder.AddNGameEditorDomainShared();
 		builder.AddConfigurations();
 		builder.AddFiles();

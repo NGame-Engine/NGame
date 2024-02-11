@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NGame.Assets.Common.Ecs;
+using NGame.Platform;
 using NGame.Platform.Assets;
 using NGame.Platform.Assets.Unpacking;
 using NGame.Platform.Setup;
@@ -93,7 +94,7 @@ public class CanPackAndLoadTest
 
 
 		builder.Logging.AddXUnitLogging(_testOutputHelper);
-		builder.AddNGameCore();
+		builder.AddNGamePlatform();
 		builder.Services.AddSingleton(assetStreamProvider);
 		builder.Services.AddSingleton(new AssetTypeEntry(typeof(SceneAsset)));
 

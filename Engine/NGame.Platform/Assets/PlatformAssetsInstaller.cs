@@ -9,10 +9,10 @@ namespace NGame.Platform.Assets;
 
 
 
-public static class AssetsInstaller
+public static class PlatformAssetsInstaller
 {
 	// ReSharper disable once UnusedMethodReturnValue.Global
-	public static IHostApplicationBuilder AddAssets(
+	public static IHostApplicationBuilder AddPlatformAssets(
 		this IHostApplicationBuilder builder
 	)
 	{

@@ -34,7 +34,6 @@ public class SceneLoadOperationExecutor(
 		var assetJsonContent = assetUnpacker.GetAssetJsonContent(sceneId);
 		var sceneAsset = JsonSerializer.Deserialize<SceneAsset>(assetJsonContent, options)!;
 
-
 		var replacedAssets = assetReferenceReplacer.ReplaceAssetReferences(sceneAsset);
 		assetProcessorCollection.LoadAssets(replacedAssets);
 
