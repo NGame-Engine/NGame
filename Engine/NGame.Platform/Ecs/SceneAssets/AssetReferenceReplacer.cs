@@ -3,6 +3,7 @@ using System.Reflection;
 using NGame.Assets;
 using NGame.Assets.Common.Ecs;
 using NGame.Platform.Assets;
+using Semver;
 
 namespace NGame.Platform.Ecs.SceneAssets;
 
@@ -56,10 +57,20 @@ public class AssetReferenceReplacer(
 		var value = propertyInfo.GetValue(obj);
 		if (value == null) return;
 
-		referenceLevel++;
-
 		var type = propertyInfo.PropertyType;
 
+		if (type == typeof(bool) ||
+		    type == typeof(byte) ||
+		    type == typeof(int) ||
+		    type == typeof(float) ||
+		    type == typeof(string) ||
+		    type == typeof(Guid) ||
+		    type == typeof(SemVersion))
+		{
+			return;
+		}
+
+		referenceLevel++;
 
 		if (propertyInfo.CanWrite &&
 		    type.IsAssignableTo(typeof(Asset)) &&

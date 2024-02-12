@@ -29,15 +29,19 @@ public class AssetSerializer(
 		{
 			return JsonSerializer.Deserialize<Asset>(json, JsonSerializerOptions)!;
 		}
-		catch (NotSupportedException e)
+		catch (Exception e)
 		{
-			if (!e.Message.StartsWith("Deserialization of types without a parameterless constructor"))
+			if (e is NotSupportedException &&
+			    e.Message.StartsWith("Deserialization of types without a parameterless constructor"))
 			{
-				throw;
+				var message = $"Unable to find correct subtype for asset, did you register it? JSON: {json}";
+				throw new InvalidOperationException(message);
 			}
 
-			var message = $"Unable to find correct subtype for asset, did you register it? JSON: {json}";
-			throw new InvalidOperationException(message);
+			throw new InvalidOperationException(
+				$"Unable to deserialize JSON {json}",
+				e
+			);
 		}
 	}
 
