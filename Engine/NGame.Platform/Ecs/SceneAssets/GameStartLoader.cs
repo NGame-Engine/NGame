@@ -12,8 +12,10 @@ public class GameStartLoader(
 )
 	: IBeforeApplicationStartListener
 {
-	public void OnBeforeApplicationStart() =>
-		sceneLoader
-			.Load(validSceneAssetsConfiguration.StartSceneId)
-			.Completed += rootSceneAccessor.SetRootScene;
+	public void OnBeforeApplicationStart()
+	{
+		var startSceneId = validSceneAssetsConfiguration.StartSceneId;
+		var scene = sceneLoader.Load(startSceneId);
+		rootSceneAccessor.SetRootScene(scene);
+	}
 }

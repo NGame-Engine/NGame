@@ -6,6 +6,7 @@ namespace NGame.Ecs;
 
 public interface ISceneLoader
 {
-	IRunningOperation<float, Scene> Load(Guid assetId);
-	IRunningOperation<float, Scene> Unload(Guid assetId);
+	Scene Load(Guid assetId);
+	IRunningOperation<float, Scene> StartLoading(Guid assetId);
+	IRunningOperation<float, Scene> StartUnloading(Guid assetId);
 }
