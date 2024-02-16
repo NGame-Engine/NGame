@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Reflection;
 using NGame.Assets;
-using NGame.Assets.Common.Assets;
 using NGame.Assets.Common.Ecs;
 using NGame.Platform.Assets;
+using Semver;
 
 namespace NGame.Platform.Ecs.SceneAssets;
 
 
 
+public record AssetReference(Asset Asset, int ReferenceLevel);
+
+
+
 public interface IAssetReferenceReplacer
 {
-	void ReplaceAssetReferences(object input);
+	List<AssetReference> ReplaceAssetReferences(object input);
 }
 
 
@@ -26,44 +30,79 @@ public class AssetReferenceReplacer(
 			.Where(p => p.GetIndexParameters().Length == 0);
 
 
-	public void ReplaceAssetReferences(object input)
+	public List<AssetReference> ReplaceAssetReferences(object input)
 	{
 		var type = input.GetType();
 		var propertyInfos = GetNonIndexPropertyInfos(type);
 
+		var referenceLevel = 1;
+		var assetReferences = new List<AssetReference>();
+
 		foreach (var propertyInfo in propertyInfos)
 		{
-			CheckProperty(input, propertyInfo);
+			CheckProperty(input, propertyInfo, referenceLevel, assetReferences);
 		}
+
+		return assetReferences;
 	}
 
 
-	private void CheckProperty(object obj, PropertyInfo propertyInfo)
+	private void CheckProperty(
+		object obj,
+		PropertyInfo propertyInfo,
+		int referenceLevel,
+		List<AssetReference> assetReferences
+	)
 	{
 		var value = propertyInfo.GetValue(obj);
 		if (value == null) return;
 
 		var type = propertyInfo.PropertyType;
 
-
-		if (
-			propertyInfo.CanWrite &&
-			type.IsAssignableTo(typeof(Asset)) &&
-			!type.IsAssignableTo(typeof(SceneAsset))
-		)
+		if (type == typeof(bool) ||
+			type == typeof(byte) ||
+			type == typeof(int) ||
+			type == typeof(float) ||
+			type == typeof(string) ||
+			type == typeof(Guid) ||
+			type == typeof(SemVersion))
 		{
-			value = GetRealAssetValue(type, value);
-			propertyInfo.SetValue(obj, value);
+			return;
 		}
+
+		referenceLevel++;
+
+		if (propertyInfo.CanWrite &&
+			type.IsAssignableTo(typeof(Asset)) &&
+			type.IsAssignableTo(typeof(SceneAsset)) == false)
+		{
+			var reference = (Asset)value;
+
+			var hasTraversedAssetAlready =
+				assetReferences.Any(x => x.Asset.Id == reference.Id);
+
+			var asset = assetAccessor.ReadFromAssetPack(reference.Id);
+
+			propertyInfo.SetValue(obj, asset);
+
+			var assetReference = new AssetReference(asset, referenceLevel);
+			assetReferences.Add(assetReference);
+
+			if (hasTraversedAssetAlready) return;
+			value = asset;
+		}
+
 
 		var propertyInfos = GetNonIndexPropertyInfos(type);
 
 		foreach (var childPropertyInfo in propertyInfos)
 		{
-			CheckProperty(value, childPropertyInfo);
+			CheckProperty(value, childPropertyInfo, referenceLevel, assetReferences);
 		}
 
+
 		if (value is not IEnumerable enumerable) return;
+
 		foreach (var enumeratedObject in enumerable)
 		{
 			if (enumeratedObject == null) continue;
@@ -73,26 +112,9 @@ public class AssetReferenceReplacer(
 
 			foreach (var enumeratedPropertyInfo in enumeratedPropertyInfos)
 			{
-				CheckProperty(enumeratedObject, enumeratedPropertyInfo);
+				CheckProperty(enumeratedObject, enumeratedPropertyInfo, referenceLevel,
+					assetReferences);
 			}
 		}
-	}
-
-
-	private Asset GetRealAssetValue(Type type, object value)
-	{
-		var propertyInfoSelector = GetNonIndexPropertyInfos(type);
-		var idProperty =
-			propertyInfoSelector
-				.First(x => x.Name == AssetConventions.AssetIdPropertyName);
-
-		var id = idProperty.GetValue(value);
-		if (id == null)
-		{
-			throw new InvalidOperationException($"ID of {type} not set");
-		}
-
-		var assetId = (Guid)id;
-		return assetAccessor.ReadFromAssetPack(assetId);
 	}
 }

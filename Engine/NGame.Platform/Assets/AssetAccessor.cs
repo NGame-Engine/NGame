@@ -1,6 +1,5 @@
 using NGame.Assets;
 using NGame.Platform.Assets.Json;
-using NGame.Platform.Assets.Processors;
 using NGame.Platform.Assets.Registries;
 using NGame.Platform.Assets.Unpacking;
 
@@ -8,8 +7,14 @@ namespace NGame.Platform.Assets;
 
 
 
+public interface IAssetAccessor
+{
+	Asset ReadFromAssetPack(Guid assetId);
+}
+
+
+
 public class AssetAccessor(
-	IAssetProcessorCollection assetProcessorCollection,
 	IAssetRegistry assetRegistry,
 	IAssetSerializer assetSerializer,
 	IAssetUnpacker assetUnpacker
@@ -21,9 +26,8 @@ public class AssetAccessor(
 		var asset = assetRegistry.Get(assetId);
 		if (asset != null) return asset;
 
-		var rawAsset = assetUnpacker.Unpack(assetId);
-		asset = assetSerializer.Deserialize(rawAsset.Json);
-		assetProcessorCollection.Load(asset, rawAsset.fileBytes);
+		var assetJsonContent = assetUnpacker.GetAssetJsonContent(assetId);
+		asset = assetSerializer.Deserialize(assetJsonContent);
 		assetRegistry.Add(asset);
 
 		return asset;

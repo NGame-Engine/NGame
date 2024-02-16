@@ -29,7 +29,7 @@ public static class BackendInstaller
 		builder.AddScenes();
 		builder.AddBackendIpc();
 		builder.AddUserInterface();
-		builder.AddNGameCommon();
+		builder.AddNGameAssetsCommon();
 		builder.AddProjectFiles();
 	}
 }

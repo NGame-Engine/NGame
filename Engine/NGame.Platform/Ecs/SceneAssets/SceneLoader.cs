@@ -5,14 +5,18 @@ namespace NGame.Platform.Ecs.SceneAssets;
 
 
 
-public class SceneLoader(
+internal class SceneLoader(
 	ISceneLoadOperationExecutor sceneLoadOperationExecutor,
 	ISceneUnloadOperationExecutor sceneUnloadOperationExecutor,
 	IOperationRequestScheduler operationRequestScheduler
 )
 	: ISceneLoader
 {
-	public IRunningOperation<float, Scene> Load(Guid assetId)
+	public Scene Load(Guid assetId) =>
+		sceneLoadOperationExecutor.Execute(_ => { }, assetId);
+
+
+	public IRunningOperation<float, Scene> StartLoading(Guid assetId)
 	{
 		var operation = new OperationRequest<float, Scene>(
 			0f,
@@ -23,7 +27,7 @@ public class SceneLoader(
 	}
 
 
-	public IRunningOperation<float, Scene> Unload(Guid assetId)
+	public IRunningOperation<float, Scene> StartUnloading(Guid assetId)
 	{
 		var operation = new OperationRequest<float, Scene>(
 			0f,

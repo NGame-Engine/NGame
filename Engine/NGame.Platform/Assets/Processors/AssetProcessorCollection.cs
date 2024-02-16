@@ -1,4 +1,6 @@
 using NGame.Assets;
+using NGame.Platform.Assets.Unpacking;
+using NGame.Platform.Ecs.SceneAssets;
 
 namespace NGame.Platform.Assets.Processors;
 
@@ -6,25 +8,41 @@ namespace NGame.Platform.Assets.Processors;
 
 public interface IAssetProcessorCollection
 {
-	void Load(Asset asset, byte[]? companionFileBytes);
+	void LoadAssets(IEnumerable<AssetReference> assetReferences);
 	void Unload(Asset asset);
 }
 
 
 
 public class AssetProcessorCollection(
-	IEnumerable<IAssetProcessor> assetProcessors
+	IEnumerable<IAssetProcessor> assetProcessors,
+	IAssetUnpacker assetUnpacker
 )
 	: IAssetProcessorCollection
 {
-	public void Load(Asset asset, byte[]? companionFileBytes)
+	public void LoadAssets(IEnumerable<AssetReference> assetReferences)
 	{
-		var type = asset.GetType();
-		var processors = assetProcessors.Where(x => x.Type == type);
+		var processedAssetIds = new HashSet<Guid>();
 
-		foreach (var assetProcessor in processors)
+		var orderedAssetReferences =
+			assetReferences
+				.OrderByDescending(x => x.ReferenceLevel);
+
+		foreach (var assetReference in orderedAssetReferences)
 		{
-			assetProcessor.Load(asset, companionFileBytes);
+			var assetId = assetReference.Asset.Id;
+			if (processedAssetIds.Add(assetId) == false) continue;
+
+			var asset = assetReference.Asset;
+			var companionFileBytes = assetUnpacker.GetCompanionFileBytes(assetId);
+
+			var type = asset.GetType();
+			var processors = assetProcessors.Where(x => x.Type == type);
+
+			foreach (var assetProcessor in processors)
+			{
+				assetProcessor.Load(asset, companionFileBytes);
+			}
 		}
 	}
 

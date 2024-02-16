@@ -12,7 +12,7 @@ public interface ISceneAssetsConfigurationValidator
 
 
 
-// TODO Clean up when list of included scene is used properly
+// TODO Clean up comment when list of included scene is used properly
 // ReSharper disable once NotAccessedPositionalProperty.Global
 public record ValidSceneAssetsConfiguration(ISet<Guid> SceneIds, Guid StartSceneId);
 

@@ -13,9 +13,9 @@ public static class SceneAssetsInstaller
 	{
 		builder.Services.Configure<SceneAssetsConfiguration>(
 			builder.Configuration.GetSection(SceneAssetsConfiguration.JsonElementName));
-
 		builder.Services.AddTransient<ISceneAssetsConfigurationValidator, SceneAssetsConfigurationValidator>();
-
+		builder.Services.AddSingleton(services =>
+			services.GetRequiredService<ISceneAssetsConfigurationValidator>().Validate());
 
 		builder.Services.AddTransient<ISceneLoader, SceneLoader>();
 		builder.Services.AddTransient<ISceneLoadOperationExecutor, SceneLoadOperationExecutor>();

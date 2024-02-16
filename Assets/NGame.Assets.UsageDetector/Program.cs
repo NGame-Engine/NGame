@@ -11,7 +11,7 @@ using NGame.Assets.UsageDetector.FileWriters;
 var builder = Host.CreateApplicationBuilder(args);
 
 
-builder.AddNGameCommon();
+builder.AddNGameAssetsCommon();
 
 builder.Services.Configure<CommandArguments>(builder.Configuration);
 builder.Services.AddTransient<ICommandValidator, CommandValidator>();

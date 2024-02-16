@@ -7,19 +7,19 @@ using NGame.Platform.Ecs.SceneAssets;
 using NGame.Platform.Parallelism;
 using NGame.Platform.UpdateLoop;
 
-namespace NGame.Platform.Setup;
+namespace NGame.Platform;
 
 
 
-public static class NGameCoreInstaller
+public static class NGamePlatformInstaller
 {
 	// ReSharper disable once UnusedMethodReturnValue.Global
-	public static IHostApplicationBuilder AddNGameCore(this IHostApplicationBuilder builder)
+	public static IHostApplicationBuilder AddNGamePlatform(this IHostApplicationBuilder builder)
 	{
-		builder.AddNGameCommon();
+		builder.AddNGameAssetsCommon();
 		builder.Services.AddNGameCoreEcs();
-		builder.AddUpdateLoop();
-		builder.AddAssets();
+		builder.AddPlatformUpdateLoop();
+		builder.AddPlatformAssets();
 		builder.AddParallelism();
 		builder.AddEcs();
 		builder.AddSceneAssets();
