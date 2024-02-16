@@ -60,12 +60,12 @@ public class AssetReferenceReplacer(
 		var type = propertyInfo.PropertyType;
 
 		if (type == typeof(bool) ||
-		    type == typeof(byte) ||
-		    type == typeof(int) ||
-		    type == typeof(float) ||
-		    type == typeof(string) ||
-		    type == typeof(Guid) ||
-		    type == typeof(SemVersion))
+			type == typeof(byte) ||
+			type == typeof(int) ||
+			type == typeof(float) ||
+			type == typeof(string) ||
+			type == typeof(Guid) ||
+			type == typeof(SemVersion))
 		{
 			return;
 		}
@@ -73,8 +73,8 @@ public class AssetReferenceReplacer(
 		referenceLevel++;
 
 		if (propertyInfo.CanWrite &&
-		    type.IsAssignableTo(typeof(Asset)) &&
-		    type.IsAssignableTo(typeof(SceneAsset)) == false)
+			type.IsAssignableTo(typeof(Asset)) &&
+			type.IsAssignableTo(typeof(SceneAsset)) == false)
 		{
 			var reference = (Asset)value;
 

@@ -32,7 +32,7 @@ public class AssetSerializer(
 		catch (Exception e)
 		{
 			if (e is NotSupportedException &&
-			    e.Message.StartsWith("Deserialization of types without a parameterless constructor"))
+				e.Message.StartsWith("Deserialization of types without a parameterless constructor"))
 			{
 				var message = $"Unable to find correct subtype for asset, did you register it? JSON: {json}";
 				throw new InvalidOperationException(message);
