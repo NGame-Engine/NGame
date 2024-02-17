@@ -57,4 +57,15 @@ public static class NumericsExtensions
 		var cosYCosP = 1 - 2 * (quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z);
 		return MathF.Atan2(sinYCosP, cosYCosP);
 	}
+
+
+	public static string ToLogString(this Matrix4x4 matrix4X4)
+	{
+		string Pad(float f) => f.ToString("F12").PadRight(15);
+		return
+			$"{Pad(matrix4X4.M11)} {Pad(matrix4X4.M12)} {Pad(matrix4X4.M13)} {Pad(matrix4X4.M14)}\n"
+			+ $"{Pad(matrix4X4.M21)} {Pad(matrix4X4.M22)} {Pad(matrix4X4.M23)} {Pad(matrix4X4.M24)}\n"
+			+ $"{Pad(matrix4X4.M31)} {Pad(matrix4X4.M32)} {Pad(matrix4X4.M33)} {Pad(matrix4X4.M34)}\n"
+			+ $"{Pad(matrix4X4.M41)} {Pad(matrix4X4.M42)} {Pad(matrix4X4.M43)} {Pad(matrix4X4.M44)}";
+	}
 }
