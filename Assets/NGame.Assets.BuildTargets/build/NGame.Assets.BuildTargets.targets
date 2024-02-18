@@ -85,7 +85,7 @@
     --version 0.0.2-dev ^
     --create-manifest-if-needed"/>
 
-    <Exec Command="dotnet tool update NGame.Assets.UsageDetector --version 0.0.6"/>
+    <Exec Command="dotnet tool update NGame.Assets.UsageDetector --version 0.0.7"/>
 
     <Exec Command="dotnet tool run ngame-asset-usages ^
     solutiondir=&quot;$(SolutionDir)\&quot; ^
