@@ -27,6 +27,14 @@ public class CommandValidator(
 			_commandArguments.SolutionDir ??
 			throw new InvalidOperationException("No solutiondir provided");
 
+		// When compiling on Windows, msbuild provides $(SolutionDir) with a
+		// backslash at the end.  This leads to the command line parameter
+		// ending in \"
+		// That means that that double quote is passed as part of the string parameter
+		// instead of ending it. In order to prevent that, we put a space before
+		// the closing double quote. That's why we need to trim it here.
+		solutionDirParameter = solutionDirParameter.Trim();
+
 		var solutionDirectory = DirectoryPath.ParseAbsolute(solutionDirParameter);
 		if (solutionDirectory.Exists == false)
 		{

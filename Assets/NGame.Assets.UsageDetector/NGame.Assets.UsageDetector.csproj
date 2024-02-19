@@ -8,7 +8,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   
     <PackageId>NGame.Assets.UsageDetector</PackageId>
-    <VersionPrefix>0.0.7</VersionPrefix>
+    <VersionPrefix>0.0.8</VersionPrefix>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>ngame-asset-usages</ToolCommandName>
     <Authors>NGame Contributors</Authors>
