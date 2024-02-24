@@ -7,7 +7,7 @@ using NGame.Platform.Assets.Unpacking;
 using NGame.Platform.Setup;
 using Xunit.Abstractions;
 
-namespace NGame.Assets.UsageDetector.Tests.Integration.CanPackAndLoad;
+namespace NGame.Assets.Packer.Tests.Integration.CanPackAndLoad;
 
 
 
