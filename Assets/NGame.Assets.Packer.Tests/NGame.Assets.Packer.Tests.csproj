@@ -29,4 +29,9 @@
       <ProjectReference Include="..\NGame.Assets.Packer\NGame.Assets.Packer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Integration\**" />
+      <Content Include="Integration\**" CopyToOutputDirectory="PreserveNewest"/>
+    </ItemGroup>
+
 </Project>

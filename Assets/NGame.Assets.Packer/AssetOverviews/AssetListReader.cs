@@ -13,7 +13,7 @@ public record AssetFileInfo(
 
 
 
-public record PathInfo(IAbsoluteFilePath AbsolutePath, IRelativeFilePath RelativePath);
+public record PathInfo(IAbsoluteFilePath SourcePath, IRelativeFilePath TargetPath);
 
 
 
@@ -40,33 +40,32 @@ public class AssetListReader : IAssetListReader
 		IAbsoluteDirectoryPath unpackedAssetsDirectory
 	)
 	{
-		var assetFileSet =
+		var allFilePaths =
 			assetFilePaths
-				.Select(x => x.PathDisplay)
+				.Select(x => x.PathDisplay.Replace('\\', '/'))
 				.ToHashSet();
 
-		return assetFileSet
+		return allFilePaths
 			.Where(x => x.EndsWith(AssetConventions.AssetFileEnding))
-			.Select(x => CreateAssetFileInfo(x, unpackedAssetsDirectory, assetFileSet));
+			.Select(x => CreateAssetFileInfo(x, unpackedAssetsDirectory, allFilePaths));
 	}
 
 
 	private static AssetFileInfo CreateAssetFileInfo(
 		string assetFilePath,
 		IAbsoluteDirectoryPath unpackedAssetsDirectory,
-		IReadOnlySet<string> allLinesSet
+		IReadOnlySet<string> allFilePaths
 	)
 	{
-		var lineParts = SplitPath(assetFilePath);
-		var packageName = lineParts.PackageName;
-		var filePathString = lineParts.FilePath;
-		var pathInfo = CreatePathInfo(filePathString, unpackedAssetsDirectory);
+		var absoluteFilePath = unpackedAssetsDirectory.CombineFile(assetFilePath);
 
+		var (packageName, filePathString) = SplitPath(assetFilePath);
+		var relativeFilePath = FilePath.ParseRelative(filePathString);
+		var pathInfo = new PathInfo(absoluteFilePath, relativeFilePath);
 
 		var satellitePathInfo = GetSatelliteFile(
-			assetFilePath, allLinesSet, unpackedAssetsDirectory
+			assetFilePath, allFilePaths, unpackedAssetsDirectory
 		);
-
 
 		return new AssetFileInfo(pathInfo, packageName, satellitePathInfo);
 	}
@@ -75,38 +74,29 @@ public class AssetListReader : IAssetListReader
 	private static (string PackageName, string FilePath) SplitPath(string path)
 	{
 		var lineParts = path.Split(PathSeparators, 2);
-
 		var packageName = lineParts[0];
 		var filePathString = lineParts[1];
 		return (packageName, filePathString);
 	}
 
 
-	private static PathInfo CreatePathInfo(
-		string filePathString,
-		IAbsoluteDirectoryPath unpackedAssetsDirectory
-	)
-	{
-		var relativeFilePath = FilePath.ParseRelative(filePathString);
-		var absoluteFilePath = unpackedAssetsDirectory.CombineFile(filePathString);
-		return new PathInfo(absoluteFilePath, relativeFilePath);
-	}
-
-
 	private static PathInfo? GetSatelliteFile(
 		string assetFilePath,
-		IReadOnlySet<string> assetListLines,
+		IReadOnlySet<string> allFilePaths,
 		IAbsoluteDirectoryPath unpackedAssetsDirectory
 	)
 	{
 		var satelliteFilePath =
 			assetFilePath[..^AssetConventions.AssetFileEnding.Length];
 
-		if (assetListLines.Contains(satelliteFilePath) == false) return null;
+		if (allFilePaths.Contains(satelliteFilePath) == false) return null;
+
+		var absoluteFilePath = unpackedAssetsDirectory.CombineFile(satelliteFilePath);
 
 		var lineParts = SplitPath(satelliteFilePath);
 		var filePathString = lineParts.FilePath;
+		var relativeFilePath = FilePath.ParseRelative(filePathString);
 
-		return CreatePathInfo(filePathString, unpackedAssetsDirectory);
+		return new PathInfo(absoluteFilePath, relativeFilePath);
 	}
 }

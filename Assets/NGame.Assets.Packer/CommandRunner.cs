@@ -44,7 +44,7 @@ internal class CommandRunner(
 		);
 
 		var outputPath = validatedCommand.Output;
-		assetPackFileWriter.WriteToFile(usedAssetOverview, outputPath);
+		assetPackFileWriter.WriteToFile(usedAssetOverview, outputPath, validatedCommand);
 		logger.LogInformation("Assets packs created");
 	}
 }

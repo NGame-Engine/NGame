@@ -5,6 +5,7 @@ using NGame.Platform;
 using NGame.Platform.Assets;
 using NGame.Platform.Assets.Unpacking;
 using NGame.Platform.Setup;
+using Singulink.IO;
 using Xunit.Abstractions;
 
 namespace NGame.Assets.Packer.Tests.Integration.CanPackAndLoad;
@@ -17,65 +18,39 @@ public class CanPackAndLoadTest(ITestOutputHelper testOutputHelper)
 	public void Integration_CanCreatePackagesAndLoadThemAgain()
 	{
 		var projectFolderPath =
-			Path.Combine(
-				AppContext.BaseDirectory,
-				nameof(CanPackAndLoad),
-				"ExampleProject"
-			);
+			DirectoryPath.ParseAbsolute(AppContext.BaseDirectory)
+				.CombineDirectory(nameof(Integration))
+				.CombineDirectory(nameof(CanPackAndLoad))
+				.CombineDirectory("ExampleProject");
 
-		if (string.IsNullOrEmpty(projectFolderPath) == false)
-		{
-			// TODO CLI test code might be reused for desktop asset packer
-			return;
-		}
+		var unpackedAssetsPath = projectFolderPath.CombineDirectory("AssetFolder");
+		var appSettingsPath = projectFolderPath.CombineFile("appsettings.json");
+		var minifyJson = true;
+		var outputPath = projectFolderPath.CombineDirectory("output");
 
-
-		var assetListPath = Path.Combine(projectFolderPath, "Items.txt");
-		var targetPath = Path.Combine(projectFolderPath, "assetpacks");
-		var assetStreamProvider = new FileAssetStreamProvider(targetPath);
-
-
-		PackAssets(projectFolderPath, assetListPath, targetPath);
+		
+		var assetStreamProvider = new FileAssetStreamProvider(outputPath.PathDisplay);
+		
+		PackAssets(unpackedAssetsPath, appSettingsPath, minifyJson, outputPath);
 		LoadAssets(assetStreamProvider);
 	}
 
 
 	private void PackAssets(
-		string projectFolderPath,
-		string assetListPath,
-		string targetPath
+		IAbsoluteDirectoryPath unpackedAssetsPath,
+		IFilePath appSettingsPath,
+		bool minifyJson,
+		IDirectoryPath outputPath
 	)
 	{
-		var solutionPath = Path.GetFullPath(
-			Path.Combine(
-				AppContext.BaseDirectory, "..", "..", "..", "..")
-		);
-
-
-		var cliProjectFolder = Path.Combine(solutionPath, "NGame.Assets.UsageDetector");
-
-		CommandLineHelper.Run(
-			"dotnet",
-			"build",
-			cliProjectFolder,
-			testOutputHelper
-		);
-
-
-		var cliExePath =
-			Directory.GetFiles(
-					Path.Combine(cliProjectFolder, "bin"),
-					"NGame.Assets.UsageDetector*",
-					SearchOption.AllDirectories
-				)
-				.First(x => x.EndsWith("NGame.Assets.UsageDetector.exe") || x.EndsWith("NGame.Assets.UsageDetector"));
-
-		CommandLineHelper.Run(
-			cliExePath,
-			$"pack --assetlist={assetListPath} --project={projectFolderPath} --target={targetPath}",
-			cliProjectFolder,
-			testOutputHelper
-		);
+		var minifyJsonString = minifyJson ? "true" : "false";
+	
+		Program.Main([
+			$"unpackedassets={unpackedAssetsPath.PathDisplay} ",
+			$"appsettings={appSettingsPath.PathDisplay}",
+			$"minifyJson={minifyJsonString}",
+			$"output={outputPath.PathDisplay} "
+		]);
 	}
 
 

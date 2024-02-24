@@ -27,12 +27,10 @@ public class CommandValidator(
 			_commandArguments.UnpackedAssets ??
 			throw new InvalidOperationException("No unpackedassets provided");
 
-		// When compiling on Windows, msbuild is to provide paths with a
-		// backslash at the end.  This leads to the command line parameter
-		// ending in \"
-		// That means that that double quote is passed as part of the string parameter
-		// instead of ending it. In order to prevent that, we put a space before
-		// the closing double quote. That's why we need to trim it here.
+		// msbuild convention is to provide a backslash at the end of a path.
+		// However, a backslash before a double quote means it will be included
+		// in the parameter instead of ending it. In msbuild targets we leave a space,
+		// here we trim it again.
 		unpackedAssetsParameter = unpackedAssetsParameter.Trim();
 
 		var unpackedAssetsDirectory = DirectoryPath.ParseAbsolute(unpackedAssetsParameter);
@@ -58,6 +56,12 @@ public class CommandValidator(
 		var outputParameter =
 			_commandArguments.Output ??
 			throw new InvalidOperationException("No output folder provided");
+
+		// msbuild convention is to provide a backslash at the end of a path.
+		// However, a backslash before a double quote means it will be included
+		// in the parameter instead of ending it. In msbuild targets we leave a space,
+		// here we trim it again.
+		outputParameter = outputParameter.Trim();
 
 		var outputFilePath = DirectoryPath.ParseAbsolute(outputParameter);
 

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using NGame.Assets.Packer.AssetUsages;
+using NGame.Assets.Packer.Commands;
 using Singulink.IO;
 
 namespace NGame.Assets.Packer.FileWriters;
@@ -10,7 +11,8 @@ internal interface IAssetPackFileWriter
 {
 	public void WriteToFile(
 		AssetUsageOverview assetUsageOverview,
-		IAbsoluteDirectoryPath outputPath
+		IAbsoluteDirectoryPath outputPath,
+		ValidatedCommand validatedCommand
 	);
 }
 
@@ -24,7 +26,8 @@ internal class AssetPackFileWriter(
 {
 	public void WriteToFile(
 		AssetUsageOverview assetUsageOverview,
-		IAbsoluteDirectoryPath outputPath
+		IAbsoluteDirectoryPath outputPath,
+		ValidatedCommand validatedCommand
 	)
 	{
 		var assetFileSpecifications = assetUsageOverview
@@ -32,11 +35,11 @@ internal class AssetPackFileWriter(
 			.ToList();
 
 
-		outputPath.Create();
+		validatedCommand.Output.Create();
 		var createdPackNames = assetFileSpecifications
 			.GroupBy(x => x.PackageName)
 			.Select(x =>
-				assetPackFactory.Create(x.Key, x, outputPath)
+				assetPackFactory.Create(x.Key, x, outputPath, validatedCommand)
 			);
 
 		var packNamesString = string.Join(", ", createdPackNames);

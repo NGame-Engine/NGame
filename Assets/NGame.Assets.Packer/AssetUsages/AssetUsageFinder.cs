@@ -49,8 +49,7 @@ internal class AssetUsageFinder(
 				.GetSection(SceneAssetsConfiguration.JsonElementName)
 				.Get<SceneAssetsConfiguration>()!;
 
-		var sceneIds = sceneAssetsConfiguration.Scenes;
-		return sceneIds;
+		return sceneAssetsConfiguration.Scenes;
 	}
 
 
@@ -64,7 +63,7 @@ internal class AssetUsageFinder(
 
 		var assetEntry = assetEntries[assetId];
 		var mainPathInfo = assetEntry.MainPathInfo;
-		var fileContent = File.ReadAllText(mainPathInfo.AbsolutePath.PathDisplay);
+		var fileContent = File.ReadAllText(mainPathInfo.SourcePath.PathDisplay);
 		var jsonNode = JsonNode.Parse(fileContent)!;
 		var referencedAssetIds = jsonNodeAssetIdFinder.FindReferencedIdsRecursively(jsonNode);
 

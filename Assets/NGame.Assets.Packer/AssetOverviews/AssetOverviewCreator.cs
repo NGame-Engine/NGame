@@ -60,7 +60,7 @@ internal class AssetOverviewCreator(
 	)
 	{
 		var mainPathInfo = assetFileInfo.MainPathInfo;
-		var allText = File.ReadAllText(mainPathInfo.AbsolutePath.PathDisplay);
+		var allText = File.ReadAllText(mainPathInfo.SourcePath.PathDisplay);
 		var jsonAsset = JsonSerializer.Deserialize<JsonAsset>(allText, options)!;
 
 		return new AssetEntry(
