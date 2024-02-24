@@ -24,6 +24,31 @@
   </Target>
 
 
+
+  <Target Name="NGame_UpdateAssetsAAAAAAAAAAAAAAa" BeforeTargets="BeforeBuild"    >
+
+    <ItemGroup>
+      <NgAsset Include="**/*.ngasset" Exclude="bin/**/*;obj/**/*"/>
+      <NgAsset
+        Include="@(NgAsset -> '%(RelativeDir)%(FileName)')"
+        Condition="Exists('%(RelativeDir)%(FileName)')"
+      />
+
+      <Content Include="@(NgAsset)"
+               CopyToOutputDirectory="PreserveNewest"
+               Link=".assets/%(RelativeDir)%(Filename)%(Extension)"
+      />
+    </ItemGroup>
+
+    <Message Importance="high" Text="=== NgAsset: @(NgAsset)"/>
+    <Message Importance="high" Text="=== Content: @(Content)"/>
+  </Target>
+
+
+
+
+
+
   <Target
     Name="NGame_UpdateAssets"
     BeforeTargets="BeforeBuild"
