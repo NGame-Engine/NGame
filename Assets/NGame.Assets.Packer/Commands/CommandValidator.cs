@@ -23,21 +23,11 @@ public class CommandValidator(
 
 	public ValidatedCommand ValidateCommand()
 	{
-		var unpackedAssetsParameter =
-			_commandArguments.UnpackedAssets ??
-			throw new InvalidOperationException("No unpackedassets provided");
+		var assetListsParameter =
+			_commandArguments.AssetLists ??
+			throw new InvalidOperationException("No assetlists provided");
 
-		// msbuild convention is to provide a backslash at the end of a path.
-		// However, a backslash before a double quote means it will be included
-		// in the parameter instead of ending it. In msbuild targets we leave a space,
-		// here we trim it again.
-		unpackedAssetsParameter = unpackedAssetsParameter.Trim();
-
-		var unpackedAssetsDirectory = DirectoryPath.ParseAbsolute(unpackedAssetsParameter);
-		if (unpackedAssetsDirectory.Exists == false)
-		{
-			throw new InvalidOperationException($"Invalid unpackedassets '{unpackedAssetsDirectory}'");
-		}
+		var assetListPaths = assetListsParameter.Split(';');
 
 
 		var appSettingsParameter =
@@ -66,18 +56,18 @@ public class CommandValidator(
 		var outputFilePath = DirectoryPath.ParseAbsolute(outputParameter);
 
 		logger.LogInformation(
-			"Input validated, unpacked assets directory: {UnpackedAssetsDirectory}" +
+			"Input validated, unpacked assets directory: {AssetLists}" +
 			", appSettings file: {AppSettings}" +
 			", minifyJson: {MinifyJson}" +
 			", output file: {Output}",
-			unpackedAssetsDirectory.PathDisplay,
+			assetListsParameter,
 			appSettings.PathDisplay,
 			minifyJson,
 			outputFilePath.PathDisplay
 		);
 
 		return new ValidatedCommand(
-			unpackedAssetsDirectory,
+			assetListPaths,
 			appSettings,
 			minifyJson,
 			outputFilePath

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using NGame.Assets.Common.Assets;
 using NGame.Assets.Packer.Commands;
 using Singulink.IO;
 
@@ -19,24 +20,14 @@ internal interface IAssetOverviewCreator
 
 
 internal class AssetOverviewCreator(
-	IAssetListReader assetListReader,
 	IEnumerable<JsonConverter> jsonConverters
 ) : IAssetOverviewCreator
 {
+	private record AssetFileInfo(PathInfo MainPathInfo, PathInfo? SatellitePathInfo);
+
+
 	public AssetOverview Create(ValidatedCommand validatedCommand)
 	{
-		var unpackedAssetsDirectory = validatedCommand.UnpackedAssetsDirectory;
-
-		var assetFilePaths =
-			unpackedAssetsDirectory
-				.GetRelativeChildFiles(
-					new SearchOptions
-					{
-						Recursive = true
-					}
-				);
-
-
 		var options = new JsonSerializerOptions();
 
 		foreach (var jsonConverter in jsonConverters)
@@ -44,9 +35,17 @@ internal class AssetOverviewCreator(
 			options.Converters.Add(jsonConverter);
 		}
 
+		var allFilePaths =
+			validatedCommand
+				.AssetListPaths
+				.SelectMany(File.ReadAllLines)
+				.ToHashSet();
+
+
 		var assetEntries =
-			assetListReader
-				.ReadEntries(assetFilePaths, unpackedAssetsDirectory)
+			allFilePaths
+				.Where(x => x.EndsWith(AssetConventions.AssetFileEnding))
+				.Select(x => CreateAssetFileInfo(x, allFilePaths))
 				.Select(info => CreateAssetEntry(info, options));
 
 
@@ -54,7 +53,41 @@ internal class AssetOverviewCreator(
 	}
 
 
-	private AssetEntry CreateAssetEntry(
+	private static AssetFileInfo CreateAssetFileInfo(
+		string assetFilePath,
+		IReadOnlySet<string> allFilePaths
+	)
+	{
+		var mainPathInfo = ParseFileLine(assetFilePath);
+
+		var satelliteFilePath =
+			assetFilePath[..^AssetConventions.AssetFileEnding.Length];
+
+		var satellitePathInfo =
+			allFilePaths.Contains(satelliteFilePath)
+				? ParseFileLine(satelliteFilePath)
+				: null;
+
+		return new AssetFileInfo(mainPathInfo, satellitePathInfo);
+	}
+
+
+	private static PathInfo ParseFileLine(string fileLine)
+	{
+		var pathParts = fileLine.Split(AssetConventions.PackSeparator, 2);
+
+		var sourcePath =
+			DirectoryPath
+				.ParseAbsolute(pathParts[0])
+				.CombineFile(pathParts[1]);
+
+		var targetPath = FilePath.ParseRelative(pathParts[1]);
+
+		return new PathInfo(sourcePath, targetPath);
+	}
+
+
+	private static AssetEntry CreateAssetEntry(
 		AssetFileInfo assetFileInfo,
 		JsonSerializerOptions options
 	)
@@ -66,7 +99,7 @@ internal class AssetOverviewCreator(
 		return new AssetEntry(
 			jsonAsset.Id,
 			mainPathInfo,
-			assetFileInfo.PackageName,
+			jsonAsset.PackageName,
 			assetFileInfo.SatellitePathInfo
 		);
 	}

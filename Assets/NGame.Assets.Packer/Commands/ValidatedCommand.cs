@@ -5,13 +5,13 @@ namespace NGame.Assets.Packer.Commands;
 
 
 public class ValidatedCommand(
-	IAbsoluteDirectoryPath unpackedAssetsDirectory,
+	string[] assetListPaths,
 	IAbsoluteFilePath appSettings,
 	bool minifyJson,
 	IAbsoluteDirectoryPath output
 )
 {
-	public IAbsoluteDirectoryPath UnpackedAssetsDirectory { get; } = unpackedAssetsDirectory;
+	public string[] AssetListPaths { get; } = assetListPaths;
 	public IAbsoluteFilePath AppSettings { get; } = appSettings;
 	public bool MinifyJson { get; } = minifyJson;
 	public IAbsoluteDirectoryPath Output { get; } = output;

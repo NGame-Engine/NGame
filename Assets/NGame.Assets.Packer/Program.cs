@@ -7,7 +7,6 @@ using NGame.Assets.Packer.Commands;
 using NGame.Assets.Packer.FileWriters;
 
 
-
 namespace NGame.Assets.Packer;
 
 
@@ -27,7 +26,6 @@ public class Program
 		builder.Services.AddTransient<ICommandRunner, CommandRunner>();
 
 		builder.Services.AddTransient<IAssetOverviewCreator, AssetOverviewCreator>();
-		builder.Services.AddTransient<IAssetListReader, AssetListReader>();
 
 		builder.Services.AddTransient<IAssetUsageFinder, AssetUsageFinder>();
 		builder.Services.AddTransient<IJsonNodeAssetIdFinder, JsonNodeAssetIdFinder>();

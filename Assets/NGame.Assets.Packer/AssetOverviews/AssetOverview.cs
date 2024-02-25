@@ -1,4 +1,19 @@
+using Singulink.IO;
+
 namespace NGame.Assets.Packer.AssetOverviews;
+
+
+
+public record PathInfo(IAbsoluteFilePath SourcePath, IRelativeFilePath TargetPath);
+
+
+
+public record AssetEntry(
+	Guid Id,
+	PathInfo MainPathInfo,
+	string PackageName,
+	PathInfo? SatellitePathInfo
+);
 
 
 
