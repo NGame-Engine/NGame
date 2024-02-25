@@ -11,7 +11,7 @@ public static class AssetConventions
 	[Obsolete("Clean up when unused")] public const string ListFileName = "NGAssets.g.txt"; // TODO clean up when unused
 	[Obsolete("Clean up when unused")] public const string PackSeparator = "//"; // TODO clean up when unused
 
-	public const string AssetPackSubFolder = ".assets";
+	public const string AssetPackSubFolder = ".assetpacks";
 	public const string TableOfContentsFileName = "toc.json";
 	public const string PackFileEnding = ".ngpack";
 }

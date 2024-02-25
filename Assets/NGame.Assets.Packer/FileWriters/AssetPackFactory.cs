@@ -59,9 +59,8 @@ public class AssetPackFactory : IAssetPackFactory
 				? OpenMinifiedJsonStream(pathInfo.SourcePath)
 				: File.OpenRead(pathInfo.SourcePath.PathDisplay);
 
-		var targetPath = pathInfo.TargetPath.PathDisplay;
-		var normalizedTargetPath = targetPath.Replace('\\', '/');
-		var zipArchiveEntry = zipArchive.CreateEntry(normalizedTargetPath, CompressionLevel.Fastest);
+		var targetPath = pathInfo.GetNormalizedZipPath();
+		var zipArchiveEntry = zipArchive.CreateEntry(targetPath, CompressionLevel.Fastest);
 		using var zipStream = zipArchiveEntry.Open();
 		sourceStream.CopyTo(zipStream);
 	}

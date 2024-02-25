@@ -4,7 +4,16 @@ namespace NGame.Assets.Packer.AssetOverviews;
 
 
 
-public record PathInfo(IAbsoluteFilePath SourcePath, IRelativeFilePath TargetPath);
+public class PathInfo(IAbsoluteFilePath sourcePath, IRelativeFilePath targetPath)
+{
+	public IAbsoluteFilePath SourcePath { get; init; } = sourcePath;
+
+
+	public string GetNormalizedZipPath() =>
+		targetPath
+			.PathDisplay
+			.Replace('\\', '/');
+}
 
 
 

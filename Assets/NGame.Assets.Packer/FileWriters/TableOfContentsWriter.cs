@@ -42,7 +42,7 @@ public class TableOfContentsWriter(
 						x => new ContentEntry
 						{
 							PackFileName = $"{x.PackageName}{AssetConventions.PackFileEnding}",
-							FilePath = x.MainPathInfo.TargetPath.PathDisplay
+							FilePath = x.MainPathInfo.GetNormalizedZipPath()
 						}
 					)
 		};
