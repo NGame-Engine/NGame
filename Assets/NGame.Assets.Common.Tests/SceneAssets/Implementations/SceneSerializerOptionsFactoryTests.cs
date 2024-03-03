@@ -1,7 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
-using NGame.Assets.Common.Assets;
 using NGame.Assets.Common.Assets.JsonConverters;
 using NGame.Assets.Common.Ecs;
 using NGame.Ecs;
