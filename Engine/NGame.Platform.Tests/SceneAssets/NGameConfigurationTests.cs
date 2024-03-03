@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NGame.Assets.Common.Assets;
+using NGame.Assets.Common.Assets.JsonConverters;
 using NGame.Assets.Common.Ecs;
 
 namespace NGame.Implementations.Tests.SceneAssets;
