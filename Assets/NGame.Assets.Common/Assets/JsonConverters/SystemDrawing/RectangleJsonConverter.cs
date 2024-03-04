@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,7 +7,7 @@ namespace NGame.Assets.Common.Assets.JsonConverters.SystemDrawing;
 
 
 public class RectangleJsonConverter : JsonConverter<Rectangle>
-	{
+{
 	public override Rectangle Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var stringValue = reader.GetString();

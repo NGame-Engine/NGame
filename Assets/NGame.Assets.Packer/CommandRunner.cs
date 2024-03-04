@@ -30,7 +30,7 @@ internal class CommandRunner(
 
 		var validatedCommand = commandValidator.ValidateCommand();
 
-		var assetOverview = assetOverviewCreator.Create( validatedCommand);
+		var assetOverview = assetOverviewCreator.Create(validatedCommand);
 		logger.LogInformation(
 			"Assets overview created with {AssetEntriesCount} entries",
 			assetOverview.AssetEntries.Count

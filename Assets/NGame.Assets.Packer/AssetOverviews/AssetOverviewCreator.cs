@@ -74,7 +74,7 @@ internal class AssetOverviewCreator(
 
 	private static PathInfo ParseFileLine(string fileLine)
 	{
-		var pathParts = fileLine.Split(AssetConventions.PackSeparator, 2);
+		var pathParts = fileLine.Split(AssetConventions.RelativePathSeparator, 2);
 
 		var sourcePath =
 			DirectoryPath
