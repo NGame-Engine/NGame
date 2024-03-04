@@ -30,7 +30,7 @@ public class SceneLoadOperationExecutor(
 	{
 		var componentTypes = types.Select(x => x.SubType);
 		var options = optionsFactory.Create(componentTypes);
-
+		//sceneId = Guid.Parse("0F85A235-5A85-4BFB-8BCB-2B7CAF7BF8CC"); // TODO load real ID on android
 		var assetJsonContent = assetUnpacker.GetAssetJsonContent(sceneId);
 		var sceneAsset = JsonSerializer.Deserialize<SceneAsset>(assetJsonContent, options)!;
 

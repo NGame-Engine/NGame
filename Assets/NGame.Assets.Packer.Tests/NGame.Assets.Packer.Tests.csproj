@@ -25,7 +25,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\NGame.Assets.Common\NGame.Assets.Common.csproj" />
+      <ProjectReference Include="..\..\Engine\NGame.Platform\NGame.Platform.csproj" />
+      <ProjectReference Include="..\NGame.Assets.Packer\NGame.Assets.Packer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Integration\**" />
+      <Content Include="Integration\**" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
 
 </Project>

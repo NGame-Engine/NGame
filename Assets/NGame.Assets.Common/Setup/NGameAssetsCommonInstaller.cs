@@ -10,7 +10,7 @@ public static class NGameAssetsCommonInstaller
 {
 	public static void AddNGameAssetsCommon(this IHostApplicationBuilder builder)
 	{
-		builder.Services.AddNGameCoreAssets();
+		builder.AddNGameCoreAssets();
 		builder.Services.AddNGameCoreSceneAssets();
 	}
 }
