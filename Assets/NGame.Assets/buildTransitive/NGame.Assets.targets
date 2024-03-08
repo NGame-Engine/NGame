@@ -10,7 +10,7 @@
 
     <Target Name="_NGameAssetsDiscover">
         <ItemGroup>
-            <NgAsset Include="**/*.ngasset" Exclude="bin/**/*;obj/**/*"/>
+            <NgAsset Include="**/*.ngasset" Exclude="$(BaseOutputPath)/**/*;$(BaseIntermediateOutputPath)/**/*"/>
             <NgAsset
                 Include="@(NgAsset -> '%(RelativeDir)%(FileName)')"
                 Condition="Exists('%(RelativeDir)%(FileName)')"
