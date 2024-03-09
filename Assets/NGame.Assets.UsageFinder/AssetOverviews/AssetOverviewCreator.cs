@@ -62,6 +62,7 @@ internal class AssetOverviewCreator(
 
 		return
 			fileLineSet
+				.Where(x=>x.EndsWith(AssetConventions.AssetFileEnding))
 				.Select(x =>
 					CreateAssetFileInfo(x, fileLineSet, projectDirectory)
 				);
