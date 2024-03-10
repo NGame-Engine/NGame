@@ -3,7 +3,7 @@
 
     <Target Name="_NGameAssetsSetProperties">
         <PropertyGroup>
-            <NgAssetListPath>$(SolutionDir).ngame/assets/$(ProjectName).g.txt</NgAssetListPath>
+            <NgAssetListPath>$(SolutionDir).ngame/assets/$(ProjectName).g.ngassetlist</NgAssetListPath>
         </PropertyGroup>
     </Target>
 
@@ -12,7 +12,9 @@
         <ItemGroup>
             <NgAsset Include="**/*.ngasset" Exclude="$(BaseOutputPath)/**/*;$(BaseIntermediateOutputPath)/**/*"/>
             <NgAsset
-                Include="@(NgAsset -> '%(RelativeDir)%(FileName)')"
+                Update="@(NgAsset)"
+                DataFile="%(RelativeDir)%(FileName)"
+                DataFileExtension="$( [System.IO.Path]::GetExtension('%(FileName)').ToLower() )"
                 Condition="Exists('%(RelativeDir)%(FileName)')"
             />
         </ItemGroup>
@@ -24,7 +26,7 @@
         Name="NGameAssetsWriteList"
         BeforeTargets="BeforeBuild"
         DependsOnTargets="_NGameAssetsSetProperties;_NGameAssetsDiscover"
-        Inputs="@(NgAsset)"
+        Inputs="@(NgAsset);@(NgAsset -> '%(DataFile)')"
         Outputs="$(NgAssetListPath)"
     >
         <WriteLinesToFile
@@ -32,11 +34,11 @@
             File="$(NgAssetListPath)"
             Overwrite="true"
             Encoding="Unicode"/>
-        <WriteLinesToFile
-            Lines="@(NgAsset)"
-            File="$(NgAssetListPath)"
-            Overwrite="false"
-            Encoding="Unicode"/>
+       <WriteLinesToFile
+           Lines="@(NgAsset -> '%(Identity)//%(DataFile)')"
+           File="$(NgAssetListPath)"
+           Overwrite="false"
+           Encoding="Unicode"/>
         <Message Text="Updated NGame asset list in project $(ProjectName)"/>
     </Target>
 

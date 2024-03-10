@@ -50,39 +50,36 @@ internal class AssetOverviewCreator(
 	}
 
 
-	private IEnumerable<AssetFileInfo> ReadAssetListFile(IAbsoluteFilePath assetListFile)
+	private static IEnumerable<AssetFileInfo> ReadAssetListFile(
+		IAbsoluteFilePath assetListFile
+	)
 	{
 		var fileLines = File.ReadAllLines(assetListFile.PathDisplay);
+
 		var projectDirectory = DirectoryPath.ParseAbsolute(fileLines[0]);
 
-		var fileLineSet =
-			fileLines
-				.Skip(1)
-				.ToHashSet();
-
-		return
-			fileLineSet
-				.Where(x=>x.EndsWith(AssetConventions.AssetFileEnding))
-				.Select(x =>
-					CreateAssetFileInfo(x, fileLineSet, projectDirectory)
-				);
+		return fileLines
+			.Skip(1)
+			.Select(x => CreateAssetFileInfo(x, projectDirectory));
 	}
 
 
 	private static AssetFileInfo CreateAssetFileInfo(
-		string assetFilePath,
-		IReadOnlySet<string> allFilePaths,
+		string assetListLine,
 		IAbsoluteDirectoryPath projectDirectory
 	)
 	{
-		var mainPathInfo = CreatePathInfo(assetFilePath, projectDirectory);
+		var lineParts = assetListLine.Split(
+			AssetConventions.RelativePathSeparator,
+			2,
+			StringSplitOptions.RemoveEmptyEntries
+		);
 
-		var satelliteFilePath =
-			assetFilePath[..^AssetConventions.AssetFileEnding.Length];
+		var mainPathInfo = CreatePathInfo(lineParts[0], projectDirectory);
 
 		var satellitePathInfo =
-			allFilePaths.Contains(satelliteFilePath)
-				? CreatePathInfo(satelliteFilePath, projectDirectory)
+			lineParts.Length == 2
+				? CreatePathInfo(lineParts[1], projectDirectory)
 				: null;
 
 		return new AssetFileInfo(mainPathInfo, satellitePathInfo);
@@ -90,7 +87,7 @@ internal class AssetOverviewCreator(
 
 
 	private static PathInfo CreatePathInfo(
-		string fileLine,
+		ReadOnlySpan<char> fileLine,
 		IAbsoluteDirectoryPath projectDirectory
 	)
 	{
