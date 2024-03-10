@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using NGame.Assets.Common.Assets;
 using NGame.Assets.Common.Ecs;
 using NGame.Platform;
 using NGame.Platform.Assets;

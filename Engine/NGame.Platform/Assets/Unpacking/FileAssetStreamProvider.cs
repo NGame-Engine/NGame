@@ -2,10 +2,6 @@ using NGame.Assets.Common.Assets;
 
 namespace NGame.Platform.Assets.Unpacking;
 
-public interface IAssetStreamProvider
-{
-	Stream Open(string fileName);
-}
 
 
 public class FileAssetStreamProvider(string assetFolder) : IAssetStreamProvider

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NGame.Assets.Common.Assets;
 using NGame.Platform.Assets.Json;
 using NGame.Platform.Assets.Processors;
 using NGame.Platform.Assets.Registries;
