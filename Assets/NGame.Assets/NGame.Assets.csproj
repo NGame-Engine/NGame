@@ -7,7 +7,7 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
         <PackageId>NGame.Assets</PackageId>
-        <VersionPrefix>0.0.11</VersionPrefix>
+        <VersionPrefix>0.0.28</VersionPrefix>
         <Authors>NGame Contributors</Authors>
         <Description>A Game Engine Embracing the .NET Ecosystem</Description>
         <Copyright>Copyright © NGame Contributors 2024</Copyright>
@@ -26,6 +26,11 @@
         <None Include="nuget-logo.png" Pack="true" PackagePath=""/>
         <None Include="README.md" Pack="true" PackagePath=""/>
         <None Update="buildTransitive\NGame.Assets.targets" Pack="true" PackagePath=""/>
+        <None Update="buildTransitive\NGame.Assets.props" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NGame.Assets.ResolveUsedTask" Version="0.0.4" />
     </ItemGroup>
 
 </Project>

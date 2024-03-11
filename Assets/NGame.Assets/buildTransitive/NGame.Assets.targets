@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-
+    <!-- Targets for asset projects -->
     <Target Name="_NGameAssetsSetProperties">
         <PropertyGroup>
             <NgAssetListPath>$(SolutionDir).ngame/assets/$(ProjectName).g.ngassetlist</NgAssetListPath>
@@ -13,9 +13,9 @@
             <NgAsset Include="**/*.ngasset" Exclude="$(BaseOutputPath)/**/*;$(BaseIntermediateOutputPath)/**/*"/>
             <NgAsset
                 Update="@(NgAsset)"
+                Condition="Exists('%(RelativeDir)%(FileName)')"
                 DataFile="%(RelativeDir)%(FileName)"
                 DataFileExtension="$( [System.IO.Path]::GetExtension('%(FileName)').ToLower() )"
-                Condition="Exists('%(RelativeDir)%(FileName)')"
             />
         </ItemGroup>
         <Message Text="NGame assets in project $(ProjectName): @(NgAsset)"/>
@@ -34,22 +34,36 @@
             File="$(NgAssetListPath)"
             Overwrite="true"
             Encoding="Unicode"/>
-       <WriteLinesToFile
-           Lines="@(NgAsset -> '%(Identity)//%(DataFile)')"
-           File="$(NgAssetListPath)"
-           Overwrite="false"
-           Encoding="Unicode"/>
+        <WriteLinesToFile
+            Lines="@(NgAsset -> '%(Identity)//%(DataFile)')"
+            File="$(NgAssetListPath)"
+            Overwrite="false"
+            Encoding="Unicode"/>
         <Message Text="Updated NGame asset list in project $(ProjectName)"/>
     </Target>
 
 
     <Target
-        Name="NGameAssetsCleanList"
+        Name="NgAssetsCleanList"
         BeforeTargets="Clean"
         DependsOnTargets="_NGameAssetsSetProperties"
     >
         <Delete Files="$(NgAssetListPath)"/>
     </Target>
 
+
+    <!-- Targets for platform projects -->
+    <Target 
+        Name="NgAssetsBuild" 
+        BeforeTargets="NgPlatformBuild"
+        Inputs="@(NgAssetLists)"
+        Outputs="$(BaseIntermediateOutputPath)ngame/assets/timestamp"
+    >
+        <CallTarget Targets="NgAssetsResolveUsages"/>
+        <CallTarget Targets="NgAssetsPack"/>
+
+        <MakeDir Directories="$(BaseIntermediateOutputPath)ngame/assets/"/>
+        <Touch Files="$(BaseIntermediateOutputPath)ngame/assets/timestamp" AlwaysCreate="true"/>
+    </Target>
 
 </Project>

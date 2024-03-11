@@ -13,7 +13,7 @@ internal class JsonAsset : Asset;
 
 internal interface IAssetOverviewCreator
 {
-	AssetOverview Create(IAbsoluteDirectoryPath assetListPaths);
+	AssetOverview Create(IEnumerable<IAbsoluteFilePath> assetListPaths);
 }
 
 
@@ -22,10 +22,15 @@ internal class AssetOverviewCreator(
 	IEnumerable<JsonConverter> jsonConverters
 ) : IAssetOverviewCreator
 {
-	private record AssetFileInfo(PathInfo MainPathInfo, PathInfo? SatellitePathInfo);
+	private record AssetFileInfo(
+		IAbsoluteDirectoryPath ProjectDirectory,
+		PathInfo MainPathInfo,
+		PathInfo? SatellitePathInfo
+	);
 
 
-	public AssetOverview Create(IAbsoluteDirectoryPath solutionDirectory)
+
+	public AssetOverview Create(IEnumerable<IAbsoluteFilePath> assetListPaths)
 	{
 		var options = new JsonSerializerOptions();
 
@@ -34,14 +39,8 @@ internal class AssetOverviewCreator(
 			options.Converters.Add(jsonConverter);
 		}
 
-		var pathToAssetLists = DirectoryPath.ParseRelative(
-			Path.Combine(".ngame", "assets")
-		);
 
-		var assetsDirectory = solutionDirectory.Combine(pathToAssetLists);
-
-		var assetEntries = assetsDirectory
-			.GetChildFiles("*.g.txt")
+		var assetEntries = assetListPaths
 			.SelectMany(ReadAssetListFile)
 			.Select(x => CreateAssetEntry(x, options));
 
@@ -82,7 +81,7 @@ internal class AssetOverviewCreator(
 				? CreatePathInfo(lineParts[1], projectDirectory)
 				: null;
 
-		return new AssetFileInfo(mainPathInfo, satellitePathInfo);
+		return new AssetFileInfo(projectDirectory, mainPathInfo, satellitePathInfo);
 	}
 
 
@@ -93,7 +92,7 @@ internal class AssetOverviewCreator(
 	{
 		var sourcePath = projectDirectory.CombineFile(fileLine);
 		var targetPath = FilePath.ParseRelative(fileLine);
-		return new PathInfo(sourcePath, targetPath);
+		return new PathInfo(projectDirectory, sourcePath, targetPath);
 	}
 
 
@@ -108,6 +107,7 @@ internal class AssetOverviewCreator(
 
 		return new AssetEntry(
 			jsonAsset.Id,
+			assetFileInfo.ProjectDirectory,
 			mainPathInfo,
 			jsonAsset.PackageName,
 			assetFileInfo.SatellitePathInfo

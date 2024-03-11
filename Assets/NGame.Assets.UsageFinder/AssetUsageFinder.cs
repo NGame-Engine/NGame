@@ -9,7 +9,7 @@ namespace NGame.Assets.UsageFinder;
 
 public interface IAssetUsageFinder
 {
-	AssetUsageOverview Find(IAbsoluteDirectoryPath assetListPaths, IEnumerable<IAbsoluteFilePath> appSettingsPath);
+	AssetUsageOverview Find(IEnumerable<IAbsoluteFilePath> assetListPaths, IAbsoluteFilePath appSettingsPath);
 }
 
 
@@ -22,17 +22,17 @@ internal class AssetUsageFinder(
 	: IAssetUsageFinder
 {
 	public AssetUsageOverview Find(
-		IAbsoluteDirectoryPath solutionDirectory,
-		IEnumerable<IAbsoluteFilePath> appSettingsFiles
+		IEnumerable<IAbsoluteFilePath> assetListPaths,
+		IAbsoluteFilePath appSettingsPath
 	)
 	{
-		var assetOverview = assetOverviewCreator.Create(solutionDirectory);
+		var assetOverview = assetOverviewCreator.Create(assetListPaths);
 		logger.LogInformation(
 			"Assets overview created with {AssetEntriesCount} entries",
 			assetOverview.AssetEntries.Count
 		);
 
-		var usedAssetOverview = assetUsageOverviewFactory.Create(appSettingsFiles, assetOverview);
+		var usedAssetOverview = assetUsageOverviewFactory.Create(appSettingsPath, assetOverview);
 		logger.LogInformation(
 			"Found {AssetEntriesCount} used asset entries",
 			usedAssetOverview.UsedAssetEntries.Count

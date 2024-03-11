@@ -10,7 +10,7 @@ namespace NGame.Assets.UsageFinder.AssetUsages;
 
 internal interface IAssetUsageOverviewFactory
 {
-	AssetUsageOverview Create(IEnumerable<IAbsoluteFilePath> appSettingsFiles, AssetOverview assetOverview);
+	AssetUsageOverview Create(IAbsoluteFilePath appSettingsPath, AssetOverview assetOverview);
 }
 
 
@@ -19,9 +19,9 @@ internal class AssetUsageOverviewFactory(
 	IJsonNodeAssetIdFinder jsonNodeAssetIdFinder
 ) : IAssetUsageOverviewFactory
 {
-	public AssetUsageOverview Create(IEnumerable<IAbsoluteFilePath> appSettingsFiles, AssetOverview assetOverview)
+	public AssetUsageOverview Create(IAbsoluteFilePath appSettingsPath, AssetOverview assetOverview)
 	{
-		var sceneIds = GetSceneIds(appSettingsFiles);
+		var sceneIds = GetSceneIds(appSettingsPath);
 
 		var assetEntries =
 			assetOverview
@@ -39,18 +39,10 @@ internal class AssetUsageOverviewFactory(
 	}
 
 
-	private static HashSet<Guid> GetSceneIds(IEnumerable<IAbsoluteFilePath> appSettingsFiles)
+	private static HashSet<Guid> GetSceneIds(IAbsoluteFilePath appSettingsPath)
 	{
 		var configurationManager = new ConfigurationManager();
-
-		var orderedAppSettings =
-			appSettingsFiles.OrderBy(x => x.Length);
-
-		foreach (var appSettingsFile in orderedAppSettings)
-		{
-			configurationManager.AddJsonFile(appSettingsFile.PathDisplay);
-		}
-
+		configurationManager.AddJsonFile(appSettingsPath.PathDisplay);
 
 		var sceneAssetsConfiguration =
 			configurationManager

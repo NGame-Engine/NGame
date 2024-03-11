@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <_NgAssetsResolveUsed_TaskFolder>$(MSBuildThisFileDirectory)..\tasks\net8.0</_NgAssetsResolveUsed_TaskFolder>
+        <NgAssetsResolveUsedAssembly>$(_NgAssetsResolveUsed_TaskFolder)\$(MSBuildThisFileName).dll</NgAssetsResolveUsedAssembly>
+    </PropertyGroup>
+
+    <UsingTask TaskName="$(MSBuildThisFileName).ResolveUsedAssets" AssemblyFile="$(NgAssetsResolveUsedAssembly)"/>
+
+</Project>

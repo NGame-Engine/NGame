@@ -4,7 +4,7 @@ using NGame.Assets.Common.Assets;
 using NGame.Assets.Common.Ecs;
 using NGame.Platform;
 using NGame.Platform.Assets;
-using NGame.Platform.Assets.Unpacking;
+using NGame.Platform.Desktop.Assets;
 using NGame.Platform.Setup;
 using Singulink.IO;
 using Xunit.Abstractions;
