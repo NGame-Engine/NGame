@@ -1,4 +1,4 @@
-﻿using Singulink.IO;
+using Singulink.IO;
 
 namespace NGame.Assets.UsageFinder.TaskItems;
 

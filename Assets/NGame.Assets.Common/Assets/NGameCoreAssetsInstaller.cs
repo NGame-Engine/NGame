@@ -18,7 +18,7 @@ public static class NGameCoreAssetsInstaller
 		builder.Services.AddTransient<ISceneSerializerOptionsFactory, SceneSerializerOptionsFactory>();
 
 		builder.Services.AddTransient<IStoredAssetReader, SimpleStoredAssetReader>();
-		
+
 		return builder;
 	}
 }

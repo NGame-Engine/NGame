@@ -1,4 +1,4 @@
-﻿namespace NGame.Assets.UsageFinder.Setup;
+namespace NGame.Assets.UsageFinder.Setup;
 
 
 

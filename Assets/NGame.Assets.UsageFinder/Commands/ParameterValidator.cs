@@ -21,7 +21,7 @@ public class ParameterValidator : IParameterValidator
 				.Select(x => FilePath.ParseAbsolute(x))
 				.ToList();
 
-		
+
 		var appSettingsPaths = taskParameters.AppSettings;
 		if (appSettingsPaths.Length == 0)
 		{
@@ -40,7 +40,7 @@ public class ParameterValidator : IParameterValidator
 		{
 			throw new InvalidOperationException($"Invalid appsettings '{appSettingsPath}'");
 		}
-		
+
 		return new ValidatedCommand(
 			assetListPaths,
 			appSettingsPath

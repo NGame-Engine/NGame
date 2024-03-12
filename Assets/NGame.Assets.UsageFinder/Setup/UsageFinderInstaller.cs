@@ -19,10 +19,10 @@ public static class UsageFinderInstaller
 
 
 		builder.Services.AddTransient<ICommandRunner, CommandRunner>();
-	
+
 		builder.Services.AddTransient<IParameterValidator, ParameterValidator>();
-		
-		
+
+
 		builder.Services.AddTransient<IAssetUsageFinder, AssetUsageFinder>();
 
 		builder.Services.AddTransient<IAssetOverviewCreator, AssetOverviewCreator>();
