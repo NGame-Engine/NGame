@@ -11,11 +11,13 @@ public static class NGameCoreAssetsInstaller
 {
 	public static IHostApplicationBuilder AddNGameCoreAssets(this IHostApplicationBuilder builder)
 	{
+		builder.AddNGameCoreJsonConverters();
+
 		builder.Services.AddTransient<IAssetTypeFinder, AssetTypeFinder>();
 		builder.Services.AddTransient<IAssetDeserializerOptionsFactory, AssetDeserializerOptionsFactory>();
 		builder.Services.AddTransient<ISceneSerializerOptionsFactory, SceneSerializerOptionsFactory>();
 
-		builder.AddNGameCoreJsonConverters();
+		builder.Services.AddTransient<IStoredAssetReader, SimpleStoredAssetReader>();
 
 		return builder;
 	}

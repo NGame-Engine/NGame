@@ -1,7 +1,7 @@
 using NGame.Assets;
+using NGame.Assets.Common.Assets;
 using NGame.Platform.Assets.Json;
 using NGame.Platform.Assets.Registries;
-using NGame.Platform.Assets.Unpacking;
 
 namespace NGame.Platform.Assets;
 
@@ -17,7 +17,7 @@ public interface IAssetAccessor
 public class AssetAccessor(
 	IAssetRegistry assetRegistry,
 	IAssetSerializer assetSerializer,
-	IAssetUnpacker assetUnpacker
+	IStoredAssetReader storedAssetReader
 )
 	: IAssetAccessor
 {
@@ -26,7 +26,7 @@ public class AssetAccessor(
 		var asset = assetRegistry.Get(assetId);
 		if (asset != null) return asset;
 
-		var assetJsonContent = assetUnpacker.GetAssetJsonContent(assetId);
+		var assetJsonContent = storedAssetReader.GetAssetJson(assetId);
 		asset = assetSerializer.Deserialize(assetJsonContent);
 		assetRegistry.Add(asset);
 

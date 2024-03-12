@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+        <PackageId>NGame.Assets.ResolveUsedTask</PackageId>
+        <VersionPrefix>0.4.0</VersionPrefix>
+        <Authors>NGame Contributors</Authors>
+        <Description>A Game Engine Embracing the .NET Ecosystem</Description>
+        <Copyright>Copyright © NGame Contributors 2024</Copyright>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/NGame-Engine/NGame/wiki</PackageProjectUrl>
+        <PackageIcon>nuget-logo.png</PackageIcon>
+        <RepositoryUrl>https://github.com/NGame-Engine/NGame</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>Game Engine</PackageTags>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="nuget-logo.png" Pack="true" PackagePath=""/>
+        <None Include="README.md" Pack="true" PackagePath=""/>
+        <None Include="buildTransitive\NGame.Assets.ResolveUsedTask.props" Pack="true" PackagePath="buildTransitive"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\NGame.Assets.Common\NGame.Assets.Common.csproj" PrivateAssets="all"/>
+        <ProjectReference Include="..\NGame.Assets.UsageFinder\NGame.Assets.UsageFinder.csproj" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference
+            Include="Microsoft.Build.Utilities.Core"
+            Version="17.9.5"
+            PrivateAssets="all"
+            ExcludeAssets="Runtime"/>
+    </ItemGroup>
+
+
+    <PropertyGroup>
+        <TargetsForTfmSpecificBuildOutput>
+            $(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage
+        </TargetsForTfmSpecificBuildOutput>
+        <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+        <NoWarn>NU5100</NoWarn>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    </PropertyGroup>
+
+    <Target
+        Name="CopyProjectReferencesToPackage"
+        DependsOnTargets="ResolveReferences">
+        <ItemGroup>
+            <BuildOutputInPackage
+                Include="@(ReferenceCopyLocalPaths)"
+                TargetPath="%(ReferenceCopyLocalPaths.DestinationSubPath)"/>
+        </ItemGroup>
+    </Target>
+
+
+    <PropertyGroup>
+        <GenerateDependencyFile>true</GenerateDependencyFile>
+    </PropertyGroup>
+
+    <Target
+        Name="AddBuildDependencyFileToBuiltProjectOutputGroupOutput"
+        BeforeTargets="BuiltProjectOutputGroup"
+        Condition=" '$(GenerateDependencyFile)' == 'true'">
+
+        <ItemGroup>
+            <BuiltProjectOutputGroupOutput
+                Include="$(ProjectDepsFilePath)"
+                TargetPath="$(ProjectDepsFileName)"
+                FinalOutputPath="$(ProjectDepsFilePath)"/>
+        </ItemGroup>
+    </Target>
+
+</Project>

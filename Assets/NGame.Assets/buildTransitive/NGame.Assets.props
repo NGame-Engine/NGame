@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+    <ItemGroup>
+        <NgAssetLists Include="$(SolutionDir).ngame/assets/*.g.ngassetlist"/>
+    </ItemGroup>
+
+
+    <Target Name="_NgAssetsResolveProperties">
+        <PropertyGroup>
+            <NgAssetsPackOutputDirectory Condition=" '$(NgAssetsPackOutputDirectory)' == ''">$(ProjectDir)$(OutputPath).assetpacks/</NgAssetsPackOutputDirectory>
+        </PropertyGroup>
+    </Target>
+
+
+    <Target
+        Name="NgAssetsResolveUsages"
+        DependsOnTargets="_NgAssetsResolveProperties"
+    >
+        <ReadLinesFromFile File="$(SolutionDir).ngame/appsettingspath.txt">
+            <Output TaskParameter="Lines" ItemName="NgStoredAppSettings"/>
+        </ReadLinesFromFile>
+
+        <ResolveUsedAssets
+            AssetLists="@(NgAssetLists)"
+            AppSettings="@(NgStoredAppSettings -> '%(FullPath)')"
+        >
+            <Output TaskParameter="UsedAssets" ItemName="NgUsedAssets"/>
+        </ResolveUsedAssets>
+
+        <Message Text="NGame found used assets: @(NgUsedAssets)"/>
+    </Target>
+
+
+    <Target Name="NgAssetsPack" DependsOnTargets="_NgAssetsResolveProperties">
+        <Copy
+            SourceFiles="@(NgUsedAssets)"
+            DestinationFiles="$(NgAssetsPackOutputDirectory)%(AssetId)/asset.json"
+        />
+        <Copy
+            SourceFiles="@(NgUsedAssets -> '%(ProjectDirectory)%(DataFilePath)')"
+            Condition=" '%(DataFilePath)' != '' "
+            DestinationFiles="$(NgAssetsPackOutputDirectory)%(AssetId)/data.bin"
+        />
+    </Target>
+
+
+    <Target Name="NgAssetsClean" DependsOnTargets="_NgAssetsResolveProperties">
+        <RemoveDir Directories="$(NgAssetsPackOutputDirectory)"/>
+    </Target>
+
+
+</Project>
