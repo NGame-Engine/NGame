@@ -7,7 +7,7 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
         <PackageId>NGame.Assets</PackageId>
-        <VersionPrefix>0.0.30</VersionPrefix>
+        <VersionPrefix>0.4.0</VersionPrefix>
         <Authors>NGame Contributors</Authors>
         <Description>A Game Engine Embracing the .NET Ecosystem</Description>
         <Copyright>Copyright © NGame Contributors 2024</Copyright>
