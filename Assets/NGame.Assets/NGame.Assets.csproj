@@ -30,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="NGame.Assets.ResolveUsedTask" Version="0.0.4" />
+      <PackageReference Include="NGame.Assets.ResolveUsedTask" Version="0.4.0" />
     </ItemGroup>
 
 </Project>
