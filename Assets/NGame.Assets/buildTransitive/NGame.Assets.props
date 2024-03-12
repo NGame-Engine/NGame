@@ -9,7 +9,7 @@
 
     <Target Name="_NgAssetsResolveProperties">
         <PropertyGroup>
-            <NgAssetsPackOutputDirectory Condition=" '$(NgAssetsPackOutputDirectory)' == ''">$(OutputPath).assetpacks/</NgAssetsPackOutputDirectory>
+            <NgAssetsPackOutputDirectory Condition=" '$(NgAssetsPackOutputDirectory)' == ''">$(ProjectDir)$(OutputPath).assetpacks/</NgAssetsPackOutputDirectory>
         </PropertyGroup>
     </Target>
 
@@ -43,6 +43,11 @@
             Condition=" '%(DataFilePath)' != '' "
             DestinationFiles="$(NgAssetsPackOutputDirectory)%(AssetId)/data.bin"
         />
+    </Target>
+
+
+    <Target Name="NgAssetsClean" DependsOnTargets="_NgAssetsResolveProperties">
+        <RemoveDir Directories="$(NgAssetsPackOutputDirectory)"/>
     </Target>
 
 

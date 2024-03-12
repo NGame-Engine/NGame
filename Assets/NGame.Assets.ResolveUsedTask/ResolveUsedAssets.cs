@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NGame.Assets.UsageFinder;
 using NGame.Assets.UsageFinder.Setup;
+using NGame.Assets.UsageFinder.TaskItems;
 
 namespace NGame.Assets.ResolveUsedTask;
 
@@ -48,17 +49,8 @@ public class ResolveUsedAssets : Microsoft.Build.Utilities.Task
 			UsedAssets =
 				assetUsageOverview
 					.UsedAssetEntries
-					.Select(x =>
-					{
-						var taskItem = new TaskItem(x.MainPathInfo.SourcePath.PathDisplay);
-						taskItem.SetMetadata("AssetId", x.Id.ToString());
-						taskItem.SetMetadata("ProjectDirectory", $"{x.ProjectDirectory.PathDisplay}/");
-						taskItem.SetMetadata("Package", x.PackageName);
-						taskItem.SetMetadata("JsonFilePath", x.MainPathInfo.TargetPath.PathDisplay);
-						taskItem.SetMetadata("DataFilePath", x.SatellitePathInfo?.TargetPath.PathDisplay);
-						return taskItem;
-					})
-					.ToArray<ITaskItem>();
+					.Select(UsedAssetMapper.Map)
+					.ToArray();
 		}
 		catch (Exception e)
 		{
